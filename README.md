@@ -1,7 +1,7 @@
-Yii 2 Advanced Project Template
-===============================
+Yii 2 Skeleton
+==============
 
-Yii 2 Advanced Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
+Yii 2 Skeleton is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
 developing complex Web applications with multiple tiers.
 
 The template includes three tiers: front end, back end, and console, each of which
@@ -12,9 +12,20 @@ deploying the application in different environments.
 
 Documentation is at [docs/guide/README.md](docs/guide/README.md).
 
-[![Latest Stable Version](https://poser.pugx.org/yiisoft/yii2-app-advanced/v/stable.png)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Total Downloads](https://poser.pugx.org/yiisoft/yii2-app-advanced/downloads.png)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Build Status](https://travis-ci.org/yiisoft/yii2-app-advanced.svg?branch=master)](https://travis-ci.org/yiisoft/yii2-app-advanced)
+## Installing using Composer
+
+If you do not have [Composer](http://getcomposer.org/), follow the instructions in the
+[Installing Yii](https://github.com/yiisoft/yii2/blob/master/docs/guide/start-installation.md#installing-via-composer) section of the definitive guide to install it.
+
+With Composer installed, you can then install the application using the following commands:
+
+    composer global require "fxp/composer-asset-plugin:~1.1.1"
+    composer create-project --prefer-dist modernkernel/yii2-skeleton yii-application
+
+The first command installs the [composer asset plugin](https://github.com/francoispluchino/composer-asset-plugin/)
+which allows managing bower and npm package dependencies through Composer. You only need to run this command
+once for all. The second command installs the advanced application in a directory named `yii-application`.
+You can choose a different directory name if you want.
 
 DIRECTORY STRUCTURE
 -------------------
