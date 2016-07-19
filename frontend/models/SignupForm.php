@@ -1,18 +1,26 @@
 <?php
+/**
+ * @author Harry Tang <harry@modernkernel.com>
+ * @link https://modernkernel.com
+ * @copyright Copyright (c) 2016 Modern Kernel
+ */
+
 namespace frontend\models;
 
+
+use himiklab\yii2\recaptcha\ReCaptchaValidator;
 use yii\base\Model;
-use common\models\User;
+use Yii;
 
 /**
- * Signup form
+ * Class SignupForm
+ * @package frontend\models
  */
 class SignupForm extends Model
 {
-    public $username;
+    public $name;
     public $email;
-    public $password;
-
+    public $captcha;
 
     /**
      * @inheritdoc
@@ -20,39 +28,33 @@ class SignupForm extends Model
     public function rules()
     {
         return [
-            ['username', 'filter', 'filter' => 'trim'],
-            ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
+            ['name', 'required'],
+            ['name', 'string', 'min' => 2, 'max' => 255],
+            ['name', 'filter', 'filter' => 'trim'],
+            ['name', 'filter', 'filter' => 'ucwords'],
 
-            ['email', 'filter', 'filter' => 'trim'],
             ['email', 'required'],
             ['email', 'email'],
-            ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
+            ['email', 'filter', 'filter' => 'trim'],
+            ['email', 'filter', 'filter' => 'strtolower'],
+            ['email', 'unique', 'targetClass' => '\common\models\Account', 'message' => Yii::t('app', 'This email address has already been taken.')],
 
-            ['password', 'required'],
-            ['password', 'string', 'min' => 6],
+            ['captcha', 'required', 'message' => Yii::t('app', 'Prove you are NOT a robot')],
+            ['captcha', ReCaptchaValidator::className(), 'message' => Yii::t('app', 'Prove you are NOT a robot')]
+
         ];
     }
 
     /**
-     * Signs user up.
-     *
-     * @return User|null the saved model or null if saving fails
+     * @inheritdoc
      */
-    public function signup()
+    public function attributeLabels()
     {
-        if (!$this->validate()) {
-            return null;
-        }
-        
-        $user = new User();
-        $user->username = $this->username;
-        $user->email = $this->email;
-        $user->setPassword($this->password);
-        $user->generateAuthKey();
-        
-        return $user->save() ? $user : null;
+        return [
+            'name' => Yii::t('app', 'Name'),
+            'email' => Yii::t('app', 'Email'),
+            'captcha' => Yii::t('app', 'Verify Code'),
+        ];
     }
-}
+
+} 

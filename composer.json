@@ -18,7 +18,11 @@
         "yiisoft/yii2": ">=2.0.6",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
-        "modernkernel/yii2-core": "@dev"
+        "modernkernel/yii2-bootstrapsocial": "@dev",
+
+        "himiklab/yii2-recaptcha-widget": "*",
+        "facebook/php-sdk-v4": "~5.0",
+        "google/apiclient": "1.1.*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

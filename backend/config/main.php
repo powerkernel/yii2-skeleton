@@ -13,9 +13,15 @@ return [
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
+        'session' => [
+            'class' => 'yii\web\DbSession',
+            'sessionTable' => '{{%core_session}}',
+            'name' => 'PHPBACKSESSID'
+        ],
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'common\models\Account',
             'enableAutoLogin' => true,
+            'loginUrl'=>['/account/login']
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

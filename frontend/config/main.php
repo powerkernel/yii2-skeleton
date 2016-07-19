@@ -12,9 +12,15 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
+        'session' => [
+            'class' => 'yii\web\DbSession',
+            'sessionTable' => '{{%core_session}}',
+            'name' => 'PHPFRONTSESSID'
+        ],
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'common\models\Account',
             'enableAutoLogin' => true,
+            'loginUrl'=>['/account/login']
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
