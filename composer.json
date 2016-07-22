@@ -1,28 +1,27 @@
 {
-    "name": "yiisoft/yii2-app-advanced",
-    "description": "Yii 2 Advanced Project Template",
-    "keywords": ["yii2", "framework", "advanced", "project template"],
-    "homepage": "http://www.yiiframework.com/",
+    "name": "modernkernel/yii2-skeleton",
+    "description": "Yii 2 Skeleton Project Template",
+    "keywords": ["yii2", "framework", "skeleton", "project template"],
+    "homepage": "https://modernkernel.com/",
     "type": "project",
     "license": "BSD-3-Clause",
     "support": {
-        "issues": "https://github.com/yiisoft/yii2/issues?state=open",
-        "forum": "http://www.yiiframework.com/forum/",
-        "wiki": "http://www.yiiframework.com/wiki/",
-        "irc": "irc://irc.freenode.net/yii",
-        "source": "https://github.com/yiisoft/yii2"
+        "issues": "https://github.com/modernkernel/yii2-skeleton/issues?state=open",
+        "source": "https://github.com/modernkernel/yii2-skeleton"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
+    "prefer-stable" : true,
     "require": {
         "php": ">=5.4.0",
         "yiisoft/yii2": ">=2.0.6",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
-        "modernkernel/yii2-bootstrapsocial": "@dev",
+
+        "modernkernel/yii2-bootstrapsocial": "*",
 
         "himiklab/yii2-recaptcha-widget": "*",
         "facebook/php-sdk-v4": "~5.0",
-        "google/apiclient": "1.1.*"
+        "google/apiclient": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
