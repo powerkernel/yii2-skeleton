@@ -81,16 +81,5 @@ class AccountController extends Controller
         return $user->save();
     }
 
-    public function actionTest(){
-        $user = new Account();
-        $user->fullname = 'Gia Duy';
-        $user->email = 'me@giaduy.info';
-        $user->setPassword();
-        $user->generateAuthKey();
-        if(!$user->save()){
-            var_dump($user->errors);
-        }
-    }
-
 
 }
