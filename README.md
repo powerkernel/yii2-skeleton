@@ -68,8 +68,9 @@ FEATURES
 --------
 
 ```
-* User system
-* i18 UI
-* CMS
-* and many more...
+Account System
+    Signup, Login
+    Reset password
 ```
+
+And adding more features...
