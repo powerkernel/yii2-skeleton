@@ -9,19 +9,17 @@
         "issues": "https://github.com/modernkernel/yii2-skeleton/issues?state=open",
         "source": "https://github.com/modernkernel/yii2-skeleton"
     },
-    "minimum-stability": "dev",
-    "prefer-stable" : true,
+    "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
         "yiisoft/yii2": ">=2.0.6",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
-
-        "modernkernel/yii2-bootstrapsocial": "*",
-
         "himiklab/yii2-recaptcha-widget": "*",
         "facebook/php-sdk-v4": "~5.0",
-        "google/apiclient": "^2.0"
+        "google/apiclient": "^2.0",
+
+        "modernkernel/yii2-bootstrapsocial": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

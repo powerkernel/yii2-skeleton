@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c61235bbdaca143c1b107f9999b2bb4a",
-    "content-hash": "eaa24d40eb6cee8536b24eb751b6a858",
+    "hash": "7017beb6cdef86ed201c364d30ee99d2",
+    "content-hash": "d4a0e7ea2dfbc1d9c3c6e7a8cc0d5674",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -834,16 +834,16 @@
         },
         {
             "name": "modernkernel/yii2-bootstrapsocial",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/modernkernel/yii2-bootstrapsocial.git",
-                "reference": "697f32cb1027006fef52498a7a652b5742aa8e58"
+                "reference": "6b78109276e3ce180298816acf45987d7368a332"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modernkernel/yii2-bootstrapsocial/zipball/697f32cb1027006fef52498a7a652b5742aa8e58",
-                "reference": "697f32cb1027006fef52498a7a652b5742aa8e58",
+                "url": "https://api.github.com/repos/modernkernel/yii2-bootstrapsocial/zipball/6b78109276e3ce180298816acf45987d7368a332",
+                "reference": "6b78109276e3ce180298816acf45987d7368a332",
                 "shasum": ""
             },
             "require": {
@@ -859,7 +859,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "Apache-2.0"
+                "BSD-3-Clause"
             ],
             "authors": [
                 {
@@ -867,25 +867,26 @@
                     "email": "harry@modernkernel.com"
                 }
             ],
-            "description": "Yii2 Bootstrap Social",
+            "description": "Bootstrap Social extension for Yii2",
             "keywords": [
-                "extension",
+                "bootstrap",
+                "social",
                 "yii2"
             ],
-            "time": "2016-07-22 18:34:48"
+            "time": "2016-07-23 03:02:20"
         },
         {
             "name": "modernkernel/yii2-fontawesome",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/modernkernel/yii2-fontawesome.git",
-                "reference": "9293d2fe3db8572bf495ad9f7d8d7d9e8459f075"
+                "reference": "16fd48f4d9c562d2f99db5d179e86a9ab2a21bf2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modernkernel/yii2-fontawesome/zipball/9293d2fe3db8572bf495ad9f7d8d7d9e8459f075",
-                "reference": "9293d2fe3db8572bf495ad9f7d8d7d9e8459f075",
+                "url": "https://api.github.com/repos/modernkernel/yii2-fontawesome/zipball/16fd48f4d9c562d2f99db5d179e86a9ab2a21bf2",
+                "reference": "16fd48f4d9c562d2f99db5d179e86a9ab2a21bf2",
                 "shasum": ""
             },
             "require": {
@@ -900,7 +901,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "Apache-2.0"
+                "BSD-3-Clause"
             ],
             "authors": [
                 {
@@ -913,7 +914,7 @@
                 "extension",
                 "yii2"
             ],
-            "time": "2016-07-22 18:23:28"
+            "time": "2016-07-23 03:33:16"
         },
         {
             "name": "monolog/monolog",
@@ -1821,9 +1822,9 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "stability-flags": [],
-    "prefer-stable": true,
+    "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": ">=5.4.0"
