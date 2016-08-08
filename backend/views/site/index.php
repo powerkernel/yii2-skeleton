@@ -2,7 +2,9 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'My Yii Application';
+$this->title = 'My Application';
+//$this->params['subtitle']='v1.0';
+//$this->params['breadcrumbs'][] = ['label' => 'Home', 'url' => '#home'];
 ?>
 <div class="site-index">
 

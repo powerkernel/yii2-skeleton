@@ -46,26 +46,16 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'email') ?>
             <?= $form->field($model, 'password')->passwordInput() ?>
             <?= $form->field($model, 'rememberMe')->checkbox() ?>
-
             <div class="text-center">
                 <div class="form-group">
                     <?= Html::submitButton($this->title, ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                </div>
-                <div>
-                    <?= Yii::t('app', 'If you forgot your password you can {RESET}.', ['RESET' => Html::a(Yii::t('app', 'reset it'), ['/account/reset'])]); ?>
                 </div>
             </div>
             <?php ActiveForm::end(); ?>
             <div>
                 <hr/>
             </div>
-            <?php if (!Yii::$app->params['account']['registrationDisabled']): ?>
-                <div class="text-center">
-                    <?= Yii::t('app', 'Do not have an account?') ?> <a
-                        href="<?= Yii::$app->urlManager->createUrl(['/account/signup']) ?>"
-                        class="btn btn-xs btn-danger"><?= Yii::t('app', 'Signup') ?></a>
-                </div>
-            <?php endif; ?>
+
         </div>
     </div>
 </div>

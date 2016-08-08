@@ -12,6 +12,8 @@ use common\models\LoginForm;
  */
 class SiteController extends Controller
 {
+    public $layout = 'admin';
+
     /**
      * @inheritdoc
      */
@@ -32,12 +34,7 @@ class SiteController extends Controller
                     ],
                 ],
             ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
+
         ];
     }
 
@@ -59,6 +56,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+
         return $this->render('index');
     }
 

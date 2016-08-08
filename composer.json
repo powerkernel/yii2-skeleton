@@ -15,12 +15,22 @@
         "yiisoft/yii2": ">=2.0.6",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
+
         "himiklab/yii2-recaptcha-widget": "*",
         "facebook/php-sdk-v4": "~5.0",
         "google/apiclient": "^2.0",
 
-        "modernkernel/yii2-bootstrapsocial": "*"
+        "modernkernel/yii2-bootstrapsocial": "*",
+        "modernkernel/yii2-theme-adminlte": "@dev",
+        "harrytang/yii2-theme-inspinia": "@dev"
+
     },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@bitbucket.org:harrytang/yii2-theme-inspinia.git"
+        }
+    ],
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
         "yiisoft/yii2-debug": "*",
