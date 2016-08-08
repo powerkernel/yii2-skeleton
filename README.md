@@ -20,7 +20,7 @@ If you do not have [Composer](http://getcomposer.org/), follow the instructions 
 With Composer installed, you can then install the application using the following commands:
 
     composer global require "fxp/composer-asset-plugin:~1.1.1"
-    composer create-project --prefer-dist modernkernel/yii2-skeleton yii-application
+    composer create-project -s dev --prefer-dist modernkernel/yii2-skeleton yii-application
 
 The first command installs the [composer asset plugin](https://github.com/francoispluchino/composer-asset-plugin/)
 which allows managing bower and npm package dependencies through Composer. You only need to run this command
@@ -68,8 +68,9 @@ FEATURES
 --------
 
 ```
-* User system
-* i18 UI
-* CMS
-* and many more...
+Account System
+    Signup, Login
+    Reset password
 ```
+
+And adding more features...
