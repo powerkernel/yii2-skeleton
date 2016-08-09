@@ -50,6 +50,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
     <div class="box box-primary">
         <div class="box-body">
             <?php Pjax::begin(); ?>
+            <div class="table-responsive sort-ordinal">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
@@ -76,6 +77,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                     ['class' => 'yii\grid\ActionColumn'],
                 ],
             ]); ?>
+            </div>
             <?php Pjax::end(); ?>
             <p><?= Html::a(Yii::t('app', 'Add New User'), ['create'], ['class' => 'btn btn-success']) ?></p>
         </div>

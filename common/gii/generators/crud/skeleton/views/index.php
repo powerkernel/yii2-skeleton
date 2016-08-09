@@ -70,6 +70,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
 
         <?= $generator->enablePjax ? '<?php Pjax::begin(); ?>' : '' ?>
         <?php if ($generator->indexWidgetType === 'grid'): ?>
+            <div class="table-responsive">
             <?= "<?= " ?>GridView::widget([
                 'dataProvider' => $dataProvider,
                 <?= !empty($generator->searchModelClass) ? "'filterModel' => \$searchModel,\n        'columns' => [\n" : "'columns' => [\n"; ?>
@@ -100,6 +101,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                     ['class' => 'yii\grid\ActionColumn'],
                 ],
             ]); ?>
+            </div>
         <?php else: ?>
             <?= "<?= " ?>ListView::widget([
                 'dataProvider' => $dataProvider,
