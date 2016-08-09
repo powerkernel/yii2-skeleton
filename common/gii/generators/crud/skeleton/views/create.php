@@ -1,12 +1,20 @@
 <?php
-use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+
+use yii\helpers\Inflector;
+use yii\helpers\StringHelper;
 
 /* @var $this yii\web\View */
-/* @var $form yii\bootstrap\ActiveForm */
-/* @var $model \common\models\LoginForm */
+/* @var $generator yii\gii\generators\crud\Generator */
 
-$this->title = Yii::t('app', 'Login');
+echo "<?php\n";
+?>
+
+
+
+/* @var $this yii\web\View */
+/* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
+
+$this->title = <?= $generator->generateString('Create ' . Inflector::camel2words(StringHelper::basename($generator->modelClass))) ?>;
 $keywords = '';
 $description = '';
 
@@ -34,28 +42,22 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
 //$this->registerMetaTag(['name'=>'twitter:data2', 'content'=>'']);
 //$this->registerMetaTag(['name'=>'twitter:label2', 'content'=>'']);
 
+/* breadcrumbs */
+$this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 
-//$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Account'), 'url' => ['/account']];
-//$this->params['breadcrumbs'][] = $this->title;
+/* misc */
+//$js=file_get_contents(__DIR__.'/index.min.js');
+//$this->registerJs($js);
+//$css=file_get_contents(__DIR__.'/index.css');
+//$this->registerCss($css);
 ?>
-<div class="account-login-index">
-    <div class="row">
-        <div style="" class="col-xs-12">
-
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
-            <?= $form->field($model, 'email') ?>
-            <?= $form->field($model, 'password')->passwordInput() ?>
-            <?= $form->field($model, 'rememberMe')->checkbox() ?>
-            <div class="text-center">
-                <div class="form-group">
-                    <?= Html::submitButton($this->title, ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                </div>
-            </div>
-            <?php ActiveForm::end(); ?>
-            <div>
-                <hr/>
-            </div>
-
+<div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-create">
+    <div class="box box-success">
+        <div class="box-body">
+            <?= "<?= " ?>$this->render('_form', [
+                'model' => $model,
+            ]) ?>
         </div>
     </div>
 </div>

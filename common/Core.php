@@ -77,7 +77,7 @@ class Core
         }
 
         /* go */
-        if (Yii::$app->controller->module->id != 'app-frontend') {
+        if (!in_array(Yii::$app->controller->module->id, ['app-frontend', 'app-backend'])) {
             return (
                 (in_array(Yii::$app->controller->module->id, $module) || in_array('*', $module)) &&
                 (in_array(Yii::$app->controller->id, $controller) || in_array('*', $controller)) &&
