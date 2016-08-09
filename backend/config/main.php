@@ -49,6 +49,14 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
         ],
+        'view' => [
+            'theme' => [
+                //'class' => 'harrytang\themeinspinia\InspiniaTheme',
+                'class' => 'modernkernel\themeadminlte\AdminlteTheme',
+                //'skin'=>'skin-red-light',
+                'layout'=>'sidebar-mini' //fixed
+            ],
+        ],
     ],
     'params' => $params,
 ];
