@@ -27,7 +27,8 @@ class SideMenu extends Widget
     public function run()
     {
         $this->items = [
-            ['icon' => 'users', 'label' => 'Users', 'url' => ['/account/index'], 'active' => Core::checkMCA(null, 'account', '*')]
+            ['icon' => 'users', 'label' => 'Users', 'url' => ['/account/index'], 'active' => Core::checkMCA(null, 'account', '*')],
+
         ];
         return $this->render('sideMenu', ['items' => $this->items]);
     }
