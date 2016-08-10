@@ -8,6 +8,7 @@
 namespace common\bootstrap;
 
 
+use Yii;
 use yii\base\Component;
 
 /**
@@ -27,9 +28,13 @@ class Setting extends Component
         //$headers->add('strict-transport-security', 'max-age=600');
         //\Yii::$app->
 
-        $module = \Yii::$app->getModule('debug');
-        //$module->allowedIPs=['127.0.0.1', '::1'];
-        $module->allowedIPs=[''];
+        /* not cmd */
+        if(!is_a(Yii::$app, 'yii\console\Application')){
+            $module = \Yii::$app->getModule('debug');
+            //$module->allowedIPs=['127.0.0.1', '::1'];
+            $module->allowedIPs=[''];
+        }
+
 
         //\Yii::$app->view->theme->skin='skin-green';
         //$a=Account::find()->one();

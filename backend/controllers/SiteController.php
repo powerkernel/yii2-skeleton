@@ -10,33 +10,9 @@ use common\models\LoginForm;
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends BackendController
 {
-    public $layout = 'admin';
 
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['logout', 'index'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-
-        ];
-    }
 
     /**
      * @inheritdoc

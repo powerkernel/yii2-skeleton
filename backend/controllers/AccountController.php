@@ -13,10 +13,8 @@ use yii\filters\VerbFilter;
 /**
  * AccountController implements the CRUD actions for Account model.
  */
-class AccountController extends Controller
+class AccountController extends BackendController
 {
-
-    public $layout = 'admin';
 
     /**
      * @inheritdoc

@@ -28,6 +28,7 @@ class SideMenu extends Widget
     {
         $this->items = [
             ['icon' => 'users', 'label' => 'Users', 'url' => ['/account/index'], 'active' => Core::checkMCA(null, 'account', '*')],
+            ['icon' => 'key', 'label' => 'RBAC', 'url' => ['/rbac/index'], 'active' => Core::checkMCA(null, 'rbac', '*')],
 
         ];
         return $this->render('sideMenu', ['items' => $this->items]);
