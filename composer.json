@@ -17,6 +17,7 @@
         "yiisoft/yii2-swiftmailer": "*",
 
         "himiklab/yii2-recaptcha-widget": "*",
+        "conquer/select2": "*",
         "facebook/php-sdk-v4": "~5.0",
         "google/apiclient": "^2.0",
 

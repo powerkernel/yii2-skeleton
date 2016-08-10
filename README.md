@@ -32,9 +32,13 @@ DIRECTORY STRUCTURE
 
 ```
 common
+    bootstrap/           contains bootstrap 
     config/              contains shared configurations
+    gii/                 contains gii templates
     mail/                contains view files for e-mails
     models/              contains model classes used in both backend and frontend
+    plugins/             contains 3rd plugins used in both backend and frontend
+    widgets/             contains widgets classes used in both backend and frontend    
 console
     config/              contains console configurations
     controllers/         contains console controllers (commands)
@@ -68,9 +72,14 @@ FEATURES
 --------
 
 ```
-Account System
+Account
     Signup, Login
-    Reset password
+    CRUD: View, Update, Delete, List
+RBAC
+    Assign, Revoke, List
 ```
 
 And adding more features...
+```
+i18n
+```
