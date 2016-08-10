@@ -100,6 +100,7 @@ class m160810_022938_rbac extends Migration
     // Use safeUp/safeDown to run migration code within a transaction
     public function safeUp()
     {
+
     }
 
     public function safeDown()

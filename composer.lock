@@ -419,16 +419,16 @@
         },
         {
             "name": "facebook/php-sdk-v4",
-            "version": "5.2.0",
+            "version": "5.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facebook/facebook-php-sdk-v4.git",
-                "reference": "c60fba1fe1de62db1e0776d32fc2fb778189459c"
+                "reference": "7ed1ecdae6a5b2f8b8f60e132d06594b39b16fb1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facebook/facebook-php-sdk-v4/zipball/c60fba1fe1de62db1e0776d32fc2fb778189459c",
-                "reference": "c60fba1fe1de62db1e0776d32fc2fb778189459c",
+                "url": "https://api.github.com/repos/facebook/facebook-php-sdk-v4/zipball/7ed1ecdae6a5b2f8b8f60e132d06594b39b16fb1",
+                "reference": "7ed1ecdae6a5b2f8b8f60e132d06594b39b16fb1",
                 "shasum": ""
             },
             "require": {
@@ -472,7 +472,7 @@
                 "facebook",
                 "sdk"
             ],
-            "time": "2016-05-18 22:04:36"
+            "time": "2016-08-09 11:32:26"
         },
         {
             "name": "firebase/php-jwt",
@@ -1002,12 +1002,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modernkernel/yii2-theme-adminlte.git",
-                "reference": "bf015ce30620b75d162966e5fcd183db145bb65a"
+                "reference": "40e7e9d2e0e7500373883d2eebe85356d7c91f74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modernkernel/yii2-theme-adminlte/zipball/bf015ce30620b75d162966e5fcd183db145bb65a",
-                "reference": "bf015ce30620b75d162966e5fcd183db145bb65a",
+                "url": "https://api.github.com/repos/modernkernel/yii2-theme-adminlte/zipball/40e7e9d2e0e7500373883d2eebe85356d7c91f74",
+                "reference": "40e7e9d2e0e7500373883d2eebe85356d7c91f74",
                 "shasum": ""
             },
             "require": {
@@ -1036,7 +1036,7 @@
                 "extension",
                 "yii2"
             ],
-            "time": "2016-08-05 04:02:16"
+            "time": "2016-08-09 17:06:28"
         },
         {
             "name": "monolog/monolog",
@@ -1210,16 +1210,16 @@
         },
         {
             "name": "psr/cache",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/cache.git",
-                "reference": "9e66031f41fbbdda45ee11e93c45d480ccba3eb3"
+                "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/cache/zipball/9e66031f41fbbdda45ee11e93c45d480ccba3eb3",
-                "reference": "9e66031f41fbbdda45ee11e93c45d480ccba3eb3",
+                "url": "https://api.github.com/repos/php-fig/cache/zipball/d11b50ad223250cf17b86e38383413f5a6764bf8",
+                "reference": "d11b50ad223250cf17b86e38383413f5a6764bf8",
                 "shasum": ""
             },
             "require": {
@@ -1252,20 +1252,20 @@
                 "psr",
                 "psr-6"
             ],
-            "time": "2015-12-11 02:52:07"
+            "time": "2016-08-06 20:24:11"
         },
         {
             "name": "psr/http-message",
-            "version": "1.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/http-message.git",
-                "reference": "85d63699f0dbedb190bbd4b0d2b9dc707ea4c298"
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-message/zipball/85d63699f0dbedb190bbd4b0d2b9dc707ea4c298",
-                "reference": "85d63699f0dbedb190bbd4b0d2b9dc707ea4c298",
+                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
+                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
                 "shasum": ""
             },
             "require": {
@@ -1293,6 +1293,7 @@
                 }
             ],
             "description": "Common interface for HTTP messages",
+            "homepage": "https://github.com/php-fig/http-message",
             "keywords": [
                 "http",
                 "http-message",
@@ -1301,7 +1302,7 @@
                 "request",
                 "response"
             ],
-            "time": "2015-05-04 20:22:00"
+            "time": "2016-08-06 14:39:51"
         },
         {
             "name": "psr/log",

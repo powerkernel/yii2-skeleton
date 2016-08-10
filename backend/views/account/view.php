@@ -6,6 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Account */
 
+
 $this->title = $model->fullname;
 $keywords = '';
 $description = '';
@@ -42,6 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //$this->registerJs($js);
 //$css=file_get_contents(__DIR__.'/index.css');
 //$this->registerCss($css);
+
 ?>
 <div class="account-view">
     <div class="box box-info">
@@ -61,7 +63,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         'email_verified:boolean',
                         'new_email:email',
                         'change_email_token:email',
-                        'role',
+                        [
+                            'label' => 'Role(s)',
+                            'value' => $this->render('_rbac', ['model'=>$model]),
+                            'format'=>'raw'
+                        ],
                         'language',
                         'timezone',
                         'status',
@@ -70,7 +76,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ]) ?>
             </div>
-            <p>
+
+            <p class="">
                 <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
                 <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
                     'class' => 'btn btn-danger',
