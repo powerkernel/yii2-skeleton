@@ -6,6 +6,7 @@
  */
 
 /* @var $this \yii\web\View */
+/* @var $roles yii\rbac\Role[] */
 
 $this->title = Yii::t('app', 'RBAC - Role-based Access Control');
 $keywords = '';
@@ -37,11 +38,34 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
 
 /* breadcrumbs */
 $this->params['breadcrumbs'][] = Yii::t('app', 'RBAC');
+
+
 ?>
 <div class="rbac-index">
-    <ul>
-        <li>Admin
-            <ul><li>staff</li></ul>
-        </li>
-    </ul>
+    <div class="box box-primary">
+        <div class="box-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr role="row">
+                        <th><?= Yii::t('app', 'Name') ?></th>
+                        <th><?= Yii::t('app', 'Type') ?></th>
+                        <th><?= Yii::t('app', 'Description') ?></th>
+                        <th><?= Yii::t('app', 'Rule') ?></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($roles as $i => $role): ?>
+                        <tr role="row" class="<?= ($i % 2) ? 'odd' : 'even' ?>">
+                            <td class="sorting_1"><?= ucfirst($role->name) ?></td>
+                            <td><?= $role->type == \yii\rbac\Role::TYPE_ROLE ? Yii::t('app', 'Role') : Yii::t('app', 'Permission') ?></td>
+                            <td><?= $role->description ?></td>
+                            <td><?= $role->ruleName ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>

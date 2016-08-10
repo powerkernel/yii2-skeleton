@@ -8,6 +8,7 @@
 namespace backend\widgets;
 
 use common\Core;
+use Yii;
 use \yii\bootstrap\Widget;
 
 /**
@@ -27,8 +28,8 @@ class SideMenu extends Widget
     public function run()
     {
         $this->items = [
-            ['icon' => 'users', 'label' => 'Users', 'url' => ['/account/index'], 'active' => Core::checkMCA(null, 'account', '*')],
-            //['icon' => 'key', 'label' => 'RBAC', 'url' => ['/rbac/index'], 'active' => Core::checkMCA(null, 'rbac', '*')],
+            ['icon' => 'users', 'label' => Yii::t('app','Users'), 'url' => ['/account/index'], 'active' => Core::checkMCA(null, 'account', '*')],
+            ['icon' => 'key', 'label' => Yii::t('app','RBAC'), 'url' => ['/rbac/index'], 'active' => Core::checkMCA(null, 'rbac', '*')],
         ];
         return $this->render('sideMenu', ['items' => $this->items]);
     }

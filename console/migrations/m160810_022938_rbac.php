@@ -61,8 +61,11 @@ class m160810_022938_rbac extends Migration
         /* authManager */
         $auth = Yii::$app->authManager;
         $staff = $auth->createRole('staff');
+        $staff->description=Yii::t('app', 'Only frontend access');
+
         $auth->add($staff);
         $admin = $auth->createRole('admin');
+        $admin->description=Yii::t('app', 'Full access frontend and backend');
         $auth->add($admin);
         $auth->addChild($admin, $staff);
     }
