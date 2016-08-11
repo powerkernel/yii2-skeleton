@@ -35,8 +35,8 @@ class ChangeEmailForm extends Model {
             ['newEmail', 'filter', 'filter' => 'strtolower'],
             ['newEmail', 'unique', 'targetAttribute'=>'email', 'targetClass' => 'common\models\Account', 'message' => Yii::t('app', 'This email address has already been taken.')],
 
-            //[['verifyCode'], 'required', 'message'=> Yii::t('app', 'Prove you are NOT a robot')],
-            //[['verifyCode'], ReCaptchaValidator::className(), 'message'=> Yii::t('app', 'Prove you are NOT a robot')]
+            [['verifyCode'], 'required', 'message'=> Yii::t('app', 'Prove you are NOT a robot')],
+            [['verifyCode'], ReCaptchaValidator::className(), 'message'=> Yii::t('app', 'Prove you are NOT a robot')]
         ];
     }
 

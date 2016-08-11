@@ -56,12 +56,41 @@ class AccountController extends Controller
         return $this->render('password', ['model'=>$model]);
     }
 
+    /**
+     * change email
+     * @return string
+     */
     public function actionEmail(){
         $model=new ChangeEmailForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->changeEmail()) {
             Yii::$app->session->setFlash('info', Yii::t('app','We sent a verification link to your new email address.'));
         }
         return $this->render('email', ['model'=>$model]);
+    }
+
+
+    /**
+     * @param $token
+     * @return \yii\web\Response
+     */
+    public function actionEmailConfirm($token){
+        $user=Yii::$app->user->identity;
+        if (Account::isChangeEmailTokenValid($token)==false || $user->change_email_token!=$token) {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'Invalid or expired token.'));
+        }
+        else {
+            $user->email=$user->new_email;
+            $user->new_email=null;
+            $user->removeChangeEmailToken();
+            if($user->save())
+            {
+                Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Email successfully changed.'));
+            }
+            else {
+                Yii::$app->getSession()->setFlash('error', Yii::t('app', 'Sorry, something went wrong. Please try again later.'));
+            }
+        }
+        return $this->redirect(['/account/email']);
     }
 
     /**
@@ -90,6 +119,7 @@ class AccountController extends Controller
      */
     public function actionSignup()
     {
+        $this->layout='main';
         $model = new SignupForm();
         if (!Yii::$app->params['account']['registrationDisabled']) {
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -117,6 +147,7 @@ class AccountController extends Controller
      */
     public function actionLogin()
     {
+        $this->layout='login';
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
