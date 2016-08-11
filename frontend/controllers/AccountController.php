@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Account;
+use common\models\ChangePasswordForm;
 use common\models\LoginForm;
 use frontend\models\SignupForm;
 use Yii;
@@ -15,6 +16,7 @@ use yii\web\Controller;
  */
 class AccountController extends Controller
 {
+    public $layout = 'account';
 
     /**
      * @inheritdoc
@@ -44,13 +46,33 @@ class AccountController extends Controller
     /**
      * @return string
      */
+    public function actionPassword(){
+        $model=new ChangePasswordForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->changePassword()) {
+            Yii::$app->session->setFlash('success', Yii::t('app','Success! Your Password has been changed!'));
+        }
+        else {
+            // hjvvyK
+            //Yii::$app->session->setFlash('error', Yii::t('app','Error! Please try again later!'));
+        }
+
+        return $this->render('password', ['model'=>$model]);
+    }
+
+    /**
+     * @return string
+     */
     public function actionIndex()
     {
-        $this->layout = 'account';
+
         $model=Yii::$app->user->identity;
+        $model->setScenario('update');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //$this->refresh();
+            return $this->redirect(['index', 'success'=>true]);
+        }
+
+        if(Yii::$app->request->get('success')){
             Yii::$app->session->setFlash('success', 'Profile updated successfully');
         }
 

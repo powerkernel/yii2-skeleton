@@ -1,5 +1,7 @@
 <?php
+use common\Core;
 use modernkernel\fontawesome\Icon;
+use yii\bootstrap\Nav;
 
 ?>
 <header class="main-header">
@@ -15,15 +17,43 @@ use modernkernel\fontawesome\Icon;
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="<?= Yii::$app->homeUrl ?>">Home<span
-                                class="sr-only">(current)</span></a></li>
-                    <li><a href="<?= Yii::$app->urlManager->createUrl(['/site/about']) ?>">About</a></li>
-                    <li><a href="<?= Yii::$app->urlManager->createUrl(['/site/contact']) ?>">Contact</a></li>
-                </ul>
+                <?=
+                Nav::widget([
+                    'options' => ['class' => 'navbar-nav'],
+                    'items' => [
+                        ['label' => Yii::t('app','Home'), 'url' => ['/site/index']],
+                        ['label' => Yii::t('app','about'), 'url' => ['/site/about']],
+                    ],
+                ]);
+                ?>
             </div>
             <!-- /.navbar-collapse -->
             <!-- Navbar Right Menu -->
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <?php if(!Yii::$app->user->isGuest):?>
+                    <li class="<?= Core::checkMCA('', 'account', '*')?'active':'' ?>">
+                        <a href="<?= Yii::$app->urlManager->createUrl(['/account']) ?>">
+                            <?= Icon::widget(['icon' => 'user']) ?>
+                            <span><?= Yii::$app->user->identity->fullname ?></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= Yii::$app->urlManager->createUrl(['/site/logout']) ?>">
+                            <span><?= Yii::t('app', 'Logout') ?></span>
+                            <?= Icon::widget(['icon' => 'sign-out']) ?>
+                        </a>
+                    </li>
+                    <?php else:?>
+                        <li>
+                            <a href="<?= Yii::$app->urlManager->createUrl(Yii::$app->user->loginUrl) ?>">
+                                <?= Icon::widget(['icon' => 'key']) ?>
+                                <span><?= Yii::t('app', 'Login') ?></span>
+                            </a>
+                        </li>
+                    <?php endif;?>
+                </ul>
+            </div>
 
             <!-- /.navbar-custom-menu -->
         </div>

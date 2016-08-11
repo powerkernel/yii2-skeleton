@@ -38,7 +38,7 @@ class Account extends ActiveRecord implements IdentityInterface
     const STATUS_ACTIVE = 10;
 
     public $passwordText;
-    public $emailNewAccount=true;
+    public $emailNewAccount = true;
 
     /**
      * get status list
@@ -104,12 +104,19 @@ class Account extends ActiveRecord implements IdentityInterface
     {
         return [
             [['fullname', 'email'], 'required'],
+            [['fullname', 'email'], 'filter', 'filter' => 'trim'],
+
             [['fullname_changed', 'role', 'status', 'created_at', 'updated_at'], 'integer'],
+
             [['seo_name', 'fullname', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['language'], 'string', 'max' => 5],
-            [['timezone'], 'string', 'max' => 100],
 
+            [['timezone'], 'string', 'max' => 100],
+            [['timezone'], 'in', 'range' => timezone_identifiers_list()],
+
+            /* update action */
+            [['fullname', 'language', 'timezone'], 'required', 'on' => 'update'],
         ];
     }
 
@@ -166,9 +173,11 @@ class Account extends ActiveRecord implements IdentityInterface
     {
         parent::beforeSave($insert);
         if ($insert) {
-            $this->language=Yii::$app->language;
+            /* default timezone and language */
+            $this->language = Yii::$app->language;
             $this->status = self::STATUS_ACTIVE;
         }
+
         $this->seo_name = Core::generateSeoName($this->fullname);
         return true;
     }
@@ -183,10 +192,10 @@ class Account extends ActiveRecord implements IdentityInterface
     {
         parent::afterSave($insert, $changedAttributes);
         if ($insert) {
-            if($this->emailNewAccount){
+            if ($this->emailNewAccount) {
                 $this->sendMailNewUser();
             }
-            
+
             /* Admin */
             if (in_array($this->id, Yii::$app->params['settings']['admins'])) {
                 $auth = Yii::$app->authManager;
@@ -195,6 +204,33 @@ class Account extends ActiveRecord implements IdentityInterface
             }
         }
 
+        /* name changed ++ */
+        if (in_array('fullname', array_keys($changedAttributes))) {
+            /* if reach max, revert name */
+            if (!$this->canChangeName()) {
+                $cmd = Yii::$app->db->createCommand();
+                $cmd->update('{{%core_account}}', ['fullname' => $changedAttributes['fullname']], ['id' => $this->id]);
+                $cmd->execute();
+            } else {
+                /* count changed ++ */
+                $cmd = Yii::$app->db->createCommand();
+                $cmd->update('{{%core_account}}', ['fullname_changed' => $this->fullname_changed + 1], ['id' => $this->id]);
+                $cmd->execute();
+            }
+        }
+    }
+
+    /**
+     * check can change name
+     * @return bool
+     */
+    public function canChangeName()
+    {
+        $max = Setting::getValue('maxNameChange');
+        if ($this->fullname_changed < $max || $max == -1) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -401,7 +437,7 @@ class Account extends ActiveRecord implements IdentityInterface
         if (
             (in_array($this->id, Yii::$app->params['settings']['admins']) or $this->status == self::STATUS_DELETED)
             or
-            Yii::$app->user->id==$this->id
+            Yii::$app->user->id == $this->id
         ) {
             return false;
         }
@@ -435,5 +471,6 @@ class Account extends ActiveRecord implements IdentityInterface
         return false;
 
     }
+
 
 }

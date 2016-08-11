@@ -69,7 +69,10 @@ $this->title = 'My Yii Application';
         </div>
 
         <div class="php-test">
-
+            <?php
+            var_dump(timezone_identifiers_list());
+            //var_dump(mb_language());
+            ?>
         </div>
     </div>
 
