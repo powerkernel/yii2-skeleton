@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Account;
+use common\models\ChangeEmailForm;
 use common\models\ChangePasswordForm;
 use common\models\LoginForm;
 use frontend\models\SignupForm;
@@ -44,6 +45,7 @@ class AccountController extends Controller
 
 
     /**
+     * change email
      * @return string
      */
     public function actionPassword(){
@@ -51,12 +53,15 @@ class AccountController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->changePassword()) {
             Yii::$app->session->setFlash('success', Yii::t('app','Success! Your Password has been changed!'));
         }
-        else {
-            // hjvvyK
-            //Yii::$app->session->setFlash('error', Yii::t('app','Error! Please try again later!'));
-        }
-
         return $this->render('password', ['model'=>$model]);
+    }
+
+    public function actionEmail(){
+        $model=new ChangeEmailForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->changeEmail()) {
+            Yii::$app->session->setFlash('info', Yii::t('app','We sent a verification link to your new email address.'));
+        }
+        return $this->render('email', ['model'=>$model]);
     }
 
     /**

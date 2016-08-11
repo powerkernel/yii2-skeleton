@@ -1,8 +1,9 @@
 <?php
-use \yii\helpers\Html;
 
-/* @var $user \common\models\Account */
+/* @var $this yii\web\View */
+/* @var $user common\models\Account */
 
+$confirmLink = Yii::$app->urlManager->createAbsoluteUrl(['/account/email-confirm', 'token' => $user->change_email_token]);
 ?>
 <table class="body-wrap" style="background-color: #f6f6f6; width: 100%;" width="100%" bgcolor="#f6f6f6">
     <tr>
@@ -12,29 +13,33 @@ use \yii\helpers\Html;
                 <table class="main" width="100%" cellpadding="0" cellspacing="0" itemprop="action" itemscope="" itemtype="http://schema.org/ConfirmAction" style="background-color: #fff; border: 1px solid #e9e9e9; border-radius: 3px;" bgcolor="#fff">
                     <tr>
                         <td class="content-wrap" style="vertical-align: top; padding: 20px;" valign="top">
-                            <meta itemprop="name" content="Welcome Email">
+                            <meta itemprop="name" content="Confirm Email">
                             <table width="100%" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td class="content-block" style="vertical-align: top; padding: 0 0 20px;" valign="top">
-                                        <?= Yii::t('app', 'Hello {FULLNAME},', ['FULLNAME' => Html::encode($user->fullname)]) ?>
+                                        <?= Yii::t('app', 'Hello {USERNAME},', ['USERNAME' => $user->fullname]) ?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="content-block" style="vertical-align: top; padding: 0 0 20px;" valign="top">
-                                        <?= Yii::t('app', 'Thank you for registering with {APPNAME}. Please note details of your account:', ['APPNAME' => Html::encode(Html::encode(\Yii::$app->name))]) ?>
+                                        <?= Yii::t('app', 'You are requesting to change your email address at {APPNAME}:', ['APPNAME' => Yii::$app->name]) ?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="content-block" style="vertical-align: top; padding: 0 0 20px;" valign="top">
-                                        <?= Yii::t('app', 'Email: {EMAIL}', ['EMAIL' => Html::encode($user->email)]) ?>
-                                        <br>
-                                        <?= Yii::t('app', 'Password: {PASSWORD}', ['PASSWORD' => Html::encode($user->passwordText)]) ?>
-                                        <br>
+                                        <?= Yii::t('app', 'To confirm, just click the button below:') ?>
                                     </td>
                                 </tr>
+
+
                                 <tr>
                                     <td class="content-block" itemprop="handler" itemscope="" itemtype="http://schema.org/HttpActionHandler" style="vertical-align: top; padding: 0 0 20px;" valign="top">
-                                        <a href="<?= Yii::$app->urlManager->createAbsoluteUrl(Yii::$app->user->loginUrl) ?>" class="btn-primary" itemprop="url" style="font-weight: bold; color: #FFF; background-color: #348eda; border: solid #348eda; border-width: 10px 20px; line-height: 2em; text-decoration: none; text-align: center; cursor: pointer; display: inline-block; border-radius: 5px; text-transform: capitalize;"><?= Yii::t('app', 'Login Now') ?></a>
+                                        <a href="<?= $confirmLink ?>" class="btn-primary" itemprop="url" style="font-weight: bold; color: #FFF; background-color: #348eda; border: solid #348eda; border-width: 10px 20px; line-height: 2em; text-decoration: none; text-align: center; cursor: pointer; display: inline-block; border-radius: 5px; text-transform: capitalize;"><?= Yii::t('app', 'Confirm') ?></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="content-block" style="vertical-align: top; padding: 0 0 20px;" valign="top">
+                                        <?= Yii::t('app', 'If you did not request this action, please ignore this email.') ?>
                                     </td>
                                 </tr>
                             </table>
@@ -47,4 +52,3 @@ use \yii\helpers\Html;
         <td style="vertical-align: top;" valign="top"></td>
     </tr>
 </table>
-

@@ -151,7 +151,7 @@ class Account extends ActiveRecord implements IdentityInterface
     {
         $this->passwordText = $password;
         if ($this->passwordText === null) {
-            $this->passwordText = Yii::$app->security->generateRandomString(Yii::$app->params['account']['minPasswordLength']);
+            $this->passwordText = Yii::$app->security->generateRandomString(9);
         }
         $this->password_hash = Yii::$app->security->generatePasswordHash($this->passwordText);
     }
@@ -239,9 +239,9 @@ class Account extends ActiveRecord implements IdentityInterface
      */
     protected function sendMailNewUser()
     {
-        $subject = Yii::t('app', 'New account at {APPNAME}', ['APPNAME' => Yii::$app->name]);
+        $subject = Yii::t('app', 'Welcome to {APP_NAME}', ['APP_NAME' => Yii::$app->name]);
         return \Yii::$app->mailer->compose('newUser', ['user' => $this])
-            ->setFrom([\Yii::$app->params['settings']['supportEmail'] => Yii::$app->name])
+            ->setFrom([Setting::getValue('outgoingMail') => Yii::$app->name])
             ->setTo($this->email)
             ->setSubject($subject)
             ->send();
@@ -255,7 +255,7 @@ class Account extends ActiveRecord implements IdentityInterface
     {
         $subject = Yii::t('app', 'Your password has been changed');
         return \Yii::$app->mailer->compose('password', ['user' => $this])
-            ->setFrom([\Yii::$app->params['settings']['supportEmail'] => \Yii::$app->name])
+            ->setFrom([Setting::getValue('outgoingMail') => \Yii::$app->name])
             ->setTo($this->email)
             ->setSubject($subject)
             ->send();
@@ -354,7 +354,7 @@ class Account extends ActiveRecord implements IdentityInterface
         if (empty($token)) {
             return false;
         }
-        $expire = Yii::$app->params['account']['tokenExpire'];
+        $expire = 3600;//Yii::$app->params['account']['tokenExpire'];
         $parts = explode('_', $token);
         $timestamp = (int)end($parts);
         return $timestamp + $expire >= time();
@@ -403,7 +403,7 @@ class Account extends ActiveRecord implements IdentityInterface
         if (empty($token)) {
             return false;
         }
-        $expire = Yii::$app->params['account']['tokenExpire'];
+        $expire = 3600;//Yii::$app->params['account']['tokenExpire'];
         $parts = explode('_', $token);
         $timestamp = (int)end($parts);
         return $timestamp + $expire >= time();
@@ -434,13 +434,13 @@ class Account extends ActiveRecord implements IdentityInterface
     public function canDelete()
     {
 
-        if (
-            (in_array($this->id, Yii::$app->params['settings']['admins']) or $this->status == self::STATUS_DELETED)
-            or
-            Yii::$app->user->id == $this->id
-        ) {
-            return false;
-        }
+//        if (
+//            (in_array($this->id, Yii::$app->params['settings']['admins']) or $this->status == self::STATUS_DELETED)
+//            or
+//            Yii::$app->user->id == $this->id
+//        ) {
+//            return false;
+//        }
         return true;
     }
 
@@ -450,9 +450,9 @@ class Account extends ActiveRecord implements IdentityInterface
      */
     public function canChangePassword()
     {
-        if (in_array($this->id, Yii::$app->params['settings']['admins'])) {
-            return false;
-        }
+//        if (in_array($this->id, Yii::$app->params['settings']['admins'])) {
+//            return false;
+//        }
         return true;
     }
 

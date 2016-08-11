@@ -24,9 +24,9 @@ use \yii\helpers\Html;
                                 <tr>
                                     <td class="content-block">
                                         <?= Yii::$app->getModule('account')->t('Email: {EMAIL}', ['EMAIL' => Html::encode($user->email)]) ?>
-                                        <br/>
+                                        <br>
                                         <?= Yii::$app->getModule('account')->t('Password: {PASSWORD}', ['PASSWORD' => Html::encode($user->passwordText)]) ?>
-                                        <br/>
+                                        <br>
                                     </td>
                                 </tr>
                             </table>
