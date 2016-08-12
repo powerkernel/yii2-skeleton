@@ -6,6 +6,8 @@ use common\models\Account;
 use common\models\ChangeEmailForm;
 use common\models\ChangePasswordForm;
 use common\models\LoginForm;
+use frontend\models\PasswordResetRequestForm;
+use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use Yii;
 use yii\filters\AccessControl;
@@ -29,7 +31,7 @@ class AccountController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['signup', 'login'],
+                        'actions' => ['signup', 'login', 'reset', 'reset-confirm'],
                         'allow' => true,
                     ],
                     [
@@ -48,24 +50,26 @@ class AccountController extends Controller
      * change email
      * @return string
      */
-    public function actionPassword(){
-        $model=new ChangePasswordForm();
+    public function actionPassword()
+    {
+        $model = new ChangePasswordForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->changePassword()) {
-            Yii::$app->session->setFlash('success', Yii::t('app','Success! Your Password has been changed!'));
+            Yii::$app->session->setFlash('success', Yii::t('app', 'Success! Your Password has been changed!'));
         }
-        return $this->render('password', ['model'=>$model]);
+        return $this->render('password', ['model' => $model]);
     }
 
     /**
      * change email
      * @return string
      */
-    public function actionEmail(){
-        $model=new ChangeEmailForm();
+    public function actionEmail()
+    {
+        $model = new ChangeEmailForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->changeEmail()) {
-            Yii::$app->session->setFlash('info', Yii::t('app','We sent a verification link to your new email address.'));
+            Yii::$app->session->setFlash('info', Yii::t('app', 'We sent a verification link to your new email address.'));
         }
-        return $this->render('email', ['model'=>$model]);
+        return $this->render('email', ['model' => $model]);
     }
 
 
@@ -73,20 +77,18 @@ class AccountController extends Controller
      * @param $token
      * @return \yii\web\Response
      */
-    public function actionEmailConfirm($token){
-        $user=Yii::$app->user->identity;
-        if (Account::isChangeEmailTokenValid($token)==false || $user->change_email_token!=$token) {
+    public function actionEmailConfirm($token)
+    {
+        $user = Yii::$app->user->identity;
+        if (Account::isChangeEmailTokenValid($token) == false || $user->change_email_token != $token) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'Invalid or expired token.'));
-        }
-        else {
-            $user->email=$user->new_email;
-            $user->new_email=null;
+        } else {
+            $user->email = $user->new_email;
+            $user->new_email = null;
             $user->removeChangeEmailToken();
-            if($user->save())
-            {
+            if ($user->save()) {
                 Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Email successfully changed.'));
-            }
-            else {
+            } else {
                 Yii::$app->getSession()->setFlash('error', Yii::t('app', 'Sorry, something went wrong. Please try again later.'));
             }
         }
@@ -99,18 +101,18 @@ class AccountController extends Controller
     public function actionIndex()
     {
 
-        $model=Yii::$app->user->identity;
+        $model = Yii::$app->user->identity;
         $model->setScenario('update');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index', 'success'=>true]);
+            return $this->redirect(['index', 'success' => true]);
         }
 
-        if(Yii::$app->request->get('success')){
+        if (Yii::$app->request->get('success')) {
             Yii::$app->session->setFlash('success', 'Profile updated successfully');
         }
 
-        return $this->render('index', ['model'=>$model]);
+        return $this->render('index', ['model' => $model]);
     }
 
     /**
@@ -119,7 +121,7 @@ class AccountController extends Controller
      */
     public function actionSignup()
     {
-        $this->layout='main';
+        $this->layout = 'main';
         $model = new SignupForm();
         if (!Yii::$app->params['account']['registrationDisabled']) {
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -147,7 +149,7 @@ class AccountController extends Controller
      */
     public function actionLogin()
     {
-        $this->layout='login';
+        $this->layout = 'login';
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
@@ -161,6 +163,52 @@ class AccountController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    /**
+     * reset password
+     * @return string|\yii\web\Response
+     */
+    public function actionReset()
+    {
+        $this->layout = 'login';
+        $model = new PasswordResetRequestForm();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->sendEmail()) {
+                Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Check your email for further instructions.'));
+                return $this->goBack();
+            } else {
+                Yii::$app->getSession()->setFlash('error', Yii::t('app', 'Sorry, we are unable to reset password for email provided.'));
+            }
+        }
+
+        return $this->render('reset', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * set new password
+     * @param $token
+     * @return string|\yii\web\Response
+     */
+    public function actionResetConfirm($token)
+    {
+        $this->layout = 'login';
+        $model = new ResetPasswordForm();
+        $account = Account::findByPasswordResetToken($token);
+        if ($account) {
+            if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->setPassword($account)) {
+                Yii::$app->getSession()->setFlash('success', Yii::t('app', 'New password was saved.'));
+                return $this->redirect(['/account/login']);
+            }
+        }
+
+
+        return $this->render('reset-confirm', [
+            'model' => $model,
+            'account' => $account
+        ]);
     }
 
 

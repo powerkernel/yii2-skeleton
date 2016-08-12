@@ -10,14 +10,18 @@ use yii\data\ActiveDataProvider;
  */
 class AccountSearch extends Account
 {
+
+    //public $created_at_picker;
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'fullname_changed', 'email_verified', 'role', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'fullname_changed', 'email_verified', 'role', 'status'], 'integer'],
             [['seo_name', 'fullname', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'new_email', 'change_email_token', 'language', 'timezone'], 'safe'],
+            [['created_at'], 'safe']
         ];
     }
 
@@ -63,8 +67,9 @@ class AccountSearch extends Account
             'email_verified' => $this->email_verified,
             'role' => $this->role,
             'status' => $this->status,
-            'created_at' => $this->created_at,
+            //'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'DATE(FROM_UNIXTIME(`created_at`))' => $this->created_at,
         ]);
 
         $query->andFilterWhere(['like', 'seo_name', $this->seo_name])

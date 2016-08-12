@@ -1,7 +1,9 @@
 <?php
 
+use common\models\Account;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\jui\DatePicker;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
@@ -71,9 +73,9 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                     // 'language',
                     // 'timezone',
                     //'status',
-                    'created_at:date',
+                    ['attribute' => 'created_at', 'value' => 'created_at', 'format' => 'date', 'filter' => DatePicker::widget(['model' => $searchModel, 'attribute' => 'created_at', 'dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']])],
                     // 'updated_at',
-                    //['attribute' => 'status', 'value' => function ($model){return $model->statusText;}, 'filter'=>''],
+                    ['attribute' => 'status', 'value' => function ($model){return $model->statusText;}, 'filter'=> Account::getStatusOption()],
                     ['class' => 'yii\grid\ActionColumn'],
                 ],
             ]); ?>

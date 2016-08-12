@@ -1,5 +1,8 @@
 <?php
 
+use common\Core;
+use common\models\Account;
+use conquer\select2\Select2Widget;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -16,27 +19,18 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'fullname')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'fullname_changed')->textInput() ?>
-
-    <?= $form->field($model, 'auth_key')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'password_hash')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'password_reset_token')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'role')->textInput() ?>
 
     <?= $form->field($model, 'language')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'timezone')->textInput(['maxlength' => true]) ?>
+    <?=
+    $form->field($model, 'timezone')->widget(Select2Widget::className(), [
+        'bootstrap'=>false,
+        'items'=>Core::getTimezoneList(),
+    ])
+    ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+    <?= $form->field($model, 'status')->dropDownList(Account::getStatusOption()) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

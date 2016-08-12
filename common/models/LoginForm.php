@@ -53,6 +53,9 @@ class LoginForm extends Model
             if (!$account || !$account->validatePassword($this->password)) {
                 $this->addError($attribute, Yii::t('app', 'Incorrect email or password.'));
             }
+            else if($account->status==Account::STATUS_SUSPENDED){
+                $this->addError($attribute, Yii::t('app', 'Your account has been suspended.'));
+            }
         }
     }
 

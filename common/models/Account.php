@@ -34,8 +34,9 @@ use yii\web\IdentityInterface;
  */
 class Account extends ActiveRecord implements IdentityInterface
 {
-    const STATUS_DELETED = 0;
+
     const STATUS_ACTIVE = 10;
+    const STATUS_SUSPENDED = 20;
 
     public $passwordText;
     public $emailNewAccount = true;
@@ -49,7 +50,7 @@ class Account extends ActiveRecord implements IdentityInterface
     {
         $option = [
             self::STATUS_ACTIVE => Yii::t('app', 'Active'),
-            self::STATUS_DELETED => Yii::t('app', 'Deleted'),
+            self::STATUS_SUSPENDED => Yii::t('app', 'Suspended'),
         ];
         if (is_array($e))
             foreach ($e as $i)
@@ -70,8 +71,8 @@ class Account extends ActiveRecord implements IdentityInterface
             case self::STATUS_ACTIVE:
                 return Yii::t('app', 'Active');
                 break;
-            case self::STATUS_DELETED:
-                return Yii::t('app', 'Deleted');
+            case self::STATUS_SUSPENDED:
+                return Yii::t('app', 'Suspended');
                 break;
             default:
                 return Yii::t('app', 'Unknown');
@@ -171,15 +172,16 @@ class Account extends ActiveRecord implements IdentityInterface
      */
     public function beforeSave($insert)
     {
-        parent::beforeSave($insert);
+
         if ($insert) {
             /* default timezone and language */
             $this->language = Yii::$app->language;
             $this->status = self::STATUS_ACTIVE;
+            $this->timezone = Yii::$app->timeZone;
         }
 
         $this->seo_name = Core::generateSeoName($this->fullname);
-        return true;
+        return parent::beforeSave($insert);
     }
 
 
@@ -247,19 +249,7 @@ class Account extends ActiveRecord implements IdentityInterface
             ->send();
     }
 
-    /**
-     * Send password email
-     * @return bool
-     */
-    public function sendPassword()
-    {
-        $subject = Yii::t('app', 'Your password has been changed');
-        return \Yii::$app->mailer->compose('password', ['user' => $this])
-            ->setFrom([Setting::getValue('outgoingMail') => \Yii::$app->name])
-            ->setTo($this->email)
-            ->setSubject($subject)
-            ->send();
-    }
+
 
     /**
      * Validates password
@@ -281,7 +271,7 @@ class Account extends ActiveRecord implements IdentityInterface
      */
     public static function findByEmail($email)
     {
-        return static::findOne(['email' => $email, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['email' => $email]);
     }
 
 
@@ -463,7 +453,7 @@ class Account extends ActiveRecord implements IdentityInterface
     public function deleteUser()
     {
         if ($this->canDelete()) {
-            $this->status = Account::STATUS_DELETED;
+            $this->status = Account::STATUS_SUSPENDED;
             $this->save();
             return true;
         }
