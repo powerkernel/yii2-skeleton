@@ -3,6 +3,11 @@ use \yii\helpers\Html;
 
 /* @var $user \common\models\Account */
 
+$loginUrl=Yii::$app->urlManager->createAbsoluteUrl(Yii::$app->user->loginUrl);
+if(Yii::$app->id=='app-backend'){
+    $loginUrl=Yii::$app->urlManagerFrontend->createAbsoluteUrl(['/account/login']);
+}
+
 ?>
 <table class="body-wrap" style="background-color: #f6f6f6; width: 100%;" width="100%" bgcolor="#f6f6f6">
     <tr>
@@ -34,7 +39,7 @@ use \yii\helpers\Html;
                                 </tr>
                                 <tr>
                                     <td class="content-block" itemprop="handler" itemscope="" itemtype="http://schema.org/HttpActionHandler" style="vertical-align: top; padding: 0 0 20px;" valign="top">
-                                        <a href="<?= Yii::$app->urlManager->createAbsoluteUrl(Yii::$app->user->loginUrl) ?>" class="btn-primary" itemprop="url" style="font-weight: bold; color: #FFF; background-color: #348eda; border: solid #348eda; border-width: 10px 20px; line-height: 2em; text-decoration: none; text-align: center; cursor: pointer; display: inline-block; border-radius: 5px; text-transform: capitalize;"><?= Yii::t('app', 'Login Now') ?></a>
+                                        <a href="<?= $loginUrl ?>" class="btn-primary" itemprop="url" style="font-weight: bold; color: #FFF; background-color: #348eda; border: solid #348eda; border-width: 10px 20px; line-height: 2em; text-decoration: none; text-align: center; cursor: pointer; display: inline-block; border-radius: 5px; text-transform: capitalize;"><?= Yii::t('app', 'Login Now') ?></a>
                                     </td>
                                 </tr>
                             </table>

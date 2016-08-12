@@ -3,6 +3,11 @@ use \yii\helpers\Html;
 
 /* @var $user \common\models\Account */
 
+$loginUrl=Yii::$app->urlManager->createAbsoluteUrl(Yii::$app->user->loginUrl);
+if(Yii::$app->id=='app-backend'){
+    $loginUrl=Yii::$app->urlManagerFrontend->createAbsoluteUrl(['/account/login']);
+}
+
 ?>
 <table class="body-wrap">
     <tr>
@@ -34,7 +39,7 @@ use \yii\helpers\Html;
                                 </tr>
                                 <tr>
                                     <td class="content-block" itemprop="handler" itemscope="" itemtype="http://schema.org/HttpActionHandler">
-                                        <a href="<?= Yii::$app->urlManager->createAbsoluteUrl(Yii::$app->user->loginUrl) ?>" class="btn-primary" itemprop="url"><?= Yii::t('app', 'Login Now') ?></a>
+                                        <a href="<?= $loginUrl ?>" class="btn-primary" itemprop="url"><?= Yii::t('app', 'Login Now') ?></a>
                                     </td>
                                 </tr>
                             </table>

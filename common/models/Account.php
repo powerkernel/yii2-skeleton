@@ -117,7 +117,8 @@ class Account extends ActiveRecord implements IdentityInterface
             [['timezone'], 'in', 'range' => timezone_identifiers_list()],
 
             /* update action */
-            [['fullname', 'language', 'timezone'], 'required', 'on' => 'update'],
+            [['fullname', 'email', 'language', 'timezone', 'status'], 'required', 'on' => ['update']],
+            [['fullname', 'email', 'language', 'timezone'], 'required', 'on' => 'create'],
         ];
     }
 
@@ -174,10 +175,13 @@ class Account extends ActiveRecord implements IdentityInterface
     {
 
         if ($insert) {
+            $this->setPassword();
+            $this->generateAuthKey();
+
             /* default timezone and language */
-            $this->language = Yii::$app->language;
+            $this->language = empty($this->language)?Yii::$app->language:$this->language;
             $this->status = self::STATUS_ACTIVE;
-            $this->timezone = Yii::$app->timeZone;
+            $this->timezone = empty($this->timezone)?Yii::$app->timeZone:$this->timezone;
         }
 
         $this->seo_name = Core::generateSeoName($this->fullname);
@@ -424,13 +428,13 @@ class Account extends ActiveRecord implements IdentityInterface
     public function canDelete()
     {
 
-//        if (
-//            (in_array($this->id, Yii::$app->params['settings']['admins']) or $this->status == self::STATUS_DELETED)
-//            or
-//            Yii::$app->user->id == $this->id
-//        ) {
-//            return false;
-//        }
+        if (
+            (in_array($this->id, Yii::$app->params['rootAdmin']))
+            or
+            Yii::$app->user->id == $this->id
+        ) {
+            return false;
+        }
         return true;
     }
 
@@ -457,7 +461,7 @@ class Account extends ActiveRecord implements IdentityInterface
             $this->save();
             return true;
         }
-        Yii::$app->session->setFlash('error', Yii::t('app', 'Administrator account cannot be deleted.'));
+        Yii::$app->session->setFlash('error', Yii::t('app', 'Account cannot be deleted.'));
         return false;
 
     }

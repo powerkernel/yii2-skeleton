@@ -6,7 +6,6 @@ use common\models\LoginForm;
 use Yii;
 use common\models\Account;
 use common\models\AccountSearch;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -92,6 +91,9 @@ class AccountController extends BackendController
     public function actionCreate()
     {
         $model = new Account();
+        $model->setScenario('create');
+        $model->language=Yii::$app->language;
+        $model->timezone=Yii::$app->timeZone;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -111,6 +113,7 @@ class AccountController extends BackendController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->setScenario('update');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

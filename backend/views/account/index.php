@@ -76,7 +76,20 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                     ['attribute' => 'created_at', 'value' => 'created_at', 'format' => 'date', 'filter' => DatePicker::widget(['model' => $searchModel, 'attribute' => 'created_at', 'dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']])],
                     // 'updated_at',
                     ['attribute' => 'status', 'value' => function ($model){return $model->statusText;}, 'filter'=> Account::getStatusOption()],
-                    ['class' => 'yii\grid\ActionColumn'],
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'buttons' => [
+                            'delete' => function ($url, $model, $key) {
+                                $delete = Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+                                    'title' => Yii::t('yii', 'Delete'),
+                                    'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                                    'data-method' => 'post',
+                                ]);
+                                unset($key);
+                                return $model->canDelete() ? $delete : '';
+                            }
+                        ]
+                    ],
                 ],
             ]); ?>
             </div>

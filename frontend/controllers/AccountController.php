@@ -222,8 +222,6 @@ class AccountController extends Controller
         $user = new Account();
         $user->fullname = $u['name'];
         $user->email = $u['email'];
-        $user->setPassword();
-        $user->generateAuthKey();
         return $user->save();
     }
 
