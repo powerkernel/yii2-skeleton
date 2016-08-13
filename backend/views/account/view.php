@@ -83,6 +83,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <p class="">
                 <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+
+                <?= Html::a(Yii::t('app', 'Send New Password'), ['new-password', 'id' => $model->id], [
+                    'class' => 'btn btn-info',
+                    'data' => [
+                        'confirm' => Yii::t('app', 'Send new password to this user?'),
+                        'method' => 'post',
+                    ],
+                ]) ?>
+
                 <?php if($model->canSuspend()):?>
                 <?= Html::a(Yii::t('app', 'Suspend'), ['suspend', 'id' => $model->id], [
                     'class' => 'btn btn-danger',

@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\LoginForm;
+use common\models\Setting;
 use Yii;
 use common\models\Account;
 use common\models\AccountSearch;
@@ -27,6 +28,8 @@ class AccountController extends BackendController
                 'actions' => [
                     'delete' => ['POST'],
                     'suspend' => ['POST'],
+                    'unsuspend' => ['POST'],
+                    'new-password' => ['POST'],
                 ],
             ],
         ]);
@@ -157,9 +160,39 @@ class AccountController extends BackendController
         $model = $this->findModel($id);
         $model->status = Account::STATUS_ACTIVE;
         if ($model->save()) {
-            Yii::$app->session->setFlash('success', 'Done! Account is now activated.');
+            Yii::$app->session->setFlash('success', Yii::t('app', 'Done! Account is now activated.'));
         } else {
-            Yii::$app->session->setFlash('error', 'Sorry, something went wrong. Please try again later.');
+            Yii::$app->session->setFlash('error', Yii::t('app', 'Sorry, something went wrong. Please try again later.'));
+        }
+        return $this->redirect(['view', 'id' => $model->id]);
+    }
+
+
+    /**
+     * send new password to user
+     * @param $id
+     * @return bool|\yii\web\Response
+     */
+    public function actionNewPassword($id)
+    {
+        $model = $this->findModel($id);
+        $model->setPassword();
+        if ($model->save()) {
+            /* send mail */
+            $subject = Yii::t('app', '[{APP_NAME}] Password changed', ['APP_NAME' => Yii::$app->name]);
+            $mailSent = Yii::$app->mailer->compose('passwordChanged', ['user' => $model])
+                ->setFrom([Setting::getValue('outgoingMail') => Yii::$app->name])
+                ->setTo($model->email)
+                ->setSubject($subject)
+                ->send();
+            if($mailSent){
+                Yii::$app->session->setFlash('success', Yii::t('app', 'New password has been sent.'));
+            }
+            else {
+                Yii::$app->session->setFlash('warning', Yii::t('app', 'New password set successfully ({PASS}). Error while sending email to user.', ['PASS'=>$model->passwordText]));
+            }
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'Sorry, something went wrong. Please try again later.'));
         }
         return $this->redirect(['view', 'id' => $model->id]);
     }
