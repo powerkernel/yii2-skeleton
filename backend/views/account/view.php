@@ -81,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]) ?>
             </div>
 
-            <p class="">
+            <p class="pull-left">
                 <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
 
                 <?= Html::a(Yii::t('app', 'Send New Password'), ['new-password', 'id' => $model->id], [
@@ -110,6 +110,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                     ]) ?>
                 <?php endif;?>
+            </p>
+            <p class="pull-right">
+                <?= Html::a(Yii::t('app', 'Login'), ['login-as', 'id' => $model->id], ['class' => 'btn btn-warning', 'target'=>'_blank']) ?>
             </p>
         </div>
     </div>

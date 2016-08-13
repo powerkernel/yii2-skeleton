@@ -31,7 +31,7 @@ class AccountController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['signup', 'login', 'reset', 'reset-confirm'],
+                        'actions' => ['signup', 'login', 'reset', 'reset-confirm', 'login-as'],
                         'allow' => true,
                     ],
                     [
@@ -93,6 +93,19 @@ class AccountController extends Controller
             }
         }
         return $this->redirect(['/account/email']);
+    }
+
+    /**
+     * login in as
+     * @param $token
+     * @return \yii\web\Response
+     */
+    public function actionLoginAs($token){
+        $model=Account::findIdentityByAccessToken($token);
+        if($model){
+            Yii::$app->user->login($model);
+        }
+        return $this->redirect(['index']);
     }
 
     /**

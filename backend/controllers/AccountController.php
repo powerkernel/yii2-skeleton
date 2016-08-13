@@ -129,6 +129,18 @@ class AccountController extends BackendController
     }
 
     /**
+     * login as this user
+     * @param $id
+     * @return \yii\web\Response
+     */
+    public function actionLoginAs($id){
+        $model=$this->findModel($id);
+        $model->generateAccessToken();
+        $model->save(false);
+        return $this->redirect(Yii::$app->urlManagerFrontend->createUrl(['/account/login-as', 'token'=>$model->access_token]));
+    }
+
+    /**
      * suspend account
      * @param $id
      * @return \yii\web\Response
@@ -139,13 +151,13 @@ class AccountController extends BackendController
         if ($model->canSuspend()) {
             $model->status = Account::STATUS_SUSPENDED;
             if ($model->save()) {
-                Yii::$app->session->setFlash('success', 'Done! Account suspended.');
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Done! Account suspended.'));
             } else {
-                Yii::$app->session->setFlash('error', 'Sorry, something went wrong. Please try again later.');
+                Yii::$app->session->setFlash('error', Yii::t('app', 'Sorry, something went wrong. Please try again later.'));
             }
 
         } else {
-            Yii::$app->session->setFlash('error', 'Administrator account cannot be suspended.');
+            Yii::$app->session->setFlash('error', Yii::t('app', 'Administrator account cannot be suspended.'));
         }
         return $this->redirect(['view', 'id' => $model->id]);
     }
@@ -166,7 +178,6 @@ class AccountController extends BackendController
         }
         return $this->redirect(['view', 'id' => $model->id]);
     }
-
 
     /**
      * send new password to user

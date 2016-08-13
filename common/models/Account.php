@@ -17,6 +17,7 @@ use yii\web\IdentityInterface;
  * @property string $fullname
  * @property integer $fullname_changed
  * @property string $auth_key
+ * @property string $access_token
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $email
@@ -109,7 +110,7 @@ class Account extends ActiveRecord implements IdentityInterface
 
             [['fullname_changed', 'role', 'status', 'created_at', 'updated_at'], 'integer'],
 
-            [['seo_name', 'fullname', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
+            [['seo_name', 'fullname', 'password_hash', 'password_reset_token', 'access_token', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['language'], 'string', 'max' => 5],
 
@@ -118,6 +119,7 @@ class Account extends ActiveRecord implements IdentityInterface
 
             /* update action */
             [['fullname', 'email', 'language', 'timezone'], 'required', 'on' => ['create','update']],
+            [['fullname', 'email', 'language', 'timezone'], 'required', 'on' => 'create'],
         ];
     }
 
@@ -291,8 +293,36 @@ class Account extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+        if (!static::isAccessTokenValid($token)) {
+            return null;
+        }
+        return static::findOne(['access_token' => $token]);
     }
+
+    /**
+     * check access token
+     * @param $token
+     * @return bool
+     */
+    public static function isAccessTokenValid($token)
+    {
+        if (empty($token)) {
+            return false;
+        }
+        $expire = 3600;//Yii::$app->params['account']['tokenExpire'];
+        $parts = explode('_', $token);
+        $timestamp = (int)end($parts);
+        return $timestamp + $expire >= time();
+    }
+
+    /**
+     * Generates new change email token
+     */
+    public function generateAccessToken()
+    {
+        $this->access_token = Yii::$app->security->generateRandomString() . '_' . time();
+    }
+
 
     /**
      * @inheritdoc
