@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Account;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -82,13 +83,24 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <p class="">
                 <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-                <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+                <?php if($model->canSuspend()):?>
+                <?= Html::a(Yii::t('app', 'Suspend'), ['suspend', 'id' => $model->id], [
                     'class' => 'btn btn-danger',
                     'data' => [
-                        'confirm' => Yii::t('app', 'Are you sure you want to delete this user?'),
+                        'confirm' => Yii::t('app', 'Are you sure you want to suspend this user?'),
                         'method' => 'post',
                     ],
                 ]) ?>
+                <?php endif;?>
+                <?php if($model->status== Account::STATUS_SUSPENDED):?>
+                    <?= Html::a(Yii::t('app', 'Unsuspend'), ['unsuspend', 'id' => $model->id], [
+                        'class' => 'btn btn-success',
+                        'data' => [
+                            'confirm' => Yii::t('app', 'Are you sure you want to reactivate this user?'),
+                            'method' => 'post',
+                        ],
+                    ]) ?>
+                <?php endif;?>
             </p>
         </div>
     </div>

@@ -30,10 +30,6 @@ use yii\widgets\ActiveForm;
     ])
     ?>
 
-    <?php if(!$model->isNewRecord):?>
-    <?= $form->field($model, 'status')->dropDownList(Account::getStatusOption()) ?>
-    <?php endif;?>
-
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

@@ -117,8 +117,7 @@ class Account extends ActiveRecord implements IdentityInterface
             [['timezone'], 'in', 'range' => timezone_identifiers_list()],
 
             /* update action */
-            [['fullname', 'email', 'language', 'timezone', 'status'], 'required', 'on' => ['update']],
-            [['fullname', 'email', 'language', 'timezone'], 'required', 'on' => 'create'],
+            [['fullname', 'email', 'language', 'timezone'], 'required', 'on' => ['create','update']],
         ];
     }
 
@@ -422,16 +421,18 @@ class Account extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * can delete user
+     * account can be suspended?
      * @return bool
      */
-    public function canDelete()
+    public function canSuspend()
     {
 
         if (
             (in_array($this->id, Yii::$app->params['rootAdmin']))
             or
             Yii::$app->user->id == $this->id
+            or
+            $this->status==self::STATUS_SUSPENDED
         ) {
             return false;
         }
@@ -450,21 +451,7 @@ class Account extends ActiveRecord implements IdentityInterface
         return true;
     }
 
-    /**
-     * delete user
-     * @return bool
-     */
-    public function deleteUser()
-    {
-        if ($this->canDelete()) {
-            $this->status = Account::STATUS_SUSPENDED;
-            $this->save();
-            return true;
-        }
-        Yii::$app->session->setFlash('error', Yii::t('app', 'Account cannot be deleted.'));
-        return false;
 
-    }
 
 
 }

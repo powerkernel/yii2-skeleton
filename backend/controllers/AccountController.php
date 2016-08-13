@@ -26,6 +26,7 @@ class AccountController extends BackendController
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    'suspend' => ['POST'],
                 ],
             ],
         ]);
@@ -92,8 +93,8 @@ class AccountController extends BackendController
     {
         $model = new Account();
         $model->setScenario('create');
-        $model->language=Yii::$app->language;
-        $model->timezone=Yii::$app->timeZone;
+        $model->language = Yii::$app->language;
+        $model->timezone = Yii::$app->timeZone;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -122,6 +123,45 @@ class AccountController extends BackendController
                 'model' => $model,
             ]);
         }
+    }
+
+    /**
+     * suspend account
+     * @param $id
+     * @return \yii\web\Response
+     */
+    public function actionSuspend($id)
+    {
+        $model = $this->findModel($id);
+        if ($model->canSuspend()) {
+            $model->status = Account::STATUS_SUSPENDED;
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', 'Done! Account suspended.');
+            } else {
+                Yii::$app->session->setFlash('error', 'Sorry, something went wrong. Please try again later.');
+            }
+
+        } else {
+            Yii::$app->session->setFlash('error', 'Administrator account cannot be suspended.');
+        }
+        return $this->redirect(['view', 'id' => $model->id]);
+    }
+
+    /**
+     * un-suspend account
+     * @param $id
+     * @return \yii\web\Response
+     */
+    public function actionUnsuspend($id)
+    {
+        $model = $this->findModel($id);
+        $model->status = Account::STATUS_ACTIVE;
+        if ($model->save()) {
+            Yii::$app->session->setFlash('success', 'Done! Account is now activated.');
+        } else {
+            Yii::$app->session->setFlash('error', 'Sorry, something went wrong. Please try again later.');
+        }
+        return $this->redirect(['view', 'id' => $model->id]);
     }
 
     /**
