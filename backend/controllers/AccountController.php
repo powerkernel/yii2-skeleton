@@ -8,7 +8,6 @@ use Yii;
 use common\models\Account;
 use common\models\AccountSearch;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * AccountController implements the CRUD actions for Account model.
@@ -19,21 +18,21 @@ class AccountController extends BackendController
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        $parent = parent::behaviors();
-        return array_merge($parent, [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                    'suspend' => ['POST'],
-                    'unsuspend' => ['POST'],
-                    'new-password' => ['POST'],
-                ],
-            ],
-        ]);
-    }
+//    public function behaviors()
+//    {
+//        $parent = parent::behaviors();
+//        return array_merge($parent, [
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'delete' => ['POST'],
+//                    'suspend' => ['POST'],
+//                    'unsuspend' => ['POST'],
+//                    'new-password' => ['POST'],
+//                ],
+//            ],
+//        ]);
+//    }
 
 
     /**
@@ -187,24 +186,32 @@ class AccountController extends BackendController
     public function actionNewPassword($id)
     {
         $model = $this->findModel($id);
-        $model->setPassword();
-        if ($model->save()) {
-            /* send mail */
-            $subject = Yii::t('app', '[{APP_NAME}] Password changed', ['APP_NAME' => Yii::$app->name]);
-            $mailSent = Yii::$app->mailer->compose('passwordChanged', ['user' => $model])
-                ->setFrom([Setting::getValue('outgoingMail') => Yii::$app->name])
-                ->setTo($model->email)
-                ->setSubject($subject)
-                ->send();
-            if($mailSent){
-                Yii::$app->session->setFlash('success', Yii::t('app', 'New password has been sent.'));
+        if($model->status!=Account::STATUS_SUSPENDED){
+            $model->setPassword();
+            if ($model->save()) {
+                /* send mail */
+                $subject = Yii::t('app', '[{APP_NAME}] Password changed', ['APP_NAME' => Yii::$app->name]);
+                $mailSent = Yii::$app->mailer->compose('passwordChanged', ['user' => $model])
+                    ->setFrom([Setting::getValue('outgoingMail') => Yii::$app->name])
+                    ->setTo($model->email)
+                    ->setSubject($subject)
+                    ->send();
+                if($mailSent){
+                    Yii::$app->session->setFlash('success', Yii::t('app', 'New password has been sent.'));
+                }
+                else {
+                    Yii::$app->session->setFlash('warning', Yii::t('app', 'New password set successfully ({PASS}). Error while sending email to user.', ['PASS'=>$model->passwordText]));
+                }
+            } else {
+                Yii::$app->session->setFlash('error', Yii::t('app', 'Sorry, something went wrong. Please try again later.'));
             }
-            else {
-                Yii::$app->session->setFlash('warning', Yii::t('app', 'New password set successfully ({PASS}). Error while sending email to user.', ['PASS'=>$model->passwordText]));
-            }
-        } else {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'Sorry, something went wrong. Please try again later.'));
         }
+        else {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'Before you can send the password, restore the suspended account.'));
+        }
+
+
+
         return $this->redirect(['view', 'id' => $model->id]);
     }
 

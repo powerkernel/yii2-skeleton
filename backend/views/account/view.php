@@ -84,20 +84,22 @@ $this->params['breadcrumbs'][] = $this->title;
             <p class="pull-left">
                 <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
 
+                <?php if($model->status!=Account::STATUS_SUSPENDED):?>
                 <?= Html::a(Yii::t('app', 'Send New Password'), ['new-password', 'id' => $model->id], [
                     'class' => 'btn btn-info',
                     'data' => [
                         'confirm' => Yii::t('app', 'Send new password to this user?'),
-                        'method' => 'post',
+                        //'method' => 'post',
                     ],
                 ]) ?>
+                <?php endif;?>
 
                 <?php if($model->canSuspend()):?>
                 <?= Html::a(Yii::t('app', 'Suspend'), ['suspend', 'id' => $model->id], [
                     'class' => 'btn btn-danger',
                     'data' => [
                         'confirm' => Yii::t('app', 'Are you sure you want to suspend this user?'),
-                        'method' => 'post',
+                        //'method' => 'post',
                     ],
                 ]) ?>
                 <?php endif;?>
@@ -106,14 +108,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         'class' => 'btn btn-success',
                         'data' => [
                             'confirm' => Yii::t('app', 'Are you sure you want to reactivate this user?'),
-                            'method' => 'post',
+                            //'method' => 'post',
                         ],
                     ]) ?>
                 <?php endif;?>
             </p>
+
+            <?php if($model->status!=Account::STATUS_SUSPENDED):?>
             <p class="pull-right">
                 <?= Html::a(Yii::t('app', 'Login'), ['login-as', 'id' => $model->id], ['class' => 'btn btn-warning', 'target'=>'_blank']) ?>
             </p>
+            <?php endif;?>
         </div>
     </div>
 </div>

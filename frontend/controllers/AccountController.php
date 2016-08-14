@@ -80,7 +80,7 @@ class AccountController extends Controller
     public function actionEmailConfirm($token)
     {
         $user = Yii::$app->user->identity;
-        if (Account::isChangeEmailTokenValid($token) == false || $user->change_email_token != $token) {
+        if (Account::isTokenValid($token) == false || $user->change_email_token != $token) {
             Yii::$app->session->setFlash('error', Yii::t('app', 'Invalid or expired token.'));
         } else {
             $user->email = $user->new_email;
@@ -100,11 +100,17 @@ class AccountController extends Controller
      * @param $token
      * @return \yii\web\Response
      */
-    public function actionLoginAs($token){
-        $model=Account::findIdentityByAccessToken($token);
-        if($model){
+    public function actionLoginAs($token)
+    {
+
+        $model = Account::findIdentityByAccessToken($token);
+        if ($model) {
+            $model->removeAccessToken();
+            $model->save();
             Yii::$app->user->login($model);
         }
+
+
         return $this->redirect(['index']);
     }
 

@@ -4,7 +4,6 @@ namespace common\models;
 
 use common\Core;
 use yii;
-use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
@@ -293,27 +292,13 @@ class Account extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        if (!static::isAccessTokenValid($token)) {
+        if (!static::isTokenValid($token)) {
             return null;
         }
         return static::findOne(['access_token' => $token]);
     }
 
-    /**
-     * check access token
-     * @param $token
-     * @return bool
-     */
-    public static function isAccessTokenValid($token)
-    {
-        if (empty($token)) {
-            return false;
-        }
-        $expire = 3600;//Yii::$app->params['account']['tokenExpire'];
-        $parts = explode('_', $token);
-        $timestamp = (int)end($parts);
-        return $timestamp + $expire >= time();
-    }
+
 
     /**
      * Generates new change email token
@@ -366,22 +351,7 @@ class Account extends ActiveRecord implements IdentityInterface
         ]);
     }
 
-    /**
-     * Finds out if password reset token is valid
-     *
-     * @param string $token password reset token
-     * @return boolean
-     */
-    public static function isPasswordResetTokenValid($token)
-    {
-        if (empty($token)) {
-            return false;
-        }
-        $expire = 3600;//Yii::$app->params['account']['tokenExpire'];
-        $parts = explode('_', $token);
-        $timestamp = (int)end($parts);
-        return $timestamp + $expire >= time();
-    }
+
 
     /**
      * Generates new password reset token
@@ -408,11 +378,18 @@ class Account extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Removes change email token
+     * Remove change email token
      */
     public function removeChangeEmailToken()
     {
         $this->change_email_token = null;
+    }
+
+    /**
+     * remove access token
+     */
+    public function removeAccessToken(){
+        $this->access_token=null;
     }
 
     /**
@@ -421,12 +398,12 @@ class Account extends ActiveRecord implements IdentityInterface
      * @param string $token change email token
      * @return boolean
      */
-    public static function isChangeEmailTokenValid($token)
+    public static function isTokenValid($token)
     {
         if (empty($token)) {
             return false;
         }
-        $expire = 3600;//Yii::$app->params['account']['tokenExpire'];
+        $expire = Setting::getValue('tokenExpiryTime');
         $parts = explode('_', $token);
         $timestamp = (int)end($parts);
         return $timestamp + $expire >= time();
@@ -469,17 +446,6 @@ class Account extends ActiveRecord implements IdentityInterface
         return true;
     }
 
-    /**
-     * is this user's password can be changed?
-     * @return bool
-     */
-    public function canChangePassword()
-    {
-//        if (in_array($this->id, Yii::$app->params['settings']['admins'])) {
-//            return false;
-//        }
-        return true;
-    }
 
 
 
