@@ -341,7 +341,7 @@ class Account extends ActiveRecord implements IdentityInterface
      */
     public static function findByPasswordResetToken($token)
     {
-        if (!static::isPasswordResetTokenValid($token)) {
+        if (!static::isTokenValid($token)) {
             return null;
         }
 
@@ -417,7 +417,7 @@ class Account extends ActiveRecord implements IdentityInterface
      */
     public static function findByChangeEmailToken($token)
     {
-        if (!static::isChangeEmailTokenValid($token)) {
+        if (!static::isTokenValid($token)) {
             return null;
         }
 

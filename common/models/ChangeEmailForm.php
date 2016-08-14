@@ -58,7 +58,7 @@ class ChangeEmailForm extends Model {
     public function changeEmail()
     {
         $user= Yii::$app->user->identity;
-        if (!Account::isChangeEmailTokenValid($user->change_email_token)) {
+        if (!Account::isTokenValid($user->change_email_token)) {
             $user->generateChangeEmailToken();
         }
 
@@ -73,6 +73,7 @@ class ChangeEmailForm extends Model {
                 ->setSubject($subject)
                 ->send();
         }
+
 
         return false;
     }

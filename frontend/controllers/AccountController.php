@@ -69,6 +69,7 @@ class AccountController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->changeEmail()) {
             Yii::$app->session->setFlash('info', Yii::t('app', 'We sent a verification link to your new email address.'));
         }
+
         return $this->render('email', ['model' => $model]);
     }
 

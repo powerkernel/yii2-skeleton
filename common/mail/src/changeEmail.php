@@ -10,10 +10,11 @@ $confirmLink = Yii::$app->urlManager->createAbsoluteUrl(['/account/email-confirm
         <td></td>
         <td class="container" width="600">
             <div class="content">
-                <table class="main" width="100%" cellpadding="0" cellspacing="0" itemprop="action" itemscope="" itemtype="http://schema.org/ConfirmAction">
+                <table class="main" width="100%" cellpadding="0" cellspacing="0" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/ViewAction">
                     <tr>
                         <td class="content-wrap">
-                            <meta itemprop="name" content="Confirm Email">
+                            <meta itemprop="name" content="Confirm Email" />
+                            <meta itemprop="description" content="Verify your new email address" />
                             <table width="100%" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td class="content-block">
@@ -33,8 +34,8 @@ $confirmLink = Yii::$app->urlManager->createAbsoluteUrl(['/account/email-confirm
 
 
                                 <tr>
-                                    <td class="content-block" itemprop="handler" itemscope="" itemtype="http://schema.org/HttpActionHandler">
-                                        <a href="<?= $confirmLink ?>" class="btn-primary" itemprop="url"><?= Yii::t('app', 'Confirm') ?></a>
+                                    <td class="content-block">
+                                        <a href="<?= $confirmLink ?>" class="btn-primary" itemprop="target"><?= Yii::t('app', 'Confirm') ?></a>
                                     </td>
                                 </tr>
                                 <tr>
