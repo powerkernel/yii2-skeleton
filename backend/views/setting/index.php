@@ -1,11 +1,17 @@
 <?php
 
+
+use common\models\Setting;
+use conquer\select2\Select2Widget;
+use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
-use yii\grid\GridView;
-use yii\widgets\Pjax;
+
+
 /* @var $this yii\web\View */
-/* @var $searchModel backend\models\SettingSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $model \yii\base\DynamicModel */
+/* @var $attributes [] */
+/* @var $tabs [] */
+/* @var $settings [] */
 
 $this->title = Yii::t('app', 'Settings');
 $keywords = '';
@@ -44,41 +50,40 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
 //$this->registerJs($js);
 //$css=file_get_contents(__DIR__.'/index.css');
 //$this->registerCss($css);
+//echo json_encode(\common\Core::getTimezoneList());
+//var_dump(json_decode('\common\Core::getTimezoneList()'));
 ?>
 <div class="setting-index">
-    <div class="box box-primary">
-        <div class="box-body">
+    <?php $form = ActiveForm::begin(); ?>
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <?php foreach ($tabs as $i => $tab): ?>
+                <li class="<?= $i == 0 ? 'active' : '' ?>"><a href="#<?= $tab ?>" data-toggle="tab"
+                                                              aria-expanded="<?= $i == 0 ? 'true' : 'false' ?>"><?= $tab ?></a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <div class="tab-content">
 
-
-                    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-        
-
-        <?php Pjax::begin(); ?>                    <div class="table-responsive">
-            <?= GridView::widget([
-                'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel,
-        'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
-
-                    'key',
-            'value:ntext',
-            'description',
-            'group',
-                    //['attribute' => 'status', 'value' => function ($model){return $model->statusText;}, 'filter'=>''],
-                    ['class' => 'yii\grid\ActionColumn'],
-                ],
-            ]); ?>
-            </div>
-                <?php Pjax::end(); ?>
-            <p>
-                <?= Html::a(Yii::t('app', 'Create Setting'), ['create'], ['class' => 'btn btn-success']) ?>
-            </p>
-
+            <?php foreach ($tabs as $i => $tab): ?>
+                <div class="tab-pane <?= $i == 0 ? 'active' : '' ?>" id="<?= $tab ?>">
+                    <?php foreach ($settings[$tab] as $key => $setting): ?>
+                        <?php if ($setting['type'] == 'textInput'): ?>
+                            <?= $form->field($model, $key)->textInput() ?>
+                        <?php endif; ?>
+                        <?php if ($setting['type'] == 'dropDownList'): ?>
+                            <?= $form->field($model, $key)->widget(Select2Widget::className(), [
+                                'bootstrap' => false,
+                                'items' => in_array($setting['data'], ['{TIMEZONE}', '{LANGUAGE}'])? Setting::getListData($setting['data']):json_decode($setting['data'], true),
+                            ]) ?>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </div>
+            <?php endforeach; ?>
+            <div class="form-group">
+                <?= Html::submitButton(Yii::t('app', 'Save Settings'), ['class' => 'btn btn-primary']) ?>
+            </div
         </div>
-        <!-- Loading (remove the following to stop the loading)-->
-        <div class="overlay grid-view-overlay hidden">
-            <?=  \modernkernel\fontawesome\Icon::widget(['icon'=>'refresh fa-spin']) ?>
-        </div>
-        <!-- end loading -->
     </div>
+    <?php ActiveForm::end(); ?>
 </div>

@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\Core;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -12,6 +13,10 @@ use yii\db\ActiveRecord;
  * @property string $value
  * @property string $description
  * @property string $group
+ * @property string $type
+ * @property string $data
+ * @property string $default
+ * @property string $rules
  */
 class Setting extends ActiveRecord
 {
@@ -29,8 +34,8 @@ class Setting extends ActiveRecord
     public function rules()
     {
         return [
-            [['key', 'description', 'group'], 'required'],
-            [['value'], 'string'],
+            [['key', 'description', 'group', 'type', 'data', 'rules'], 'required'],
+            [['value', 'default'], 'string'],
             [['key', 'description', 'group'], 'string', 'max' => 255],
         ];
     }
@@ -64,5 +69,21 @@ class Setting extends ActiveRecord
      */
     public static function getValue($key){
         return self::findOne($key)->value;
+    }
+
+
+    /**
+     * get data for dropDownList in update setting page
+     * @param $type
+     * @return array
+     */
+    public static function getListData($type){
+        if($type=='{TIMEZONE}'){
+            return Core::getTimezoneList();
+        }
+        if($type=='{LANGUAGE}'){
+            return ['en-US'=>'en-US', 'vi-VN'=>'vi-VN'];
+        }
+        return [];
     }
 }

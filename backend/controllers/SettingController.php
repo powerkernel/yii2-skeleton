@@ -2,9 +2,12 @@
 
 namespace backend\controllers;
 
+use common\Core;
 use Yii;
 use common\models\Setting;
 use common\models\SettingSearch;
+use yii\base\DynamicModel;
+use yii\db\Query;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -35,12 +38,41 @@ class SettingController extends BackendController
      */
     public function actionIndex()
     {
-        $searchModel = new SettingSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $attributes=(new Query())->select('key')->from('{{%core_setting}}')->column();
+        $tabs=(new Query())->select('group')->from('{{%core_setting}}')->distinct()->column();
+        //var_dump($tabs);
+
+
+        $model = new DynamicModel($attributes);
+        $settings=[];
+        foreach ($attributes as $attribute) {
+            $setting=Setting::find()->where(['key'=>$attribute])->asArray()->one();
+            $settings[$setting['group']][$attribute]=$setting;
+            $model->$attribute=$setting['value'];
+
+            if(!empty($rules=json_decode($setting['rules'], true))){
+                foreach ($rules as $rule => $conf) {
+                    //var_dump($conf);
+                    $model->addRule($attribute, $rule, $conf);
+                }
+
+            }
+
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            foreach($attributes as $attribute){
+                $s=Setting::findOne($attribute);
+                $s->value=$model->$attribute;
+                $s->save();
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Settings saved successfully.'));
+            }
+        }
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'model' => $model,
+            'settings' => $settings,
+            'tabs'=>$tabs
         ]);
     }
 

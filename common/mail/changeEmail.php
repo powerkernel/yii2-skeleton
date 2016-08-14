@@ -9,12 +9,11 @@ $confirmLink = Yii::$app->urlManager->createAbsoluteUrl(['/account/email-confirm
     <tr>
         <td style="vertical-align: top;" valign="top"></td>
         <td class="container" width="600" style="vertical-align: top; display: block !important; max-width: 600px !important; margin: 0 auto !important; clear: both !important;" valign="top">
-            <div class="content" style="max-width: 600px; margin: 0 auto; display: block; padding: 20px;">
-                <table class="main" width="100%" cellpadding="0" cellspacing="0" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/ViewAction" style="background-color: #fff; border: 1px solid #e9e9e9; border-radius: 3px;" bgcolor="#fff">
+            <div class="content" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/ViewAction" style="max-width: 600px; margin: 0 auto; display: block; padding: 20px;">
+                <table class="main" width="100%" cellpadding="0" cellspacing="0" style="background-color: #fff; border: 1px solid #e9e9e9; border-radius: 3px;" bgcolor="#fff">
                     <tr>
                         <td class="content-wrap" style="vertical-align: top; padding: 20px;" valign="top">
-                            <meta itemprop="name" content="Confirm Email">
-                            <meta itemprop="description" content="Verify your new email address">
+
                             <table width="100%" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td class="content-block" style="vertical-align: top; padding: 0 0 20px;" valign="top">
@@ -35,7 +34,9 @@ $confirmLink = Yii::$app->urlManager->createAbsoluteUrl(['/account/email-confirm
 
                                 <tr>
                                     <td class="content-block" style="vertical-align: top; padding: 0 0 20px;" valign="top">
-                                        <a href="<?= $confirmLink ?>" class="btn-primary" itemprop="target" style="font-weight: bold; color: #FFF; background-color: #348eda; border: solid #348eda; border-width: 10px 20px; line-height: 2em; text-decoration: none; text-align: center; cursor: pointer; display: inline-block; border-radius: 5px; text-transform: capitalize;"><?= Yii::t('app', 'Confirm') ?></a>
+                                        <a href="<?= $confirmLink ?>" class="btn-primary" style="font-weight: bold; color: #FFF; background-color: #348eda; border: solid #348eda; border-width: 10px 20px; line-height: 2em; text-decoration: none; text-align: center; cursor: pointer; display: inline-block; border-radius: 5px; text-transform: capitalize;"><?= Yii::t('app', 'Confirm') ?></a>
+                                        <link itemprop="target" href="<?= $confirmLink ?>">
+                                        <meta itemprop="name" content="<?= Yii::t('app', 'Confirm') ?>">
                                     </td>
                                 </tr>
                                 <tr>
@@ -49,6 +50,7 @@ $confirmLink = Yii::$app->urlManager->createAbsoluteUrl(['/account/email-confirm
                 </table>
 
             </div>
+            <meta itemprop="description" content="<?= Yii::t('app', 'Confirm your new email address') ?>">
         </td>
         <td style="vertical-align: top;" valign="top"></td>
     </tr>

@@ -63,17 +63,20 @@ use yii\helpers\Html;
     </style>
     <?php $this->head() ?>
 </head>
-<body itemscope itemtype="http://schema.org/EmailMessage">
+<body>
     <?php $this->beginBody() ?>
-    <?= $content ?>
-    <div class="footer" style="width: 100%; clear: both; color: #999; padding: 20px;">
-        <table width="100%">
-            <tr>
-                <td class="aligncenter content-block" style="vertical-align: top; padding: 0 0 20px; text-align: center; color: #999; font-size: 12px;" valign="top" align="center">
-                    <?= Html::encode(Yii::$app->name) ?>
-                </td>
-            </tr>
-        </table>
+    
+    <div itemscope itemtype="http://schema.org/EmailMessage">
+        <?= $content ?>
+        <div class="footer" style="width: 100%; clear: both; color: #999; padding: 20px;">
+            <table width="100%">
+                <tr>
+                    <td class="aligncenter content-block" style="vertical-align: top; padding: 0 0 20px; text-align: center; color: #999; font-size: 12px;" valign="top" align="center">
+                        <?= Html::encode(Yii::$app->name) ?>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
     <?php $this->endBody() ?>
 </body>

@@ -9,12 +9,11 @@ $confirmLink = Yii::$app->urlManager->createAbsoluteUrl(['/account/email-confirm
     <tr>
         <td></td>
         <td class="container" width="600">
-            <div class="content">
-                <table class="main" width="100%" cellpadding="0" cellspacing="0" itemprop="potentialAction" itemscope="" itemtype="http://schema.org/ViewAction">
+            <div class="content" itemprop="potentialAction" itemscope itemtype="http://schema.org/ViewAction">
+                <table class="main" width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                         <td class="content-wrap">
-                            <meta itemprop="name" content="Confirm Email" />
-                            <meta itemprop="description" content="Verify your new email address" />
+
                             <table width="100%" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td class="content-block">
@@ -35,7 +34,9 @@ $confirmLink = Yii::$app->urlManager->createAbsoluteUrl(['/account/email-confirm
 
                                 <tr>
                                     <td class="content-block">
-                                        <a href="<?= $confirmLink ?>" class="btn-primary" itemprop="target"><?= Yii::t('app', 'Confirm') ?></a>
+                                        <a href="<?= $confirmLink ?>" class="btn-primary"><?= Yii::t('app', 'Confirm') ?></a>
+                                        <link itemprop="target" href="<?= $confirmLink ?>"/>
+                                        <meta itemprop="name" content="<?= Yii::t('app', 'Confirm') ?>"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -49,6 +50,7 @@ $confirmLink = Yii::$app->urlManager->createAbsoluteUrl(['/account/email-confirm
                 </table>
 
             </div>
+            <meta itemprop="description" content="<?= Yii::t('app', 'Confirm your new email address') ?>"/>
         </td>
         <td></td>
     </tr>
