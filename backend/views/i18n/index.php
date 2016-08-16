@@ -2,6 +2,7 @@
 
 
 use common\Core;
+use common\models\Message;
 use common\models\SourceMessage;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
@@ -60,7 +61,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
 
-                    'language',
+                    ['attribute' => 'language', 'value' => 'language', 'filter'=> Message::getLocaleList([Yii::$app->sourceLanguage])],
                     ['attribute' => 'category', 'value' => 'source.category', 'filter' => SourceMessage::getCategoryList()],
                     ['attribute' => 'message', 'value' => 'source.message'],
                     ['attribute' => 'translation', 'format' => 'raw', 'value' => function ($model) {

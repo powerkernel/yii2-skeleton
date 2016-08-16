@@ -91,9 +91,10 @@ class Message extends ActiveRecord
 
     /**
      * for user account settings
+     * @param $e [] exception
      * @return array
      */
-    public static function getLocaleList(){
+    public static function getLocaleList($e=[]){
         /* current translation languages */
         $l=(new Query())->select(['language'])->distinct()->from('{{%core_message}}')->column();
         $l[]=Yii::$app->sourceLanguage;
@@ -102,6 +103,15 @@ class Message extends ActiveRecord
         if(!in_array($default, $l)){
             $l[]=$default;
         }
-        return Core::getLocaleList($l);
+
+        $list= Core::getLocaleList($l);
+        /* exception */
+        if(is_array($e)){
+            foreach($e as $key){
+                unset($list[$key]);
+            }
+        }
+
+        return $list;
     }
 }
