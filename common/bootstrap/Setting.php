@@ -8,6 +8,8 @@
 namespace common\bootstrap;
 
 
+use common\Core;
+use common\models\Message;
 use Yii;
 use yii\base\Component;
 use yii\base\Exception;
@@ -26,7 +28,15 @@ class Setting extends Component
             if (!Yii::$app->user->isGuest) {
                 try {
                     $user = Yii::$app->user->identity;
-                    Yii::$app->language = $user->language;
+
+                    /* if user local not exist, set default */
+                    $locales=Message::getLocaleList();
+                    if(!in_array($user->language, array_keys($locales))){
+                        $user->language=\common\models\Setting::getValue('language');
+                        $user->save();
+                    }
+
+                    Yii::$app->language=$user->language;
                     Yii::$app->setTimeZone($user->timezone);
                 } catch (Exception $e) {
                     Yii::$app->cache->flush();
@@ -35,10 +45,10 @@ class Setting extends Component
                 }
             }
             else {
-                $timezone=\common\models\Setting::findOne('timezone');
-                $language=\common\models\Setting::findOne('language');
-                Yii::$app->language = $language->value;
-                Yii::$app->setTimeZone($timezone->value);
+                $timezone=\common\models\Setting::getValue('timezone');
+                $language=\common\models\Setting::getValue('language');
+                Yii::$app->language = $language;
+                Yii::$app->setTimeZone($timezone);
             }
         }
 
