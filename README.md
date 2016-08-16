@@ -77,9 +77,12 @@ Account
     CRUD: View, Update, Delete, List
 RBAC
     Assign, Revoke, List
+I18N
+    Message Translation
+    User locale selection    
 ```
 
 And adding more features...
 ```
-i18n
+??
 ```

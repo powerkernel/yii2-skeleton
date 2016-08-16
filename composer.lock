@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1bd9836b208053e0979d88c9efb6aa99",
-    "content-hash": "60861ddf84a3dcd01368bf3128756081",
+    "hash": "21c377df56c802e50afbd4c480ef1f61",
+    "content-hash": "abd8ad7f0c7ed6ec4dec377635568074",
     "packages": [
         {
             "name": "bower-asset/admin-lte",
@@ -1144,6 +1144,46 @@
                 "yii2"
             ],
             "time": "2016-07-23 03:33:16"
+        },
+        {
+            "name": "modernkernel/yii2-jeditable",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/modernkernel/yii2-jeditable.git",
+                "reference": "87e822aa113c374f3391b4d101b84258668742a2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/modernkernel/yii2-jeditable/zipball/87e822aa113c374f3391b4d101b84258668742a2",
+                "reference": "87e822aa113c374f3391b4d101b84258668742a2",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "modernkernel\\jeditable\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Harry Tang",
+                    "email": "harry@modernkernel.com"
+                }
+            ],
+            "description": "Jquery Editable extension for Yii 2",
+            "keywords": [
+                "jeditable",
+                "yii2"
+            ],
+            "time": "2016-07-23 05:03:27"
         },
         {
             "name": "modernkernel/yii2-theme-adminlte",

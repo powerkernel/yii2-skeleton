@@ -51,7 +51,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
 //$css=file_get_contents(__DIR__.'/index.css');
 //$this->registerCss($css);
 //echo json_encode(\common\Core::getTimezoneList());
-//var_dump(json_decode('\common\Core::getTimezoneList()'));
+//var_dump(json_encode(['required'=>[]]));
 ?>
 <div class="setting-index">
     <?php $form = ActiveForm::begin(); ?>
@@ -74,7 +74,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                         <?php if ($setting['type'] == 'dropDownList'): ?>
                             <?= $form->field($model, $key)->widget(Select2Widget::className(), [
                                 'bootstrap' => false,
-                                'items' => in_array($setting['data'], ['{TIMEZONE}', '{LANGUAGE}'])? Setting::getListData($setting['data']):json_decode($setting['data'], true),
+                                'items' => in_array($setting['data'], ['{TIMEZONE}', '{LOCALE}'])? Setting::getListData($setting['data']):json_decode($setting['data'], true),
                             ]) ?>
                         <?php endif; ?>
                     <?php endforeach; ?>

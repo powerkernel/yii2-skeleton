@@ -9,6 +9,7 @@ use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
 
 $this->title = Yii::t('app', 'My Account');
+
 ?>
 <div class="account-index">
     <div class="box box-default">
@@ -19,7 +20,10 @@ $this->title = Yii::t('app', 'My Account');
             <div class="account-form">
                 <?php $form = ActiveForm::begin(['action'=>Yii::$app->urlManager->createUrl(['/account'])]); ?>
                 <?= $form->field($model, 'fullname')->textInput(['maxlength' => true, 'disabled'=>!$model->canChangeName()]) ?>
-                <?= $form->field($model, 'language')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'language')->widget(Select2Widget::className(), [
+                    'bootstrap'=>false,
+                    'items'=>\common\models\Message::getLocaleList(),
+                ]) ?>
                 <?=
                     $form->field($model, 'timezone')->widget(Select2Widget::className(), [
                         'bootstrap'=>false,

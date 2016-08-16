@@ -17,5 +17,16 @@ return [
             'itemTable'=>'{{%core_auth_item}}',
             'defaultRoles'=>['member']
         ],
+        'i18n' => [
+            'translations' => [
+                'app*' => [
+                    'class' => 'common\components\DbMessageSource',
+                    //'basePath'=>$this->basePath.DIRECTORY_SEPARATOR.'messages',
+                    'on missingTranslation' => function ($event) {
+                        $event->sender->insertMissingTranslation($event);
+                    },
+                ],
+            ],
+        ],
     ],
 ];

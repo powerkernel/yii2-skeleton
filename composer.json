@@ -24,7 +24,8 @@
 
         "modernkernel/yii2-bootstrapsocial": "*",
         "modernkernel/yii2-theme-adminlte": "@dev",
-        "harrytang/yii2-theme-inspinia": "@dev"
+        "harrytang/yii2-theme-inspinia": "@dev",
+        "modernkernel/yii2-jeditable": "*"
 
     },
     "repositories": [

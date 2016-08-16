@@ -40,6 +40,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
 
 /* breadcrumbs */
 //$this->params['breadcrumbs'][] = ['label' => 'label', 'url' => '#'];
+
 ?>
 <div class="account-password">
     <div class="box box-default">

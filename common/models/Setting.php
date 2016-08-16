@@ -81,8 +81,8 @@ class Setting extends ActiveRecord
         if($type=='{TIMEZONE}'){
             return Core::getTimezoneList();
         }
-        if($type=='{LANGUAGE}'){
-            return ['en-US'=>'en-US', 'vi-VN'=>'vi-VN'];
+        if($type=='{LOCALE}'){
+            return Core::getLocaleList();
         }
         return [];
     }

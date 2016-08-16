@@ -55,7 +55,9 @@ class SettingController extends BackendController
                     //var_dump($conf);
                     $model->addRule($attribute, $rule, $conf);
                 }
-
+            }
+            else {
+                $model->addRule($attribute, 'required');
             }
 
         }
@@ -64,8 +66,14 @@ class SettingController extends BackendController
             foreach($attributes as $attribute){
                 $s=Setting::findOne($attribute);
                 $s->value=$model->$attribute;
-                $s->save();
-                Yii::$app->session->setFlash('success', Yii::t('app', 'Settings saved successfully.'));
+                if($s->save(false)){
+                    Yii::$app->session->setFlash('success', Yii::t('app', 'Settings saved successfully.'));
+                }
+                else {
+                    Yii::$app->session->setFlash('error', Yii::t('app', 'Sorry, something went wrong. {ERRORS}.', ['ERRORS'=>json_encode($s->errors)]));
+                    break;
+                }
+
             }
         }
 
