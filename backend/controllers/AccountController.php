@@ -191,7 +191,12 @@ class AccountController extends BackendController
             if ($model->save()) {
                 /* send mail */
                 $subject = Yii::t('app', '[{APP_NAME}] Password changed', ['APP_NAME' => Yii::$app->name]);
-                $mailSent = Yii::$app->mailer->compose('passwordChanged', ['user' => $model])
+                $mailSent = Yii::$app->mailer
+                    //->compose('passwordChanged', ['user' => $model])
+                    ->compose(
+                        ['html' => 'password-changed-html', 'text' => 'password-changed-text'],
+                        ['user' => $model]
+                    )
                     ->setFrom([Setting::getValue('outgoingMail') => Yii::$app->name])
                     ->setTo($model->email)
                     ->setSubject($subject)

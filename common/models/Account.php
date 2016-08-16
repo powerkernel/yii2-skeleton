@@ -197,6 +197,7 @@ class Account extends ActiveRecord implements IdentityInterface
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
+
         if ($insert) {
             if ($this->emailNewAccount) {
                 $this->sendMailNewUser();
@@ -246,7 +247,12 @@ class Account extends ActiveRecord implements IdentityInterface
     protected function sendMailNewUser()
     {
         $subject = Yii::t('app', 'Welcome to {APP_NAME}', ['APP_NAME' => Yii::$app->name]);
-        return \Yii::$app->mailer->compose('newUser', ['user' => $this])
+        return Yii::$app->mailer
+            //->compose('newUser', ['user' => $this])
+            ->compose(
+                ['html' => 'new-user-html', 'text' => 'new-user-text'],
+                ['title'=>$subject, 'user' => $this]
+            )
             ->setFrom([Setting::getValue('outgoingMail') => Yii::$app->name])
             ->setTo($this->email)
             ->setSubject($subject)

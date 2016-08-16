@@ -67,7 +67,12 @@ class ChangeEmailForm extends Model {
         if ($user->save()) {
             Yii::$app->language=$user->language;
             $subject=Yii::t('app', '[{APP_NAME}] Please verify your email address', ['APP_NAME'=> Yii::$app->name]);
-            return Yii::$app->mailer->compose('changeEmail', ['title'=>$subject, 'user' => $user])
+            return Yii::$app->mailer
+                //->compose('changeEmail', ['title'=>$subject, 'user' => $user])
+                ->compose(
+                    ['html' => 'change-email-html', 'text' => 'change-email-text'],
+                    ['title'=>$subject, 'user' => $user]
+                )
                 ->setFrom([Setting::getValue('outgoingMail')])
                 ->setTo($user->new_email)
                 ->setSubject($subject)

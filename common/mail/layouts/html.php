@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $content string main view render result */
 ?>
 <?php $this->beginPage() ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=<?= Yii::$app->charset ?>" />
@@ -66,7 +66,7 @@ use yii\helpers\Html;
 <body>
     <?php $this->beginBody() ?>
     
-    <div itemscope itemtype="http://schema.org/EmailMessage">
+
         <?= $content ?>
         <div class="footer" style="width: 100%; clear: both; color: #999; padding: 20px;">
             <table width="100%">
@@ -77,7 +77,7 @@ use yii\helpers\Html;
                 </tr>
             </table>
         </div>
-    </div>
+
     <?php $this->endBody() ?>
 </body>
 </html>

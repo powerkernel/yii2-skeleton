@@ -143,16 +143,15 @@ class AccountController extends Controller
     {
         $this->layout = 'main';
         $model = new SignupForm();
-        if (!Yii::$app->params['account']['registrationDisabled']) {
-            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-                if ($this->createUser(['name' => $model->name, 'email' => $model->email])) {
-                    Yii::$app->session->setFlash('success', Yii::t('app', 'Your account as been created successfully. Please check your email for login instructions.'));
-                    return $this->redirect(Yii::$app->user->loginUrl);
-                } else {
-                    Yii::$app->session->setFlash('error', Yii::t('app', 'Sorry, something went wrong. We\'re working on getting this fixed as soon as we can.'));
-                }
 
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($this->createUser(['name' => $model->name, 'email' => $model->email])) {
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Your account as been created successfully. Please check your email for login instructions.'));
+                return $this->redirect(Yii::$app->user->loginUrl);
+            } else {
+                Yii::$app->session->setFlash('error', Yii::t('app', 'Sorry, something went wrong. We\'re working on getting this fixed as soon as we can.'));
             }
+
         }
 
 
