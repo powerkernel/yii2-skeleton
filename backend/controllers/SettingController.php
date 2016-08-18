@@ -84,64 +84,47 @@ class SettingController extends BackendController
         ]);
     }
 
-    /**
-     * Displays a single Setting model.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
+    public function actionUpdate(){
+        /* delete */
+        //Yii::$app->db->createCommand()->delete('{{%core_setting}}')->execute();
+        /* insert */
+        $s=[
+            /* General */
+            ['key'=>'language', 'value'=>'en-US', 'description'=>'Site language', 'group'=>'General', 'type'=>'dropDownList', 'data'=>'{LOCALE}', 'default'=>'en-US', 'rules'=>json_encode(['required'=>[]])],
+            ['key'=>'timezone', 'value'=>'Asia/Ho_Chi_Minh', 'description'=>'Server Timezone', 'group'=>'General', 'type'=>'dropDownList', 'data'=>'{TIMEZONE}', 'default'=>'Asia/Ho_Chi_Minh', 'rules'=>json_encode(['required'=>[]])],
 
-    /**
-     * Creates a new Setting model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Setting();
+            /* Account */
+            ['key'=>'maxNameChange', 'value'=>'1', 'description'=>'Max name change allowed', 'group'=>'Account', 'type'=>'textInput', 'data'=>'[]', 'default'=>'1', 'rules'=>json_encode(['required'=>[], 'number'=>['min'=>-1]])],
+            ['key'=>'tokenExpiryTime', 'value'=>'3600', 'description'=>'Expiration time in seconds', 'group'=>'Account', 'type'=>'textInput', 'data'=>'[]', 'default'=>'3600', 'rules'=>json_encode(['required'=>[], 'number'=>['min'=>3600]])],
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->key]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            /* Mail */
+            ['key'=>'outgoingMail', 'value'=>'youremail@domain.com', 'description'=>'Outgoing email address', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['required'=>[], 'email'=>[]])],
+            ['key'=>'mailProtocol', 'value'=>'php', 'description'=>'Outgoing email protocol', 'group'=>'Mail', 'type'=>'dropDownList', 'data'=>json_encode(['php'=>'php', 'smtp'=>'smtp']), 'default'=>'php', 'rules'=>json_encode(['required'=>[]])],
+            ['key'=>'smtpHost', 'value'=>'', 'description'=>'SMTP host', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[]])],
+            ['key'=>'smtpUsername', 'value'=>'', 'description'=>'SMTP username', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[]])],
+            ['key'=>'smtpPassword', 'value'=>'', 'description'=>'SMTP password', 'group'=>'Mail', 'type'=>'passwordInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[]])],
+            ['key'=>'smtpPort', 'value'=>'', 'description'=>'SMTP port', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'25', 'rules'=>json_encode(['safe'=>[]])],
+            ['key'=>'smtpEncryption', 'value'=>'', 'description'=>'SMTP port', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'ssl', 'rules'=>json_encode(['safe'=>[]])],
+
+        ];
+
+        foreach($s as $setting){
+            $conf=Setting::findOne($setting['key']);
+            if(!$conf){
+                $conf=new Setting();
+                $conf->key=$setting['key'];
+                $conf->value=$setting['value'];
+            }
+
+
+            $conf->description=$setting['description'];
+            $conf->group=$setting['group'];
+            $conf->type=$setting['type'];
+            $conf->data=$setting['data'];
+            $conf->default=$setting['default'];
+            $conf->rules=$setting['rules'];
+            $conf->save();
         }
-    }
-
-    /**
-     * Updates an existing Setting model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->key]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Deletes an existing Setting model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }

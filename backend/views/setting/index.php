@@ -54,36 +54,58 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
 //var_dump(json_encode(['required'=>[]]));
 ?>
 <div class="setting-index">
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'layout' => 'default',
+//        'fieldConfig'=>['horizontalCssClasses' => [
+//            'label' => 'col-sm-4',
+//            'offset' => '',
+//            'wrapper' => 'col-sm-8',
+//            'error' => '',
+//            'hint' => '',
+//        ]],
+    ]); ?>
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
             <?php foreach ($tabs as $i => $tab): ?>
-                <li class="<?= $i == 0 ? 'active' : '' ?>"><a href="#<?= $tab ?>" data-toggle="tab"
-                                                              aria-expanded="<?= $i == 0 ? 'true' : 'false' ?>"><?= $tab ?></a>
+                <li class="<?= $i == 0 ? 'active' : '' ?>">
+                    <a href="#<?= $tab ?>" data-toggle="tab" aria-expanded="<?= $i == 0 ? 'true' : 'false' ?>"><?= $tab ?></a>
                 </li>
             <?php endforeach; ?>
         </ul>
         <div class="tab-content">
-
             <?php foreach ($tabs as $i => $tab): ?>
                 <div class="tab-pane <?= $i == 0 ? 'active' : '' ?>" id="<?= $tab ?>">
                     <?php foreach ($settings[$tab] as $key => $setting): ?>
+
                         <?php if ($setting['type'] == 'textInput'): ?>
                             <?= $form->field($model, $key)->textInput() ?>
                         <?php endif; ?>
-                        <?php if ($setting['type'] == 'dropDownList'): ?>
-                            <?= $form->field($model, $key)->widget(Select2Widget::className(), [
-                                'bootstrap' => false,
-                                'items' => in_array($setting['data'], ['{TIMEZONE}', '{LOCALE}'])? Setting::getListData($setting['data']):json_decode($setting['data'], true),
-                            ]) ?>
+
+                        <?php if ($setting['type'] == 'passwordInput'): ?>
+                            <?= $form->field($model, $key)->passwordInput() ?>
                         <?php endif; ?>
+
+                        <?php if ($setting['type'] == 'dropDownList'): ?>
+                            <?=
+//                            $form->field($model, $key)->widget(Select2Widget::className(), [
+//                                'bootstrap' => false,
+//                                //'items' => in_array($setting['data'], ['{TIMEZONE}', '{LOCALE}'])? Setting::getListData($setting['data']):json_decode($setting['data'], true),
+//                                'items' => \common\Core::getLocaleList()
+//                            ])
+                            $form->field($model, $key)->dropDownList(in_array($setting['data'], ['{TIMEZONE}', '{LOCALE}'])? Setting::getListData($setting['data']):json_decode($setting['data'], true))
+                            ?>
+                        <?php endif; ?>
+
                     <?php endforeach; ?>
                 </div>
             <?php endforeach; ?>
             <div class="form-group">
                 <?= Html::submitButton(Yii::t('app', 'Save Settings'), ['class' => 'btn btn-primary']) ?>
-            </div
+            </div>
         </div>
     </div>
     <?php ActiveForm::end(); ?>
 </div>
+<?php
+var_dump(Yii::$app->mailer);
+?>
