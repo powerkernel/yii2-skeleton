@@ -5,17 +5,17 @@
  * @copyright Copyright (c) 2016 Modern Kernel
  */
 
-namespace common\models;
+namespace frontend\models;
 
-
-
+use common\models\Account;
+use common\models\Setting;
 use himiklab\yii2\recaptcha\ReCaptchaValidator;
 use Yii;
 use yii\base\Model;
 
 /**
  * Class ChangeEmailForm
- * @package common\models
+ * @package frontend\models
  */
 class ChangeEmailForm extends Model {
 

@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2016 Modern Kernel
  */
 
-namespace common\models;
+namespace frontend\models;
 
 
 use Yii;
@@ -13,7 +13,7 @@ use yii\base\Model;
 
 /**
  * Class ChangePasswordForm
- * @package common\models
+ * @package frontend\models
  */
 class ChangePasswordForm extends Model
 {

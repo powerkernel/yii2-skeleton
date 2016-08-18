@@ -53,14 +53,14 @@ class Setting extends ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     * @return SettingQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new SettingQuery(get_called_class());
-    }
+//    /**
+//     * @inheritdoc
+//     * @return SettingQuery the active query used by this AR class.
+//     */
+//    public static function find()
+//    {
+//        return new SettingQuery(get_called_class());
+//    }
 
     /**
      * get setting value

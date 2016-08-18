@@ -8,7 +8,6 @@
 namespace common\bootstrap;
 
 
-use common\Core;
 use common\models\Message;
 use Yii;
 use yii\base\Component;

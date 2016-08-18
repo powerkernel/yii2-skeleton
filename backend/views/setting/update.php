@@ -1,7 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Setting */
+/* @var $model common\models\Setting */
 
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
     'modelClass' => 'Setting',

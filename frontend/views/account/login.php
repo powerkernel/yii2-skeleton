@@ -59,13 +59,13 @@ $this->params['breadcrumbs'][] = $this->title;
             <div>
                 <hr/>
             </div>
-            <?php if (!Yii::$app->params['account']['registrationDisabled']): ?>
+
                 <div class="text-center">
                     <?= Yii::t('app', 'Do not have an account?') ?> <a
                         href="<?= Yii::$app->urlManager->createUrl(['/account/signup']) ?>"
                         class="btn btn-xs btn-danger"><?= Yii::t('app', 'Signup') ?></a>
                 </div>
-            <?php endif; ?>
+
         </div>
     </div>
 </div>

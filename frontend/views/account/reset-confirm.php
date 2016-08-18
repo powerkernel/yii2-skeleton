@@ -43,7 +43,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
 /* breadcrumbs */
 //$this->params['breadcrumbs'][] = ['label' => 'label', 'url' => '#'];
 ?>
-<div class="account-reset">
+<div class="account-reset-confirm">
     <div class="row">
         <div style="" class="col-xs-12">
             <h1 class="no-margin"><?= $this->title ?></h1>

@@ -3,7 +3,7 @@
 
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Setting */
+/* @var $model common\models\Setting */
 
 $this->title = Yii::t('app', 'Create Setting');
 $keywords = '';

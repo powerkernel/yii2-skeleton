@@ -3,12 +3,14 @@
 namespace frontend\controllers;
 
 use common\models\Account;
-use common\models\ChangeEmailForm;
-use common\models\ChangePasswordForm;
 use common\models\LoginForm;
+
+use frontend\models\ChangeEmailForm;
+use frontend\models\ChangePasswordForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
+
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;

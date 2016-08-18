@@ -72,7 +72,7 @@ class LoginForm extends Model
             $account->email_verified=1;
             $account->save();
 
-            return Yii::$app->user->login($account, $this->rememberMe ? Yii::$app->params['account']['rememberMeExpire'] : 0);
+            return Yii::$app->user->login($account, $this->rememberMe ? 3600*24*30 : 0);
         } else {
             return false;
         }
