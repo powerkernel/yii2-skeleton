@@ -3,12 +3,8 @@ return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'bootstrap' => ['configuration'],
     'components' => [
-        'configuration'=>[
-            'class'=>'common\bootstrap\Configuration'
-        ],
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
-        ],
+        'configuration'=>['class'=>'common\bootstrap\Configuration'],
+        'cache' => ['class' => 'yii\caching\FileCache'],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
             'ruleTable'=>'{{%core_auth_rule}}',
@@ -30,18 +26,6 @@ return [
         ],
         'authClientCollection' => [
             'class' => 'yii\authclient\Collection',
-            //'clients' => [
-//                'google' => [
-//                    'class' => 'yii\authclient\clients\Google',
-//                    //'clientId' => 'client_id',
-//                    //'clientSecret' => 'client_secret',
-//                ],
-//                'facebook' => [
-//                    'class' => 'yii\authclient\clients\Facebook',
-//                    'clientId' => 'client_id',
-//                    'clientSecret' => 'client_secret',
-//                ],
-            //],
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
@@ -55,8 +39,7 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
-            ],
+            'rules' => [],
         ],
 
     ],

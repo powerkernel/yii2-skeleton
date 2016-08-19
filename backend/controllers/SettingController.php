@@ -38,8 +38,8 @@ class SettingController extends BackendController
      */
     public function actionIndex()
     {
-        $tabs=(new Query())->select('group')->from('{{%core_setting}}')->distinct()->column();
-        $attributes=(new Query())->select('key')->from('{{%core_setting}}')->orderBy('key')->column();
+        $tabs=(new Query())->select('group')->from('{{%core_setting}}')->orderBy('key_order')->distinct()->column();
+        $attributes=(new Query())->select('key')->from('{{%core_setting}}')->orderBy('key_order')->column();
 
         //var_dump($tabs);
 
@@ -87,9 +87,6 @@ class SettingController extends BackendController
     }
 
     public function actionUpdate(){
-        /* delete */
-        //Yii::$app->db->createCommand()->delete('{{%core_setting}}')->execute();
-        /* insert */
         $s=[
             /* General */
             ['key'=>'language', 'value'=>'en-US', 'title'=>'Language', 'description'=>'Site language', 'group'=>'General', 'type'=>'dropDownList', 'data'=>'{LOCALE}', 'default'=>'en-US', 'rules'=>json_encode(['required'=>[]])],
@@ -101,6 +98,10 @@ class SettingController extends BackendController
             ['key'=>'tokenExpiryTime', 'value'=>'3600', 'title'=>'Token Expiry Time', 'description'=>'Expiration time in seconds', 'group'=>'Account', 'type'=>'textInput', 'data'=>'[]', 'default'=>'3600', 'rules'=>json_encode(['required'=>[], 'number'=>['min'=>3600]])],
             ['key'=>'rememberMeDuration', 'value'=>'2592000', 'title'=>'Remember Me Duration', 'description'=>'Customize the duration of the Remember Me in seconds', 'group'=>'Account', 'type'=>'textInput', 'data'=>'[]', 'default'=>'2592000', 'rules'=>json_encode(['required'=>[], 'number'=>['min'=>86400]])],
 
+            /* SEO */
+            ['key'=>'title', 'value'=>'Yii2 Skeleton', 'title'=>'Title', 'description'=>'Homepage title', 'group'=>'SEO', 'type'=>'textInput', 'data'=>'[]', 'default'=>'Yii2 Skeleton', 'rules'=>json_encode(['required'=>[]])],
+            ['key'=>'keywords', 'value'=>'Yii2, Skeleton', 'title'=>'Keywords', 'description'=>'Homepage keywords', 'group'=>'SEO', 'type'=>'textInput', 'data'=>'[]', 'default'=>'Yii2, Skeleton', 'rules'=>json_encode(['required'=>[]])],
+            ['key'=>'description', 'value'=>'Skeleton for Yii Framework', 'title'=>'Description', 'description'=>'Homepage description', 'group'=>'SEO', 'type'=>'textInput', 'data'=>'[]', 'default'=>'Skeleton for Yii Framework', 'rules'=>json_encode(['required'=>[]])],
 
             /* Mail */
             ['key'=>'outgoingMail', 'value'=>'youremail@domain.com', 'title'=>'Outgoing Mail', 'description'=>'Outgoing email address', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['required'=>[], 'email'=>[]])],
@@ -120,9 +121,13 @@ class SettingController extends BackendController
 
             ['key'=>'googleClientId', 'value'=>'', 'title'=>'Google Client ID', 'description'=>'Google Client ID', 'group'=>'API', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[]])],
             ['key'=>'googleClientSecret', 'value'=>'', 'title'=>'Google Client Secret', 'description'=>'Google Client Secret', 'group'=>'API', 'type'=>'passwordInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[]])],
+
+            /* System */
+            //['key'=>'language', 'value'=>'en-US', 'title'=>'Language', 'description'=>'Site language', 'group'=>'General', 'type'=>'dropDownList', 'data'=>'{LOCALE}', 'default'=>'en-US', 'rules'=>json_encode(['required'=>[]])],
+            ['key'=>'debug', 'value'=>'0', 'title'=>'Debug Mode', 'description'=>'Turn on debug mode', 'group'=>'System', 'type'=>'dropDownList', 'data'=>json_encode(Core::getYesNoOption()), 'default'=>'0', 'rules'=>json_encode(['required'=>[]])],
         ];
 
-        foreach($s as $setting){
+        foreach($s as $i=>$setting){
             $conf=Setting::findOne($setting['key']);
             if(!$conf){
                 $conf=new Setting();
@@ -137,6 +142,7 @@ class SettingController extends BackendController
             $conf->data=$setting['data'];
             $conf->default=$setting['default'];
             $conf->rules=$setting['rules'];
+            $conf->key_order=$i;
             $conf->save();
         }
 

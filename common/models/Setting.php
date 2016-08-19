@@ -18,6 +18,7 @@ use yii\db\ActiveRecord;
  * @property string $data
  * @property string $default
  * @property string $rules
+ * @property string $key_order
  */
 class Setting extends ActiveRecord
 {
@@ -38,6 +39,7 @@ class Setting extends ActiveRecord
             [['key', 'title', 'description', 'group', 'type', 'data', 'rules'], 'required'],
             [['value', 'default'], 'string'],
             [['key', 'title', 'description', 'group'], 'string', 'max' => 255],
+            [['key_order'], 'safe']
         ];
     }
 
