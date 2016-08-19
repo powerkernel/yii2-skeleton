@@ -38,8 +38,9 @@ class SettingController extends BackendController
      */
     public function actionIndex()
     {
-        $attributes=(new Query())->select('key')->from('{{%core_setting}}')->column();
         $tabs=(new Query())->select('group')->from('{{%core_setting}}')->distinct()->column();
+        $attributes=(new Query())->select('key')->from('{{%core_setting}}')->orderBy('key')->column();
+
         //var_dump($tabs);
 
 
@@ -49,6 +50,7 @@ class SettingController extends BackendController
             $setting=Setting::find()->where(['key'=>$attribute])->asArray()->one();
             $settings[$setting['group']][$attribute]=$setting;
             $model->$attribute=$setting['value'];
+            //$model->la
 
             if(!empty($rules=json_decode($setting['rules'], true))){
                 foreach ($rules as $rule => $conf) {
@@ -90,22 +92,34 @@ class SettingController extends BackendController
         /* insert */
         $s=[
             /* General */
-            ['key'=>'language', 'value'=>'en-US', 'description'=>'Site language', 'group'=>'General', 'type'=>'dropDownList', 'data'=>'{LOCALE}', 'default'=>'en-US', 'rules'=>json_encode(['required'=>[]])],
-            ['key'=>'timezone', 'value'=>'Asia/Ho_Chi_Minh', 'description'=>'Server Timezone', 'group'=>'General', 'type'=>'dropDownList', 'data'=>'{TIMEZONE}', 'default'=>'Asia/Ho_Chi_Minh', 'rules'=>json_encode(['required'=>[]])],
+            ['key'=>'language', 'value'=>'en-US', 'title'=>'Language', 'description'=>'Site language', 'group'=>'General', 'type'=>'dropDownList', 'data'=>'{LOCALE}', 'default'=>'en-US', 'rules'=>json_encode(['required'=>[]])],
+            ['key'=>'timezone', 'value'=>'Asia/Ho_Chi_Minh', 'title'=>'Timezone', 'description'=>'Server Timezone', 'group'=>'General', 'type'=>'dropDownList', 'data'=>'{TIMEZONE}', 'default'=>'Asia/Ho_Chi_Minh', 'rules'=>json_encode(['required'=>[]])],
+
 
             /* Account */
-            ['key'=>'maxNameChange', 'value'=>'1', 'description'=>'Max name change allowed', 'group'=>'Account', 'type'=>'textInput', 'data'=>'[]', 'default'=>'1', 'rules'=>json_encode(['required'=>[], 'number'=>['min'=>-1]])],
-            ['key'=>'tokenExpiryTime', 'value'=>'3600', 'description'=>'Expiration time in seconds', 'group'=>'Account', 'type'=>'textInput', 'data'=>'[]', 'default'=>'3600', 'rules'=>json_encode(['required'=>[], 'number'=>['min'=>3600]])],
+            ['key'=>'maxNameChange', 'value'=>'1', 'title'=>'Max Name Change', 'description'=>'Max name change allowed', 'group'=>'Account', 'type'=>'textInput', 'data'=>'[]', 'default'=>'1', 'rules'=>json_encode(['required'=>[], 'number'=>['min'=>-1]])],
+            ['key'=>'tokenExpiryTime', 'value'=>'3600', 'title'=>'Token Expiry Time', 'description'=>'Expiration time in seconds', 'group'=>'Account', 'type'=>'textInput', 'data'=>'[]', 'default'=>'3600', 'rules'=>json_encode(['required'=>[], 'number'=>['min'=>3600]])],
+            ['key'=>'rememberMeDuration', 'value'=>'2592000', 'title'=>'Remember Me Duration', 'description'=>'Customize the duration of the Remember Me in seconds', 'group'=>'Account', 'type'=>'textInput', 'data'=>'[]', 'default'=>'2592000', 'rules'=>json_encode(['required'=>[], 'number'=>['min'=>86400]])],
+
 
             /* Mail */
-            ['key'=>'outgoingMail', 'value'=>'youremail@domain.com', 'description'=>'Outgoing email address', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['required'=>[], 'email'=>[]])],
-            ['key'=>'mailProtocol', 'value'=>'php', 'description'=>'Outgoing email protocol', 'group'=>'Mail', 'type'=>'dropDownList', 'data'=>json_encode(['php'=>'php', 'smtp'=>'smtp']), 'default'=>'php', 'rules'=>json_encode(['required'=>[]])],
-            ['key'=>'smtpHost', 'value'=>'', 'description'=>'SMTP host', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[]])],
-            ['key'=>'smtpUsername', 'value'=>'', 'description'=>'SMTP username', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[]])],
-            ['key'=>'smtpPassword', 'value'=>'', 'description'=>'SMTP password', 'group'=>'Mail', 'type'=>'passwordInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[]])],
-            ['key'=>'smtpPort', 'value'=>'', 'description'=>'SMTP port', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'25', 'rules'=>json_encode(['safe'=>[]])],
-            ['key'=>'smtpEncryption', 'value'=>'', 'description'=>'SMTP port', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'ssl', 'rules'=>json_encode(['safe'=>[]])],
+            ['key'=>'outgoingMail', 'value'=>'youremail@domain.com', 'title'=>'Outgoing Mail', 'description'=>'Outgoing email address', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['required'=>[], 'email'=>[]])],
+            ['key'=>'mailProtocol', 'value'=>'php', 'title'=>'Mail Protocol', 'description'=>'Outgoing email protocol', 'group'=>'Mail', 'type'=>'dropDownList', 'data'=>json_encode(['php'=>'php', 'smtp'=>'smtp']), 'default'=>'php', 'rules'=>json_encode(['required'=>[]])],
+            ['key'=>'smtpHost', 'value'=>'', 'title'=>'SMTP Host', 'description'=>'SMTP host', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[]])],
+            ['key'=>'smtpUsername', 'value'=>'', 'title'=>'SMTP Username', 'description'=>'SMTP username', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[]])],
+            ['key'=>'smtpPassword', 'value'=>'', 'title'=>'SMTP Password', 'description'=>'SMTP password', 'group'=>'Mail', 'type'=>'passwordInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[]])],
+            ['key'=>'smtpPort', 'value'=>'', 'title'=>'SMTP Port', 'description'=>'SMTP port', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'25', 'rules'=>json_encode(['safe'=>[]])],
+            ['key'=>'smtpEncryption', 'value'=>'', 'title'=>'SMTP Encryption', 'description'=>'SMTP port', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'ssl', 'rules'=>json_encode(['safe'=>[]])],
 
+            /* API */
+            ['key'=>'reCaptchaKey', 'value'=>'', 'title'=>'reCaptcha Site Key', 'description'=>'reCaptcha Site Key', 'group'=>'API', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[]])],
+            ['key'=>'reCaptchaSecret', 'value'=>'', 'title'=>'reCaptcha Secret', 'description'=>'reCaptcha Secret', 'group'=>'API', 'type'=>'passwordInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[]])],
+
+            ['key'=>'facebookAppId', 'value'=>'', 'title'=>'Facebook App ID', 'description'=>'Facebook App ID', 'group'=>'API', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[]])],
+            ['key'=>'facebookAppSecret', 'value'=>'', 'title'=>'Facebook App Secret', 'description'=>'Facebook App Secret', 'group'=>'API', 'type'=>'passwordInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[]])],
+
+            ['key'=>'googleClientId', 'value'=>'', 'title'=>'Google Client ID', 'description'=>'Google Client ID', 'group'=>'API', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[]])],
+            ['key'=>'googleClientSecret', 'value'=>'', 'title'=>'Google Client Secret', 'description'=>'Google Client Secret', 'group'=>'API', 'type'=>'passwordInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[]])],
         ];
 
         foreach($s as $setting){
@@ -116,7 +130,7 @@ class SettingController extends BackendController
                 $conf->value=$setting['value'];
             }
 
-
+            $conf->title=$setting['title'];
             $conf->description=$setting['description'];
             $conf->group=$setting['group'];
             $conf->type=$setting['type'];

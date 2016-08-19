@@ -1,4 +1,5 @@
 <?php
+use modernkernel\bootstrapsocial\Button;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
@@ -6,7 +7,7 @@ use yii\bootstrap\ActiveForm;
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \common\models\LoginForm */
 
-$this->title = Yii::t('app', 'Login');
+$this->title = Yii::t('app', 'Log in');
 $keywords = '';
 $description = '';
 
@@ -37,34 +38,51 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Account'), 'url' => ['/account']];
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
-<div class="account-login-index">
+<div class="account-login">
     <div class="row">
-        <div style="" class="col-xs-12">
+        <div class="col-xs-12">
+
+            <?php if(!empty(Yii::$app->authClientCollection->clients['facebook'])):?>
+            <?= Button::widget([
+                'button' => 'facebook',
+                'link' => Yii::$app->urlManager->createUrl(['/account/auth', 'authclient'=>'facebook']),
+                'label'=> Yii::t('app', 'Login with Facebook')
+            ]) ?>
+            <?php endif;?>
+            <?php if(!empty(Yii::$app->authClientCollection->clients['google'])):?>
+            <?= Button::widget([
+                'button' => 'google',
+                'link' => Yii::$app->urlManager->createUrl(['/account/auth', 'authclient'=>'google']),
+                'label'=> Yii::t('app', 'Login with Google')
+            ]) ?>
+            <?php endif;?>
+
+
+            <div>
+                <hr/>
+            </div>
 
             <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
             <?= $form->field($model, 'email') ?>
             <?= $form->field($model, 'password')->passwordInput() ?>
             <?= $form->field($model, 'rememberMe')->checkbox() ?>
-
-            <div class="text-center">
-                <div class="form-group">
-                    <?= Html::submitButton($this->title, ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-                </div>
-                <div>
-                    <?= Yii::t('app', 'If you forgot your password you can {RESET}.', ['RESET' => Html::a(Yii::t('app', 'reset it'), ['/account/reset'])]); ?>
-                </div>
+            <div class="form-group text-center">
+                <?= Html::submitButton($this->title, ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
             </div>
             <?php ActiveForm::end(); ?>
+
+
+
             <div>
                 <hr/>
             </div>
 
-                <div class="text-center">
-                    <?= Yii::t('app', 'Do not have an account?') ?> <a
-                        href="<?= Yii::$app->urlManager->createUrl(['/account/signup']) ?>"
-                        class="btn btn-xs btn-danger"><?= Yii::t('app', 'Signup') ?></a>
-                </div>
+            <div class="text-center">
+                <?= Html::a(Yii::t('app', 'Sign up'), ['/account/signup'], ['class' => 'btn btn-danger']); ?>
+                <?= Html::a(Yii::t('app', 'Forgot password?'), ['/account/reset'], ['class' => 'btn btn-default']); ?>
+            </div>
 
         </div>
     </div>

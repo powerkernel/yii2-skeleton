@@ -1,13 +1,13 @@
 <?php
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
-    'bootstrap' => ['setting'],
+    'bootstrap' => ['configuration'],
     'components' => [
+        'configuration'=>[
+            'class'=>'common\bootstrap\Configuration'
+        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
-        ],
-        'setting'=>[
-            'class'=>'common\bootstrap\Setting'
         ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
@@ -28,5 +28,36 @@ return [
                 ],
             ],
         ],
+        'authClientCollection' => [
+            'class' => 'yii\authclient\Collection',
+            //'clients' => [
+//                'google' => [
+//                    'class' => 'yii\authclient\clients\Google',
+//                    //'clientId' => 'google_client_id',
+//                    //'clientSecret' => 'google_client_secret',
+//                ],
+//                'facebook' => [
+//                    'class' => 'yii\authclient\clients\Facebook',
+//                    'clientId' => '177284462681430',
+//                    'clientSecret' => 'a4df0eca3ce0545cf6a6112ccc92ea73',
+//                ],
+            //],
+        ],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'viewPath' => '@common/mail',
+            'useFileTransport' => false,
+        ],
+        'reCaptcha' => [
+            'name' => 'reCaptcha',
+            'class' => 'himiklab\yii2\recaptcha\ReCaptcha',
+        ],
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+            ],
+        ],
+
     ],
 ];

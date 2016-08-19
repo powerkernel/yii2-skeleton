@@ -2,7 +2,9 @@
 
 namespace frontend\controllers;
 
+use common\components\AuthHandler;
 use common\models\Account;
+use common\models\Auth;
 use common\models\LoginForm;
 
 use frontend\models\ChangeEmailForm;
@@ -32,19 +34,44 @@ class AccountController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
-                    [
-                        'actions' => ['signup', 'login', 'reset', 'reset-confirm', 'login-as'],
-                        'allow' => true,
-                    ],
+
                     [
                         //'actions' => ['*'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    [
+                        'actions' => ['auth', 'signup', 'login', 'reset', 'reset-confirm', 'login-as'],
+                        'allow' => true,
+                    ],
                 ],
             ],
 
         ];
+    }
+
+    /**
+     * @inheritdoc
+     * @return array
+     */
+    public function actions()
+    {
+        return [
+            'auth' => [
+                'class' => 'yii\authclient\AuthAction',
+                'successCallback' => [$this, 'onAuthSuccess'],
+            ],
+        ];
+    }
+
+    /**
+     * @param $client
+     */
+    public function onAuthSuccess($client)
+    {
+
+        (new AuthHandler($client))->handle();
+
     }
 
 
@@ -138,6 +165,30 @@ class AccountController extends Controller
     }
 
     /**
+     * @param string $remove
+     * @return string
+     */
+    public function actionLinked($remove=''){
+        $model = Yii::$app->user->identity;
+        $auths=[];
+        if($model->auths){
+            foreach($model->auths as $auth){
+                $auths[$auth->source]=$auth->id;
+
+                if(!empty($remove) && $remove==$auth->id){
+                    Auth::findOne($remove)->delete();
+                    Yii::$app->session->setFlash('success', Yii::t('app', '{SOURCE} account removed.', ['SOURCE'=>ucfirst($auth->source)]));
+                    //$auths[$auth->source]=null;
+                    return $this->redirect(['linked']);
+                }
+            }
+        }
+
+
+        return $this->render('linked', ['model' => $model, 'auths'=>$auths]);
+    }
+
+    /**
      * The signup page
      * @return string|\yii\web\Response
      */
@@ -185,6 +236,8 @@ class AccountController extends Controller
             ]);
         }
     }
+
+
 
     /**
      * reset password

@@ -14,7 +14,7 @@ $this->title = Yii::t('app', 'My Account');
 <div class="account-index">
     <div class="box box-default">
         <div class="box-header with-border">
-            <h1 class="box-title">Profile</h1>
+            <h1 class="box-title"><?= Yii::t('app', 'Profile'); ?></h1>
         </div>
         <div class="box-body">
             <div class="account-form">

@@ -31,6 +31,7 @@ use yii\web\IdentityInterface;
  * @property integer $updated_at
  * @property string $password write-only password
  * @property mixed statusText
+ * @property Auth[] $auths
  */
 class Account extends ActiveRecord implements IdentityInterface
 {
@@ -204,7 +205,7 @@ class Account extends ActiveRecord implements IdentityInterface
             }
 
             /* Admin */
-            if (in_array($this->id, Yii::$app->params['settings']['admins'])) {
+            if (in_array($this->id, Yii::$app->params['rootAdmin'])) {
                 $auth = Yii::$app->authManager;
                 $admin = $auth->getRole('admin');
                 $auth->assign($admin, $this->id);
@@ -452,6 +453,14 @@ class Account extends ActiveRecord implements IdentityInterface
         return true;
     }
 
+
+    /**
+     * @return yii\db\ActiveQuery
+     */
+    public function getAuths()
+    {
+        return $this->hasMany(Auth::className(), ['user_id' => 'id']);
+    }
 
 
 

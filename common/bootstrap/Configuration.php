@@ -9,15 +9,16 @@ namespace common\bootstrap;
 
 
 use common\models\Message;
+use common\models\Setting;
 use Yii;
 use yii\base\Component;
 use yii\base\Exception;
 
 /**
- * Class Setting
+ * Class Configuration
  * @package common\components
  */
-class Setting extends Component
+class Configuration extends Component
 {
     public function init()
     {
@@ -29,38 +30,36 @@ class Setting extends Component
                     $user = Yii::$app->user->identity;
 
                     /* if user local not exist, set default */
-                    $locales=Message::getLocaleList();
-                    if(!in_array($user->language, array_keys($locales))){
-                        $user->language=\common\models\Setting::getValue('language');
+                    $locales = Message::getLocaleList();
+                    if (!in_array($user->language, array_keys($locales))) {
+                        $user->language = Setting::getValue('language');
                         $user->save();
                     }
 
-                    Yii::$app->language=$user->language;
+                    Yii::$app->language = $user->language;
                     Yii::$app->setTimeZone($user->timezone);
                 } catch (Exception $e) {
                     Yii::$app->cache->flush();
                     Yii::$app->db->schema->refresh();
                     Yii::$app->user->logout();
                 }
-            }
-            else {
-                $timezone=\common\models\Setting::getValue('timezone');
-                $language=\common\models\Setting::getValue('language');
+            } else {
+                $timezone = Setting::getValue('timezone');
+                $language = Setting::getValue('language');
                 Yii::$app->language = $language;
                 Yii::$app->setTimeZone($timezone);
             }
         }
 
         /* other site settings */
-        $mailProtocol=\common\models\Setting::getValue('mailProtocol');
-
-        if($mailProtocol=='smtp'){
-
-            $host=\common\models\Setting::getValue('smtpHost');
-            $user=\common\models\Setting::getValue('smtpUsername');
-            $pass=\common\models\Setting::getValue('smtpPassword');
-            $port=\common\models\Setting::getValue('smtpPort');
-            $encryption=\common\models\Setting::getValue('smtpEncryption');
+        // mail
+        $mailProtocol = Setting::getValue('mailProtocol');
+        if ($mailProtocol == 'smtp') {
+            $host = Setting::getValue('smtpHost');
+            $user = Setting::getValue('smtpUsername');
+            $pass = Setting::getValue('smtpPassword');
+            $port = Setting::getValue('smtpPort');
+            $encryption = Setting::getValue('smtpEncryption');
             Yii::$container->set('yii\swiftmailer\Mailer', [
                 //'class' => 'yii\swiftmailer\Mailer',
                 'viewPath' => '@common/mail',
@@ -76,7 +75,49 @@ class Setting extends Component
             ]);
         }
 
+        // recaptcha
+        $rcKey = Setting::getValue('reCaptchaKey');
+        $rcSecret = Setting::getValue('reCaptchaSecret');
+        if (!empty($rcKey) && !empty($rcSecret)) {
+            Yii::$container->set('himiklab\yii2\recaptcha\ReCaptcha', [
+                'siteKey' => $rcKey,
+                'secret' => $rcSecret,
+            ]);
+        }
 
+        // client facebbok
+        $clients = [];
+        $fbAppId = Setting::getValue('facebookAppId');
+        $fbAppSecret = Setting::getValue('facebookAppSecret');
+        if (!empty($fbAppId) && !empty($fbAppSecret)) {
+            $clients['facebook'] = [
+                'class' => 'yii\authclient\clients\Facebook',
+                'clientId' => $fbAppId,
+                'clientSecret' => $fbAppSecret,
+            ];
+        }
+        // client google
+        $gClientId = Setting::getValue('googleClientId');
+        $gClientSecret = Setting::getValue('googleClientSecret');
+        if (!empty($gClientId) && !empty($gClientSecret)) {
+            $clients['google'] = [
+                'class' => 'yii\authclient\clients\Google',
+                'clientId' => $gClientId,
+                'clientSecret' => $gClientSecret,
+            ];
+        }
+        // clients OK
+        if (!empty($clients)) {
+            Yii::$container->set('yii\authclient\Collection', [
+                'class' => 'yii\authclient\Collection',
+                'clients' => $clients,
+            ]);
+        }
+
+
+        // Auth APIS
+
+        /* END: other site settings */
 
 
         /* Header */

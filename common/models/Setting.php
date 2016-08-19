@@ -11,6 +11,7 @@ use yii\db\ActiveRecord;
  *
  * @property string $key
  * @property string $value
+ * @property string $title
  * @property string $description
  * @property string $group
  * @property string $type
@@ -34,9 +35,9 @@ class Setting extends ActiveRecord
     public function rules()
     {
         return [
-            [['key', 'description', 'group', 'type', 'data', 'rules'], 'required'],
+            [['key', 'title', 'description', 'group', 'type', 'data', 'rules'], 'required'],
             [['value', 'default'], 'string'],
-            [['key', 'description', 'group'], 'string', 'max' => 255],
+            [['key', 'title', 'description', 'group'], 'string', 'max' => 255],
         ];
     }
 
@@ -48,6 +49,7 @@ class Setting extends ActiveRecord
         return [
             'key' => Yii::t('app', 'Key'),
             'value' => Yii::t('app', 'Value'),
+            'title' => Yii::t('app', 'Title'),
             'description' => Yii::t('app', 'Description'),
             'group' => Yii::t('app', 'Group'),
         ];
