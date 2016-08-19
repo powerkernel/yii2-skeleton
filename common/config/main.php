@@ -33,13 +33,13 @@ return [
             //'clients' => [
 //                'google' => [
 //                    'class' => 'yii\authclient\clients\Google',
-//                    //'clientId' => 'google_client_id',
-//                    //'clientSecret' => 'google_client_secret',
+//                    //'clientId' => 'client_id',
+//                    //'clientSecret' => 'client_secret',
 //                ],
 //                'facebook' => [
 //                    'class' => 'yii\authclient\clients\Facebook',
-//                    'clientId' => '177284462681430',
-//                    'clientSecret' => 'a4df0eca3ce0545cf6a6112ccc92ea73',
+//                    'clientId' => 'client_id',
+//                    'clientSecret' => 'client_secret',
 //                ],
             //],
         ],

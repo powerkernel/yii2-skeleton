@@ -65,13 +65,11 @@ class AccountController extends Controller
     }
 
     /**
-     * @param $client
+     * @param $client \yii\authclient\ClientInterface
      */
     public function onAuthSuccess($client)
     {
-
         (new AuthHandler($client))->handle();
-
     }
 
 

@@ -34,16 +34,33 @@ class AuthHandler
         $this->client = $client;
     }
 
+    /**
+     * handle
+     */
     public function handle()
     {
 
         $attributes = $this->client->getUserAttributes();
 
-
-        $email = ArrayHelper::getValue($attributes, 'email');
+        // common
         $id = ArrayHelper::getValue($attributes, 'id');
-        $name = ArrayHelper::getValue($attributes, 'name');
-        $nickname = $name?$name:ArrayHelper::getValue($attributes, 'login');
+        $fullname='';
+        $email='';
+
+        // google
+        if($this->client->getName()=='google'){
+            $fullname= ArrayHelper::getValue($attributes, 'displayName');
+            $emails = ArrayHelper::getValue($attributes, 'emails');
+            $email=$emails[0]['value'];
+        }
+        // facebook
+        if($this->client->getName()=='facebook'){
+            $fullname = ArrayHelper::getValue($attributes, 'name');
+            $email = ArrayHelper::getValue($attributes, 'email');
+        }
+
+
+
 
 
         /* @var Auth $auth */
@@ -70,8 +87,7 @@ class AuthHandler
 
                     $password = Yii::$app->security->generateRandomString(6);
                     $user = new Account([
-                        'fullname' => $nickname,
-                        //'github' => $nickname,
+                        'fullname' => $fullname,
                         'email' => $email,
                         'password' => $password,
                     ]);
