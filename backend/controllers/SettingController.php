@@ -70,6 +70,7 @@ class SettingController extends BackendController
                 $s->value=$model->$attribute;
                 if($s->save(false)){
                     Yii::$app->session->setFlash('success', Yii::t('app', 'Settings saved successfully.'));
+
                 }
                 else {
                     Yii::$app->session->setFlash('error', Yii::t('app', 'Sorry, something went wrong. {ERRORS}.', ['ERRORS'=>json_encode($s->errors)]));
@@ -77,6 +78,7 @@ class SettingController extends BackendController
                 }
 
             }
+            return $this->redirect(['index']);
         }
 
         return $this->render('index', [
@@ -86,6 +88,11 @@ class SettingController extends BackendController
         ]);
     }
 
+
+    /**
+     * update settings
+     * @return \yii\web\Response
+     */
     public function actionUpdate(){
         $s=[
             /* General */
