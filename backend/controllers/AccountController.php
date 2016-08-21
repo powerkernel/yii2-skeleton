@@ -2,11 +2,13 @@
 
 namespace backend\controllers;
 
+use common\components\AuthHandler;
 use common\models\LoginForm;
 use common\models\Setting;
 use Yii;
 use common\models\Account;
 use common\models\AccountSearch;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 
 /**
@@ -18,22 +20,56 @@ class AccountController extends BackendController
     /**
      * @inheritdoc
      */
-//    public function behaviors()
-//    {
-//        $parent = parent::behaviors();
-//        return array_merge($parent, [
-//            'verbs' => [
-//                'class' => VerbFilter::className(),
-//                'actions' => [
-//                    'delete' => ['POST'],
-//                    'suspend' => ['POST'],
-//                    'unsuspend' => ['POST'],
-//                    'new-password' => ['POST'],
+    public function behaviors()
+    {
+//        return [
+//            'access' => [
+//                'class' => AccessControl::className(),
+//                'rules' => [
+//                    [
+//                        'allow' => true,
+//                        'roles' => ['admin'],
+//                    ],
 //                ],
 //            ],
-//        ]);
-//    }
+//
+//        ];
+        $parent = parent::behaviors();
+        return array_merge($parent, [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions'=>['login', 'auth'],
+                        'allow' => true,
+                    ],
+                ],
+            ],
+        ]);
+    }
 
+
+    /**
+     * @inheritdoc
+     * @return array
+     */
+    public function actions()
+    {
+        return [
+            'auth' => [
+                'class' => 'yii\authclient\AuthAction',
+                'successCallback' => [$this, 'onAuthSuccess'],
+            ],
+        ];
+    }
+
+    /**
+     * @param $client \yii\authclient\ClientInterface
+     */
+    public function onAuthSuccess($client)
+    {
+        (new AuthHandler($client))->handle();
+    }
 
     /**
      * login

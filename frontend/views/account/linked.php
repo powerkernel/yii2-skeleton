@@ -16,6 +16,7 @@ $this->title = Yii::t('app', 'Linked Accounts');
     <div class="box box-default">
         <div class="box-header with-border">
             <h1 class="box-title"><?= $this->title ?></h1>
+
         </div>
         <div class="box-body">
             <h4 class="no-margin"><?= Yii::t('app', 'Available Services') ?></h4>

@@ -59,16 +59,11 @@ class AuthHandler
             $email = ArrayHelper::getValue($attributes, 'email');
         }
 
-
-
-
-
         /* @var Auth $auth */
         $auth = Auth::find()->where([
             'source' => $this->client->getId(),
             'source_id' => $id,
         ])->one();
-
 
 
         if (Yii::$app->user->isGuest) {
@@ -131,6 +126,7 @@ class AuthHandler
             }
         }
         else { // user already logged in
+            Yii::$app->user->setReturnUrl(Yii::$app->request->referrer);
             if (!$auth) { // add auth provider
                 $auth = new Auth([
                     'user_id' => Yii::$app->user->id,
