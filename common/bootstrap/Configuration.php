@@ -107,7 +107,7 @@ class Configuration extends Component
                 'clientSecret' => $gClientSecret,
             ];
         }
-        // clients OK
+
         if (!empty($clients)) {
             Yii::$container->set('yii\authclient\Collection', [
                 'class' => 'yii\authclient\Collection',
