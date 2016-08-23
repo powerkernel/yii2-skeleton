@@ -22,30 +22,20 @@ class AccountController extends BackendController
      */
     public function behaviors()
     {
-//        return [
-//            'access' => [
-//                'class' => AccessControl::className(),
-//                'rules' => [
-//                    [
-//                        'allow' => true,
-//                        'roles' => ['admin'],
-//                    ],
-//                ],
-//            ],
-//
-//        ];
-        $parent = parent::behaviors();
-        return array_merge($parent, [
+        $adminRules = parent::behaviors()['access']['rules'];
+        $rules = array_merge([
+            [
+                'actions' => ['login', 'auth'],
+                'allow' => true,
+                'roles' => ['?']
+            ],
+        ], $adminRules);
+        return [
             'access' => [
                 'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions'=>['login', 'auth'],
-                        'allow' => true,
-                    ],
-                ],
+                'rules' => $rules,
             ],
-        ]);
+        ];
     }
 
 
@@ -168,11 +158,12 @@ class AccountController extends BackendController
      * @param $id
      * @return \yii\web\Response
      */
-    public function actionLoginAs($id){
-        $model=$this->findModel($id);
+    public function actionLoginAs($id)
+    {
+        $model = $this->findModel($id);
         $model->generateAccessToken();
         $model->save(false);
-        return $this->redirect(Yii::$app->urlManagerFrontend->createUrl(['/account/login-as', 'token'=>$model->access_token]));
+        return $this->redirect(Yii::$app->urlManagerFrontend->createUrl(['/account/login-as', 'token' => $model->access_token]));
     }
 
     /**
@@ -222,7 +213,7 @@ class AccountController extends BackendController
     public function actionNewPassword($id)
     {
         $model = $this->findModel($id);
-        if($model->status!=Account::STATUS_SUSPENDED){
+        if ($model->status != Account::STATUS_SUSPENDED) {
             $model->setPassword();
             if ($model->save()) {
                 /* send mail */
@@ -237,20 +228,17 @@ class AccountController extends BackendController
                     ->setTo($model->email)
                     ->setSubject($subject)
                     ->send();
-                if($mailSent){
+                if ($mailSent) {
                     Yii::$app->session->setFlash('success', Yii::t('app', 'New password has been sent.'));
-                }
-                else {
-                    Yii::$app->session->setFlash('warning', Yii::t('app', 'New password set successfully ({PASS}). Error while sending email to user.', ['PASS'=>$model->passwordText]));
+                } else {
+                    Yii::$app->session->setFlash('warning', Yii::t('app', 'New password set successfully ({PASS}). Error while sending email to user.', ['PASS' => $model->passwordText]));
                 }
             } else {
                 Yii::$app->session->setFlash('error', Yii::t('app', 'Sorry, something went wrong. Please try again later.'));
             }
-        }
-        else {
+        } else {
             Yii::$app->session->setFlash('error', Yii::t('app', 'Before you can send the password, restore the suspended account.'));
         }
-
 
 
         return $this->redirect(['view', 'id' => $model->id]);

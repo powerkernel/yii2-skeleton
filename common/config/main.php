@@ -26,13 +26,6 @@ return [
         ],
         'authClientCollection' => [
             'class' => 'yii\authclient\Collection',
-//            'clients'=>[
-//                'facebook'=>[
-//                    'class' => 'yii\authclient\clients\Facebook',
-//                    'clientId'=>'177284462681430',
-//                    'clientSecret'=>'a4df0eca3ce0545cf6a6112ccc92ea73'
-//                ]
-//            ]
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
@@ -48,6 +41,5 @@ return [
             'showScriptName' => false,
             'rules' => [],
         ],
-
     ],
 ];

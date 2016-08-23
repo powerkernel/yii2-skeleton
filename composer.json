@@ -20,12 +20,10 @@
 
         "himiklab/yii2-recaptcha-widget": "*",
         "conquer/select2": "*",
-        "facebook/php-sdk-v4": "~5.0",
-        "google/apiclient": "^2.0",
+        "omnilight/yii2-scheduling": "*",
 
         "modernkernel/yii2-bootstrapsocial": "*",
         "modernkernel/yii2-theme-adminlte": "@dev",
-        "harrytang/yii2-theme-inspinia": "@dev",
         "modernkernel/yii2-jeditable": "*"
 
     },
