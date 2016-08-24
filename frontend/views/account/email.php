@@ -4,12 +4,13 @@
  * @link https://modernkernel.com
  * @copyright Copyright (c) 2016 Modern Kernel
  */
+use common\Core;
 use himiklab\yii2\recaptcha\ReCaptcha;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
 
 /* @var $this \yii\web\View */
-/* @var $model common\models\ChangeEmailForm */
+/* @var $model frontend\models\ChangeEmailForm */
 
 $this->title = Yii::t('app', 'Change Email');
 $keywords = '';
@@ -55,7 +56,9 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
                 </p>
                 <?php $form = ActiveForm::begin(); ?>
                 <?= $form->field($model, 'newEmail')->textInput(['type'=>'email']) ?>
+                <?php if(Core::isReCaptchaEnabled()):?>
                 <?= $form->field($model, 'verifyCode')->widget(ReCaptcha::className())->label(false) ?>
+                <?php endif;?>
                 <div class="form-group">
                     <?= Html::submitButton(Yii::t('app', 'Change'), ['class' => 'btn btn-primary']) ?>
                 </div

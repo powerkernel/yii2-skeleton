@@ -1,6 +1,5 @@
 <?php
 
-use yii\db\Schema;
 use yii\db\Migration;
 
 /**
@@ -13,7 +12,7 @@ class m150119_083106_update extends Migration
      */
     public function up()
     {
-        $this->addColumn('{{core_account}}', 'seo_name', Schema::TYPE_STRING . ' NULL AFTER `id`');
+        $this->addColumn('{{core_account}}', 'seo_name', $this->string()->null()->after('id'));
     }
 
     /**

@@ -1,7 +1,6 @@
 <?php
 
 use yii\db\Migration;
-use yii\db\Schema;
 
 /**
  * Class m160814_141426_update_setting
@@ -14,10 +13,10 @@ class m160814_141426_update_setting extends Migration
     public function up()
     {
         // type, data, default, rules
-        $this->addColumn('{{core_setting}}', 'type', Schema::TYPE_STRING.' NOT NULL DEFAULT "textInput"');
-        $this->addColumn('{{core_setting}}', 'data', Schema::TYPE_TEXT);
-        $this->addColumn('{{core_setting}}', 'default', Schema::TYPE_STRING);
-        $this->addColumn('{{core_setting}}', 'rules', Schema::TYPE_TEXT);
+        $this->addColumn('{{core_setting}}', 'type', $this->string()->notNull()->defaultValue('textInput'));
+        $this->addColumn('{{core_setting}}', 'data', $this->text());
+        $this->addColumn('{{core_setting}}', 'default', $this->string());
+        $this->addColumn('{{core_setting}}', 'rules', $this->text());
 
     }
 

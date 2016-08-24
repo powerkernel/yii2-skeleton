@@ -1,7 +1,6 @@
 <?php
 
 use yii\db\Migration;
-use yii\db\Schema;
 
 /**
  * Class m160810_180440_setting
@@ -21,10 +20,10 @@ class m160810_180440_setting extends Migration
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
         $this->createTable('{{%core_setting}}', [
-            'key' => Schema::TYPE_STRING . ' NOT NULL',
-            'value' => Schema::TYPE_TEXT . ' NULL DEFAULT NULL',
-            'description' => Schema::TYPE_STRING . ' NOT NULL',
-            'group' => Schema::TYPE_STRING . ' NOT NULL',
+            'key' => $this->string()->notNull(),
+            'value' => $this->text(),
+            'description' => $this->string()->notNull(),
+            'group' => $this->string()->notNull(),
         ], $tableOptions);
         $this->addPrimaryKey('pk', '{{%core_setting}}', 'key');
     }

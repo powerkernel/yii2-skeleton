@@ -1,7 +1,6 @@
 <?php
 
 use yii\db\Migration;
-use yii\db\Schema;
 
 /**
  * Class m160719_075619_update
@@ -15,7 +14,7 @@ class m160719_075619_update extends Migration
     {
         $this->renameColumn('{{%core_account}}', 'username', 'fullname');
         $this->renameColumn('{{%core_account}}', 'username_changed', 'fullname_changed');
-        $this->addColumn('{{%core_account}}', 'email_verified', Schema::TYPE_BOOLEAN . ' NULL DEFAULT 0 AFTER `email`'); //
+        $this->addColumn('{{%core_account}}', 'email_verified', $this->boolean()->null()->defaultValue(0)->after('email')); //
 
     }
 

@@ -1,7 +1,6 @@
 <?php
 
 use yii\db\Migration;
-use yii\db\Schema;
 
 /**
  * Class m160813_133839_update_tbl_account
@@ -13,7 +12,7 @@ class m160813_133839_update_tbl_account extends Migration
      */
     public function up()
     {
-        $this->addColumn('{{core_account}}', 'access_token', Schema::TYPE_STRING . ' NULL DEFAULT NULL AFTER `auth_key`');
+        $this->addColumn('{{core_account}}', 'access_token', $this->string()->after('auth_key'));
     }
 
     /**

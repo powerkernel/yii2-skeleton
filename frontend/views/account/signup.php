@@ -40,28 +40,23 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Account'), 'url' => 
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="account-signup">
-    <?php if (Yii::$app->params['account']['registrationDisabled']): ?>
-        <div class="alert alert-warning">
-            <?= Yii::t('app', 'Sorry registration has been disabled by the administrator.') ?>
-        </div>
-    <?php else: ?>
+    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="row">
+        <div class="col-sm-8 col-md-5 col-lg-5">
+            <?php $form = ActiveForm::begin(['id' => 'signup-form', 'enableAjaxValidation' => false]); ?>
+            <?= $form->field($model, 'name') ?>
+            <?= $form->field($model, 'email') ?>
+            <?php if(\common\Core::isReCaptchaEnabled()):?>
+            <?= $form->field($model, 'captcha')->widget(ReCaptcha::className())->label(false) ?>
+            <?php endif;?>
+            <p>
+                <?= Yii::t('app', 'By Clicking Submit below, you are agreeing to the Terms and Conditions and Privacy Policy.') ?>
+            </p>
 
-        <h1><?= Html::encode($this->title) ?></h1>
-        <div class="row">
-            <div class="col-sm-8 col-md-5 col-lg-5">
-                <?php $form = ActiveForm::begin(['id' => 'signup-form', 'enableAjaxValidation' => false]); ?>
-                <?= $form->field($model, 'name') ?>
-                <?= $form->field($model, 'email') ?>
-                <?= $form->field($model, 'captcha')->widget(ReCaptcha::className())->label(false) ?>
-                <p>
-                    <?= Yii::t('app', 'By Clicking Submit below, you are agreeing to the Terms and Conditions and Privacy Policy.') ?>
-                </p>
-
-                <div class="form-group">
-                    <?= Html::submitButton(Yii::t('app', 'Signup'), ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
-                </div>
-                <?php ActiveForm::end(); ?>
+            <div class="form-group">
+                <?= Html::submitButton(Yii::t('app', 'Signup'), ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
             </div>
+            <?php ActiveForm::end(); ?>
         </div>
-    <?php endif; ?>
+    </div>
 </div>

@@ -1,6 +1,5 @@
 <?php
 
-use yii\db\Schema;
 use yii\db\Migration;
 
 /**
@@ -13,9 +12,9 @@ class m151122_044038_update extends Migration
      */
     public function up()
     {
-        $this->addColumn('{{core_account}}', 'language', Schema::TYPE_STRING . '(5) NOT NULL DEFAULT "en-US" AFTER `role`');
-        $this->addColumn('{{core_account}}', 'timezone', Schema::TYPE_STRING . '(100) NOT NULL DEFAULT "GMT" AFTER `language`');
-        $this->addColumn('{{core_account}}', 'username_changed', Schema::TYPE_SMALLINT . ' NOT NULL DEFAULT 0 AFTER `username`');
+        $this->addColumn('{{core_account}}', 'language', $this->string(5)->notNull()->defaultValue('en-US')->after('role'));
+        $this->addColumn('{{core_account}}', 'timezone', $this->string(100)->notNull()->defaultValue('Asia/Ho_Chi_Minh')->after('language'));
+        $this->addColumn('{{core_account}}', 'username_changed', $this->smallInteger()->notNull()->defaultValue(0)->after('username'));
     }
 
     /**

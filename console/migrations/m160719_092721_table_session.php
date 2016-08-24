@@ -1,7 +1,6 @@
 <?php
 
 use yii\db\Migration;
-use yii\db\Schema;
 
 /**
  * Class m160719_092721_table_session
@@ -21,8 +20,8 @@ class m160719_092721_table_session extends Migration
 
         $this->createTable('{{%core_session}}', [
             'id' => 'CHAR(64) NOT NULL PRIMARY KEY',
-            'expire' => Schema::TYPE_INTEGER.' NOT NULL',
-            'data' => Schema::TYPE_BINARY.' NOT NULL',
+            'expire' => $this->integer()->notNull(),
+            'data' => $this->binary()->notNull(),
         ], $tableOptions);
 
         $this->createIndex('expire', '{{%core_session}}', 'expire');

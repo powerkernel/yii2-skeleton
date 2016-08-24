@@ -86,3 +86,11 @@ And adding more features...
 ```
 ??
 ```
+
+HOW TO USE
+----------
+1. Update your database information in common\config\mail-local.php
+2. Run `php yii migrate`
+3. Go to home page and sign up for new account, admin role will be auto assigned.
+4. Go to \backend and update all settings (reCaptcha, API, SMTP...)
+5. Your are ready!

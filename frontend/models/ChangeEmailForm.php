@@ -7,6 +7,7 @@
 
 namespace frontend\models;
 
+use common\Core;
 use common\models\Account;
 use common\models\Setting;
 use himiklab\yii2\recaptcha\ReCaptchaValidator;
@@ -27,17 +28,25 @@ class ChangeEmailForm extends Model {
      */
     public function rules()
     {
-        return [
+        $captcha=[];
+        if(Core::isReCaptchaEnabled()){
+            $captcha=[
+                ['verifyCode', 'required', 'message' => Yii::t('app', 'Prove you are NOT a robot')],
+                ['verifyCode', ReCaptchaValidator::className(), 'message' => Yii::t('app', 'Prove you are NOT a robot')]
+
+            ];
+        }
+
+        $default= [
             [['newEmail'], 'required'],
 
             ['newEmail', 'email'],
             ['newEmail', 'filter', 'filter' => 'trim'],
             ['newEmail', 'filter', 'filter' => 'strtolower'],
             ['newEmail', 'unique', 'targetAttribute'=>'email', 'targetClass' => 'common\models\Account', 'message' => Yii::t('app', 'This email address has already been taken.')],
-
-            [['verifyCode'], 'required', 'message'=> Yii::t('app', 'Prove you are NOT a robot')],
-            [['verifyCode'], ReCaptchaValidator::className(), 'message'=> Yii::t('app', 'Prove you are NOT a robot')]
         ];
+
+        return array_merge($default, $captcha);
     }
 
     /**

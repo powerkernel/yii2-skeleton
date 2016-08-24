@@ -8,6 +8,7 @@
 namespace frontend\models;
 
 
+use common\Core;
 use himiklab\yii2\recaptcha\ReCaptchaValidator;
 use yii\base\Model;
 use Yii;
@@ -27,7 +28,15 @@ class SignupForm extends Model
      */
     public function rules()
     {
-        return [
+        $captcha=[];
+        if(Core::isReCaptchaEnabled()){
+            $captcha=[
+                ['captcha', 'required', 'message' => Yii::t('app', 'Prove you are NOT a robot')],
+                ['captcha', ReCaptchaValidator::className(), 'message' => Yii::t('app', 'Prove you are NOT a robot')]
+
+            ];
+        }
+        $default= [
             ['name', 'required'],
             ['name', 'string', 'min' => 2, 'max' => 255],
             ['name', 'filter', 'filter' => 'trim'],
@@ -38,11 +47,9 @@ class SignupForm extends Model
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'filter', 'filter' => 'strtolower'],
             ['email', 'unique', 'targetClass' => '\common\models\Account', 'message' => Yii::t('app', 'This email address has already been taken.')],
-
-            ['captcha', 'required', 'message' => Yii::t('app', 'Prove you are NOT a robot')],
-            ['captcha', ReCaptchaValidator::className(), 'message' => Yii::t('app', 'Prove you are NOT a robot')]
-
         ];
+
+        return array_merge($default, $captcha);
     }
 
     /**

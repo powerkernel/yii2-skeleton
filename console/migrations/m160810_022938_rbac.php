@@ -1,7 +1,6 @@
 <?php
 
 use yii\db\Migration;
-use yii\db\Schema;
 
 /**
  * Class m160810_022938_rbac
@@ -22,20 +21,20 @@ class m160810_022938_rbac extends Migration
         }
         $this->createTable('{{%core_auth_rule}}', [
             'name' => 'VARCHAR(64)',
-            'data' => Schema::TYPE_TEXT . ' NULL DEFAULT NULL',
-            'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'data' => $this->text()->null(),
+            'created_at' => $this->integer()->notNull(),
+            'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);
         $this->addPrimaryKey('pk', '{{%core_auth_rule}}', 'name');
 
         $this->createTable('{{%core_auth_item}}', [
             'name' => 'VARCHAR(64)',
-            'type' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'description' => Schema::TYPE_TEXT . ' NULL DEFAULT NULL',
+            'type' => $this->integer()->notNull(),
+            'description' => $this->text(),
             'rule_name' => 'VARCHAR(64) NULL DEFAULT NULL',
-            'data' => Schema::TYPE_TEXT . ' NULL DEFAULT NULL',
-            'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'data' => $this->text(),
+            'created_at' => $this->integer()->notNull(),
+            'updated_at' => $this->integer()->notNull(),
         ], $tableOptions);
         $this->addPrimaryKey('pk', '{{%core_auth_item}}', 'name');
         $this->addForeignKey('fk_item_rule', '{{%core_auth_item}}', 'rule_name', '{{%core_auth_rule}}', 'name', 'SET NULL', 'CASCADE');
@@ -51,8 +50,8 @@ class m160810_022938_rbac extends Migration
 
         $this->createTable('{{%core_auth_assignment}}', [
             'item_name' => 'VARCHAR(64) NOT NULL',
-            'user_id' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'user_id' => $this->integer()->notNull(),
+            'created_at' => $this->integer()->notNull(),
         ], $tableOptions);
         $this->addPrimaryKey('pk', '{{%core_auth_assignment}}', ['item_name', 'user_id']);
         $this->addForeignKey('fk_item_name', '{{%core_auth_assignment}}', 'item_name', '{{%core_auth_item}}', 'name', 'CASCADE', 'CASCADE');

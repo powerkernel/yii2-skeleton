@@ -1,6 +1,5 @@
 <?php
 
-use yii\db\Schema;
 use yii\db\Migration;
 
 /**
@@ -15,9 +14,9 @@ class m141025_155318_update extends Migration
     {
         $this->createIndex('user_email', '{{core_account}}', 'email', true);
         $this->createIndex('user_password_reset_token', '{{core_account}}', 'password_reset_token', true);
-        $this->addColumn('{{core_account}}', 'change_email_token', Schema::TYPE_STRING . ' AFTER `email`');
+        $this->addColumn('{{core_account}}', 'change_email_token', $this->string()->after('email'));
         $this->createIndex('user_change_email_token', '{{core_account}}', 'change_email_token', true);
-        $this->addColumn('{{core_account}}', 'new_email', Schema::TYPE_STRING . ' AFTER `email`');
+        $this->addColumn('{{core_account}}', 'new_email', $this->string()->after('email'));
     }
 
     /**

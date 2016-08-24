@@ -1,7 +1,6 @@
 <?php
 
 use yii\db\Migration;
-use yii\db\Schema;
 
 /**
  * Class m160818_132736_update_setting
@@ -13,7 +12,7 @@ class m160818_132736_update_setting extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn('{{core_setting}}', 'title', Schema::TYPE_STRING.' NULL DEFAULT NULL AFTER `value`');
+        $this->addColumn('{{core_setting}}', 'title', $this->string()->after('value'));
     }
 
     /**

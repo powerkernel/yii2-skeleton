@@ -1,7 +1,6 @@
 <?php
 
 use yii\db\Migration;
-use yii\db\Schema;
 
 /**
  * Class m160816_013208_i18n
@@ -20,17 +19,17 @@ class m160816_013208_i18n extends Migration
         }
 
         $this->createTable('{{%core_source_message}}', [
-            'id' => Schema::TYPE_PK,
-            'category' => Schema::TYPE_STRING . '(32) NOT NULL',
-            'message' => Schema::TYPE_TEXT . ' NOT NULL',
+            'id' => $this->primaryKey(),
+            'category' => $this->string(32)->notNull(),
+            'message' => $this->text()->notNull(),
         ], $tableOptions);
         //$this->createIndex('idx_message', '{{%icore_source_message}}', ['message']);
 
         $this->createTable('{{%core_message}}', [
-            'id' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'language' => Schema::TYPE_STRING . '(16) NOT NULL',
-            'translation' => Schema::TYPE_TEXT . ' NOT NULL',
-            'is_translated' => Schema::TYPE_BOOLEAN . ' NOT NULL DEFAULT 0'
+            'id' => $this->integer()->notNull(),
+            'language' => $this->string(16)->notNull(),
+            'translation' => $this->text()->notNull(),
+            'is_translated' => $this->boolean()->notNull()->defaultValue(0),
         ], $tableOptions);
         $this->addPrimaryKey('pk', '{{%core_message}}', ['id', 'language']);
         $this->addForeignKey('fk_message_source_message', '{{%core_message}}', 'id', '{{%core_source_message}}', 'id', 'CASCADE', 'RESTRICT');

@@ -209,6 +209,7 @@ class Account extends ActiveRecord implements IdentityInterface
                 $auth = Yii::$app->authManager;
                 $admin = $auth->getRole('admin');
                 $auth->assign($admin, $this->id);
+                Yii::$app->session->setFlash('info', Yii::t('app', 'Your admin account password is {PASS}', ['PASS'=>$this->passwordText]));
             }
         }
 

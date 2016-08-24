@@ -2,6 +2,7 @@
 
 namespace common;
 
+use common\models\Setting;
 use DateTime;
 use Imagine\Exception\InvalidArgumentException;
 use Imagine\Exception\RuntimeException;
@@ -1131,6 +1132,19 @@ class Core
             return $new;
         }
         return $list;
+    }
+
+    /**
+     * check if reCaptcha enabled
+     * @return bool
+     */
+    public static function isReCaptchaEnabled(){
+        $rcKey = Setting::getValue('reCaptchaKey');
+        $rcSecret = Setting::getValue('reCaptchaSecret');
+        if (!empty($rcKey) && !empty($rcSecret)) {
+            return true;
+        }
+        return false;
     }
 
 }
