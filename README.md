@@ -21,6 +21,9 @@ With Composer installed, you can then install the application using the followin
 
     composer global require "fxp/composer-asset-plugin:~1.1.1"
     composer create-project -s dev --prefer-dist modernkernel/yii2-skeleton yii-application
+or if you want to install packages from ```source```
+
+    composer create-project -s dev --prefer-source modernkernel/yii2-skeleton yii-application
 
 The first command installs the [composer asset plugin](https://github.com/francoispluchino/composer-asset-plugin/)
 which allows managing bower and npm package dependencies through Composer. You only need to run this command
@@ -91,6 +94,13 @@ HOW TO USE
 ----------
 1. Update your database information in common\config\mail-local.php
 2. Run `php yii migrate`
-3. Go to home page and sign up for new account, admin role will be auto assigned.
-4. Go to \backend and update all settings (reCaptcha, API, SMTP...)
-5. Your are ready!
+3. Config/Symlink frontend\web & backend\web to your public_html
+4. Go to frontend and sign up for new account, admin role will be auto assigned.
+5. Go to backend and update all settings (reCaptcha, API, SMTP...)
+6. Your are ready!
+
+## Symlink Help
+For Linux
+```ln -s PATH_TO/frontend/web/backend PATH_TO/backend/web```
+For windows
+```mklink /D PATH_TO\frontend\web\backend PATH_TO\backend\web```

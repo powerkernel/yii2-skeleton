@@ -91,7 +91,7 @@ class Configuration extends Component
             ]);
         }
 
-        // client facebbok
+        // client facebook
         $clients = [];
         $fbAppId = Setting::getValue('facebookAppId');
         $fbAppSecret = Setting::getValue('facebookAppSecret');
@@ -112,7 +112,7 @@ class Configuration extends Component
                 'clientSecret' => $gClientSecret,
             ];
         }
-
+        // clients OK
         if (!empty($clients)) {
             Yii::$container->set('yii\authclient\Collection', [
                 'class' => 'yii\authclient\Collection',
@@ -122,38 +122,9 @@ class Configuration extends Component
 
 
         /* debug  mode */
-        /* not cmd */
         if(Setting::getValue('debug') && !is_a(Yii::$app, 'yii\console\Application') && Yii::$app->user->can('admin')){
             $module = Yii::$app->getModule('debug');
             $module->allowedIPs=[Yii::$app->request->userIP];
-            //$module->allowedIPs=[];
         }
-
-        // Auth APIS
-
-        /* END: other site settings */
-
-
-        /* Header */
-        //$headers = Yii::$app->response->headers;
-
-        // HSTS
-        //$headers->add('strict-transport-security', 'max-age=600');
-        //\Yii::$app->
-
-
-
-
-        //\Yii::$app->view->theme->skin='skin-green';
-        //$a=Account::find()->one();
-//        \Yii::$container->set('modernkernel\themeadminlte\AdminlteTheme', [
-//            'skin' => 'skin-green'.$a->id,
-//        ]);
-
-//        \Yii::$container->set('yii\web\JqueryAsset', [
-//            'sourcePath'=>null,
-//            'js' => ['https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js']
-//        ]);
     }
-
 }
