@@ -1,7 +1,7 @@
 Yii 2 Skeleton
 ==============
 
-Yii 2 Skeleton is a skeleton (base on [Yii 2 App Advanced](https://github.com/yiisoft/yii2-app-advanced)) application best for
+Yii 2 Skeleton is a skeleton (based on [Yii 2 App Advanced](https://github.com/yiisoft/yii2-app-advanced)) application best for
 developing complex Web applications with multiple tiers.
 
 The template includes three tiers: front end, back end, and console, each of which
@@ -77,6 +77,7 @@ FEATURES
 ```
 Account
     Signup, Login
+    Login with Facebook, Google
     CRUD: View, Update, Delete, List
 RBAC
     Assign, Revoke, List
@@ -87,7 +88,7 @@ I18N
 
 And adding more features...
 ```
-??
+More comming soon..
 ```
 
 HOW TO USE
