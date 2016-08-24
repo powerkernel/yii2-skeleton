@@ -1,7 +1,7 @@
 Yii 2 Skeleton
 ==============
 
-Yii 2 Skeleton is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
+Yii 2 Skeleton is a skeleton (base on [Yii 2 App Advanced](https://github.com/yiisoft/yii2-app-advanced)) application best for
 developing complex Web applications with multiple tiers.
 
 The template includes three tiers: front end, back end, and console, each of which
@@ -10,7 +10,7 @@ is a separate Yii application.
 The template is designed to work in a team development environment. It supports
 deploying the application in different environments.
 
-Documentation is at [docs/guide/README.md](docs/guide/README.md).
+Yii2 App Advanced Documentation is at [docs/guide/README.md](https://github.com/yiisoft/yii2-app-advanced/blob/master/docs/guide/README.md).
 
 ## Installing using Composer
 
@@ -102,5 +102,6 @@ HOW TO USE
 ## Symlink Help
 For Linux
 ```ln -s PATH_TO/frontend/web/backend PATH_TO/backend/web```
+
 For windows
 ```mklink /D PATH_TO\frontend\web\backend PATH_TO\backend\web```
