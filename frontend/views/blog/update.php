@@ -5,26 +5,12 @@
  * @copyright Copyright (c) 2016 Modern Kernel
  */
 
-use yii\helpers\Inflector;
-use yii\helpers\StringHelper;
-
 /* @var $this yii\web\View */
-/* @var $generator yii\gii\generators\crud\Generator */
+/* @var $model common\models\Blog */
 
-$urlParams = $generator->generateUrlParams();
-
-echo "<?php\n";
-?>
-/**
- * @author Harry Tang <harry@modernkernel.com>
- * @link https://modernkernel.com
- * @copyright Copyright (c) 2016 Modern Kernel
- */
-
-/* @var $this yii\web\View */
-/* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
-
-$this->title = <?= $generator->generateString('Update {modelClass}: ', ['modelClass' => Inflector::camel2words(StringHelper::basename($generator->modelClass))]) ?> . $model-><?= $generator->getNameAttribute() ?>;
+$this->title = Yii::t('app', 'Update {modelClass}: ', [
+    'modelClass' => 'Blog',
+]) . $model->title;
 $keywords = '';
 $description = '';
 
@@ -52,9 +38,9 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
 //$this->registerMetaTag(['name'=>'twitter:data2', 'content'=>'']);
 //$this->registerMetaTag(['name'=>'twitter:label2', 'content'=>'']);
 
-$this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model-><?= $generator->getNameAttribute() ?>, 'url' => ['view', <?= $urlParams ?>]];
-$this->params['breadcrumbs'][] = <?= $generator->generateString('Update') ?>;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Blogs'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 
 /* misc */
 //$js=file_get_contents(__DIR__.'/index.min.js');
@@ -62,10 +48,10 @@ $this->params['breadcrumbs'][] = <?= $generator->generateString('Update') ?>;
 //$css=file_get_contents(__DIR__.'/index.css');
 //$this->registerCss($css);
 ?>
-<div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-update">
+<div class="blog-update">
     <div class="box box-primary">
         <div class="box-body">
-            <?= "<?= " ?>$this->render('_form', [
+            <?= $this->render('_form', [
                 'model' => $model,
             ]) ?>
         </div>

@@ -1,4 +1,9 @@
 <?php
+/**
+ * @author Harry Tang <harry@modernkernel.com>
+ * @link https://modernkernel.com
+ * @copyright Copyright (c) 2016 Modern Kernel
+ */
 
 use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
@@ -8,6 +13,11 @@ use yii\helpers\StringHelper;
 
 echo "<?php\n";
 ?>
+/**
+ * @author Harry Tang <harry@modernkernel.com>
+ * @link https://modernkernel.com
+ * @copyright Copyright (c) 2016 Modern Kernel
+ */
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;

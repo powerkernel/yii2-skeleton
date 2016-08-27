@@ -1,30 +1,13 @@
 <?php
-/**
- * @author Harry Tang <harry@modernkernel.com>
- * @link https://modernkernel.com
- * @copyright Copyright (c) 2016 Modern Kernel
- */
 
-use yii\helpers\Inflector;
-use yii\helpers\StringHelper;
+use yii\helpers\Html;
+use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
-/* @var $generator yii\gii\generators\crud\Generator */
+/* @var $searchModel common\models\BlogSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
-$urlParams = $generator->generateUrlParams();
-
-echo "<?php\n";
-?>
-/**
- * @author Harry Tang <harry@modernkernel.com>
- * @link https://modernkernel.com
- * @copyright Copyright (c) 2016 Modern Kernel
- */
-
-/* @var $this yii\web\View */
-/* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
-
-$this->title = <?= $generator->generateString('Update {modelClass}: ', ['modelClass' => Inflector::camel2words(StringHelper::basename($generator->modelClass))]) ?> . $model-><?= $generator->getNameAttribute() ?>;
+$this->title = Yii::t('app', 'Blog');
 $keywords = '';
 $description = '';
 
@@ -52,22 +35,24 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
 //$this->registerMetaTag(['name'=>'twitter:data2', 'content'=>'']);
 //$this->registerMetaTag(['name'=>'twitter:label2', 'content'=>'']);
 
-$this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model-><?= $generator->getNameAttribute() ?>, 'url' => ['view', <?= $urlParams ?>]];
-$this->params['breadcrumbs'][] = <?= $generator->generateString('Update') ?>;
+/* breadcrumbs */
+$this->params['breadcrumbs'][] = $this->title;
 
 /* misc */
+$this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay").removeClass("hidden");});$(document).on("pjax:complete", function(){ $(".grid-view-overlay").addClass("hidden");})');
 //$js=file_get_contents(__DIR__.'/index.min.js');
 //$this->registerJs($js);
 //$css=file_get_contents(__DIR__.'/index.css');
 //$this->registerCss($css);
 ?>
-<div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-update">
-    <div class="box box-primary">
-        <div class="box-body">
-            <?= "<?= " ?>$this->render('_form', [
-                'model' => $model,
-            ]) ?>
-        </div>
-    </div>
+<div class="blog-index">
+    <?= ListView::widget([
+        'layout' => '<div class="row">{items}</div>{summary}{pager}',
+        'dataProvider' => $dataProvider,
+        'itemOptions' => ['class' => 'item'],
+        'itemView' => function ($model, $key, $index, $widget) {
+            return $this->render('_grid', ['model' => $model]);
+            //return Html::a(Html::encode($model->title), ['view', 'id' => $model->id]);
+        },
+    ]) ?>
 </div>

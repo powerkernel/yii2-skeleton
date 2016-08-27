@@ -17,7 +17,7 @@ class RbacController extends BackendController
      */
     public function actionIndex()
     {
-        $roles = Yii::$app->authManager->getRoles();
+        $roles = array_merge(Yii::$app->authManager->getRoles(), Yii::$app->authManager->getPermissions());
         return $this->render('index', ['roles' => $roles]);
     }
 

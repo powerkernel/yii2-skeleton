@@ -24,7 +24,8 @@
 
         "modernkernel/yii2-bootstrapsocial": "*",
         "modernkernel/yii2-theme-adminlte": "@dev",
-        "modernkernel/yii2-jeditable": "*"
+        "modernkernel/yii2-jeditable": "*",
+        "modernkernel/yii2-slugify": "@dev"
 
     },
     "repositories": [

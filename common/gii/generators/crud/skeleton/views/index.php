@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * @author Harry Tang <harry@modernkernel.com>
+ * @link https://modernkernel.com
+ * @copyright Copyright (c) 2016 Modern Kernel
+ */
 use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
 
@@ -97,6 +101,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
             }
         }
         ?>
+                    //['attribute' => 'created_at', 'value' => 'created_at', 'format' => 'dateTime', 'filter' => DatePicker::widget(['model' => $searchModel, 'attribute' => 'created_at', 'dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']])],
                     //['attribute' => 'status', 'value' => function ($model){return $model->statusText;}, 'filter'=>''],
                     ['class' => 'yii\grid\ActionColumn'],
                 ],

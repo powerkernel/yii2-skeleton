@@ -5,28 +5,15 @@
  * @copyright Copyright (c) 2016 Modern Kernel
  */
 
-use yii\helpers\Inflector;
-use yii\helpers\StringHelper;
+use yii\helpers\Html;
+use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $generator yii\gii\generators\crud\Generator */
+/* @var $model common\models\Blog */
 
-$urlParams = $generator->generateUrlParams();
-
-echo "<?php\n";
-?>
-/**
- * @author Harry Tang <harry@modernkernel.com>
- * @link https://modernkernel.com
- * @copyright Copyright (c) 2016 Modern Kernel
- */
-
-/* @var $this yii\web\View */
-/* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
-
-$this->title = <?= $generator->generateString('Update {modelClass}: ', ['modelClass' => Inflector::camel2words(StringHelper::basename($generator->modelClass))]) ?> . $model-><?= $generator->getNameAttribute() ?>;
-$keywords = '';
-$description = '';
+$this->title = $model->title;
+$keywords = $model->tags;
+$description = $model->desc;
 
 $this->registerMetaTag(['name' => 'keywords', 'content' => $keywords]);
 $this->registerMetaTag(['name' => 'description', 'content' => $description]);
@@ -52,9 +39,9 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
 //$this->registerMetaTag(['name'=>'twitter:data2', 'content'=>'']);
 //$this->registerMetaTag(['name'=>'twitter:label2', 'content'=>'']);
 
-$this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString(Inflector::pluralize(Inflector::camel2words(StringHelper::basename($generator->modelClass)))) ?>, 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model-><?= $generator->getNameAttribute() ?>, 'url' => ['view', <?= $urlParams ?>]];
-$this->params['breadcrumbs'][] = <?= $generator->generateString('Update') ?>;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Blog'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
+$this->params['subtitle']=Yii::$app->formatter->asDate($model->updated_at);
 
 /* misc */
 //$js=file_get_contents(__DIR__.'/index.min.js');
@@ -62,12 +49,23 @@ $this->params['breadcrumbs'][] = <?= $generator->generateString('Update') ?>;
 //$css=file_get_contents(__DIR__.'/index.css');
 //$this->registerCss($css);
 ?>
-<div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-update">
+<div class="blog-view">
     <div class="box box-primary">
+        <div class="box-header with-border">
+            <h1 class="box-title"><?= $this->title ?></h1>
+
+            <?php if (Yii::$app->user->can('updateBlog', ['model' => $model])):?>
+            <div class="box-tools pull-right">
+                <a href="<?= $model->updateUrl ?>" class="btn btn-box-tool">
+                    <?= \modernkernel\fontawesome\Icon::widget(['icon'=>'pencil-square fa-lg']) ?>
+                </a>
+            </div>
+            <?php endif;?>
+        </div>
         <div class="box-body">
-            <?= "<?= " ?>$this->render('_form', [
-                'model' => $model,
-            ]) ?>
+            <?= $model->content ?>
         </div>
     </div>
 </div>
+
+

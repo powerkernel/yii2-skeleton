@@ -1,5 +1,11 @@
 <?php
 /**
+ * @author Harry Tang <harry@modernkernel.com>
+ * @link https://modernkernel.com
+ * @copyright Copyright (c) 2016 Modern Kernel
+ */
+
+/**
  * This is the template for generating a CRUD controller class file.
  */
 
@@ -26,6 +32,11 @@ $actionParamComments = $generator->generateActionParamComments();
 
 echo "<?php\n";
 ?>
+/**
+ * @author Harry Tang <harry@modernkernel.com>
+ * @link https://modernkernel.com
+ * @copyright Copyright (c) 2016 Modern Kernel
+ */
 
 namespace <?= StringHelper::dirname(ltrim($generator->controllerClass, '\\')) ?>;
 

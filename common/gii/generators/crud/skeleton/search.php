@@ -1,5 +1,11 @@
 <?php
 /**
+ * @author Harry Tang <harry@modernkernel.com>
+ * @link https://modernkernel.com
+ * @copyright Copyright (c) 2016 Modern Kernel
+ */
+
+/**
  * This is the template for generating CRUD search class of the specified model.
  */
 
@@ -21,6 +27,12 @@ $searchConditions = $generator->generateSearchConditions();
 
 echo "<?php\n";
 ?>
+/**
+ * @author Harry Tang <harry@modernkernel.com>
+ * @link https://modernkernel.com
+ * @copyright Copyright (c) 2016 Modern Kernel
+ */
+
 
 namespace <?= StringHelper::dirname(ltrim($generator->searchModelClass, '\\')) ?>;
 
