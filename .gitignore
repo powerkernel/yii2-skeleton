@@ -31,4 +31,8 @@ phpunit.phar
 
 # vagrant runtime
 /.vagrant
+
+# misc
 frontend/web/backend
+composer.lock
+_ssl
