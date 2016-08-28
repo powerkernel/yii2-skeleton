@@ -6,6 +6,7 @@
  */
 
 use common\models\Blog;
+use dosamigos\tinymce\TinyMce;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -24,9 +25,24 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'desc')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'content')->widget(TinyMce::className(), [
+        'options' => ['rows' => 6],
+        //'language' => Yii::$app->language,
+
+        'clientOptions' => [
+            'menubar'=> false,
+            'plugins' => [
+                "advlist autolink lists link charmap print preview anchor",
+                "searchreplace visualblocks code fullscreen",
+                "insertdatetime media table contextmenu paste image"
+            ],
+            'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | removeformat code"
+        ]
+    ]);?>
 
     <?= $form->field($model, 'tags')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'thumbnail')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'status')->dropDownList(Blog::getStatusOption()) ?>
 

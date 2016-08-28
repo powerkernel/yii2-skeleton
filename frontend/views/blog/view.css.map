@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAEI,wBAAI,CAAC,KAAK,CAAC,GAAG,CAAE,MAAM,CAAC,GAAG,CAAE,MAAM,CAAE,QAAQ",
+"sources": ["view.scss"],
+"names": [],
+"file": "view.css"
+}

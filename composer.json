@@ -21,6 +21,8 @@
         "himiklab/yii2-recaptcha-widget": "*",
         "conquer/select2": "*",
         "omnilight/yii2-scheduling": "*",
+        "nirvana-msu/yii2-jsonld-helper": "1.0.*@dev",
+        "2amigos/yii2-tinymce-widget" : "~1.1",
 
         "modernkernel/yii2-bootstrapsocial": "*",
         "modernkernel/yii2-theme-adminlte": "@dev",
@@ -32,7 +34,7 @@
     "repositories": [
         {
             "type": "git",
-            "url": "git@github.com:modernkernel/yii2-slugify.git"
+            "url": "git@github.com:modernkernel/yii2-resume.git"
         }
     ],
     "require-dev": {

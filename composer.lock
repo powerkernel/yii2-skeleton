@@ -4,9 +4,69 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a91ddfb564ce608052699a8447d53763",
-    "content-hash": "2fb8b9d5d15234625833db846592bf02",
+    "hash": "b6e796a6beb7ae42315761b9933ec30f",
+    "content-hash": "361130120d565a6f4df65c58b4cbfed5",
     "packages": [
+        {
+            "name": "2amigos/yii2-tinymce-widget",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/2amigos/yii2-tinymce-widget.git",
+                "reference": "d58bad3ede450f86acd475fb4ecda982b980132b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/2amigos/yii2-tinymce-widget/zipball/d58bad3ede450f86acd475fb4ecda982b980132b",
+                "reference": "d58bad3ede450f86acd475fb4ecda982b980132b",
+                "shasum": ""
+            },
+            "require": {
+                "tinymce/tinymce": ">=4",
+                "yiisoft/yii2": "~2.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "asset-installer-paths": {
+                    "bower-asset-library": "vendor/bower"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "dosamigos\\tinymce\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "2amigOS! Consulting Group",
+                    "email": "hola@2amigos.us",
+                    "homepage": "http://2amigos.us",
+                    "role": "Developer"
+                }
+            ],
+            "description": "TinyMCE widget for Yii2.",
+            "homepage": "http://yiiwheels.com/extension/tinymce-widget",
+            "keywords": [
+                "2amigos",
+                "extension",
+                "tinymce",
+                "widget",
+                "yii",
+                "yii 2",
+                "yii2"
+            ],
+            "time": "2015-03-28 21:53:43"
+        },
         {
             "name": "bower-asset/admin-lte",
             "version": "v2.3.6",
@@ -681,6 +741,102 @@
             "time": "2016-06-10 15:38:28"
         },
         {
+            "name": "ml/iri",
+            "version": "1.1.4",
+            "target-dir": "ML/IRI",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lanthaler/IRI.git",
+                "reference": "cbd44fa913e00ea624241b38cefaa99da8d71341"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lanthaler/IRI/zipball/cbd44fa913e00ea624241b38cefaa99da8d71341",
+                "reference": "cbd44fa913e00ea624241b38cefaa99da8d71341",
+                "shasum": ""
+            },
+            "require": {
+                "lib-pcre": ">=4.0",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ML\\IRI": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Markus Lanthaler",
+                    "email": "mail@markus-lanthaler.com",
+                    "homepage": "http://www.markus-lanthaler.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "IRI handling for PHP",
+            "homepage": "http://www.markus-lanthaler.com",
+            "keywords": [
+                "URN",
+                "iri",
+                "uri",
+                "url"
+            ],
+            "time": "2014-01-21 13:43:39"
+        },
+        {
+            "name": "ml/json-ld",
+            "version": "1.0.5",
+            "target-dir": "ML/JsonLD",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lanthaler/JsonLD.git",
+                "reference": "2f7f00a9daed844289135cc1cc99a75fc72a5438"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lanthaler/JsonLD/zipball/2f7f00a9daed844289135cc1cc99a75fc72a5438",
+                "reference": "2f7f00a9daed844289135cc1cc99a75fc72a5438",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ml/iri": "^1.1.1",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "json-ld/tests": "@dev"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ML\\JsonLD": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Markus Lanthaler",
+                    "email": "mail@markus-lanthaler.com",
+                    "homepage": "http://www.markus-lanthaler.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "JSON-LD Processor for PHP",
+            "homepage": "http://www.markus-lanthaler.com",
+            "keywords": [
+                "JSON-LD",
+                "jsonld"
+            ],
+            "time": "2016-01-17 17:39:22"
+        },
+        {
             "name": "modernkernel/yii2-bootstrapsocial",
             "version": "1.0.2",
             "source": {
@@ -805,17 +961,51 @@
             "time": "2016-07-23 05:03:27"
         },
         {
-            "name": "modernkernel/yii2-slugify",
+            "name": "modernkernel/yii2-resume",
             "version": "dev-master",
             "source": {
                 "type": "git",
+                "url": "git@github.com:modernkernel/yii2-resume.git",
+                "reference": "c18f5d7ad3985dcf223e6afdca5496039612a1b7"
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "modernkernel\\resume\\": ""
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Harry Tang",
+                    "email": "harry@modernkernel.com"
+                }
+            ],
+            "description": "Harry Tang Yii2 Resume",
+            "keywords": [
+                "extension",
+                "resume",
+                "yii2"
+            ],
+            "time": "2016-08-27 16:38:24"
+        },
+        {
+            "name": "modernkernel/yii2-slugify",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
                 "url": "https://github.com/modernkernel/yii2-slugify.git",
-                "reference": "052ac00842fcd2c16df58a6525ac763fcf1160e8"
+                "reference": "59f967547d1cf263cf91385daa10ea43f8b5c4bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modernkernel/yii2-slugify/zipball/052ac00842fcd2c16df58a6525ac763fcf1160e8",
-                "reference": "052ac00842fcd2c16df58a6525ac763fcf1160e8",
+                "url": "https://api.github.com/repos/modernkernel/yii2-slugify/zipball/59f967547d1cf263cf91385daa10ea43f8b5c4bf",
+                "reference": "59f967547d1cf263cf91385daa10ea43f8b5c4bf",
                 "shasum": ""
             },
             "require": {
@@ -844,7 +1034,7 @@
                 "slugify",
                 "yii2"
             ],
-            "time": "2016-08-27 16:51:14"
+            "time": "2016-08-27 17:54:52"
         },
         {
             "name": "modernkernel/yii2-theme-adminlte",
@@ -852,12 +1042,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modernkernel/yii2-theme-adminlte.git",
-                "reference": "eda2514133de2761ed50458572f4fc84ada8803b"
+                "reference": "b3fe497e60ef5be2d429b42c6c83f4ffdff7a9ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modernkernel/yii2-theme-adminlte/zipball/eda2514133de2761ed50458572f4fc84ada8803b",
-                "reference": "eda2514133de2761ed50458572f4fc84ada8803b",
+                "url": "https://api.github.com/repos/modernkernel/yii2-theme-adminlte/zipball/b3fe497e60ef5be2d429b42c6c83f4ffdff7a9ac",
+                "reference": "b3fe497e60ef5be2d429b42c6c83f4ffdff7a9ac",
                 "shasum": ""
             },
             "require": {
@@ -886,7 +1076,7 @@
                 "extension",
                 "yii2"
             ],
-            "time": "2016-08-19 09:22:50"
+            "time": "2016-08-28 05:28:13"
         },
         {
             "name": "mtdowling/cron-expression",
@@ -931,6 +1121,52 @@
                 "schedule"
             ],
             "time": "2016-01-26 21:23:30"
+        },
+        {
+            "name": "nirvana-msu/yii2-jsonld-helper",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nirvana-msu/yii2-jsonld-helper.git",
+                "reference": "292c13644d761fa085472d8c8d397ce204eeaa6b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nirvana-msu/yii2-jsonld-helper/zipball/292c13644d761fa085472d8c8d397ce204eeaa6b",
+                "reference": "292c13644d761fa085472d8c8d397ce204eeaa6b",
+                "shasum": ""
+            },
+            "require": {
+                "ml/json-ld": "1.*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "nirvana\\jsonld\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Stepanov",
+                    "email": "student_vmk@mail.ru"
+                }
+            ],
+            "description": "JsonLD Helper class for Yii2",
+            "keywords": [
+                "jsonld",
+                "yii2"
+            ],
+            "time": "2016-08-24 21:51:54"
         },
         {
             "name": "omnilight/yii2-scheduling",
@@ -1081,6 +1317,52 @@
             "description": "Symfony Process Component",
             "homepage": "https://symfony.com",
             "time": "2015-06-30 16:10:16"
+        },
+        {
+            "name": "tinymce/tinymce",
+            "version": "4.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tinymce/tinymce-dist.git",
+                "reference": "351593db2412674e7be21db0d5f2e0c16bfe946d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/351593db2412674e7be21db0d5f2e0c16bfe946d",
+                "reference": "351593db2412674e7be21db0d5f2e0c16bfe946d",
+                "shasum": ""
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "tinymce.js",
+                        "plugins/*/plugin.js",
+                        "themes/*/theme.js"
+                    ],
+                    "files": [
+                        "tinymce.min.js",
+                        "plugins/*/plugin.min.js",
+                        "themes/*/theme.min.js",
+                        "skins/**"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-2.1"
+            ],
+            "description": "Web based JavaScript HTML WYSIWYG editor control.",
+            "homepage": "http://www.tinymce.com",
+            "keywords": [
+                "editor",
+                "html",
+                "javascript",
+                "richtext",
+                "tinymce",
+                "wysiwyg"
+            ],
+            "time": "2016-08-25 13:51:28"
         },
         {
             "name": "yiisoft/yii2",
@@ -1779,8 +2061,9 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "nirvana-msu/yii2-jsonld-helper": 20,
         "modernkernel/yii2-theme-adminlte": 20,
-        "modernkernel/yii2-slugify": 20
+        "modernkernel/yii2-resume": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

@@ -25,10 +25,13 @@ class m160827_044350_blog extends Migration
             'desc'=>$this->string()->notNull(),
             'content'=>$this->text()->notNull(),
             'tags'=>$this->string()->notNull(),
+            'thumbnail'=>$this->string(),
+            'image_object'=>$this->text(),
             'created_by'=>$this->integer()->notNull(),
             'status' => $this->smallInteger()->notNull()->defaultValue(10),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
+            'published_at' => $this->integer()->null(),
         ], $tableOptions);
 
         $this->addForeignKey('fk-blog_created_by-account_id', '{{%core_blog}}', 'created_by', '{{%core_account}}', 'id', 'CASCADE', 'CASCADE');

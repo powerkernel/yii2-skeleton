@@ -8,6 +8,7 @@
 namespace frontend\controllers;
 
 use common\Core;
+use nirvana\jsonld\JsonLDHelper;
 use Yii;
 use common\models\Blog;
 use common\models\BlogSearch;
@@ -102,6 +103,42 @@ class BlogController extends Controller
         if ($name != $model->slug) {
             return $this->redirect($model->viewUrl, 301);
         }
+        /* SEO */
+        $imageObject=$model->getImageObject();
+        $doc = (object)[
+            '@type'=>'Article',
+            'http://schema.org/name' => $model->title,
+            'http://schema.org/headline'=>$model->desc,
+            'http://schema.org/articleBody'=>$model->content,
+            'http://schema.org/dateCreated' => Yii::$app->formatter->asDate($model->created_at, 'php:c'),
+            'http://schema.org/dateModified' => Yii::$app->formatter->asDate($model->updated_at, 'php:c'),
+            'http://schema.org/datePublished' => Yii::$app->formatter->asDate($model->published_at, 'php:c'),
+            'http://schema.org/url'=>Yii::$app->urlManager->createAbsoluteUrl($model->viewUrl),
+            'http://schema.org/image'=>(object)[
+                '@type'=>'ImageObject',
+                'http://schema.org/url'=>$imageObject['url'],
+                'http://schema.org/width'=>$imageObject['width'],
+                'http://schema.org/height'=>$imageObject['height']
+            ],
+            'http://schema.org/author'=>(object)[
+                '@type'=>'Person',
+                'http://schema.org/name' => $model->author->fullname,
+            ],
+            'http://schema.org/publisher'=>(object)[
+                '@type'=>'Organization',
+                'http://schema.org/name'=>Yii::$app->name,
+                'http://schema.org/logo'=>(object)[
+                    '@type'=>'ImageObject',
+                    'http://schema.org/url'=>Yii::$app->urlManager->createAbsoluteUrl(Yii::$app->homeUrl.'/images/logo.png')
+                ]
+            ],
+            'http://schema.org/mainEntityOfPage'=>(object)[
+                '@type'=>'WebPage',
+                '@id'=>Yii::$app->urlManager->createAbsoluteUrl($model->viewUrl)
+            ]
+        ];
+        JsonLDHelper::add($doc);
+        /* OK */
         return $this->render('view', [
             'model' => $model
         ]);

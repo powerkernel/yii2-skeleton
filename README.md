@@ -100,6 +100,11 @@ HOW TO USE
 5. Go to backend and update all settings (reCaptcha, API, SMTP...)
 6. Your are ready!
 
+CONFIG
+------
+1. Replace your icons (apple-touch-icon-57x57.png, apple-touch-icon-60x60.png, favicon-32x32.png etc)
+2. Replace your logos in /images
+
 ## Symlink Help
 For Linux
 ```ln -s PATH_TO/frontend/web/backend PATH_TO/backend/web```
