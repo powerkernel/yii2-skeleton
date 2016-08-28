@@ -25,13 +25,14 @@
         "modernkernel/yii2-bootstrapsocial": "*",
         "modernkernel/yii2-theme-adminlte": "@dev",
         "modernkernel/yii2-jeditable": "*",
-        "modernkernel/yii2-slugify": "@dev"
+        "modernkernel/yii2-slugify": "*",
+        "modernkernel/yii2-resume": "@dev"
 
     },
     "repositories": [
         {
             "type": "git",
-            "url": "git@bitbucket.org:harrytang/yii2-theme-inspinia.git"
+            "url": "git@github.com:modernkernel/yii2-slugify.git"
         }
     ],
     "require-dev": {

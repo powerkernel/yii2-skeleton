@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d7e591befe3c5aa5df1f905cc4d26d80",
-    "content-hash": "7786e1e77535335226eb1575d3ec2319",
+    "hash": "a91ddfb564ce608052699a8447d53763",
+    "content-hash": "2fb8b9d5d15234625833db846592bf02",
     "packages": [
         {
             "name": "bower-asset/admin-lte",
@@ -206,6 +206,49 @@
             ]
         },
         {
+            "name": "bower-asset/jquery-slugify",
+            "version": "1.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/madflow/jquery-slugify.git",
+                "reference": "2fe60b0488b730a86924e6ed666c4e07ce539d43"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/madflow/jquery-slugify/zipball/2fe60b0488b730a86924e6ed666c4e07ce539d43",
+                "reference": "2fe60b0488b730a86924e6ed666c4e07ce539d43",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.7",
+                "bower-asset/speakingurl": "~9.0.0"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "dist/slugify.js",
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "node_modules",
+                    "bower_components",
+                    "test",
+                    "libs",
+                    "Gruntfile.js",
+                    "package.json",
+                    "CONTRIBUTING.md",
+                    "slugify.jquery.json"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Just another another (another) url slug creation plugin for jQuery",
+            "keywords": [
+                "slugify",
+                "slugs",
+                "strings"
+            ]
+        },
+        {
             "name": "bower-asset/jquery-ui",
             "version": "1.11.4",
             "source": {
@@ -326,6 +369,29 @@
                 ]
             },
             "description": "Select2 is a jQuery based replacement for select boxes. It supports searching, remote data sets, and infinite scrolling of results."
+        },
+        {
+            "name": "bower-asset/speakingurl",
+            "version": "v9.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pid/speakingurl.git",
+                "reference": "013eb82b59b1e5942ca3ccdfaeec2bffca81f7b8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pid/speakingurl/zipball/013eb82b59b1e5942ca3ccdfaeec2bffca81f7b8",
+                "reference": "013eb82b59b1e5942ca3ccdfaeec2bffca81f7b8",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "speakingurl.min.js",
+                "bower-asset-ignore": [
+                    "node_modules"
+                ]
+            },
+            "description": "Generate a slug – transliteration with a lot of options"
         },
         {
             "name": "bower-asset/yii2-pjax",
@@ -737,6 +803,48 @@
                 "yii2"
             ],
             "time": "2016-07-23 05:03:27"
+        },
+        {
+            "name": "modernkernel/yii2-slugify",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/modernkernel/yii2-slugify.git",
+                "reference": "052ac00842fcd2c16df58a6525ac763fcf1160e8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/modernkernel/yii2-slugify/zipball/052ac00842fcd2c16df58a6525ac763fcf1160e8",
+                "reference": "052ac00842fcd2c16df58a6525ac763fcf1160e8",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery-slugify": "*",
+                "bower-asset/speakingurl": "*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "modernkernel\\slugify\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Harry Tang",
+                    "email": "harry@modernkernel.com"
+                }
+            ],
+            "description": "Slugify extension for Yii2",
+            "keywords": [
+                "slugify",
+                "yii2"
+            ],
+            "time": "2016-08-27 16:51:14"
         },
         {
             "name": "modernkernel/yii2-theme-adminlte",
@@ -1671,7 +1779,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "modernkernel/yii2-theme-adminlte": 20
+        "modernkernel/yii2-theme-adminlte": 20,
+        "modernkernel/yii2-slugify": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

@@ -23,7 +23,7 @@ use yii\filters\VerbFilter;
 class BlogController extends Controller
 {
 
-    public $layout='account';
+    public $layout = 'account';
 
     /**
      * @inheritdoc
@@ -64,7 +64,7 @@ class BlogController extends Controller
      */
     public function actionIndex()
     {
-        $this->layout='main';
+        $this->layout = 'main';
         $searchModel = new BlogSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -92,13 +92,18 @@ class BlogController extends Controller
     /**
      * Displays a single Blog model.
      * @param integer $id
+     * @param string $name
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($id, $name=null)
     {
-        $this->layout='main';
+        $this->layout = 'main';
+        $model = $this->findModel($id);
+        if ($name != $model->slug) {
+            return $this->redirect($model->viewUrl, 301);
+        }
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model
         ]);
     }
 
@@ -112,7 +117,10 @@ class BlogController extends Controller
         $model = new Blog();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->status == Blog::STATUS_PUBLISHED) {
+                return $this->redirect($model->viewUrl);
+            }
+            return $this->redirect(['manage']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -132,7 +140,7 @@ class BlogController extends Controller
         $model = $this->findModel($id);
         if (Yii::$app->user->can('updateBlog', ['model' => $model])) {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                if($model->status==Blog::STATUS_PUBLISHED){
+                if ($model->status == Blog::STATUS_PUBLISHED) {
                     return $this->redirect($model->viewUrl);
                 }
                 return $this->redirect(['manage']);
@@ -170,9 +178,9 @@ class BlogController extends Controller
      */
     protected function findModel($id)
     {
-        $condition=['id'=>$id];
-        if(Core::checkMCA(null, 'blog', 'view')){
-            $condition=['id'=>$id, 'status'=>Blog::STATUS_PUBLISHED];
+        $condition = ['id' => $id];
+        if (Core::checkMCA(null, 'blog', 'view')) {
+            $condition = ['id' => $id, 'status' => Blog::STATUS_PUBLISHED];
         }
 
         if (($model = Blog::find()->where($condition)->one()) !== null) {

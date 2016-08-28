@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'slug')->widget(\modernkernel\slugify\Slugify::className(),['source'=>'#blog-title']) ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 

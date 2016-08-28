@@ -34,14 +34,14 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                ''=>'site/index',
+                //'blog/<id:\d+>-<name:^[a-z0-9-]+$>' => 'blog/view',
             ],
         ],
-        */
         'view' => [
             'theme' => [
                 //'class' => 'harrytang\themeinspinia\InspiniaTheme',
