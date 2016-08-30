@@ -109,6 +109,8 @@ class SettingController extends BackendController
             ['key'=>'title', 'value'=>'Yii2 Skeleton', 'title'=>'Title', 'description'=>'Homepage title', 'group'=>'SEO', 'type'=>'textInput', 'data'=>'[]', 'default'=>'Yii2 Skeleton', 'rules'=>json_encode(['required'=>[]])],
             ['key'=>'keywords', 'value'=>'Yii2, Skeleton', 'title'=>'Keywords', 'description'=>'Homepage keywords', 'group'=>'SEO', 'type'=>'textInput', 'data'=>'[]', 'default'=>'Yii2, Skeleton', 'rules'=>json_encode(['required'=>[]])],
             ['key'=>'description', 'value'=>'Skeleton for Yii Framework', 'title'=>'Description', 'description'=>'Homepage description', 'group'=>'SEO', 'type'=>'textInput', 'data'=>'[]', 'default'=>'Skeleton for Yii Framework', 'rules'=>json_encode(['required'=>[]])],
+            ['key'=>'languageUrlCode', 'value'=>'0', 'title'=>'Language URL', 'description'=>'Include language code in URL', 'group'=>'SEO', 'type'=>'dropDownList', 'data'=>json_encode(Core::getYesNoOption()), 'default'=>'0', 'rules'=>json_encode(['required'=>[], 'boolean'=>[]])],
+
 
             /* Mail */
             ['key'=>'outgoingMail', 'value'=>'youremail@domain.com', 'title'=>'Outgoing Mail', 'description'=>'Outgoing email address', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['required'=>[], 'email'=>[]])],

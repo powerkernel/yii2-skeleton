@@ -7,42 +7,6 @@ $params = array_merge(
 );
 
 
-$modules = scandir(__DIR__ . '/../../vendor/modernkernel');
-$urlManager = [
-    'ignoreLanguageUrlPatterns' => [
-        '#^account/login/google|facebook|yahoo#' => '#^account/login/google|facebook|yahoo#',
-        '#^admin/default/sitemap#' => '#^admin/default/sitemap#',
-    ],
-    'rules' => [
-        '' => 'site/index',
-        'sitemap.xml' => 'site/sitemap',
-
-        'blog/<action:(manage|create|update|delete)>' => 'blog/<action>',
-        'blog' => 'blog/index',
-        'blog/<name:.+?>' => 'blog/view',
-        'blog/sitemap<page:\d+>.xml' => 'blog/sitemap',
-
-
-    ],
-];
-foreach ($modules as $module) {
-    if (!preg_match('/[\.]+/', $module)) {
-        $urlManagerFile = __DIR__ . '/../../vendor/modernkernel/' . $module . '/urlManager.php';
-        if (is_file($urlManagerFile)) {
-            $urlManagerConfig = require($urlManagerFile);
-            $urlManager['ignoreLanguageUrlPatterns'] = array_merge(
-                $urlManager['ignoreLanguageUrlPatterns'],
-                $urlManagerConfig['ignoreLanguageUrlPatterns']
-            );
-            $urlManager['rules'] = array_merge(
-                $urlManager['rules'],
-                $urlManagerConfig['rules']
-            );
-        }
-    }
-}
-
-
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
@@ -73,19 +37,8 @@ return [
         ],
         'urlManager' => [
             'class' => 'common\components\LocaleUrl',
-            /* config */
-            //'languages' => ['vi-VN', 'en-US'],
-            'languageParam' => 'lang',
-            'enableLanguagePersistence' => false,
-            'enableDefaultLanguageUrlCode' => false,
-            'enableLanguageDetection' => false,
-            'ignoreLanguageUrlPatterns' => $urlManager['ignoreLanguageUrlPatterns'],
-
-            /* yii */
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            //'enableStrictParsing'=>true,
-            'rules' => $urlManager['rules']
         ],
         'view' => [
             'theme' => [

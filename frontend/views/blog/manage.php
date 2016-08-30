@@ -89,6 +89,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                                 'view' => function ($url, $model) {
                                     $view = Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $model->viewUrl, [
                                         'title' => Yii::t('yii', 'View'),
+                                        'data-pjax'=>0
                                     ]);
                                     unset($url);
                                     return $model->status==Blog::STATUS_PUBLISHED ? $view : '';
