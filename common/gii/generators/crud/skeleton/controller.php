@@ -103,8 +103,76 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      */
     public function actionView(<?= $actionParams ?>)
     {
+        $model=$this->findModel(<?= $actionParams ?>);
+
+        /* metaData */
+        $title=$model->title;
+        //$keywords = $model->tags;
+        //$description = $model->desc;
+        //$metaTags[]=['name'=>'keywords', 'content'=>$keywords];
+        //$metaTags[]=['name'=>'description', 'content'=>$description];
+        /* Facebook */
+        //$metaTags[]=['property' => 'og:title', 'content' => $title];
+        //$metaTags[]=['property' => 'og:description', 'content' => $description];
+        //$metaTags[]=['property' => 'og:type', 'content' => '']; // article, product, profile etc
+        //$metaTags[]=['property' => 'og:image', 'content' => '']; //best 1200 x 630
+        //$metaTags[]=['property' => 'og:url', 'content' => ''];
+        //$metaTags[]=['property' => 'fb:app_id', 'content' => ''];
+        //$metaTags[]=['property' => 'fb:admins', 'content' => ''];
+        /* Twitter */
+        //$metaTags[]=['name'=>'twitter:title', 'content'=>$title];
+        //$metaTags[]=['name'=>'twitter:description', 'content'=>$description];
+        //$metaTags[]=['name'=>'twitter:card', 'content'=>'summary'];
+        //$metaTags[]=['name'=>'twitter:site', 'content'=>''];
+        //$metaTags[]=['name'=>'twitter:image', 'content'=>''];
+        //$metaTags[]=['name'=>'twitter:data1', 'content'=>''];
+        //$metaTags[]=['name'=>'twitter:label1', 'content'=>''];
+        //$metaTags[]=['name'=>'twitter:data2', 'content'=>''];
+        //$metaTags[]=['name'=>'twitter:label2', 'content'=>''];
+        /* jsonld */
+        //$imageObject=$model->getImageObject();
+        //$jsonLd = (object)[
+        //    '@type'=>'Article',
+        //    'http://schema.org/name' => $model->title,
+        //    'http://schema.org/headline'=>$model->desc,
+        //    'http://schema.org/articleBody'=>$model->content,
+        //    'http://schema.org/dateCreated' => Yii::$app->formatter->asDate($model->created_at, 'php:c'),
+        //    'http://schema.org/dateModified' => Yii::$app->formatter->asDate($model->updated_at, 'php:c'),
+        //    'http://schema.org/datePublished' => Yii::$app->formatter->asDate($model->published_at, 'php:c'),
+        //    'http://schema.org/url'=>Yii::$app->urlManager->createAbsoluteUrl($model->viewUrl),
+        //    'http://schema.org/image'=>(object)[
+        //        '@type'=>'ImageObject',
+        //        'http://schema.org/url'=>$imageObject['url'],
+        //        'http://schema.org/width'=>$imageObject['width'],
+        //        'http://schema.org/height'=>$imageObject['height']
+        //    ],
+        //    'http://schema.org/author'=>(object)[
+        //        '@type'=>'Person',
+        //        'http://schema.org/name' => $model->author->fullname,
+        //    ],
+        //    'http://schema.org/publisher'=>(object)[
+        //    '@type'=>'Organization',
+        //    'http://schema.org/name'=>Yii::$app->name,
+        //   'http://schema.org/logo'=>(object)[
+        //        '@type'=>'ImageObject',
+        //       'http://schema.org/url'=>Yii::$app->urlManager->createAbsoluteUrl(Yii::$app->homeUrl.'/images/logo.png')
+        //    ]
+        //    ],
+        //    'http://schema.org/mainEntityOfPage'=>(object)[
+        //        '@type'=>'WebPage',
+        //        '@id'=>Yii::$app->urlManager->createAbsoluteUrl($model->viewUrl)
+        //    ]
+        //];
+
+        /* OK */
+        //$data['title']=$title;
+        //$data['metaTags']=$metaTags;
+        //$data['jsonLd']=$jsonLd;
+        //$this->registerMetaTagJsonLD($data);
+
+
         return $this->render('view', [
-            'model' => $this->findModel(<?= $actionParams ?>),
+            'model' => $model,
         ]);
     }
 
@@ -182,6 +250,21 @@ if (count($pks) === 1) {
             return $model;
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        }
+    }
+
+    /**
+     * register metaTags and JsonLD info
+     * @param array $data
+     */
+    protected function registerMetaTagJsonLD($data=[]){
+        if(!empty($data['jsonLd'])){
+            JsonLDHelper::add($data['jsonLd']);
+        }
+        if(!empty($data['metaTags'])){
+            foreach($data['metaTags'] as $tag){
+                $this->view->registerMetaTag($tag);
+            }
         }
     }
 }

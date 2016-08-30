@@ -36,4 +36,5 @@ class BlogQuery extends \yii\db\ActiveQuery
     {
         return parent::one($db);
     }
+
 }

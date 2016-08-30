@@ -11,12 +11,7 @@ use common\models\Blog;
 /* @var $this yii\web\View */
 /* @var $model common\models\Blog */
 
-$this->title = $model->title;
-$keywords = $model->tags;
-$description = $model->desc;
 
-$this->registerMetaTag(['name' => 'keywords', 'content' => $keywords]);
-$this->registerMetaTag(['name' => 'description', 'content' => $description]);
 //$this->registerMetaTag(['name' => 'robots', 'content' => 'noindex, nofollow, nosnippet, noodp, noarchive, noimageindex']);
 
 /* Facebook */
@@ -64,23 +59,8 @@ $this->registerCss($css);
             </div>
         </div>
         <div class="col-md-4">
-            <div class="box box-default">
-                <div class="box-header with-border">
-                    <h3 class="box-title"><?= Yii::t('app', 'Most Viewed') ?></h3>
-                </div>
-
-                <div class="box-body no-padding">
-                </div>
-            </div>
-            <div class="box box-default">
-                <div class="box-header with-border">
-                    <h3 class="box-title"><?= Yii::t('app', 'Latest Updates') ?></h3>
-                </div>
-
-                <div class="box-body no-padding">
-                </div>
-            </div>
-
+            <?= \frontend\widgets\BlogPost::widget(['type'=>'mostViewed']) ?>
+            <?= \frontend\widgets\BlogPost::widget(['type'=>'latest']) ?>
         </div>
     </div>
 

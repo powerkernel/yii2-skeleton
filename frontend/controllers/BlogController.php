@@ -65,9 +65,35 @@ class BlogController extends Controller
      */
     public function actionIndex()
     {
+        /* @var Blog $model */
         $this->layout = 'main';
         $searchModel = new BlogSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+
+        $title=Yii::t('app', 'Blog');
+        /* jsonld */
+
+        $listItem=null;
+        foreach($dataProvider->models as $model){
+            $listItem[]=(object)[
+                '@type'=>'ListItem',
+                'http://schema.org/item'=>(object)[
+                    '@id'=>$model->viewAbsoluteUrl,
+                    'http://schema.org/name'=>$model->title
+                ]
+            ];
+        }
+        $jsonLd = (object)[
+            '@type'=>'ItemList',
+            'http://schema.org/name' => $title,
+            'http://schema.org/itemListElement'=>$listItem
+        ];
+
+        /* OK */
+        $data['title']=$title;
+        $data['jsonLd']=$jsonLd;
+        $this->registerMetaTagJsonLD($data);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -103,11 +129,37 @@ class BlogController extends Controller
         if ($name != $model->slug) {
             return $this->redirect($model->viewUrl, 301);
         }
+
         /* views ++ */
         $model->updateViews();
-        /* SEO */
+
+        /* metaData */
+        $title=$model->title;
+        $keywords = $model->tags;
+        $description = $model->desc;
+        $metaTags[]=['name'=>'keywords', 'content'=>$keywords];
+        $metaTags[]=['name'=>'description', 'content'=>$description];
+        /* Facebook */
+        $metaTags[]=['property' => 'og:title', 'content' => $title];
+        $metaTags[]=['property' => 'og:description', 'content' => $description];
+        $metaTags[]=['property' => 'og:type', 'content' => 'article']; // article, product, profile etc
+        $metaTags[]=['property' => 'og:image', 'content' => $model->thumbnail]; //best 1200 x 630
+        $metaTags[]=['property' => 'og:url', 'content' => $model->viewAbsoluteUrl];
+        //$metaTags[]=['property' => 'fb:app_id', 'content' => ''];
+        //$metaTags[]=['property' => 'fb:admins', 'content' => ''];
+        /* Twitter */
+//        $metaTags[]=['name'=>'twitter:title', 'content'=>$title];
+//        $metaTags[]=['name'=>'twitter:description', 'content'=>$description];
+//        $metaTags[]=['name'=>'twitter:card', 'content'=>'summary'];
+//        $metaTags[]=['name'=>'twitter:site', 'content'=>''];
+//        $metaTags[]=['name'=>'twitter:image', 'content'=>''];
+//        $metaTags[]=['name'=>'twitter:data1', 'content'=>''];
+//        $metaTags[]=['name'=>'twitter:label1', 'content'=>''];
+//        $metaTags[]=['name'=>'twitter:data2', 'content'=>''];
+//        $metaTags[]=['name'=>'twitter:label2', 'content'=>''];
+        /* jsonld */
         $imageObject=$model->getImageObject();
-        $doc = (object)[
+        $jsonLd = (object)[
             '@type'=>'Article',
             'http://schema.org/name' => $model->title,
             'http://schema.org/headline'=>$model->desc,
@@ -115,7 +167,7 @@ class BlogController extends Controller
             'http://schema.org/dateCreated' => Yii::$app->formatter->asDate($model->created_at, 'php:c'),
             'http://schema.org/dateModified' => Yii::$app->formatter->asDate($model->updated_at, 'php:c'),
             'http://schema.org/datePublished' => Yii::$app->formatter->asDate($model->published_at, 'php:c'),
-            'http://schema.org/url'=>Yii::$app->urlManager->createAbsoluteUrl($model->viewUrl),
+            'http://schema.org/url'=>$model->viewAbsoluteUrl,
             'http://schema.org/image'=>(object)[
                 '@type'=>'ImageObject',
                 'http://schema.org/url'=>$imageObject['url'],
@@ -139,8 +191,13 @@ class BlogController extends Controller
                 '@id'=>Yii::$app->urlManager->createAbsoluteUrl($model->viewUrl)
             ]
         ];
-        JsonLDHelper::add($doc);
+
         /* OK */
+        $data['title']=$title;
+        $data['metaTags']=$metaTags;
+        $data['jsonLd']=$jsonLd;
+        $this->registerMetaTagJsonLD($data);
+
         return $this->render('view', [
             'model' => $model
         ]);
@@ -206,6 +263,24 @@ class BlogController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+
+    /**
+     * register metaTags and JsonLD info
+     * @param array $data
+     */
+    protected function registerMetaTagJsonLD($data=[]){
+        $this->view->title=!empty($data['title'])?$data['title']:Yii::$app->name;
+
+        if(!empty($data['jsonLd'])){
+            JsonLDHelper::add($data['jsonLd']);
+        }
+        if(!empty($data['metaTags'])){
+            foreach($data['metaTags'] as $tag){
+                $this->view->registerMetaTag($tag);
+            }
+        }
     }
 
     /**

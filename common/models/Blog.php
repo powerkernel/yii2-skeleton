@@ -36,6 +36,7 @@ use yii\helpers\HtmlPurifier;
  *
  * @property Account $author
  * @property string $viewUrl
+ * @property string $viewAbsoluteUrl
  * @property string $updateUrl
  */
 class Blog extends ActiveRecord
@@ -149,6 +150,22 @@ class Blog extends ActiveRecord
     }
 
     /**
+     * get most viewed blog
+     * @return Blog[]
+     */
+    public static function mostViewed(){
+        return Blog::find()->orderBy(['views'=>SORT_DESC])->limit(10)->all();
+    }
+
+    /**
+     * get latest blog
+     * @return Blog[]
+     */
+    public static function latest(){
+        return Blog::find()->orderBy(['published_at'=>SORT_DESC])->limit(10)->all();
+    }
+
+    /**
      * @inheritdoc
      */
     public function behaviors()
@@ -202,6 +219,15 @@ class Blog extends ActiveRecord
     public function getViewUrl()
     {
         return Yii::$app->urlManager->createUrl(['/blog/view', 'id' => $this->id, 'name' => $this->slug]);
+    }
+
+    /**
+     * get absolute view url
+     * @return string
+     */
+    public function getViewAbsoluteUrl()
+    {
+        return Yii::$app->urlManager->createAbsoluteUrl(['/blog/view', 'id' => $this->id, 'name' => $this->slug]);
     }
 
     /**
