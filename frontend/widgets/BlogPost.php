@@ -33,6 +33,10 @@ class BlogPost extends Widget
             $this->title = Yii::t('app', 'Latest Updates');
             $this->models = Blog::latest();
         }
+        if($this->type=='random'){
+            $this->title = Yii::t('app', 'Random Blog');
+            $this->models = Blog::random();
+        }
     }
 
     /**

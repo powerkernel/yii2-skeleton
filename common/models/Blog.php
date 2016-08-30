@@ -151,19 +151,32 @@ class Blog extends ActiveRecord
 
     /**
      * get most viewed blog
+     * @param int $limit
      * @return Blog[]
      */
-    public static function mostViewed(){
-        return Blog::find()->orderBy(['views'=>SORT_DESC])->limit(10)->all();
+    public static function mostViewed($limit=10){
+        return Blog::find()->orderBy(['views'=>SORT_DESC])->limit($limit)->all();
     }
 
     /**
      * get latest blog
+     * @param int $limit
      * @return Blog[]
      */
-    public static function latest(){
-        return Blog::find()->orderBy(['published_at'=>SORT_DESC])->limit(10)->all();
+    public static function latest($limit=10){
+        return Blog::find()->orderBy(['published_at'=>SORT_DESC])->limit($limit)->all();
     }
+
+    /**
+     * get random blog
+     * @param int $limit
+     * @return Blog[]
+     */
+    public static function random($limit=10){
+        return Blog::find()->orderBy('rand()')->limit($limit)->all();
+    }
+
+
 
     /**
      * @inheritdoc
