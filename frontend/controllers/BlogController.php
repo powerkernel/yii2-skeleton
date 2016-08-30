@@ -12,11 +12,13 @@ use nirvana\jsonld\JsonLDHelper;
 use Yii;
 use common\models\Blog;
 use common\models\BlogSearch;
+use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * BlogController implements the CRUD actions for Blog model.
@@ -46,7 +48,7 @@ class BlogController extends Controller
                         'roles' => ['staff'],
                     ],
                     [
-                        'actions' => ['view', 'index'],
+                        'actions' => ['view', 'index', 'sitemap'],
                         'allow' => true,
                     ],
                     [
@@ -263,6 +265,29 @@ class BlogController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * sitemap
+     * @return string
+     */
+    public function actionSitemap(){
+        /* header */
+        Yii::$app->response->format = Response::FORMAT_RAW;
+        $headers = Yii::$app->response->headers;
+        $headers->add('Content-Type', 'text/xml');
+
+        /* ok */
+        $query = Blog::find()->select(['id', 'slug', 'updated_at'])->where(['status' => Blog::STATUS_PUBLISHED]);
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $pages->setPageSize(Yii::$app->params['sitemapPageSize']);
+
+        $models = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+
+        return $this->renderPartial('sitemap', ['models' => $models]);
     }
 
 

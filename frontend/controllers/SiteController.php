@@ -2,9 +2,12 @@
 namespace frontend\controllers;
 
 
+use common\models\Blog;
 use Yii;
+use yii\data\Pagination;
 use yii\web\Controller;
 use yii\filters\AccessControl;
+use yii\web\Response;
 
 /**
  * Site controller
@@ -40,7 +43,6 @@ class SiteController extends Controller
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
-
         ];
     }
 
@@ -53,7 +55,6 @@ class SiteController extends Controller
     {
         return $this->render('index');
     }
-
 
 
     /**
@@ -69,17 +70,45 @@ class SiteController extends Controller
     }
 
 
-
     /**
-     * Displays about page.
-     *
+     * sitemap
      * @return mixed
      */
-    public function actionAbout()
+    public function actionSitemap()
     {
-        return $this->render('about');
+        /* header response */
+        Yii::$app->response->format = Response::FORMAT_RAW;
+        $headers = Yii::$app->response->headers;
+        $headers->add('Content-Type', 'text/xml');
+
+        /* begin */
+        $sitemaps = [];
+        /* blog sitemap */
+        $query = Blog::find()->where(['status' => Blog::STATUS_PUBLISHED]);
+        $countQuery = clone $query;
+        $pagination = new Pagination(['totalCount' => $countQuery->count()]);
+        $pagination->setPageSize(Yii::$app->params['sitemapPageSize']);
+        $pages=$pagination->getPageCount();
+        if($pages>0){
+            for($i=0; $i<$pages; $i++){
+                $sitemaps[]=Yii::$app->urlManager->createAbsoluteUrl(['/blog/sitemap', 'page'=>$i+1]);
+            }
+        }
+
+
+        /* load modules sitemap */
+        $modules = scandir(\Yii::$app->vendorPath . '/modernkernel');
+        foreach ($modules as $module) {
+            if (!preg_match('/[\.]+/', $module)) {
+                $moduleName = str_ireplace('yii2-', '', $module);
+                if (method_exists(Yii::$app->getModule($moduleName), 'sitemap')) {
+                    $sitemaps = array_merge($sitemaps, Yii::$app->getModule($moduleName)->sitemap());
+                }
+            }
+        }
+        return $this->renderPartial('sitemap', ['sitemaps' => $sitemaps]);
+
     }
 
-   
 
 }
