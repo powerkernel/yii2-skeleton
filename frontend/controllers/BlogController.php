@@ -73,28 +73,28 @@ class BlogController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 
-        $title=Yii::t('app', 'Blog');
+        $title = Yii::t('app', 'Blog');
         /* jsonld */
 
-        $listItem=null;
-        foreach($dataProvider->models as $model){
-            $listItem[]=(object)[
-                '@type'=>'ListItem',
-                'http://schema.org/item'=>(object)[
-                    '@id'=>$model->viewAbsoluteUrl,
-                    'http://schema.org/name'=>$model->title
+        $listItem = null;
+        foreach ($dataProvider->models as $model) {
+            $listItem[] = (object)[
+                '@type' => 'ListItem',
+                'http://schema.org/item' => (object)[
+                    '@id' => $model->viewAbsoluteUrl,
+                    'http://schema.org/name' => $model->title
                 ]
             ];
         }
         $jsonLd = (object)[
-            '@type'=>'ItemList',
+            '@type' => 'ItemList',
             'http://schema.org/name' => $title,
-            'http://schema.org/itemListElement'=>$listItem
+            'http://schema.org/itemListElement' => $listItem
         ];
 
         /* OK */
-        $data['title']=$title;
-        $data['jsonLd']=$jsonLd;
+        $data['title'] = $title;
+        $data['jsonLd'] = $jsonLd;
         $this->registerMetaTagJsonLD($data);
 
         return $this->render('index', [
@@ -120,33 +120,29 @@ class BlogController extends Controller
 
     /**
      * Displays a single Blog model.
-     * @param integer $id
      * @param string $name
      * @return mixed
      */
-    public function actionView($id, $name=null)
+    public function actionView($name)
     {
         $this->layout = 'main';
-        $model = $this->findModel($id);
-        if ($name != $model->slug) {
-            return $this->redirect($model->viewUrl, 301);
-        }
+        $model = $this->findBySlug($name);
 
         /* views ++ */
         $model->updateViews();
 
         /* metaData */
-        $title=$model->title;
+        $title = $model->title;
         $keywords = $model->tags;
         $description = $model->desc;
-        $metaTags[]=['name'=>'keywords', 'content'=>$keywords];
-        $metaTags[]=['name'=>'description', 'content'=>$description];
+        $metaTags[] = ['name' => 'keywords', 'content' => $keywords];
+        $metaTags[] = ['name' => 'description', 'content' => $description];
         /* Facebook */
-        $metaTags[]=['property' => 'og:title', 'content' => $title];
-        $metaTags[]=['property' => 'og:description', 'content' => $description];
-        $metaTags[]=['property' => 'og:type', 'content' => 'article']; // article, product, profile etc
-        $metaTags[]=['property' => 'og:image', 'content' => $model->thumbnail]; //best 1200 x 630
-        $metaTags[]=['property' => 'og:url', 'content' => $model->viewAbsoluteUrl];
+        $metaTags[] = ['property' => 'og:title', 'content' => $title];
+        $metaTags[] = ['property' => 'og:description', 'content' => $description];
+        $metaTags[] = ['property' => 'og:type', 'content' => 'article']; // article, product, profile etc
+        $metaTags[] = ['property' => 'og:image', 'content' => $model->thumbnail]; //best 1200 x 630
+        $metaTags[] = ['property' => 'og:url', 'content' => $model->viewAbsoluteUrl];
         //$metaTags[]=['property' => 'fb:app_id', 'content' => ''];
         //$metaTags[]=['property' => 'fb:admins', 'content' => ''];
         /* Twitter */
@@ -160,44 +156,44 @@ class BlogController extends Controller
 //        $metaTags[]=['name'=>'twitter:data2', 'content'=>''];
 //        $metaTags[]=['name'=>'twitter:label2', 'content'=>''];
         /* jsonld */
-        $imageObject=$model->getImageObject();
+        $imageObject = $model->getImageObject();
         $jsonLd = (object)[
-            '@type'=>'Article',
+            '@type' => 'Article',
             'http://schema.org/name' => $model->title,
-            'http://schema.org/headline'=>$model->desc,
-            'http://schema.org/articleBody'=>$model->content,
+            'http://schema.org/headline' => $model->desc,
+            'http://schema.org/articleBody' => $model->content,
             'http://schema.org/dateCreated' => Yii::$app->formatter->asDate($model->created_at, 'php:c'),
             'http://schema.org/dateModified' => Yii::$app->formatter->asDate($model->updated_at, 'php:c'),
             'http://schema.org/datePublished' => Yii::$app->formatter->asDate($model->published_at, 'php:c'),
-            'http://schema.org/url'=>$model->viewAbsoluteUrl,
-            'http://schema.org/image'=>(object)[
-                '@type'=>'ImageObject',
-                'http://schema.org/url'=>$imageObject['url'],
-                'http://schema.org/width'=>$imageObject['width'],
-                'http://schema.org/height'=>$imageObject['height']
+            'http://schema.org/url' => $model->viewAbsoluteUrl,
+            'http://schema.org/image' => (object)[
+                '@type' => 'ImageObject',
+                'http://schema.org/url' => $imageObject['url'],
+                'http://schema.org/width' => $imageObject['width'],
+                'http://schema.org/height' => $imageObject['height']
             ],
-            'http://schema.org/author'=>(object)[
-                '@type'=>'Person',
+            'http://schema.org/author' => (object)[
+                '@type' => 'Person',
                 'http://schema.org/name' => $model->author->fullname,
             ],
-            'http://schema.org/publisher'=>(object)[
-                '@type'=>'Organization',
-                'http://schema.org/name'=>Yii::$app->name,
-                'http://schema.org/logo'=>(object)[
-                    '@type'=>'ImageObject',
-                    'http://schema.org/url'=>Yii::$app->urlManager->createAbsoluteUrl(Yii::$app->homeUrl.'/images/logo.png')
+            'http://schema.org/publisher' => (object)[
+                '@type' => 'Organization',
+                'http://schema.org/name' => Yii::$app->name,
+                'http://schema.org/logo' => (object)[
+                    '@type' => 'ImageObject',
+                    'http://schema.org/url' => Yii::$app->urlManager->createAbsoluteUrl(Yii::$app->homeUrl . '/images/logo.png')
                 ]
             ],
-            'http://schema.org/mainEntityOfPage'=>(object)[
-                '@type'=>'WebPage',
-                '@id'=>Yii::$app->urlManager->createAbsoluteUrl($model->viewUrl)
+            'http://schema.org/mainEntityOfPage' => (object)[
+                '@type' => 'WebPage',
+                '@id' => Yii::$app->urlManager->createAbsoluteUrl($model->viewUrl)
             ]
         ];
 
         /* OK */
-        $data['title']=$title;
-        $data['metaTags']=$metaTags;
-        $data['jsonLd']=$jsonLd;
+        $data['title'] = $title;
+        $data['metaTags'] = $metaTags;
+        $data['jsonLd'] = $jsonLd;
         $this->registerMetaTagJsonLD($data);
 
         return $this->render('view', [
@@ -271,11 +267,12 @@ class BlogController extends Controller
      * sitemap
      * @return string
      */
-    public function actionSitemap(){
+    public function actionSitemap()
+    {
         /* header */
         Yii::$app->response->format = Response::FORMAT_RAW;
         $headers = Yii::$app->response->headers;
-        $headers->add('Content-Type', 'text/xml');
+        $headers->add('Content-Type', 'application/xml');
 
         /* ok */
         $query = Blog::find()->select(['id', 'slug', 'updated_at'])->where(['status' => Blog::STATUS_PUBLISHED]);
@@ -295,14 +292,15 @@ class BlogController extends Controller
      * register metaTags and JsonLD info
      * @param array $data
      */
-    protected function registerMetaTagJsonLD($data=[]){
-        $this->view->title=!empty($data['title'])?$data['title']:Yii::$app->name;
+    protected function registerMetaTagJsonLD($data = [])
+    {
+        $this->view->title = !empty($data['title']) ? $data['title'] : Yii::$app->name;
 
-        if(!empty($data['jsonLd'])){
+        if (!empty($data['jsonLd'])) {
             JsonLDHelper::add($data['jsonLd']);
         }
-        if(!empty($data['metaTags'])){
-            foreach($data['metaTags'] as $tag){
+        if (!empty($data['metaTags'])) {
+            foreach ($data['metaTags'] as $tag) {
                 $this->view->registerMetaTag($tag);
             }
         }
@@ -323,6 +321,20 @@ class BlogController extends Controller
         }
 
         if (($model = Blog::find()->where($condition)->one()) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        }
+    }
+
+    /**
+     * find blog by $slug
+     * @param string $slug
+     * @return array|Blog|null
+     * @throws NotFoundHttpException
+     */
+    protected function findBySlug($slug){
+        if (($model = Blog::find()->where(['slug'=>$slug, 'status' => Blog::STATUS_PUBLISHED])->one()) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));

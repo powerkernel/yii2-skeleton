@@ -13,6 +13,7 @@ class m160830_062910_update_blog extends Migration
     public function up()
     {
         $this->addColumn('{{core_blog}}', 'views', $this->integer()->notNull()->defaultValue(0)->after('created_by'));
+        $this->alterColumn('{{core_blog}}', 'slug', $this->string()->notNull()->unique());
     }
 
     /**

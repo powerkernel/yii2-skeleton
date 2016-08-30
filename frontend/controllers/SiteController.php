@@ -69,6 +69,15 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
+    /**
+     * robots.txt
+     */
+    public function actionRobots()
+    {
+        Yii::$app->response->format = Response::FORMAT_RAW;
+        $sitemap = Yii::$app->urlManager->createAbsoluteUrl('site/sitemap');
+        return $this->renderPartial('robots', array('sitemap' => $sitemap));
+    }
 
     /**
      * sitemap
@@ -79,7 +88,7 @@ class SiteController extends Controller
         /* header response */
         Yii::$app->response->format = Response::FORMAT_RAW;
         $headers = Yii::$app->response->headers;
-        $headers->add('Content-Type', 'text/xml');
+        $headers->add('Content-Type', 'application/xml');
 
         /* begin */
         $sitemaps = [];
@@ -88,10 +97,10 @@ class SiteController extends Controller
         $countQuery = clone $query;
         $pagination = new Pagination(['totalCount' => $countQuery->count()]);
         $pagination->setPageSize(Yii::$app->params['sitemapPageSize']);
-        $pages=$pagination->getPageCount();
-        if($pages>0){
-            for($i=0; $i<$pages; $i++){
-                $sitemaps[]=Yii::$app->urlManager->createAbsoluteUrl(['/blog/sitemap', 'page'=>$i+1]);
+        $pages = $pagination->getPageCount();
+        if ($pages > 0) {
+            for ($i = 0; $i < $pages; $i++) {
+                $sitemaps[] = Yii::$app->urlManager->createAbsoluteUrl(['/blog/sitemap', 'page' => $i + 1]);
             }
         }
 

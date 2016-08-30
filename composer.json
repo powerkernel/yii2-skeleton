@@ -23,6 +23,7 @@
         "omnilight/yii2-scheduling": "*",
         "nirvana-msu/yii2-jsonld-helper": "1.0.*@dev",
         "2amigos/yii2-tinymce-widget" : "~1.1",
+        "codemix/yii2-localeurls":"*",
 
         "modernkernel/yii2-bootstrapsocial": "*",
         "modernkernel/yii2-theme-adminlte": "@dev",

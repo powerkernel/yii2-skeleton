@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b6e796a6beb7ae42315761b9933ec30f",
-    "content-hash": "361130120d565a6f4df65c58b4cbfed5",
+    "hash": "8646d737cd589149715fb2860ef877a5",
+    "content-hash": "5942ff079920570ad12b9fa50f9830a2",
     "packages": [
         {
             "name": "2amigos/yii2-tinymce-widget",
@@ -546,6 +546,47 @@
                 "markdown-extra"
             ],
             "time": "2015-03-06 05:28:07"
+        },
+        {
+            "name": "codemix/yii2-localeurls",
+            "version": "1.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/codemix/yii2-localeurls.git",
+                "reference": "342ffbd5f5d9a1264a82f21ccc669ebcc3102703"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/codemix/yii2-localeurls/zipball/342ffbd5f5d9a1264a82f21ccc669ebcc3102703",
+                "reference": "342ffbd5f5d9a1264a82f21ccc669ebcc3102703",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "codemix\\localeurls\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Härtl",
+                    "email": "haertl.mike@gmail.com"
+                }
+            ],
+            "description": "Automatic locale/language management for URLs.",
+            "keywords": [
+                "i18n",
+                "locale",
+                "yii2"
+            ],
+            "time": "2016-03-21 21:06:23"
         },
         {
             "name": "conquer/helpers",

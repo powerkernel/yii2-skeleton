@@ -93,8 +93,9 @@ class Blog extends ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'desc', 'content', 'tags'], 'required'],
+            [['slug', 'title', 'desc', 'content', 'tags'], 'required'],
             [['slug'], 'match', 'pattern' => '/^[a-z0-9-]+$/'],
+            [['slug'], 'unique'],
             [['content'], 'string'],
             [['created_by', 'views', 'status', 'created_at', 'updated_at', 'published_at'], 'integer'],
 
@@ -231,7 +232,7 @@ class Blog extends ActiveRecord
      */
     public function getViewUrl()
     {
-        return Yii::$app->urlManager->createUrl(['/blog/view', 'id' => $this->id, 'name' => $this->slug]);
+        return Yii::$app->urlManager->createUrl(['/blog/view', 'name' => $this->slug]);
     }
 
     /**
@@ -240,7 +241,7 @@ class Blog extends ActiveRecord
      */
     public function getViewAbsoluteUrl()
     {
-        return Yii::$app->urlManager->createAbsoluteUrl(['/blog/view', 'id' => $this->id, 'name' => $this->slug]);
+        return Yii::$app->urlManager->createAbsoluteUrl(['/blog/view', 'name' => $this->slug]);
     }
 
     /**
