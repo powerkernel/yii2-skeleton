@@ -28,6 +28,7 @@ use yii\helpers\HtmlPurifier;
  * @property string $thumbnail
  * @property string $image_object
  * @property integer $created_by
+ * @property integer $views
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
@@ -94,7 +95,7 @@ class Blog extends ActiveRecord
             [['title', 'desc', 'content', 'tags'], 'required'],
             [['slug'], 'match', 'pattern' => '/^[a-z0-9-]+$/'],
             [['content'], 'string'],
-            [['created_by', 'status', 'created_at', 'updated_at', 'published_at'], 'integer'],
+            [['created_by', 'views', 'status', 'created_at', 'updated_at', 'published_at'], 'integer'],
 
             [['title', 'slug'], 'string', 'max' => 110],
             [['desc', 'tags', 'thumbnail'], 'string', 'max' => 255],
@@ -121,6 +122,7 @@ class Blog extends ActiveRecord
             'thumbnail' => Yii::t('app', 'Thumbnail'),
             'image_object' => Yii::t('app', 'Image Object'),
             'created_by' => Yii::t('app', 'Author'),
+            'views' => Yii::t('app', 'Views'),
             'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
@@ -230,7 +232,18 @@ class Blog extends ActiveRecord
         }
 
         return $img;
+    }
 
+    /**
+     * update views
+     */
+    public function updateViews(){
+        $key='blog_viewed'.$this->id;
+        $viewed=Yii::$app->session->get($key);
+        if(empty($viewed)){
+            Yii::$app->session->set($key, true);
+            $this->updateCounters(['views' => 1]);
+        }
 
     }
 }

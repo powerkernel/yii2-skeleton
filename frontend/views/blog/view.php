@@ -6,7 +6,6 @@
  */
 
 use common\models\Blog;
-use modernkernel\fontawesome\Icon;
 
 
 /* @var $this yii\web\View */
@@ -45,33 +44,46 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->params['subtitle'] = Yii::$app->formatter->asDate($model->updated_at);
 
 /* misc */
-$js=file_get_contents(__DIR__.'/view.min.js');
+$js = file_get_contents(__DIR__ . '/view.min.js');
 $this->registerJs($js);
-$css=file_get_contents(__DIR__.'/view.css');
+$css = file_get_contents(__DIR__ . '/view.css');
 $this->registerCss($css);
 
 ?>
 <div class="blog-view">
-    <div class="box box-primary">
-        <div class="box-header with-border hidden">
-            Author: Harry Tang.
-            <small>Last updated <?= Yii::$app->formatter->asDate($model->created_at) ?></small>
-            <?php if (Yii::$app->user->can('updateBlog', ['model' => $model])): ?>
-                <div class="box-tools pull-right">
-                    <a href="<?= $model->updateUrl ?>" class="btn btn-box-tool">
-                        <?= Icon::widget(['icon' => 'pencil-square fa-lg']) ?>
-                    </a>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="box box-primary">
+                <div class="box-body blog-body">
+                    <div><?= $model->content ?></div>
                 </div>
-            <?php endif; ?>
+                <div class="box-footer text-right">
+                    <small
+                        class="text-muted"><?= Yii::t('app', 'By {AUTHOR}, last updated {DATE}', ['AUTHOR' => $model->author->fullname, 'DATE' => Yii::$app->formatter->asDate($model->updated_at)]) ?></small>
+                </div>
+            </div>
         </div>
-        <div class="box-body">
-            <p><?= $model->desc ?></p>
-            <div><?= $model->content ?></div>
-        </div>
-        <div class="box-footer text-right">
-            <small class="text-muted"><?= Yii::t('app', 'By {AUTHOR}, last updated {DATE}', ['AUTHOR'=>$model->author->fullname, 'DATE'=>Yii::$app->formatter->asDate($model->updated_at)]) ?></small>
+        <div class="col-md-4">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><?= Yii::t('app', 'Most Viewed') ?></h3>
+                </div>
+
+                <div class="box-body no-padding">
+                </div>
+            </div>
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title"><?= Yii::t('app', 'Latest Updates') ?></h3>
+                </div>
+
+                <div class="box-body no-padding">
+                </div>
+            </div>
+
         </div>
     </div>
+
 </div>
 
 

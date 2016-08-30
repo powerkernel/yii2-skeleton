@@ -13,6 +13,10 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Blog */
 /* @var $form yii\widgets\ActiveForm */
+
+$css = file_get_contents(__DIR__ . '/form.css');
+$this->registerCss($css);
+
 ?>
 
 <div class="blog-form">

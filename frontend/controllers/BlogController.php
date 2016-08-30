@@ -103,6 +103,8 @@ class BlogController extends Controller
         if ($name != $model->slug) {
             return $this->redirect($model->viewUrl, 301);
         }
+        /* views ++ */
+        $model->updateViews();
         /* SEO */
         $imageObject=$model->getImageObject();
         $doc = (object)[

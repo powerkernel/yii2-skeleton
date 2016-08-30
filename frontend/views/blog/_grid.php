@@ -14,13 +14,19 @@ use yii\bootstrap\Html;
     <div class="box box-primary">
         <div class="box-header">
             <h2 class="box-title"><?= $model->title ?></h2>
-            <div class="box-tools pull-right">
-                <small>29/10/1984</small>
-            </div>
+
         </div>
         <div class="box-body">
+            <p><img src="<?= $model->thumbnail ?>" alt="<?= $model->title ?>" class="img-responsive"></p>
             <p><?= $model->desc ?></p>
             <p><?= Html::a(Yii::t('app', 'Read') . ' ' . Icon::widget(['icon' => 'long-arrow-right']), $model->viewUrl, ['class' => 'btn btn-info btn-xs']) ?></p>
+        </div>
+        <div class="box-footer">
+            <div class="box-tools pull-right">
+                <small class="text-muted">
+                    <?= Yii::t('app', 'By {AUTHOR}, last updated {DATE}', ['AUTHOR' => $model->author->fullname, 'DATE' => Yii::$app->formatter->asDate($model->published_at)]) ?>
+                </small>
+            </div>
         </div>
     </div>
 </div>
