@@ -37,7 +37,7 @@ return [
             'class' => 'himiklab\yii2\recaptcha\ReCaptcha',
         ],
         'urlManager' => [
-            'languageParam' => 'lang',
+            'class' => 'common\components\LocaleUrl',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
         ],

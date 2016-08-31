@@ -963,16 +963,16 @@
         },
         {
             "name": "modernkernel/yii2-jeditable",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/modernkernel/yii2-jeditable.git",
-                "reference": "87e822aa113c374f3391b4d101b84258668742a2"
+                "reference": "38bf9545edc1ce3509e64e13edd2bd7561f01541"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modernkernel/yii2-jeditable/zipball/87e822aa113c374f3391b4d101b84258668742a2",
-                "reference": "87e822aa113c374f3391b4d101b84258668742a2",
+                "url": "https://api.github.com/repos/modernkernel/yii2-jeditable/zipball/38bf9545edc1ce3509e64e13edd2bd7561f01541",
+                "reference": "38bf9545edc1ce3509e64e13edd2bd7561f01541",
                 "shasum": ""
             },
             "require": {
@@ -999,7 +999,7 @@
                 "jeditable",
                 "yii2"
             ],
-            "time": "2016-07-23 05:03:27"
+            "time": "2016-08-30 17:42:24"
         },
         {
             "name": "modernkernel/yii2-resume",
@@ -1083,12 +1083,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modernkernel/yii2-theme-adminlte.git",
-                "reference": "b3fe497e60ef5be2d429b42c6c83f4ffdff7a9ac"
+                "reference": "27e865bb34e4362199a68c781d2719d116e98e86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modernkernel/yii2-theme-adminlte/zipball/b3fe497e60ef5be2d429b42c6c83f4ffdff7a9ac",
-                "reference": "b3fe497e60ef5be2d429b42c6c83f4ffdff7a9ac",
+                "url": "https://api.github.com/repos/modernkernel/yii2-theme-adminlte/zipball/27e865bb34e4362199a68c781d2719d116e98e86",
+                "reference": "27e865bb34e4362199a68c781d2719d116e98e86",
                 "shasum": ""
             },
             "require": {
@@ -1117,7 +1117,7 @@
                 "extension",
                 "yii2"
             ],
-            "time": "2016-08-28 05:28:13"
+            "time": "2016-08-28 13:53:04"
         },
         {
             "name": "mtdowling/cron-expression",
@@ -1501,16 +1501,16 @@
         },
         {
             "name": "yiisoft/yii2-authclient",
-            "version": "2.1.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-authclient.git",
-                "reference": "1e65f3af2c7095dbb55047f617231fc0ae601876"
+                "reference": "5ed7ebfda270d87197f7640b2a9c046297080cac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-authclient/zipball/1e65f3af2c7095dbb55047f617231fc0ae601876",
-                "reference": "1e65f3af2c7095dbb55047f617231fc0ae601876",
+                "url": "https://api.github.com/repos/yiisoft/yii2-authclient/zipball/5ed7ebfda270d87197f7640b2a9c046297080cac",
+                "reference": "5ed7ebfda270d87197f7640b2a9c046297080cac",
                 "shasum": ""
             },
             "require": {
@@ -1545,7 +1545,7 @@
                 "oauth",
                 "yii2"
             ],
-            "time": "2016-08-04 13:41:57"
+            "time": "2016-08-29 09:21:09"
         },
         {
             "name": "yiisoft/yii2-bootstrap",

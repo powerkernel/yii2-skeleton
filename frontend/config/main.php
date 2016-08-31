@@ -35,11 +35,7 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        'urlManager' => [
-            'class' => 'common\components\LocaleUrl',
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-        ],
+
         'view' => [
             'theme' => [
                 //'class' => 'harrytang\themeinspinia\InspiniaTheme',
