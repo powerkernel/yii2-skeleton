@@ -28,15 +28,11 @@
         "modernkernel/yii2-bootstrapsocial": "*",
         "modernkernel/yii2-theme-adminlte": "@dev",
         "modernkernel/yii2-jeditable": "*",
-        "modernkernel/yii2-slugify": "*",
-        "modernkernel/yii2-resume": "@dev"
+        "modernkernel/yii2-slugify": "*"
 
     },
     "repositories": [
-        {
-            "type": "git",
-            "url": "git@github.com:modernkernel/yii2-resume.git"
-        }
+
     ],
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
