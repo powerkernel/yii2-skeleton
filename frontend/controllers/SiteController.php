@@ -43,8 +43,16 @@ class SiteController extends Controller
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
+            'flickr-upload' => [
+                'class' => 'common\components\FlickrUploadAction',
+            ],
+            'flickr-photo' => [
+                'class' => 'common\components\FlickrPhotoAction',
+            ],
+
         ];
     }
+
 
     /**
      * Displays homepage.

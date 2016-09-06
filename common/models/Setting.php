@@ -72,7 +72,11 @@ class Setting extends ActiveRecord
      * @return string
      */
     public static function getValue($key){
-        return self::findOne($key)->value;
+        $setting=self::findOne($key);
+        if($setting){
+            return $setting->value;
+        }
+        return null;
     }
 
 

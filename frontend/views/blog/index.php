@@ -25,7 +25,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                 'dataProvider' => $dataProvider,
                 'itemOptions' => ['class' => 'item'],
                 'itemView' => function ($model, $key, $index, $widget) {
-                    return $this->render('_grid', ['model' => $model]);
+                    return $this->render('_grid', ['model' => $model, 'index'=>$index]);
                 },
             ]) ?>
         </div>

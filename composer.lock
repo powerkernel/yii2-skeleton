@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8646d737cd589149715fb2860ef877a5",
-    "content-hash": "5942ff079920570ad12b9fa50f9830a2",
+    "hash": "752e46b472bae36e8c8a4a8ea38f31c8",
+    "content-hash": "8d911455773b17d33e93241b73888971",
     "packages": [
         {
             "name": "2amigos/yii2-tinymce-widget",
@@ -921,6 +921,48 @@
             "time": "2016-07-23 03:02:20"
         },
         {
+            "name": "modernkernel/yii2-fineuploader",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/modernkernel/yii2-fineuploader.git",
+                "reference": "125b3008d5bbd21223d302403a5c50aec482754e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/modernkernel/yii2-fineuploader/zipball/125b3008d5bbd21223d302403a5c50aec482754e",
+                "reference": "125b3008d5bbd21223d302403a5c50aec482754e",
+                "shasum": ""
+            },
+            "require": {
+                "npm-asset/fine-uploader": "5.*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "modernkernel\\fineuploader\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Harry Tang",
+                    "email": "harry@modernkernel.com"
+                }
+            ],
+            "description": "Fine Uploader extension for Yii2",
+            "keywords": [
+                "FineUploader",
+                "extension",
+                "yii2"
+            ],
+            "time": "2016-07-25 07:36:00"
+        },
+        {
             "name": "modernkernel/yii2-fontawesome",
             "version": "1.0.1",
             "source": {
@@ -1083,12 +1125,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modernkernel/yii2-theme-adminlte.git",
-                "reference": "27e865bb34e4362199a68c781d2719d116e98e86"
+                "reference": "8e153ae82940a9af1d05546e437f538f9af07e77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modernkernel/yii2-theme-adminlte/zipball/27e865bb34e4362199a68c781d2719d116e98e86",
-                "reference": "27e865bb34e4362199a68c781d2719d116e98e86",
+                "url": "https://api.github.com/repos/modernkernel/yii2-theme-adminlte/zipball/8e153ae82940a9af1d05546e437f538f9af07e77",
+                "reference": "8e153ae82940a9af1d05546e437f538f9af07e77",
                 "shasum": ""
             },
             "require": {
@@ -1117,7 +1159,7 @@
                 "extension",
                 "yii2"
             ],
-            "time": "2016-08-28 13:53:04"
+            "time": "2016-09-01 13:57:26"
         },
         {
             "name": "mtdowling/cron-expression",
@@ -1208,6 +1250,86 @@
                 "yii2"
             ],
             "time": "2016-08-24 21:51:54"
+        },
+        {
+            "name": "npm-asset/fine-uploader",
+            "version": "5.11.7",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/fine-uploader/-/fine-uploader-5.11.7.tgz",
+                "reference": null,
+                "shasum": "c4ad8237d93f9df2ab09a178f67b069858d3d626"
+            },
+            "require-dev": {
+                "npm-asset/clean-css": "3.4.19",
+                "npm-asset/jscs": "3.0.7",
+                "npm-asset/jshint": "2.9.2",
+                "npm-asset/karma": "1.1.2",
+                "npm-asset/karma-firefox-launcher": "1.0.0",
+                "npm-asset/karma-mocha": "1.1.1",
+                "npm-asset/karma-spec-reporter": "0.0.26",
+                "npm-asset/mocha": "3.0.1",
+                "npm-asset/node-static": "0.7.8",
+                "npm-asset/pica": "dev-default|*",
+                "npm-asset/uglify-js": "2.7.0"
+            },
+            "type": "npm-asset-library",
+            "extra": {
+                "npm-asset-bugs": {
+                    "url": "https://github.com/FineUploader/fine-uploader/issues"
+                },
+                "npm-asset-main": "lib/traditional.js",
+                "npm-asset-directories": [],
+                "npm-asset-repository": {
+                    "type": "git",
+                    "url": "git://github.com/FineUploader/fine-uploader.git"
+                },
+                "npm-asset-scripts": {
+                    "build": "make clean; make build-all-ui",
+                    "lint": "make lint",
+                    "test": "make lint && make test"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Widen Enterprises, Inc."
+                },
+                {
+                    "name": "Ray Nicholus",
+                    "url": "http://raynicholus.com"
+                }
+            ],
+            "description": "Multiple file upload plugin with progress-bar, drag-and-drop, direct-to-S3 & Azure uploading, client-side image scaling, preview generation, form support, chunking, auto-resume, and tons of other features.",
+            "homepage": "https://github.com/FineUploader/fine-uploader#readme",
+            "keywords": [
+                "amazon",
+                "api",
+                "aws",
+                "azure",
+                "chunk",
+                "chunking",
+                "cross-domain",
+                "cross-site",
+                "drag",
+                "drop",
+                "file",
+                "file-input",
+                "file-uploader",
+                "input",
+                "jquery",
+                "jquery-plugin",
+                "multiple",
+                "preview",
+                "progress",
+                "resume",
+                "s3",
+                "selection",
+                "upload",
+                "widget"
+            ]
         },
         {
             "name": "omnilight/yii2-scheduling",
@@ -1361,16 +1483,16 @@
         },
         {
             "name": "tinymce/tinymce",
-            "version": "4.4.2",
+            "version": "4.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tinymce/tinymce-dist.git",
-                "reference": "351593db2412674e7be21db0d5f2e0c16bfe946d"
+                "reference": "5d763d8b00bf7bb0f5020b5e9a6e7a602fefa8ac"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/351593db2412674e7be21db0d5f2e0c16bfe946d",
-                "reference": "351593db2412674e7be21db0d5f2e0c16bfe946d",
+                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/5d763d8b00bf7bb0f5020b5e9a6e7a602fefa8ac",
+                "reference": "5d763d8b00bf7bb0f5020b5e9a6e7a602fefa8ac",
                 "shasum": ""
             },
             "type": "component",
@@ -1403,7 +1525,7 @@
                 "tinymce",
                 "wysiwyg"
             ],
-            "time": "2016-08-25 13:51:28"
+            "time": "2016-09-01 11:11:25"
         },
         {
             "name": "yiisoft/yii2",

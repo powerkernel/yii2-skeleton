@@ -2,6 +2,7 @@
 
 /* @var $this yii\web\View */
 
+
 $this->title = Yii::t('app', 'Dashboard');
 //$this->params['subtitle']='v1.0';
 //$this->params['breadcrumbs'][] = ['label' => 'Home', 'url' => '#home'];

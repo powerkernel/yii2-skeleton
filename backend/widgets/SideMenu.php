@@ -32,6 +32,7 @@ class SideMenu extends Widget
             ['icon' => 'key', 'label' => Yii::t('app','RBAC'), 'url' => ['/rbac/index'], 'active' => Core::checkMCA(null, 'rbac', '*')],
             ['icon' => 'cog', 'label' => Yii::t('app','Settings'), 'url' => ['/setting/index'], 'active' => Core::checkMCA(null, 'setting', '*')],
             ['icon' => 'language', 'label' => Yii::t('app','Languages'), 'url' => ['/i18n/index'], 'active' => Core::checkMCA(null, 'i18n', '*')],
+            ['icon' => 'gears', 'label' => Yii::t('app','Services'), 'url' => ['/service/index'], 'active' => Core::checkMCA(null, 'service', '*')],
         ];
         return $this->render('sideMenu', ['items' => $this->items]);
     }

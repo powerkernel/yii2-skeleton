@@ -37,8 +37,8 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
 //$this->registerMetaTag(['name'=>'twitter:label2', 'content'=>'']);
 
 /* breadcrumbs */
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Blogs'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Blogs'), 'url' => ['index']];
+//$this->params['breadcrumbs'][] = $this->title;
 
 /* misc */
 //$js=file_get_contents(__DIR__.'/index.min.js');

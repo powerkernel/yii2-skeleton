@@ -43,6 +43,7 @@ class AuthHandler
         $attributes = $this->client->getUserAttributes();
 
         // common
+        $continue=false;
         $id = ArrayHelper::getValue($attributes, 'id');
         $fullname='';
         $email='';
@@ -52,11 +53,21 @@ class AuthHandler
             $fullname= ArrayHelper::getValue($attributes, 'displayName');
             $emails = ArrayHelper::getValue($attributes, 'emails');
             $email=$emails[0]['value'];
+            $continue=true;
         }
         // facebook
         if($this->client->getName()=='facebook'){
             $fullname = ArrayHelper::getValue($attributes, 'name');
             $email = ArrayHelper::getValue($attributes, 'email');
+            $continue=true;
+        }
+
+        if(!$continue){
+//            Yii::$app->getSession()->setFlash('info', [
+//                Yii::t('app', 'Flickr'),
+//            ]);
+            //Yii::$app->user->setReturnUrl(Yii::$app->request->referrer);
+            return;
         }
 
         /* @var Auth $auth */

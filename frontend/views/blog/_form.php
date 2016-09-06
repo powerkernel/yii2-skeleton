@@ -7,6 +7,8 @@
 
 use common\models\Blog;
 use dosamigos\tinymce\TinyMce;
+use harrytang\photouploader\widgets\Facebook;
+use modernkernel\bootstrapsocial\Button;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -27,7 +29,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'desc')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'content')->widget(TinyMce::className(), [
+    <?php
+    echo $form->field($model, 'content')->widget(TinyMce::className(), [
         'options' => ['rows' => 6],
         //'language' => Yii::$app->language,
 
@@ -40,7 +43,8 @@ use yii\widgets\ActiveForm;
             ],
             'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | removeformat code"
         ]
-    ]);?>
+    ]);
+    ?>
 
     <?= $form->field($model, 'tags')->textInput(['maxlength' => true]) ?>
 
@@ -53,5 +57,8 @@ use yii\widgets\ActiveForm;
     </div>
 
     <?php ActiveForm::end(); ?>
+
+    <?= \common\widgets\FlickrUploadWidget::widget() ?>
+
 
 </div>

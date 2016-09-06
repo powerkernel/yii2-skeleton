@@ -131,6 +131,9 @@ class SettingController extends BackendController
             ['key'=>'googleClientId', 'value'=>'', 'title'=>'Google Client ID', 'description'=>'Google Client ID', 'group'=>'API', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[]])],
             ['key'=>'googleClientSecret', 'value'=>'', 'title'=>'Google Client Secret', 'description'=>'Google Client Secret', 'group'=>'API', 'type'=>'passwordInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[]])],
 
+            ['key'=>'flickrClientKey', 'value'=>'', 'title'=>'Flickr Client Key', 'description'=>'Flickr Client Key', 'group'=>'API', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[]])],
+            ['key'=>'flickrClientSecret', 'value'=>'', 'title'=>'Flickr Client Secret', 'description'=>'Flickr Client Secret', 'group'=>'API', 'type'=>'passwordInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[]])],
+
             /* System */
             //['key'=>'language', 'value'=>'en-US', 'title'=>'Language', 'description'=>'Site language', 'group'=>'General', 'type'=>'dropDownList', 'data'=>'{LOCALE}', 'default'=>'en-US', 'rules'=>json_encode(['required'=>[]])],
             ['key'=>'debug', 'value'=>'0', 'title'=>'Debug Mode', 'description'=>'Turn on debug mode', 'group'=>'System', 'type'=>'dropDownList', 'data'=>json_encode(Core::getYesNoOption()), 'default'=>'0', 'rules'=>json_encode(['required'=>[]])],

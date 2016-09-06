@@ -127,6 +127,13 @@ class BlogController extends Controller
     {
         $this->layout = 'main';
         $model = $this->findBySlug($name);
+//        $new=new Blog();
+//        $new->attributes=$model->attributes;
+//        $new->slug=$new->slug.'-'.rand(1000,9999);
+//        $new->id=null;
+//        if(!$new->save()){
+//            var_dump($new->errors);
+//        }
 
         /* views ++ */
         $model->updateViews();

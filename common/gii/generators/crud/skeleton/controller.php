@@ -50,6 +50,7 @@ use yii\data\ActiveDataProvider;
 use <?= ltrim($generator->baseControllerClass, '\\') ?>;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use nirvana\jsonld\JsonLDHelper;
 
 /**
  * <?= $controllerClass ?> implements the CRUD actions for <?= $modelClass ?> model.
@@ -77,6 +78,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      */
     public function actionIndex()
     {
+        $this->view->title = <?= $generator->generateString($modelClass) ?>;
 <?php if (!empty($generator->searchModelClass)): ?>
         $searchModel = new <?= isset($searchModelAlias) ? $searchModelAlias : $searchModelClass ?>();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -106,7 +108,8 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         $model=$this->findModel(<?= $actionParams ?>);
 
         /* metaData */
-        $title=$model->title;
+        //$title=$model->title;
+        $this->view->title = <?= $generator->generateString($modelClass) ?>;
         //$keywords = $model->tags;
         //$description = $model->desc;
         //$metaTags[]=['name'=>'keywords', 'content'=>$keywords];
@@ -183,6 +186,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      */
     public function actionCreate()
     {
+        $this->view->title = <?= $generator->generateString('Create '.$modelClass) ?>;
         $model = new <?= $modelClass ?>();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -202,6 +206,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      */
     public function actionUpdate(<?= $actionParams ?>)
     {
+        $this->view->title = <?= $generator->generateString('Update '.$modelClass) ?>;
         $model = $this->findModel(<?= $actionParams ?>);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {

@@ -60,6 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php endif;?>
 
 
+
             <div>
                 <hr/>
             </div>

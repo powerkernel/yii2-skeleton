@@ -35,7 +35,8 @@ use common\models\Blog;
 //$this->registerMetaTag(['name'=>'twitter:label2', 'content'=>'']);
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Blog'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
+
 $this->params['subtitle'] = Yii::$app->formatter->asDate($model->updated_at);
 
 /* misc */

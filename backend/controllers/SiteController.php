@@ -20,6 +20,12 @@ class SiteController extends BackendController
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
+            'flickr-upload' => [
+                'class' => 'common\components\FlickrUploadAction',
+            ],
+            'flickr-photo' => [
+                'class' => 'common\components\FlickrPhotoAction',
+            ],
         ];
     }
 
@@ -29,7 +35,6 @@ class SiteController extends BackendController
      */
     public function actionIndex()
     {
-
         return $this->render('index');
     }
 
