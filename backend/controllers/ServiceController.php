@@ -7,14 +7,10 @@
 
 namespace backend\controllers;
 
-use common\widgets\FlickrPhoto;
 use nirvana\jsonld\JsonLDHelper;
 use Yii;
 use common\models\Service;
-use common\models\ServiceSearch;
-use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * ServiceController implements the CRUD actions for Service model.
@@ -42,7 +38,6 @@ class ServiceController extends BackendController
     public function onAuthSuccess($client)
     {
         if ($client->getName() == 'flickr-photo') {
-            /* @var FlickrPhoto $client */
             $service = Service::find()->where(['name' => $client->getName()])->one();
             if (!$service) {
                 $service = new Service();
