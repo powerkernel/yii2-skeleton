@@ -1,6 +1,9 @@
 <?php
 
 /* @var $this yii\web\View */
+use modernkernel\fontawesome\Icon;
+
+/* @var $files [] */
 
 
 $this->title = Yii::t('app', 'Dashboard');
@@ -29,7 +32,6 @@ $this->title = Yii::t('app', 'Dashboard');
                                 <th>Release date</th>
                                 <td><?= Yii::$app->formatter->asDate(Yii::$app->params['releaseDate']) ?></td>
                             </tr>
-
 
 
                             <tr>
@@ -94,6 +96,26 @@ $this->title = Yii::t('app', 'Dashboard');
 
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title"><?= Yii::t('app', 'Images files verification') ?></h3>
+        </div>
+        <div class="box-body padding">
+            <?php foreach ($files as $file): ?>
+                <div>
+                    <?php if($file['exist']):?>
+                        <code class="text-green"><?= $file['file'] ?></code>
+                        <?= Icon::widget(['icon'=>'check text-green']) ?>
+                    <?php else:?>
+                        <code class="text-red"><?= $file['file'] ?></code>
+                        <?= Icon::widget(['icon'=>'exclamation-triangle text-red']) ?>
+                    <?php endif;?>
+
+                </div>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>

@@ -35,6 +35,7 @@ use yii\widgets\ActiveForm;
         //'language' => Yii::$app->language,
 
         'clientOptions' => [
+            'height'=>480,
             'menubar'=> false,
             'plugins' => [
                 "advlist autolink lists link charmap print preview anchor",
