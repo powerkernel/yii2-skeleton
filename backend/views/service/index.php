@@ -53,4 +53,5 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
 
 
     </div>
+
 </div>

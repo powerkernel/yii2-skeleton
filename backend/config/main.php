@@ -18,9 +18,13 @@ return [
             'sessionTable' => '{{%core_session}}',
             'name' => 'PHPBACKSESSID'
         ],
+        'request'=>[
+            'csrfParam'=>'_csrf_b'
+        ],
         'user' => [
             'identityClass' => 'common\models\Account',
             'enableAutoLogin' => true,
+            'identityCookie'=>['name' => '_identity_b', 'httpOnly' => true],
             'loginUrl'=>['/account/login']
         ],
         'log' => [
@@ -44,11 +48,12 @@ return [
         ],
         */
         'urlManagerFrontend' => [
-            'class' => 'yii\web\urlManager',
+            'class' => 'common\components\LocaleUrl',
             'baseUrl' => '/',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
         ],
+
         'view' => [
             'theme' => [
                 //'class' => 'harrytang\themeinspinia\InspiniaTheme',

@@ -18,6 +18,7 @@ return [
             'sessionTable' => '{{%core_session}}',
             'name' => 'PHPFRONTSESSID'
         ],
+
         'user' => [
             'identityClass' => 'common\models\Account',
             'enableAutoLogin' => true,

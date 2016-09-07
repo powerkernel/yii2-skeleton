@@ -38,13 +38,13 @@ class FlickrPhotoAction extends FlickrAction
                             $data=$client->api('','GET', $params);
 
                             /* cache time */
-                            $time=1;
                             if($data['stat']=='ok'){
-                                $time=600;
+                                $items[$id]=$data;
+                                Yii::$app->cache->set($key, $data, 600);
                             }
-                            Yii::$app->cache->set($key, $data, $time);
+
                         }
-                        $items[$id]=$data;
+
                     }
 
                     return $this->renderHtml($items);

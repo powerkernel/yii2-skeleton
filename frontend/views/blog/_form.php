@@ -50,6 +50,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'thumbnail')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'thumbnail_square')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'status')->dropDownList(Blog::getStatusOption()) ?>
 
     <div class="form-group">

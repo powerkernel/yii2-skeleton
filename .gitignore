@@ -35,4 +35,4 @@ phpunit.phar
 # misc
 frontend/web/backend
 composer.lock
-_ssl
+_ssl/*

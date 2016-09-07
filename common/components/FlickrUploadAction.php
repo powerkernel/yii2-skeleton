@@ -6,6 +6,7 @@
  */
 
 namespace common\components;
+use common\models\Service;
 use Yii;
 
 
@@ -41,11 +42,32 @@ class FlickrUploadAction extends FlickrAction
                 }
                 $photos[]=$response['photoid'];
                 Yii::$app->session->set('flickr', $photos);
+                $this->addPhotoToSet($response['photoid']);
                 return json_encode(['success' => true, 'uuid' => Yii::$app->request->post('qquuid')]);
             }
 
         }
 
         return json_encode(['success' => false, 'uuid' => Yii::$app->request->post('qquuid')]);
+    }
+
+    /**
+     * add photo to a set
+     * @param $photoid
+     */
+    protected function addPhotoToSet($photoid){
+        $flickr=Service::findOne('flickr-photo');
+        if($flickr){
+            $client=$this->getFlickr();
+            $data=json_decode($flickr->data, true);
+            if(!empty($data['photoset'])){
+                $params = [
+                    'method' => 'flickr.photosets.addPhoto',
+                    'photoset_id'=>$data['photoset'],
+                    'photo_id'=>$photoid
+                ];
+                $client->api('', 'POST', $params);
+            }
+        }
     }
 }

@@ -26,6 +26,7 @@ use yii\helpers\HtmlPurifier;
  * @property string $content
  * @property string $tags
  * @property string $thumbnail
+ * @property string $thumbnail_square
  * @property string $image_object
  * @property integer $created_by
  * @property integer $views
@@ -93,16 +94,16 @@ class Blog extends ActiveRecord
     public function rules()
     {
         return [
-            [['slug', 'title', 'desc', 'content', 'tags'], 'required'],
+            [['slug', 'title', 'desc', 'content', 'tags', 'thumbnail', 'thumbnail_square'], 'required'],
             [['slug'], 'match', 'pattern' => '/^[a-z0-9-]+$/'],
             [['slug'], 'unique'],
             [['content'], 'string'],
             [['created_by', 'views', 'status', 'created_at', 'updated_at', 'published_at'], 'integer'],
 
             [['title', 'slug'], 'string', 'max' => 110],
-            [['desc', 'tags', 'thumbnail'], 'string', 'max' => 255],
+            [['desc', 'tags', 'thumbnail', 'thumbnail_square'], 'string', 'max' => 255],
 
-            [['thumbnail'], 'url'],
+            [['thumbnail', 'thumbnail_square'], 'url'],
             [['image_object'], 'string'],
 
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['created_by' => 'id']],
@@ -122,6 +123,7 @@ class Blog extends ActiveRecord
             'content' => Yii::t('app', 'Content'),
             'tags' => Yii::t('app', 'Tags'),
             'thumbnail' => Yii::t('app', 'Thumbnail'),
+            'thumbnail_square' => Yii::t('app', 'Square Thumbnail'),
             'image_object' => Yii::t('app', 'Image Object'),
             'created_by' => Yii::t('app', 'Author'),
             'views' => Yii::t('app', 'Views'),

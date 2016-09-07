@@ -12,7 +12,7 @@
             <?php foreach ($models as $model):?>
                 <li class="item">
                     <div class="product-img">
-                        <img src="<?= $model->thumbnail ?>" class="" style="width: 50px; height: auto" alt="<?= $model->title ?>" />
+                        <img src="<?= $model->thumbnail_square ?>" class="" style="width: 50px; height: auto" alt="<?= $model->title ?>" />
                     </div>
                     <div class="product-info">
                         <a href="<?= $model->viewUrl ?>" class="product-title"><?= $model->title ?></a>

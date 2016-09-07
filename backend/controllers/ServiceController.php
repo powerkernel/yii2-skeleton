@@ -38,12 +38,37 @@ class ServiceController extends BackendController
     public function onAuthSuccess($client)
     {
         if ($client->getName() == 'flickr-photo') {
+            $user=$client->getUserAttributes();
+
             $service = Service::find()->where(['name' => $client->getName()])->one();
             if (!$service) {
                 $service = new Service();
             }
 
-            $user=$client->getUserAttributes();
+            /* photoset */
+            $data=!empty($service->data)?json_decode($service->data, true):[];
+            $photoset=null;
+            if(empty($data['photoset']) && file_exists(Yii::getAlias('@frontend').'/web/images/logo.png')){
+                /* upload logo */
+                $response=$client->apiUpload($data, Yii::getAlias('@frontend').'/web/images/logo.png');
+
+                /* create photoset */
+                if(!empty($response['photoid'])){
+                    $params = [
+                        'method' => 'flickr.photosets.create',
+                        'title'=>Yii::$app->name,
+                        'primary_photo_id'=>$response['photoid']
+                    ];
+                    $resp=$client->api('', 'POST', $params);
+                    if(!empty($resp['photoset']['id'])){
+                        $photoset=$resp['photoset']['id'];
+                    }
+                }
+            }
+            else {
+                $photoset=$data['photoset'];
+            }
+            /* end: photoset */
 
             $service->name = $client->getName();
             $service->title = 'Flickr Photo';
@@ -52,7 +77,8 @@ class ServiceController extends BackendController
                 'token' => $client->accessToken->token,
                 'tokenSecret' => $client->accessToken->tokenSecret,
                 'userid'=>$user['user']['id'],
-                'username'=>json_encode($user['user']['username'])
+                'username'=>json_encode($user['user']['username']),
+                'photoset'=>$photoset
             ]);
 
             $service->save(false);
