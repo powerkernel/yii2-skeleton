@@ -55,14 +55,12 @@ class Configuration extends Component
             if (!Yii::$app->user->isGuest) {
                 try {
                     $user = Yii::$app->user->identity;
-
                     /* if user local not exist, set default */
                     $locales = Message::getLocaleList();
                     if (!in_array($user->language, array_keys($locales))) {
                         $user->language = Setting::getValue('language');
                         $user->save();
                     }
-
                     Yii::$app->language = $user->language;
                     Yii::$app->setTimeZone($user->timezone);
 
@@ -72,7 +70,8 @@ class Configuration extends Component
                     Yii::$app->db->schema->refresh();
                     Yii::$app->user->logout();
                 }
-            } else {
+            }
+            else {
                 $timezone = Setting::getValue('timezone');
                 $language = Setting::getValue('language');
                 Yii::$app->language = $language;
@@ -226,7 +225,7 @@ class Configuration extends Component
             'languages' => array_keys(Message::getLocaleList()),
             'enableLanguagePersistence' => false, // default true
             'enableDefaultLanguageUrlCode' => (boolean)Setting::getValue('languageUrlCode'),
-            'enableLanguageDetection' => true, // default true
+            'enableLanguageDetection' => false, // default true
             'ignoreLanguageUrlPatterns' => $urlManager['ignoreLanguageUrlPatterns'],
             'rules' => $urlManager['rules']
         ]);

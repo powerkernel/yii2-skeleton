@@ -13,7 +13,6 @@ function loadFlickrPhoto() {
             alert("error");
         })
         .always(function () {
-            //alert( "complete" );
         });
 }
 $(document).on("click", ".photo-url", function () {
