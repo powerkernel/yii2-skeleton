@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 
 use common\models\Blog;
+use common\models\Setting;
 use Yii;
 use yii\data\Pagination;
 use yii\web\Controller;
@@ -127,5 +128,45 @@ class SiteController extends Controller
 
     }
 
+    /**
+     * manifest.json
+     */
+    public function actionManifest()
+    {
+        $color = Setting::getValue('androidThemeColor');
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $json = [
+            'name' => Yii::$app->name,
+            'icons' => [
+                ['src' => '/android-chrome-192x192.png', 'sizes' => '192x192', 'type' => 'image/png'],
+                ['src' => '/android-chrome-512x512.png', 'sizes' => '512x512', 'type' => 'image/png']
+            ],
+            'display' => 'standalone',
+            'theme_color' => $color,
+        ];
+        return $json;
+    }
 
+    /**
+     * browserconfig.xml
+     */
+    public function actionBrowserconfig()
+    {
+        Yii::$app->response->format = Response::FORMAT_XML;
+        $color = Setting::getValue('msTileColor');
+
+        $xml = <<<EOB
+<?xml version="1.0" encoding="utf-8"?>
+<browserconfig>        
+    <msapplication>
+        <tile>
+          <square150x150logo src="/mstile-150x150.png"/>
+          <TileColor>{$color}</TileColor>
+        </tile>
+    </msapplication>
+</browserconfig>
+EOB;
+        echo $xml;
+
+    }
 }

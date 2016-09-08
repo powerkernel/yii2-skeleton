@@ -196,6 +196,8 @@ class Configuration extends Component
                 '' => 'site/index',
                 'sitemap.xml' => 'site/sitemap',
                 'robots.txt' => 'site/robots',
+                'manifest.json' => 'site/manifest',
+                'browserconfig.xml' => 'site/browserconfig',
 
                 'blog/<action:(manage|create|update|delete)>' => 'blog/<action>',
                 'blog/sitemap<page:\d+>.xml' => 'blog/sitemap',

@@ -48,9 +48,9 @@ class ServiceController extends BackendController
             /* photoset */
             $data=!empty($service->data)?json_decode($service->data, true):[];
             $photoset=null;
-            if(empty($data['photoset']) && file_exists(Yii::getAlias('@frontend').'/web/images/logo.png')){
+            if(empty($data['photoset']) && file_exists(Yii::getAlias('@frontend').'/web/images/banner.png')){
                 /* upload logo */
-                $response=$client->apiUpload($data, Yii::getAlias('@frontend').'/web/images/logo.png');
+                $response=$client->apiUpload($data, Yii::getAlias('@frontend').'/web/images/banner.png');
 
                 /* create photoset */
                 if(!empty($response['photoid'])){
