@@ -8,8 +8,9 @@ use yii\bootstrap\Nav;
     <nav class="navbar navbar-static-top">
         <div class="container">
             <div class="navbar-header">
-                <a href="<?= Yii::$app->homeUrl ?>" class="navbar-brand" style="width: 70px; padding: 5px 15px;">
-                        <img src="<?= Yii::$app->request->baseUrl ?>/images/logo-mini.svg" class="img-responsive" alt="<?= Yii::$app->name ?>" />
+                <a href="<?= Yii::$app->homeUrl ?>" title="<?= Yii::$app->name ?>" class="navbar-brand" style="width: 60px; padding: 10px 15px;">
+                    <img src="<?= Yii::$app->request->baseUrl ?>/images/logo-mini.svg" class="img-responsive"
+                         alt="<?= Yii::$app->name ?>" />
                 </a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                         data-target="#navbar-collapse">
@@ -23,8 +24,8 @@ use yii\bootstrap\Nav;
                 Nav::widget([
                     'options' => ['class' => 'navbar-nav'],
                     'items' => [
-                        ['label' => Yii::t('app','Home'), 'url' => ['/site/index']],
-                        ['label' => Yii::t('app','Blog'), 'url' => ['/blog']],
+                        ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']],
+                        ['label' => Yii::t('app', 'Blog'), 'url' => ['/blog']],
                     ],
                 ]);
                 ?>
@@ -33,27 +34,27 @@ use yii\bootstrap\Nav;
             <!-- Navbar Right Menu -->
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
-                    <?php if(!Yii::$app->user->isGuest):?>
-                    <li class="<?= Core::checkMCA('', 'account', '*')?'active':'' ?>">
-                        <a href="<?= Yii::$app->urlManager->createUrl(['/account']) ?>">
-                            <?= Icon::widget(['icon' => 'user']) ?>
-                            <span><?= Yii::$app->user->identity->fullname ?></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?= Yii::$app->urlManager->createUrl(['/site/logout']) ?>">
-                            <span><?= Yii::t('app', 'Logout') ?></span>
-                            <?= Icon::widget(['icon' => 'sign-out']) ?>
-                        </a>
-                    </li>
-                    <?php else:?>
+                    <?php if (!Yii::$app->user->isGuest): ?>
+                        <li class="<?= Core::checkMCA('', 'account', '*') ? 'active' : '' ?>">
+                            <a href="<?= Yii::$app->urlManager->createUrl(['/account']) ?>">
+                                <?= Icon::widget(['icon' => 'user']) ?>
+                                <span><?= Yii::$app->user->identity->fullname ?></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?= Yii::$app->urlManager->createUrl(['/site/logout']) ?>">
+                                <span><?= Yii::t('app', 'Logout') ?></span>
+                                <?= Icon::widget(['icon' => 'sign-out']) ?>
+                            </a>
+                        </li>
+                    <?php else: ?>
                         <li>
                             <a href="<?= Yii::$app->urlManager->createUrl(Yii::$app->user->loginUrl) ?>">
                                 <?= Icon::widget(['icon' => 'key']) ?>
                                 <span><?= Yii::t('app', 'Login') ?></span>
                             </a>
                         </li>
-                    <?php endif;?>
+                    <?php endif; ?>
                 </ul>
             </div>
 
