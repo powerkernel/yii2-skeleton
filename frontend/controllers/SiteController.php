@@ -135,11 +135,12 @@ class SiteController extends Controller
     {
         $color = Setting::getValue('androidThemeColor');
         Yii::$app->response->format = Response::FORMAT_JSON;
+        $baseUrl=Yii::$app->request->baseUrl;
         $json = [
             'name' => Yii::$app->name,
             'icons' => [
-                ['src' => '/android-chrome-192x192.png', 'sizes' => '192x192', 'type' => 'image/png'],
-                ['src' => '/android-chrome-512x512.png', 'sizes' => '512x512', 'type' => 'image/png']
+                ['src' => $baseUrl.'/android-chrome-192x192.png', 'sizes' => '192x192', 'type' => 'image/png'],
+                ['src' => $baseUrl.'/android-chrome-512x512.png', 'sizes' => '512x512', 'type' => 'image/png']
             ],
             'display' => 'standalone',
             'theme_color' => $color,
@@ -154,13 +155,14 @@ class SiteController extends Controller
     {
         Yii::$app->response->format = Response::FORMAT_XML;
         $color = Setting::getValue('msTileColor');
+        $baseUrl=Yii::$app->request->baseUrl;
 
         $xml = <<<EOB
 <?xml version="1.0" encoding="utf-8"?>
 <browserconfig>        
     <msapplication>
         <tile>
-          <square150x150logo src="/mstile-150x150.png"/>
+          <square150x150logo src="{$baseUrl}/mstile-150x150.png"/>
           <TileColor>{$color}</TileColor>
         </tile>
     </msapplication>

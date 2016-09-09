@@ -8,7 +8,9 @@ use yii\bootstrap\Nav;
     <nav class="navbar navbar-static-top">
         <div class="container">
             <div class="navbar-header">
-                <a href="<?= Yii::$app->homeUrl ?>" class="navbar-brand"><?= Yii::$app->name ?></a>
+                <a href="<?= Yii::$app->homeUrl ?>" class="navbar-brand" style="width: 70px; padding: 5px 15px;">
+                        <img src="<?= Yii::$app->request->baseUrl ?>/images/logo-mini.svg" class="img-responsive" alt="<?= Yii::$app->name ?>" />
+                </a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                         data-target="#navbar-collapse">
                     <?= Icon::widget(['icon' => 'bars']) ?>
@@ -22,7 +24,7 @@ use yii\bootstrap\Nav;
                     'options' => ['class' => 'navbar-nav'],
                     'items' => [
                         ['label' => Yii::t('app','Home'), 'url' => ['/site/index']],
-                        ['label' => Yii::t('app','about'), 'url' => ['/site/about']],
+                        ['label' => Yii::t('app','Blog'), 'url' => ['/blog']],
                     ],
                 ]);
                 ?>
