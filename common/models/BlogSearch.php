@@ -18,6 +18,9 @@ use yii\data\ActiveDataProvider;
  */
 class BlogSearch extends Blog
 {
+
+    public $fullname;
+
     /**
      * @inheritdoc
      */
@@ -26,6 +29,7 @@ class BlogSearch extends Blog
         return [
             [['id', 'created_by', 'status'], 'integer'],
             [['title', 'desc', 'content', 'tags', 'created_at', 'updated_at'], 'safe'],
+            [['fullname'], 'safe']
         ];
     }
 
@@ -48,25 +52,35 @@ class BlogSearch extends Blog
     public function search($params)
     {
         $query = Blog::find();
+        $query->joinWith(['author']);
+
+
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['id'=>SORT_DESC]]
+            'sort' => ['defaultOrder' => ['id' => SORT_DESC]]
         ]);
 
+        $dataProvider->sort->attributes['fullname'] = [
+            // The tables are the ones our relation are configured to
+            // in my case they are prefixed with "tbl_"
+            'asc' => ['{{%core_account}}.fullname' => SORT_ASC],
+            'desc' => ['{{%core_account}}.fullname' => SORT_DESC],
+        ];
+
         /* user's blog */
-        if(Core::checkMCA(null, 'blog', 'manage')){
+        if (Core::checkMCA(null, 'blog', 'manage')) {
             $query->andFilterWhere([
-                'created_by' => Yii::$app->user->id,
+                '{{%core_blog}}.created_by' => Yii::$app->user->id,
             ]);
         }
 
         /* list all public blog */
-        if(Core::checkMCA(null, 'blog', 'index')){
+        if (Core::checkMCA(null, 'blog', 'index')) {
             $query->andFilterWhere([
-                'status' => Blog::STATUS_PUBLISHED,
+                '{{%core_blog}}.status' => Blog::STATUS_PUBLISHED,
             ]);
         }
 
@@ -80,22 +94,25 @@ class BlogSearch extends Blog
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'created_by' => $this->created_by,
-            'status' => $this->status,
+            '{{%core_blog}}.id' => $this->id,
+            '{{%core_blog}}.created_by' => $this->created_by,
+            '{{%core_blog}}.status' => $this->status,
             //'created_at' => $this->created_at,
             //'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'desc', $this->desc])
-            ->andFilterWhere(['like', 'content', $this->content])
-            ->andFilterWhere(['like', 'tags', $this->tags]);
+        $query->andFilterWhere(['like', '{{%core_blog}}.title', $this->title])
+            ->andFilterWhere(['like', '{{%core_account}}.fullname', $this->fullname])
+            ->andFilterWhere(['like', '{{%core_blog}}.desc', $this->desc])
+            ->andFilterWhere(['like', '{{%core_blog}}.content', $this->content])
+            ->andFilterWhere(['like', '{{%core_blog}}.tags', $this->tags]);
 
         $query->andFilterWhere([
-            'DATE(FROM_UNIXTIME(`updated_at`))' => $this->updated_at,
+            'DATE(FROM_UNIXTIME(`{{%core_blog}}.updated_at`))' => $this->updated_at,
         ]);
 
         return $dataProvider;
     }
+
+
 }
