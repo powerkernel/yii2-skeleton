@@ -42,8 +42,6 @@ class SiteController extends BackendController
             ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/images/logo-mini.svg'],
             ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/images/logo-lg.svg'],
 
-
-
             ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/android-chrome-192x192.png'],
             ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/android-chrome-512x512.png'],
             ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/apple-touch-icon.png'],

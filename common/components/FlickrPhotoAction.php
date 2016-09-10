@@ -21,6 +21,7 @@ class FlickrPhotoAction extends FlickrAction
      * @return string
      */
     public function run(){
+
         if(Yii::$app->request->isAjax){
             $photos=Yii::$app->session->get('flickr');
             if(!empty($photos)){
@@ -28,9 +29,11 @@ class FlickrPhotoAction extends FlickrAction
                 if($client){
                     $items=[];
                     foreach($photos as $id){
+
                         $key='flickr-photo-'.$id;
                         $data = Yii::$app->cache->get($key);
                         if($data===false){
+
                             $params=[
                                 'method'=>'flickr.photos.getSizes',
                                 'photo_id'=>$id
@@ -44,12 +47,14 @@ class FlickrPhotoAction extends FlickrAction
                             }
 
                         }
+                        else {
+                            $items[$id]=$data;
+                        }
 
                     }
 
                     return $this->renderHtml($items);
                 }
-
             }
         }
         return null;
@@ -72,7 +77,7 @@ class FlickrPhotoAction extends FlickrAction
                                     <h4 class="modal-title"><?= $id ?></h4>
                                 </div>
                                 <div class="modal-body">
-                                    <form role="form" class="form-horizontal">
+                                    <div role="form" class="form-horizontal">
                                         <?php foreach ($photo['sizes']['size'] as $size): ?>
                                             <div class="form-group">
                                                 <label for="<?= $size['label'] ?>" class="col-sm-4 control-label"><?= $size['label'] ?>: <?= $size['width'] ?>x<?= $size['height'] ?></label>
@@ -81,7 +86,7 @@ class FlickrPhotoAction extends FlickrAction
                                                 </div>
                                             </div>
                                         <?php endforeach; ?>
-                                    </form>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

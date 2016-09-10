@@ -2,12 +2,16 @@
 namespace frontend\controllers;
 
 
+use common\Core;
 use common\models\Blog;
+use common\models\Message;
+use common\models\Page;
 use common\models\Setting;
 use Yii;
 use yii\data\Pagination;
 use yii\web\Controller;
 use yii\filters\AccessControl;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 /**
@@ -63,6 +67,38 @@ class SiteController extends Controller
     public function actionIndex()
     {
         return $this->render('index');
+    }
+
+    /**
+     * page view
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
+     * @internal param $name
+     */
+    public function actionPage($id)
+    {
+        $model = Page::findOne($id);
+        if (!$model) {
+            throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        }
+        /* found */
+        if ($model->content->language !== Yii::$app->language) {
+            Yii::$app->session->setFlash(
+                'info',
+                Yii::t('app',
+                    'This page has no {CUR_LANG} version. You are currently viewing the {LANGUAGE} version.',
+                    [
+                        'CUR_LANG' => Message::getLocaleList()[Yii::$app->language],
+                        'LANGUAGE' => Message::getLocaleList()[$model->content->language]
+                    ]
+                ));
+        }
+
+        return $this->render('page', [
+            'model' => $model
+        ]);
+
     }
 
 
@@ -135,12 +171,12 @@ class SiteController extends Controller
     {
         $color = Setting::getValue('androidThemeColor');
         Yii::$app->response->format = Response::FORMAT_JSON;
-        $baseUrl=Yii::$app->request->baseUrl;
+        $baseUrl = Yii::$app->request->baseUrl;
         $json = [
             'name' => Yii::$app->name,
             'icons' => [
-                ['src' => $baseUrl.'/android-chrome-192x192.png', 'sizes' => '192x192', 'type' => 'image/png'],
-                ['src' => $baseUrl.'/android-chrome-512x512.png', 'sizes' => '512x512', 'type' => 'image/png']
+                ['src' => $baseUrl . '/android-chrome-192x192.png', 'sizes' => '192x192', 'type' => 'image/png'],
+                ['src' => $baseUrl . '/android-chrome-512x512.png', 'sizes' => '512x512', 'type' => 'image/png']
             ],
             'display' => 'standalone',
             'theme_color' => $color,
@@ -155,7 +191,7 @@ class SiteController extends Controller
     {
         Yii::$app->response->format = Response::FORMAT_XML;
         $color = Setting::getValue('msTileColor');
-        $baseUrl=Yii::$app->request->baseUrl;
+        $baseUrl = Yii::$app->request->baseUrl;
 
         $xml = <<<EOB
 <?xml version="1.0" encoding="utf-8"?>
@@ -171,4 +207,6 @@ EOB;
         echo $xml;
 
     }
+
+
 }

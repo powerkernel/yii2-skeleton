@@ -198,6 +198,7 @@ class Configuration extends Component
                 'robots.txt' => 'site/robots',
                 'manifest.json' => 'site/manifest',
                 'browserconfig.xml' => 'site/browserconfig',
+                '<id:.+?>.html'=>'site/page',
 
                 'blog/<action:(manage|create|update|delete)>' => 'blog/<action>',
                 'blog/sitemap<page:\d+>.xml' => 'blog/sitemap',
@@ -225,6 +226,7 @@ class Configuration extends Component
         Yii::$container->set('common\components\LocaleUrl', [
             /* config */
             'languages' => array_keys(Message::getLocaleList()),
+            'languageParam' => 'lang',
             'enableLanguagePersistence' => false, // default true
             'enableDefaultLanguageUrlCode' => (boolean)Setting::getValue('languageUrlCode'),
             'enableLanguageDetection' => false, // default true

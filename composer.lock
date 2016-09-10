@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c626da0d3af3d1339ebbad36e9deacc0",
-    "content-hash": "b25a30bb457a3a126312ce65e3450d00",
+    "hash": "dabb65215e8c0b17510c370704d8a75c",
+    "content-hash": "0321a3744aa92f62a6f8cf45549850cb",
     "packages": [
         {
             "name": "2amigos/yii2-tinymce-widget",
@@ -1044,47 +1044,6 @@
             "time": "2016-08-30 17:42:24"
         },
         {
-            "name": "modernkernel/yii2-page",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/modernkernel/yii2-page.git",
-                "reference": "46a384b930b3dfd95beb2e0d14975dab098530af"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/modernkernel/yii2-page/zipball/46a384b930b3dfd95beb2e0d14975dab098530af",
-                "reference": "46a384b930b3dfd95beb2e0d14975dab098530af",
-                "shasum": ""
-            },
-            "require": {
-                "2amigos/yii2-tinymce-widget": "*",
-                "yiisoft/yii2": "*"
-            },
-            "type": "yii2-extension",
-            "autoload": {
-                "psr-4": {
-                    "modernkernel\\page\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Harry Tang",
-                    "email": "harry@modernkernel.com"
-                }
-            ],
-            "description": "Yii2 Page",
-            "keywords": [
-                " cms",
-                "page"
-            ],
-            "time": "2016-09-09 07:49:45"
-        },
-        {
             "name": "modernkernel/yii2-resume",
             "version": "dev-master",
             "source": {
@@ -1906,21 +1865,21 @@
         },
         {
             "name": "yiisoft/yii2-swiftmailer",
-            "version": "2.0.5",
+            "version": "2.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-swiftmailer.git",
-                "reference": "e2c6315caff30a9271a7afad4d684627721dc69a"
+                "reference": "26b900767f1031ff3a4668dfa36c10595875f0a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-swiftmailer/zipball/e2c6315caff30a9271a7afad4d684627721dc69a",
-                "reference": "e2c6315caff30a9271a7afad4d684627721dc69a",
+                "url": "https://api.github.com/repos/yiisoft/yii2-swiftmailer/zipball/26b900767f1031ff3a4668dfa36c10595875f0a5",
+                "reference": "26b900767f1031ff3a4668dfa36c10595875f0a5",
                 "shasum": ""
             },
             "require": {
                 "swiftmailer/swiftmailer": "~5.0",
-                "yiisoft/yii2": ">=2.0.4"
+                "yiisoft/yii2": "~2.0.4"
             },
             "type": "yii2-extension",
             "extra": {
@@ -1952,7 +1911,7 @@
                 "swiftmailer",
                 "yii2"
             ],
-            "time": "2016-03-17 03:58:49"
+            "time": "2016-09-09 11:48:11"
         }
     ],
     "packages-dev": [
@@ -2267,8 +2226,7 @@
     "stability-flags": {
         "nirvana-msu/yii2-jsonld-helper": 20,
         "modernkernel/yii2-theme-adminlte": 20,
-        "modernkernel/yii2-resume": 20,
-        "modernkernel/yii2-page": 20
+        "modernkernel/yii2-resume": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

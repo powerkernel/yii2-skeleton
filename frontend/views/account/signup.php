@@ -49,8 +49,17 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php if(\common\Core::isReCaptchaEnabled()):?>
             <?= $form->field($model, 'captcha')->widget(ReCaptcha::className())->label(false) ?>
             <?php endif;?>
+
+
             <p>
-                <?= Yii::t('app', 'By Clicking Submit below, you are agreeing to the Terms and Conditions and Privacy Policy.') ?>
+                <?= Yii::t(
+                    'app',
+                    'By clicking on the "Signup" button below, you certify that you have read and agree to our {TERMS} and {PRIVACY}.',
+                    [
+                        'TERMS'=>Html::a('terms of use', Yii::$app->urlManager->createUrl(['/site/page', 'id'=>'terms']), ['target'=>'_blank']),
+                        'PRIVACY'=>Html::a('privacy policy', Yii::$app->urlManager->createUrl(['/site/page', 'id'=>'privacy']), ['target'=>'_blank']),
+                    ]
+                ) ?>
             </p>
 
             <div class="form-group">

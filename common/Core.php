@@ -136,7 +136,7 @@ class Core
 
     /**
      * turn array params into query string
-     * @param $params[]
+     * @param $params []
      * @return string
      */
     public static function postParam2string($params)
@@ -390,7 +390,7 @@ class Core
     public static function getTimezoneList()
     {
         $zones = timezone_identifiers_list();
-        $locations=[];
+        $locations = [];
         foreach ($zones as $zone) {
             $zone = explode('/', $zone); // 0 => Continent, 1 => City
 
@@ -405,17 +405,27 @@ class Core
     }
 
     /**
-     * get language for TinyMCE
+     * get language for TinyMCE (2amigos)
      * @param $lang
      * @return string
      */
     public static function getTinyMCELang($lang)
     {
-        $l = substr($lang, 0, 2);
-        if ($l == 'en') {
-            return 'en_GB';
+        $lang = str_ireplace('-', '_', $lang);
+        $path = Yii::getAlias('@vendor') . '/2amigos/yii2-tinymce-widget/src/assets/langs';
+        $files = scandir($path);
+        $availableLang = [];
+        foreach ($files as $file) {
+            if (preg_match('/([\w\W_]+)\.js/i', $file, $name)) {
+                $availableLang[] = $name[1];
+            }
         }
-        return $l;
+
+        if (in_array($lang, $availableLang)) {
+            return $lang;
+        }
+        return 'en_GB';
+
     }
 
     /**
@@ -738,8 +748,9 @@ class Core
      * @param array $only
      * @return array
      */
-    public static function getLocaleList($only=[]){
-        $list= [
+    public static function getLocaleList($only = [])
+    {
+        $list = [
             'af-NA' => 'Afrikaans (Namibia)',
             'af-ZA' => 'Afrikaans (South Africa)',
             'ak-GH' => 'Akan (Ghana)',
@@ -1125,9 +1136,9 @@ class Core
             'yo-BJ' => 'Yoruba (Benin)',
             'yo-NG' => 'Yoruba (Nigeria)',
         ];
-        if(!empty($only)){
-            foreach($only as $l){
-                $new[$l]=$list[$l];
+        if (!empty($only)) {
+            foreach ($only as $l) {
+                $new[$l] = $list[$l];
             }
             return $new;
         }
@@ -1138,7 +1149,8 @@ class Core
      * check if reCaptcha enabled
      * @return bool
      */
-    public static function isReCaptchaEnabled(){
+    public static function isReCaptchaEnabled()
+    {
         $rcKey = Setting::getValue('reCaptchaKey');
         $rcSecret = Setting::getValue('reCaptchaSecret');
         if (!empty($rcKey) && !empty($rcSecret)) {

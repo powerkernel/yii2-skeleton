@@ -5,6 +5,7 @@
  * @copyright Copyright (c) 2016 Modern Kernel
  */
 
+use common\Core;
 use common\models\Blog;
 use dosamigos\tinymce\TinyMce;
 use harrytang\photouploader\widgets\Facebook;
@@ -29,23 +30,39 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'desc')->textInput(['maxlength' => true]) ?>
 
-    <?php
-    echo $form->field($model, 'content')->widget(TinyMce::className(), [
-        'options' => ['rows' => 6],
-        //'language' => Yii::$app->language,
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab_content" data-toggle="tab" aria-expanded="true"><?= $model->getAttributeLabel('content') ?></a></li>
+            <li class=""><a href="#tab_photo_uploader" data-toggle="tab" aria-expanded="false"><?= Yii::t('app', 'Photo Uploader') ?></a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab_content">
+                <?php
+                echo $form->field($model, 'content')->widget(TinyMce::className(), [
+                    'options' => ['rows' => 6],
+                    'language' => Core::getTinyMCELang(Yii::$app->language),
 
-        'clientOptions' => [
-            'height'=>480,
-            'menubar'=> false,
-            'plugins' => [
-                "advlist autolink lists link charmap print preview anchor",
-                "searchreplace visualblocks code fullscreen",
-                "insertdatetime media table contextmenu paste image"
-            ],
-            'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | removeformat code"
-        ]
-    ]);
-    ?>
+                    'clientOptions' => [
+                        'height'=>480,
+                        'menubar'=> false,
+                        'plugins' => [
+                            "advlist autolink lists link charmap print preview anchor",
+                            "searchreplace visualblocks code fullscreen",
+                            "insertdatetime media table contextmenu paste image"
+                        ],
+                        'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | removeformat code"
+                    ]
+                ]);
+                ?>
+            </div>
+            <!-- /.tab-pane -->
+            <div class="tab-pane" id="tab_photo_uploader">
+                <?= \common\widgets\FlickrUploadWidget::widget() ?>
+            </div>
+            <!-- /.tab-pane -->
+        </div>
+        <!-- /.tab-content -->
+    </div>
 
     <?= $form->field($model, 'tags')->textInput(['maxlength' => true]) ?>
 
@@ -61,7 +78,7 @@ use yii\widgets\ActiveForm;
 
     <?php ActiveForm::end(); ?>
 
-    <?= \common\widgets\FlickrUploadWidget::widget() ?>
+
 
 
 </div>

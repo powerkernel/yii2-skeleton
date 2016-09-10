@@ -12,7 +12,9 @@ $flickrPhotoUrl=Yii::$app->urlManager->createUrl(['/site/flickr-photo']);
 $endpoint=Yii::$app->urlManager->createUrl(['/site/flickr-upload']);
 echo Html::hiddenInput('url-load-flickr-photo', $flickrPhotoUrl, ['id' => 'url-load-flickr-photo']);
 ?>
-<div id="flickr-photos-container" style="margin-bottom: 10px;"></div>
+<div id="flickr-photos-container" style="margin-bottom: 10px;">
+
+</div>
 <div>
     <?= modernkernel\fineuploader\Fineuploader::widget([
         'dropLabel'=>Yii::t('app', 'Drag & drop photos here'),
