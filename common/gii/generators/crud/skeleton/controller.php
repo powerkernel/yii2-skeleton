@@ -123,10 +123,11 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         //$metaTags[]=['property' => 'fb:app_id', 'content' => ''];
         //$metaTags[]=['property' => 'fb:admins', 'content' => ''];
         /* Twitter */
+        //$metaTags[]=['name'=>'twitter:card', 'content'=>'summary_large_image']; // summary, summary_large_image, photo, gallery, product, app, player
+        //$metaTags[]=['name'=>'twitter:site', 'content'=>Setting::getValue('twitterSite')];
+        // Can skip b/c we already have og
         //$metaTags[]=['name'=>'twitter:title', 'content'=>$title];
         //$metaTags[]=['name'=>'twitter:description', 'content'=>$description];
-        //$metaTags[]=['name'=>'twitter:card', 'content'=>'summary'];
-        //$metaTags[]=['name'=>'twitter:site', 'content'=>''];
         //$metaTags[]=['name'=>'twitter:image', 'content'=>''];
         //$metaTags[]=['name'=>'twitter:data1', 'content'=>''];
         //$metaTags[]=['name'=>'twitter:label1', 'content'=>''];

@@ -2,7 +2,6 @@
 namespace frontend\controllers;
 
 
-use common\Core;
 use common\models\Blog;
 use common\models\Message;
 use common\models\Page;
@@ -113,10 +112,11 @@ class SiteController extends Controller
         //$metaTags[]=['property' => 'fb:app_id', 'content' => ''];
         //$metaTags[]=['property' => 'fb:admins', 'content' => ''];
         /* Twitter */
+        $metaTags[]=['name'=>'twitter:card', 'content'=>'summary_large_image'];
+        $metaTags[]=['name'=>'twitter:site', 'content'=>Setting::getValue('twitterSite')];
+
 //        $metaTags[]=['name'=>'twitter:title', 'content'=>$title];
 //        $metaTags[]=['name'=>'twitter:description', 'content'=>$description];
-//        $metaTags[]=['name'=>'twitter:card', 'content'=>'summary'];
-//        $metaTags[]=['name'=>'twitter:site', 'content'=>''];
 //        $metaTags[]=['name'=>'twitter:image', 'content'=>''];
 //        $metaTags[]=['name'=>'twitter:data1', 'content'=>''];
 //        $metaTags[]=['name'=>'twitter:label1', 'content'=>''];
