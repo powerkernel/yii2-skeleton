@@ -25,7 +25,7 @@ use yii\bootstrap\Nav;
                     'options' => ['class' => 'navbar-nav'],
                     'items' => [
                         ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']],
-                        ['label' => Yii::t('app', 'Blog'), 'url' => ['/blog']],
+                        ['label' => Yii::t('app', 'Blog'), 'url' => ['/blog/index']],
                     ],
                 ]);
                 ?>
