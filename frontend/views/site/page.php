@@ -38,35 +38,34 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
 //$this->params['breadcrumbs'][] = ['label' => Yii::t('page', 'Pages'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
-$js=file_get_contents(__DIR__.'/page.min.js');
-$this->registerJs($js);
-//$css=file_get_contents(__DIR__.'/view.css');
-//$this->registerJs($css);
+//$js = file_get_contents(__DIR__ . '/page.min.js');
+//$this->registerJs($js);
+$css=file_get_contents(__DIR__.'/page.css');
+$this->registerCss($css);
 
 ?>
-<div class="page-main-view">
-    <div class="box box-info" itemscope itemtype="http://schema.org/NewsArticle">
+<div class="site-page">
+    <div class="box box-info">
         <div class="box-header with-border">
-            <h3 class="box-title" itemprop="headline"><?= Html::encode($this->title) ?></h3>
+            <h3 class="box-title"><?= Html::encode($this->title) ?></h3>
         </div>
         <div class="box-body">
             <?php if ($model->show_description): ?>
-                <div><p itemprop="description"><?= Html::encode($model->content->description) ?></p></div>
+                <p><?= Html::encode($model->content->description) ?></p>
             <?php endif; ?>
-            <div itemprop="articleBody">
+            <div class="page-body">
                 <?= Core::translateMessage($model->content->content, [
-                    '{APP_NAME}'=>Yii::$app->name,
-                    '{APP_DOMAIN}'=>Yii::$app->request->hostInfo,
+                    '{APP_NAME}' => Yii::$app->name,
+                    '{APP_DOMAIN}' => Yii::$app->request->hostInfo,
                 ]) ?>
             </div>
         </div>
         <?php if ($model->show_update_date): ?>
             <div class="box-footer">
                 <div class="pull-right font-light text-sm">
-                    <?= Yii::t('app','Last updated: {DATE}', ['DATE' => Yii::$app->formatter->asDate($model->content->updated_at)]) ?>
+                    <?= Yii::t('app', 'Last updated: {DATE}', ['DATE' => Yii::$app->formatter->asDate($model->content->updated_at)]) ?>
                 </div>
             </div>
         <?php endif; ?>
-        <meta itemprop="datePublished" content="<?= date(DATE_ISO8601, $model->created_at) ?>"/>
     </div>
 </div>

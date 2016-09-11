@@ -2,7 +2,7 @@
 
 use common\Core;
 use common\models\PageData;
-use dosamigos\tinymce\TinyMce;
+use modernkernel\tinymce\TinyMce;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -33,19 +33,25 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
                 <?= $form->field($model, 'language')->textInput(['maxlength' => true, 'readonly' => true]) ?>
                 <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
                 <?= $form->field($model, 'description')->textarea(['rows' => 3]) ?>
-                <?= $form->field($model, 'content')->widget(TinyMce::className(), [
-                    'language' => Core::getTinyMCELang(Yii::$app->language),
-                    'clientOptions' => [
-                        'height' => 320,
-                        'autoresize_max_height' => 640,
-                        'menubar' => false,
-                        'statusbar' => false,
-                        'plugins' => [
-                            "code advlist link image",
-                        ],
-                        'toolbar' => "code | undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
-                    ]
-                ]) ?>
+
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#tab_content" data-toggle="tab" aria-expanded="true"><?= $model->getAttributeLabel('content') ?></a></li>
+                        <li class=""><a href="#tab_photo_uploader" data-toggle="tab" aria-expanded="false"><?= Yii::t('app', 'Photo Uploader') ?></a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_content">
+                            <?= $form->field($model, 'content')->widget(TinyMce::className()) ?>
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_photo_uploader">
+                            <?= \common\widgets\FlickrUploadWidget::widget() ?>
+                        </div>
+                        <!-- /.tab-pane -->
+                    </div>
+                    <!-- /.tab-content -->
+                </div>
+
                 <?= $form->field($model, 'keywords')->textInput(['maxlength' => true]) ?>
                 <?= $form->field($model, 'thumbnail')->textInput(['maxlength' => false, 'placeholder' => Yii::t('app', 'Must be at least 160x90 pixels and at most 1920x1080 pixels')]) ?>
                 <?= $form->field($model, 'status')->dropDownList(PageData::getStatusOption()) ?>

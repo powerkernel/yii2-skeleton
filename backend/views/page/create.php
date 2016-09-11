@@ -3,7 +3,7 @@
 use common\Core;
 use common\models\Message;
 use common\models\PageData;
-use dosamigos\tinymce\TinyMce;
+use modernkernel\tinymce\TinyMce;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -44,23 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_content">
-                            <?php
-                            echo $form->field($model, 'content')->widget(TinyMce::className(), [
-                                'options' => ['rows' => 6],
-                                'language' => Core::getTinyMCELang(Yii::$app->language),
-
-                                'clientOptions' => [
-                                    'height'=>320,
-                                    'menubar'=> false,
-                                    'plugins' => [
-                                        "advlist autolink lists link charmap print preview anchor",
-                                        "searchreplace visualblocks code fullscreen",
-                                        "insertdatetime media table contextmenu paste image"
-                                    ],
-                                    'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | removeformat code"
-                                ]
-                            ]);
-                            ?>
+                            <?= $form->field($model, 'content')->widget(TinyMce::className()) ?>
                         </div>
                         <!-- /.tab-pane -->
                         <div class="tab-pane" id="tab_photo_uploader">

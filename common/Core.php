@@ -404,29 +404,6 @@ class Core
         return $locations;
     }
 
-    /**
-     * get language for TinyMCE (2amigos)
-     * @param $lang
-     * @return string
-     */
-    public static function getTinyMCELang($lang)
-    {
-        $lang = str_ireplace('-', '_', $lang);
-        $path = Yii::getAlias('@vendor') . '/2amigos/yii2-tinymce-widget/src/assets/langs';
-        $files = scandir($path);
-        $availableLang = [];
-        foreach ($files as $file) {
-            if (preg_match('/([\w\W_]+)\.js/i', $file, $name)) {
-                $availableLang[] = $name[1];
-            }
-        }
-
-        if (in_array($lang, $availableLang)) {
-            return $lang;
-        }
-        return 'en_GB';
-
-    }
 
     /**
      * get country array list

@@ -200,10 +200,14 @@ class Configuration extends Component
                 'browserconfig.xml' => 'site/browserconfig',
                 '<id:.+?>.html'=>'site/page',
 
+                /* blog */
                 'blog/<action:(manage|create|update|delete)>' => 'blog/<action>',
                 'blog/sitemap<page:\d+>.xml' => 'blog/sitemap',
                 'blog' => 'blog/index',
                 'blog/<name:.+?>' => 'blog/view',
+
+                /* page */
+                'page/sitemap<page:\d+>.xml' => 'page/sitemap',
             ],
         ];
         foreach ($modules as $module) {

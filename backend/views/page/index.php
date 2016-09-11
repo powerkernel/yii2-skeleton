@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Message;
+use common\models\PageData;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
@@ -42,7 +43,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                     // 'updated_by',
                     // 'created_at',
                     // 'updated_at',
-                    //['attribute' => 'status', 'value' => function ($model){return $model->statusText;}, 'filter'=>''],
+                    ['attribute' => 'status', 'value' => function ($model){return $model->statusText;}, 'filter'=> PageData::getStatusOption()],
                     [
                         'class' => 'yii\grid\ActionColumn',
                     ],
