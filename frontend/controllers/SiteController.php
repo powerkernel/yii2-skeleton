@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 
+use common\components\MainController;
 use common\models\Blog;
 use common\models\Message;
 use common\models\Page;
@@ -10,7 +11,6 @@ use common\models\Setting;
 use nirvana\jsonld\JsonLDHelper;
 use Yii;
 use yii\data\Pagination;
-use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -18,7 +18,7 @@ use yii\web\Response;
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends MainController
 {
     /**
      * @inheritdoc
@@ -287,21 +287,5 @@ EOB;
 
     }
 
-    /**
-     * register metaTags and JsonLD info
-     * @param array $data
-     */
-    protected function registerMetaTagJsonLD($data = [])
-    {
-        $this->view->title = !empty($data['title']) ? $data['title'] : Yii::$app->name;
 
-        if (!empty($data['jsonLd'])) {
-            JsonLDHelper::add($data['jsonLd']);
-        }
-        if (!empty($data['metaTags'])) {
-            foreach ($data['metaTags'] as $tag) {
-                $this->view->registerMetaTag($tag);
-            }
-        }
-    }
 }

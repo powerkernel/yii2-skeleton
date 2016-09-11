@@ -7,14 +7,14 @@
 
 namespace frontend\controllers;
 
+use common\components\MainController;
 use common\Core;
-use nirvana\jsonld\JsonLDHelper;
+use common\models\Setting;
 use Yii;
 use common\models\Blog;
 use common\models\BlogSearch;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
-use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -23,7 +23,7 @@ use yii\web\Response;
 /**
  * BlogController implements the CRUD actions for Blog model.
  */
-class BlogController extends Controller
+class BlogController extends MainController
 {
 
     public $layout = 'account';
@@ -153,6 +153,8 @@ class BlogController extends Controller
         //$metaTags[]=['property' => 'fb:app_id', 'content' => ''];
         //$metaTags[]=['property' => 'fb:admins', 'content' => ''];
         /* Twitter */
+        $metaTags[]=['name'=>'twitter:card', 'content'=>'summary_large_image'];
+        $metaTags[]=['name'=>'twitter:site', 'content'=>Setting::getValue('twitterSite')];
 //        $metaTags[]=['name'=>'twitter:title', 'content'=>$title];
 //        $metaTags[]=['name'=>'twitter:description', 'content'=>$description];
 //        $metaTags[]=['name'=>'twitter:card', 'content'=>'summary'];
@@ -295,23 +297,7 @@ class BlogController extends Controller
     }
 
 
-    /**
-     * register metaTags and JsonLD info
-     * @param array $data
-     */
-    protected function registerMetaTagJsonLD($data = [])
-    {
-        $this->view->title = !empty($data['title']) ? $data['title'] : Yii::$app->name;
 
-        if (!empty($data['jsonLd'])) {
-            JsonLDHelper::add($data['jsonLd']);
-        }
-        if (!empty($data['metaTags'])) {
-            foreach ($data['metaTags'] as $tag) {
-                $this->view->registerMetaTag($tag);
-            }
-        }
-    }
 
     /**
      * Finds the Blog model based on its primary key value.

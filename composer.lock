@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cc173ecf2fa3de65b344beb29a659d48",
-    "content-hash": "084e4ecc123ee66316076342a9cb1c68",
+    "hash": "4301b343c8eed40e61816ea5ded5e9d2",
+    "content-hash": "b510ea61ec6b03c6b395dd16fd9a327d",
     "packages": [
         {
             "name": "bower-asset/admin-lte",
@@ -1100,6 +1100,40 @@
                 "yii2"
             ],
             "time": "2016-09-09 07:54:34"
+        },
+        {
+            "name": "modernkernel/yii2-theme-inspinia",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:modernkernel/yii2-theme-inspinia.git",
+                "reference": "37997a9e21a17ce5855c2afee65bb1079834a092"
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "modernkernel\\themeinspinia\\": ""
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Harry Tang",
+                    "email": "harry@modernkernel.com"
+                }
+            ],
+            "description": "Inspinia theme for Yii2",
+            "keywords": [
+                " inspinia",
+                "extension",
+                "yii2"
+            ],
+            "time": "2016-09-11 13:12:39"
         },
         {
             "name": "modernkernel/yii2-tinymce",
@@ -2214,7 +2248,8 @@
     "stability-flags": {
         "nirvana-msu/yii2-jsonld-helper": 20,
         "modernkernel/yii2-theme-adminlte": 20,
-        "modernkernel/yii2-resume": 20
+        "modernkernel/yii2-resume": 20,
+        "modernkernel/yii2-theme-inspinia": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

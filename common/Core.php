@@ -261,7 +261,7 @@ class Core
      */
     public static function powered()
     {
-        return 'Powered by <a target="_blank" href="http://www.greyneuron.com/" rel="external" title="Grey Neuron">Grey Neuron</a>';
+        return 'Powered by <a target="_blank" href="https://modernkernel.com/" rel="external" title="Modern Kernel">Modern Kernel</a>';
     }
 
 
