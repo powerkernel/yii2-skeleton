@@ -22,10 +22,10 @@ class Favicon extends Widget
      */
     public function run()
     {
-        if (Yii::$app->id == 'app-frontend') {
-            $baseUrl=Yii::$app->request->baseUrl;
-            $themeColor = Setting::getValue('androidThemeColor');
-            $data = <<<EOB
+
+        $baseUrl = Yii::$app->request->baseUrl;
+        $themeColor = Setting::getValue('androidThemeColor');
+        $data = <<<EOB
 <link rel="apple-touch-icon" sizes="180x180" href="{$baseUrl}/apple-touch-icon.png">
 <link rel="icon" type="image/png" href="{$baseUrl}/favicon-32x32.png" sizes="32x32">
 <link rel="icon" type="image/png" href="{$baseUrl}/favicon-16x16.png" sizes="16x16">
@@ -34,8 +34,8 @@ class Favicon extends Widget
 <meta name="theme-color" content="{$themeColor}">
 <link rel="shortcut icon" href="{$baseUrl}/favicon.ico" type="image/x-icon" />
 EOB;
-            return $data;
-        }
+        return $data;
+
 
     }
 }

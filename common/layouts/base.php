@@ -10,7 +10,7 @@ use yii\helpers\Html;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+<html prefix="og: http://ogp.me/ns#" lang="<?= Yii::$app->language ?>">
 <!--
 +++++++++++++++++++++++++++++++++++++++++++
 @author Harry Tang <harry@modernkernel.com>
