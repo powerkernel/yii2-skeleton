@@ -61,7 +61,7 @@ $this->registerCss($css);
             </div>
             <?= Disqus::widget([
                 'pageUrl'=>$model->getViewUrl(true),
-                'pageIdentifier'=>$model->id
+                'pageIdentifier'=>$model->slug
             ]) ?>
 
         </div>

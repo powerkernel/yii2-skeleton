@@ -10,6 +10,7 @@ namespace common\components;
 use common\models\Setting;
 use Yii;
 use yii\base\Object;
+use yii\web\View;
 
 /**
  * Class GAnalytics
@@ -24,7 +25,7 @@ class GAnalytics extends Object
         $js = Setting::getValue('googleAnalytics');
         if (!empty($js)) {
             $view = Yii::$app->getView();
-            $view->registerJs($js);
+            $view->registerJs($js, View::POS_END);
         }
     }
 }

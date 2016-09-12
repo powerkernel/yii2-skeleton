@@ -10,6 +10,7 @@ namespace common\widgets;
 
 use common\models\Setting;
 use Yii;
+use yii\base\View;
 use yii\base\Widget;
 use yii\helpers\Html;
 
@@ -29,8 +30,8 @@ class Disqus extends Widget
     {
         $disqus = Setting::getValue('disqus');
         if (!empty($disqus)) {
-            $this->registerVariables();
-            Yii::$app->view->registerJs($disqus);
+            $js=$this->registerVariables().$disqus;
+            Yii::$app->view->registerJs($js, \yii\web\View::POS_END);
             echo Html::tag('div', '', ['id' => 'disqus_thread']);
         }
     }
@@ -44,11 +45,11 @@ class Disqus extends Widget
         $pageIdentifier = '';
         $active = false;
         if (!empty($this->pageUrl)) {
-            $pageUrl = 'this.page.url = "' . $this->pageUrl . '"';
+            $pageUrl = 'this.page.url = "' . $this->pageUrl . '";';
             $active = true;
         }
         if (!empty($this->pageIdentifier)) {
-            $pageIdentifier = 'this.page.identifier = "' . $this->pageIdentifier . '"';
+            $pageIdentifier = 'this.page.identifier = "' . $this->pageIdentifier . '";';
             $active = true;
         }
 
@@ -59,7 +60,7 @@ class Disqus extends Widget
     {$pageIdentifier}     
  };
 EOB;
-            Yii::$app->view->registerJs($js);
+            return $js;
         }
 
     }
