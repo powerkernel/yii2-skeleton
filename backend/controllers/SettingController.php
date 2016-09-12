@@ -145,6 +145,11 @@ class SettingController extends BackendController
             ['key'=>'msTileColor', 'value'=>'#3c8dbc', 'title'=>'MS Tile Color', 'description'=>'Background color for a live tile', 'group'=>'Theme', 'type'=>'textInput', 'data'=>'[]', 'default'=>'#3c8dbc', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
             ['key'=>'safariMaskColor', 'value'=>'#3c8dbc', 'title'=>'Safari Mask Color', 'description'=>'Safari pinned tab color', 'group'=>'Theme', 'type'=>'textInput', 'data'=>'[]', 'default'=>'#3c8dbc', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
 
+            /* Enhancements */
+            ['key'=>'googleAnalytics', 'value'=>'', 'title'=>'Google Analytics', 'description'=>'Google Analytics tracking code', 'group'=>'Enhancements', 'type'=>'textarea', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
+            ['key'=>'disqus', 'value'=>'', 'title'=>'Disqus', 'description'=>'Disqus Universal Code', 'group'=>'Enhancements', 'type'=>'textarea', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
+            ['key'=>'zopim', 'value'=>'', 'title'=>'Zopim Chat', 'description'=>'Zopim Chat', 'group'=>'Enhancements', 'type'=>'textarea', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
+
 
             /* System */
             ['key'=>'languageUrlCode', 'value'=>'0', 'title'=>'Language URL', 'description'=>'Include language code in URL', 'group'=>'System', 'type'=>'dropDownList', 'data'=>json_encode(Core::getYesNoOption()), 'default'=>'0', 'rules'=>json_encode(['required'=>[], 'boolean'=>[]])],

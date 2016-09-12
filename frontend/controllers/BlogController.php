@@ -81,7 +81,7 @@ class BlogController extends MainController
             $listItem[] = (object)[
                 '@type' => 'ListItem',
                 'http://schema.org/item' => (object)[
-                    '@id' => $model->viewAbsoluteUrl,
+                    '@id' => $model->getViewUrl(true),
                     'http://schema.org/name' => $model->title
                 ]
             ];
@@ -149,7 +149,7 @@ class BlogController extends MainController
         $metaTags[] = ['property' => 'og:description', 'content' => $description];
         $metaTags[] = ['property' => 'og:type', 'content' => 'article']; // article, product, profile etc
         $metaTags[] = ['property' => 'og:image', 'content' => $model->thumbnail]; //best 1200 x 630
-        $metaTags[] = ['property' => 'og:url', 'content' => $model->viewAbsoluteUrl];
+        $metaTags[] = ['property' => 'og:url', 'content' => $model->getViewUrl(true)];
         //$metaTags[]=['property' => 'fb:app_id', 'content' => ''];
         //$metaTags[]=['property' => 'fb:admins', 'content' => ''];
         /* Twitter */
@@ -174,7 +174,7 @@ class BlogController extends MainController
             'http://schema.org/dateCreated' => Yii::$app->formatter->asDate($model->created_at, 'php:c'),
             'http://schema.org/dateModified' => Yii::$app->formatter->asDate($model->updated_at, 'php:c'),
             'http://schema.org/datePublished' => Yii::$app->formatter->asDate($model->published_at, 'php:c'),
-            'http://schema.org/url' => $model->viewAbsoluteUrl,
+            'http://schema.org/url' => $model->getViewUrl(true),
             'http://schema.org/image' => (object)[
                 '@type' => 'ImageObject',
                 'http://schema.org/url' => $imageObject['url'],

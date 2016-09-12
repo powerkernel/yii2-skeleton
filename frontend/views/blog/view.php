@@ -6,6 +6,7 @@
  */
 
 use common\models\Blog;
+use common\widgets\Disqus;
 
 
 /* @var $this yii\web\View */
@@ -58,6 +59,11 @@ $this->registerCss($css);
                         class="text-muted"><?= Yii::t('app', 'By {AUTHOR}, last updated {DATE}', ['AUTHOR' => $model->author->fullname, 'DATE' => Yii::$app->formatter->asDate($model->updated_at)]) ?></small>
                 </div>
             </div>
+            <?= Disqus::widget([
+                'pageUrl'=>$model->getViewUrl(true),
+                'pageIdentifier'=>$model->id
+            ]) ?>
+
         </div>
         <div class="col-md-4">
             <?= \frontend\widgets\BlogPost::widget(['type'=>'mostViewed']) ?>

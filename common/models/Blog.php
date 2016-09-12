@@ -37,7 +37,6 @@ use yii\helpers\HtmlPurifier;
  *
  * @property Account $author
  * @property string $viewUrl
- * @property string $viewAbsoluteUrl
  * @property string $updateUrl
  */
 class Blog extends ActiveRecord
@@ -230,21 +229,18 @@ class Blog extends ActiveRecord
 
     /**
      * get view url
+     * @param bool $absolute
      * @return string
      */
-    public function getViewUrl()
+    public function getViewUrl($absolute=false)
     {
-        return Yii::$app->urlManager->createUrl(['/blog/view', 'name' => $this->slug]);
+        $act='createUrl';
+        if($absolute){
+            $act='createAbsoluteUrl';
+        }
+        return Yii::$app->urlManager->$act(['/blog/view', 'name' => $this->slug]);
     }
 
-    /**
-     * get absolute view url
-     * @return string
-     */
-    public function getViewAbsoluteUrl()
-    {
-        return Yii::$app->urlManager->createAbsoluteUrl(['/blog/view', 'name' => $this->slug]);
-    }
 
     /**
      * get image object info for SEO

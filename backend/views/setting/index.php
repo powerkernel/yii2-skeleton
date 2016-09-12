@@ -82,6 +82,10 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                             <?= $form->field($model, $key)->textInput()->label($setting['title'])->hint($setting['description']) ?>
                         <?php endif; ?>
 
+                        <?php if ($setting['type'] == 'textarea'): ?>
+                            <?= $form->field($model, $key)->textarea()->label($setting['title'])->hint($setting['description']) ?>
+                        <?php endif; ?>
+
                         <?php if ($setting['type'] == 'passwordInput'): ?>
                             <?= $form->field($model, $key)->passwordInput()->label($setting['title'])->hint($setting['description']) ?>
                         <?php endif; ?>

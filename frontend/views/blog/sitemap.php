@@ -9,7 +9,7 @@ use yii\helpers\Url;
     <?php if ($models): ?>
         <?php foreach ($models as $model): ?>
             <url>
-                <loc><?= \yii\bootstrap\Html::encode($model->viewAbsoluteUrl) ?></loc>
+                <loc><?= \yii\bootstrap\Html::encode($model->getViewUrl(true)) ?></loc>
                 <lastmod><?= Yii::$app->formatter->asDate($model->updated_at, 'php:c') ?></lastmod>
             </url>
         <?php endforeach; ?>
