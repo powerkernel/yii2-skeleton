@@ -8,6 +8,7 @@
 namespace backend\controllers;
 
 use common\models\Blog;
+use common\models\Content;
 use Yii;
 use common\models\BlogSearch;
 
@@ -27,9 +28,22 @@ class BlogController extends BackendController
         $searchModel = new BlogSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        /* content */
+        $model=Content::findOne('Blog');
+        if(!$model)
+        {
+            $content=new Content();
+            $content->id='Blog';
+        }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Information has been updated.');
+        }
+
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model'=>$model
         ]);
     }
 

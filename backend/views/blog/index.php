@@ -6,6 +6,8 @@
  */
 
 use common\models\Blog;
+use modernkernel\tinymce\TinyMce;
+use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\jui\DatePicker;
@@ -14,6 +16,7 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\BlogSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $model \common\models\Content */
 
 $this->title = Yii::t('app', 'Blog');
 $keywords = '';
@@ -72,7 +75,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                         'id',
                         'title',
                         //'desc',
-                        ['attribute' => 'fullname', 'label'=>Yii::t('app', 'Author'), 'value' => 'author.fullname'],
+                        ['attribute' => 'fullname', 'label' => Yii::t('app', 'Author'), 'value' => 'author.fullname'],
                         //'content:ntext',
                         //'tags',
                         //'author_id',
@@ -85,16 +88,16 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                         }, 'filter' => Blog::getStatusOption()],
                         [
                             'class' => 'yii\grid\ActionColumn',
-                            'template'=>'{view} {update} {delete}',
+                            'template' => '{view} {update} {delete}',
                             'buttons' => [
                                 'view' => function ($url, $model) {
                                     $view = Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $model->viewUrl, [
                                         'title' => Yii::t('yii', 'View'),
-                                        'target'=>'_blank',
-                                        'data-pjax'=>0
+                                        'target' => '_blank',
+                                        'data-pjax' => 0
                                     ]);
                                     unset($url);
-                                    return $model->status==Blog::STATUS_PUBLISHED ? $view : '';
+                                    return $model->status == Blog::STATUS_PUBLISHED ? $view : '';
                                 }
                             ]
                         ],
@@ -111,4 +114,20 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
         </div>
         <!-- end loading -->
     </div>
+
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title"><?= Yii::t('app', 'Blog Page Content') ?></h3>
+        </div>
+        <div class="box-body">
+            <?php $form = ActiveForm::begin(); ?>
+            <?= $form->field($model, 'content')->widget(TinyMce::className()) ?>
+            <div class="form-group">
+                <?= Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-primary']) ?>
+            </div>
+            <?php ActiveForm::end(); ?>
+        </div>
+    </div>
+
+
 </div>

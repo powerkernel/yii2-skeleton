@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4301b343c8eed40e61816ea5ded5e9d2",
-    "content-hash": "b510ea61ec6b03c6b395dd16fd9a327d",
+    "hash": "a96983d1f30d272dced10f4d5f1db192",
+    "content-hash": "a3321a6bcebf234d4f2ee7e822af373a",
     "packages": [
         {
             "name": "bower-asset/admin-lte",
@@ -429,16 +429,16 @@
         },
         {
             "name": "cebe/markdown",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cebe/markdown.git",
-                "reference": "54a2c49de31cc44e864ebf0500a35ef21d0010b2"
+                "reference": "c30eb5e01fe021cc5bba2f9ee0eeef96d4931166"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cebe/markdown/zipball/54a2c49de31cc44e864ebf0500a35ef21d0010b2",
-                "reference": "54a2c49de31cc44e864ebf0500a35ef21d0010b2",
+                "url": "https://api.github.com/repos/cebe/markdown/zipball/c30eb5e01fe021cc5bba2f9ee0eeef96d4931166",
+                "reference": "c30eb5e01fe021cc5bba2f9ee0eeef96d4931166",
                 "shasum": ""
             },
             "require": {
@@ -485,7 +485,7 @@
                 "markdown",
                 "markdown-extra"
             ],
-            "time": "2015-03-06 05:28:07"
+            "time": "2016-09-14 20:40:20"
         },
         {
             "name": "codemix/yii2-localeurls",
@@ -720,6 +720,52 @@
                 "yii2"
             ],
             "time": "2016-06-10 15:38:28"
+        },
+        {
+            "name": "kotchuprik/yii2-sortable-widgets",
+            "version": "v2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kotchuprik/yii2-sortable-widgets.git",
+                "reference": "0c96a82f9f5375f3064022792a154be9e22b81af"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kotchuprik/yii2-sortable-widgets/zipball/0c96a82f9f5375f3064022792a154be9e22b81af",
+                "reference": "0c96a82f9f5375f3064022792a154be9e22b81af",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "kotchuprik\\sortable\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Constantin Chuprik",
+                    "email": "constantinchuprik@gmail.com"
+                }
+            ],
+            "description": "Implementation the jQuery UI Sortable for the Yii2 widgets. Sortable grid view.",
+            "homepage": "http://github.com/kotchuprik/yii2-sortable-widgets",
+            "keywords": [
+                "dnd",
+                "grid",
+                "gridview",
+                "jQueryUI",
+                "sortable",
+                "sorting",
+                "yii2"
+            ],
+            "time": "2016-06-10 15:58:58"
         },
         {
             "name": "ml/iri",
@@ -989,7 +1035,7 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:modernkernel/yii2-resume.git",
-                "reference": "c18f5d7ad3985dcf223e6afdca5496039612a1b7"
+                "reference": "1f13b419865f02e9db9699ca3ea97b83ab4120bd"
             },
             "require": {
                 "yiisoft/yii2": "*"
@@ -1015,7 +1061,7 @@
                 "resume",
                 "yii2"
             ],
-            "time": "2016-08-27 16:38:24"
+            "time": "2016-09-12 10:45:56"
         },
         {
             "name": "modernkernel/yii2-slugify",
@@ -1065,12 +1111,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modernkernel/yii2-theme-adminlte.git",
-                "reference": "6ef88830d7d0c24141564c69ddf0d0c58d798974"
+                "reference": "3fded41ad4c594c7845a308cfd170635f5616807"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modernkernel/yii2-theme-adminlte/zipball/6ef88830d7d0c24141564c69ddf0d0c58d798974",
-                "reference": "6ef88830d7d0c24141564c69ddf0d0c58d798974",
+                "url": "https://api.github.com/repos/modernkernel/yii2-theme-adminlte/zipball/3fded41ad4c594c7845a308cfd170635f5616807",
+                "reference": "3fded41ad4c594c7845a308cfd170635f5616807",
                 "shasum": ""
             },
             "require": {
@@ -1099,7 +1145,7 @@
                 "extension",
                 "yii2"
             ],
-            "time": "2016-09-09 07:54:34"
+            "time": "2016-09-12 10:45:24"
         },
         {
             "name": "modernkernel/yii2-theme-inspinia",

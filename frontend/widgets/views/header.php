@@ -17,16 +17,12 @@ use yii\bootstrap\Nav;
                     <?= Icon::widget(['icon' => 'bars']) ?>
                 </button>
             </div>
-
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
                 <?=
                 Nav::widget([
                     'options' => ['class' => 'navbar-nav'],
-                    'items' => [
-                        ['label' => Yii::t('app', 'Home'), 'url' => ['/site/index']],
-                        ['label' => Yii::t('app', 'Blog'), 'url' => ['/blog/index'], 'active'=>Core::checkMCA(null, 'blog', '*')],
-                    ],
+                    'items' => $items
                 ]);
                 ?>
             </div>
@@ -57,7 +53,6 @@ use yii\bootstrap\Nav;
                     <?php endif; ?>
                 </ul>
             </div>
-
             <!-- /.navbar-custom-menu -->
         </div>
         <!-- /.container-fluid -->

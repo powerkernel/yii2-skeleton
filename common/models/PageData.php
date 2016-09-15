@@ -149,8 +149,8 @@ class PageData extends ActiveRecord
         $this->description=ucfirst($this->description);
         $this->content=HtmlPurifier::process($this->content);
 
-        if(!empty(Yii::$app->user->isGuest)){
-            if($insert){
+        if(!empty(Yii::$app->user)){
+            if(empty($this->created_by)){
                 $this->created_by=Yii::$app->user->id;
             }
             $this->updated_by=Yii::$app->user->id;

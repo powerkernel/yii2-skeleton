@@ -18,6 +18,12 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
 //$this->registerCss($css);
 ?>
 <div class="blog-index">
+    <div class="box box-info">
+        <div class="box-body">
+            <?= \common\models\Content::display('Blog') ?>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-8">
             <?= ListView::widget([
@@ -34,5 +40,4 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
             <?= \frontend\widgets\BlogPost::widget(['type' => 'random']) ?>
         </div>
     </div>
-
 </div>
