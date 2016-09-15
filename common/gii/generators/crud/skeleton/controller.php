@@ -257,20 +257,5 @@ if (count($pks) === 1) {
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
-    }
-
-    /**
-     * register metaTags and JsonLD info
-     * @param array $data
-     */
-    protected function registerMetaTagJsonLD($data=[]){
-        if(!empty($data['jsonLd'])){
-            JsonLDHelper::add($data['jsonLd']);
-        }
-        if(!empty($data['metaTags'])){
-            foreach($data['metaTags'] as $tag){
-                $this->view->registerMetaTag($tag);
-            }
-        }
-    }
+    } 
 }
