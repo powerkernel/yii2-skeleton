@@ -3,7 +3,8 @@
     img {
       width: 75%;
       height: 75%;
-      margin: 15px auto;
+      margin: 15px auto !important;
+      display: block;
     }
   }
 }

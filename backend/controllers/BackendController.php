@@ -8,14 +8,14 @@
 namespace backend\controllers;
 
 
+use common\components\MainController;
 use yii\filters\AccessControl;
-use yii\web\Controller;
 
 /**
  * Class BackendController
  * @package backend\controllers
  */
-class BackendController extends Controller
+class BackendController extends MainController
 {
     public $layout = 'admin';
 

@@ -26,25 +26,33 @@ class FlickrUploadWidget extends Widget
     public function run(){
 
         /* @var \common\components\FlickrPhoto $client */
-        $client=Yii::$app->authClientCollection->getClient('flickr-photo');
+
 
         $flickr=Service::findOne('flickr-photo');
         if($flickr){
-            $data=json_decode($flickr->data);
-            $token = new OAuthToken([
-                'token' => $data->token,
-                'tokenSecret' => $data->tokenSecret
-            ]);
-            $client->setAccessToken($token);
-            /* test */
-            $r=$client->api('', 'GET', ['method' => 'flickr.test.login']);
-            if($r['stat']=='fail'){
-                $this->alertError();
+            $client=Yii::$app->authClientCollection->getClient('flickr-photo');
+            if($client){
+                $data=json_decode($flickr->data);
+                $token = new OAuthToken([
+                    'token' => $data->token,
+                    'tokenSecret' => $data->tokenSecret
+                ]);
+                $client->setAccessToken($token);
+                /* test */
+                $r=$client->api('', 'GET', ['method' => 'flickr.test.login']);
+                if($r['stat']=='fail'){
+                    $this->alertError();
+                }
+                else {
+
+                    return $this->render('flickr-upload-widget', ['client'=>$client, 'flickr'=>$flickr]);
+                }
             }
             else {
-
-                return $this->render('flickr-upload-widget', ['client'=>$client, 'flickr'=>$flickr]);
+                $this->alertError();
             }
+
+
         }
         else {
             $this->alertError();

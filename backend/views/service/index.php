@@ -19,9 +19,11 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
 //$this->registerCss($css);
 ?>
 <div class="service-index">
+    <div class="alert alert-info">
+        <?= Yii::t('app', 'Note: You can manage site services in Settings &gt; API.') ?>
+    </div>
     <div class="row">
-
-
+        <?php if(!empty(Yii::$app->authClientCollection->clients['flickr-photo'])):?>
         <div class="col-xs-6 col-sm-4 col-lg-3">
             <div class="box box-<?= isset($services['flickr-photo'])?'success':'default' ?>">
                 <div class="box-header with-border">
@@ -49,9 +51,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                 </div>
             </div>
         </div>
-
-
-
+        <?php endif;?>
     </div>
 
 </div>

@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AAEI,yBAAI,CACF,KAAK,CAAE,GAAG,CACV,MAAM,CAAE,GAAG,CACX,MAAM,CAAE,SAAS",
+"mappings": "AAEI,yBAAI,CACF,KAAK,CAAE,GAAG,CACV,MAAM,CAAE,GAAG,CACX,MAAM,CAAE,oBAAoB,CAC5B,OAAO,CAAE,KAAK",
 "sources": ["page.scss"],
 "names": [],
 "file": "page.css"

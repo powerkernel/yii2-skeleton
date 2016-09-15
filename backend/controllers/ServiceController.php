@@ -7,7 +7,6 @@
 
 namespace backend\controllers;
 
-use nirvana\jsonld\JsonLDHelper;
 use Yii;
 use common\models\Service;
 use yii\web\NotFoundHttpException;
@@ -124,19 +123,5 @@ class ServiceController extends BackendController
         }
     }
 
-    /**
-     * register metaTags and JsonLD info
-     * @param array $data
-     */
-    protected function registerMetaTagJsonLD($data = [])
-    {
-        if (!empty($data['jsonLd'])) {
-            JsonLDHelper::add($data['jsonLd']);
-        }
-        if (!empty($data['metaTags'])) {
-            foreach ($data['metaTags'] as $tag) {
-                $this->view->registerMetaTag($tag);
-            }
-        }
-    }
+
 }
