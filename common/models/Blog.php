@@ -252,21 +252,29 @@ class Blog extends ActiveRecord
         $img = Yii::$app->cache->get($key);
 
         if ($img === false) {
+            $flag=false;
             $doc = new DOMDocument();
             $doc->loadHTML($this->content);
             $tags = $doc->getElementsByTagName('img');
-            $img = [];
+            $img = ['url'=>'', 'width'=>'', 'height'=>''];
             foreach ($tags as $i => $tag) {
                 $img['url'] = $tag->getAttribute('src');
                 $img['width'] = $tag->getAttribute('width');
                 $img['height'] = $tag->getAttribute('height');
+                $flag=true;
                 break;
             }
-            /* cache */
-            $sql=(new Query())->select('updated_at')->from(Blog::tableName())->where(['id'=>$this->id])->createCommand()->rawSql;
-            $dependency = new DbDependency();
-            $dependency->sql=$sql;
-            Yii::$app->cache->set($key, $img, 0, $dependency);
+            if($flag){
+                /* cache */
+                $sql=(new Query())->select('updated_at')->from(Blog::tableName())->where(['id'=>$this->id])->createCommand()->rawSql;
+                $dependency = new DbDependency();
+                $dependency->sql=$sql;
+                Yii::$app->cache->set($key, $img, 0, $dependency);
+            }
+            else {
+                Yii::$app->session->setFlash('warning', Yii::t('app', 'Missing image in blog post.'));
+            }
+
         }
 
         return $img;

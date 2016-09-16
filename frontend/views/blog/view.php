@@ -7,6 +7,8 @@
 
 use common\models\Blog;
 use common\widgets\Disqus;
+use frontend\widgets\LikeButton;
+use frontend\widgets\PlusOneButton;
 
 
 /* @var $this yii\web\View */
@@ -54,20 +56,44 @@ $this->registerCss($css);
                 <div class="box-body blog-body">
                     <div><?= $model->content ?></div>
                 </div>
-                <div class="box-footer text-right">
-                    <small
-                        class="text-muted"><?= Yii::t('app', 'By {AUTHOR}, last updated {DATE}', ['AUTHOR' => $model->author->fullname, 'DATE' => Yii::$app->formatter->asDate($model->updated_at)]) ?></small>
+                <div class="box-footer">
+                    <div class="pull-left">
+                        <?= LikeButton::widget([
+                            'href'=>$model->getViewUrl(true),
+                            'layout'=>'button_count',
+                        ]) ?>
+
+                        <?=
+                        PlusOneButton::widget([
+                            'href'=>$model->getViewUrl(true),
+                            'size'=>'medium'
+                        ])
+                        ?>
+
+                    </div>
+                    <div class="pull-right text-right">
+                        <small class="text-muted">
+                            <?= Yii::t(
+                                'app',
+                                'By {AUTHOR}, last updated {DATE}',
+                                [
+                                    'AUTHOR' => $model->author->fullname,
+                                    'DATE' => Yii::$app->formatter->asDate($model->updated_at)
+                                ])
+                            ?>
+                        </small>
+                    </div>
                 </div>
             </div>
             <?= Disqus::widget([
-                'pageUrl'=>$model->getViewUrl(true),
-                'pageIdentifier'=>$model->slug
+                'pageUrl' => $model->getViewUrl(true),
+                'pageIdentifier' => $model->slug
             ]) ?>
 
         </div>
         <div class="col-md-4">
-            <?= \frontend\widgets\BlogPost::widget(['type'=>'mostViewed']) ?>
-            <?= \frontend\widgets\BlogPost::widget(['type'=>'latest']) ?>
+            <?= \frontend\widgets\BlogPost::widget(['type' => 'mostViewed']) ?>
+            <?= \frontend\widgets\BlogPost::widget(['type' => 'latest']) ?>
         </div>
     </div>
 
