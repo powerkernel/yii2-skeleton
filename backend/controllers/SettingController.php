@@ -149,6 +149,9 @@ class SettingController extends BackendController
             ['key'=>'googleAnalytics', 'value'=>'', 'title'=>'Google Analytics', 'description'=>'Google Analytics tracking code', 'group'=>'Enhancements', 'type'=>'textarea', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
             ['key'=>'disqus', 'value'=>'', 'title'=>'Disqus', 'description'=>'Disqus Universal Code', 'group'=>'Enhancements', 'type'=>'textarea', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
             ['key'=>'zopim', 'value'=>'', 'title'=>'Zopim Chat', 'description'=>'Zopim Chat', 'group'=>'Enhancements', 'type'=>'textarea', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
+            ['key'=>'addthisSidebar', 'value'=>'', 'title'=>'Addthis Sidebar', 'description'=>'Addthis Sidebar share buttons', 'group'=>'Enhancements', 'type'=>'textarea', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
+
+
 
 
             /* System */

@@ -24,6 +24,8 @@ class m160915_072023_tbl_content extends Migration
         $this->addPrimaryKey('pk', '{{%core_content}}', ['id']);
 
         $this->addDefaultData();
+
+        \backend\controllers\SettingController::updateSetting();
     }
 
     /**
