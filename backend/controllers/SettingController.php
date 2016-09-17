@@ -118,7 +118,7 @@ class SettingController extends BackendController
             ['key'=>'smtpUsername', 'value'=>'', 'title'=>'SMTP Username', 'description'=>'SMTP username', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
             ['key'=>'smtpPassword', 'value'=>'', 'title'=>'SMTP Password', 'description'=>'SMTP password', 'group'=>'Mail', 'type'=>'passwordInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
             ['key'=>'smtpPort', 'value'=>'', 'title'=>'SMTP Port', 'description'=>'SMTP port', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'25', 'rules'=>json_encode(['safe'=>[], 'number'=>[]])],
-            ['key'=>'smtpEncryption', 'value'=>'', 'title'=>'SMTP Encryption', 'description'=>'SMTP port', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'ssl', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
+            ['key'=>'smtpEncryption', 'value'=>'', 'title'=>'SMTP Encryption', 'description'=>'SMTP Encryption', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'ssl', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
 
             /* Social */
             ['key'=>'fbPageUrl', 'value'=>'', 'title'=>'Facebook Page URL', 'description'=>'Facebook Page URL', 'group'=>'Social', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'url'=>[]])],
