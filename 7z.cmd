@@ -1,1 +1,1 @@
-"C:\Program Files\7-Zip\7z.exe" a upload.zip * -r -x!.git -x!.idea -x!_data -x!_ssl -x!_docs -x!backend\web\assets\* -x!backend\runtime\* -x!frontend\web\assets\* -x!frontend\web\backend -x!frontend\runtime\* -x!console\runtime\*
+"C:\Program Files\7-Zip\7z.exe" a upload.zip * -r -x!.git -x!.idea -x!_data -x!_ssl -x!_docs -x!grunt-email-workflow -x!backend\web\assets\* -x!backend\runtime\* -x!frontend\web\assets\* -x!frontend\web\backend -x!frontend\runtime\* -x!console\runtime\*

@@ -4,11 +4,13 @@
  * @link https://modernkernel.com
  * @copyright Copyright (c) 2016 Modern Kernel
  */
+use common\Core;
 use himiklab\yii2\recaptcha\ReCaptcha;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 
 /* @var $this \yii\web\View */
+/* @var $model \frontend\models\ResetPasswordForm */
 
 $this->title = Yii::t('app', 'Reset Password');
 $keywords = '';
@@ -48,7 +50,9 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
             <div><hr /></div>
             <?php $form = ActiveForm::begin(['id' => 'request-password-reset-form']); ?>
             <?= $form->field($model, 'email') ?>
+            <?php if(Core::isReCaptchaEnabled()):?>
             <?= $form->field($model, 'verifyCode')->widget(ReCaptcha::className())->label(false) ?>
+            <?php endif;?>
             <div class="form-group">
                 <?= Html::submitButton(Yii::t('app', 'Reset Password'), ['class' => 'btn btn-primary']) ?>
             </div>

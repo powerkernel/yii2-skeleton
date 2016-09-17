@@ -1,6 +1,7 @@
 <?php
 namespace frontend\models;
 
+use common\Core;
 use common\models\Account;
 use himiklab\yii2\recaptcha\ReCaptchaValidator;
 use yii;
@@ -30,7 +31,16 @@ class PasswordResetRequestForm extends Model
      */
     public function rules()
     {
-        return [
+        $captcha=[];
+        if(Core::isReCaptchaEnabled()){
+            $captcha=[
+                ['verifyCode', 'required', 'message' => Yii::t('app', 'Prove you are NOT a robot')],
+                ['verifyCode', ReCaptchaValidator::className(), 'message' => Yii::t('app', 'Prove you are NOT a robot')]
+
+            ];
+        }
+
+        $default= [
             ['email', 'filter', 'filter' => 'trim'],
             ['email', 'filter', 'filter' => 'strtolower'],
             ['email', 'required'],
@@ -40,10 +50,9 @@ class PasswordResetRequestForm extends Model
                 'filter' => ['status' => Account::STATUS_ACTIVE],
                 'message' => Yii::t('app', 'There is no user with such email.')
             ],
-
-            [['verifyCode'], 'required', 'message'=> Yii::t('app', 'Prove you are NOT a robot')],
-            [['verifyCode'], ReCaptchaValidator::className(), 'message'=> Yii::t('app', 'Prove you are NOT a robot')]
         ];
+
+        return array_merge($default, $captcha);
     }
 
     /**
