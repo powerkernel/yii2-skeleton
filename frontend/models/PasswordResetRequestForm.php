@@ -3,6 +3,7 @@ namespace frontend\models;
 
 use common\Core;
 use common\models\Account;
+use common\models\Setting;
 use himiklab\yii2\recaptcha\ReCaptchaValidator;
 use yii;
 use yii\base\Model;
@@ -80,7 +81,7 @@ class PasswordResetRequestForm extends Model
                         ['html' => 'password-reset-token-html', 'text' => 'password-reset-token-text'],
                         ['user' => $user]
                     )
-                    ->setFrom([Yii::$app->params['settings']['supportEmail'] => \Yii::$app->name])
+                    ->setFrom([Setting::getValue('outgoingMail') => \Yii::$app->name])
                     ->setTo($this->email)
                     ->setSubject(Yii::t('app', 'Password reset for {APP_NAME}', ['APP_NAME'=>\Yii::$app->name]));
                 return $email->send();                    
