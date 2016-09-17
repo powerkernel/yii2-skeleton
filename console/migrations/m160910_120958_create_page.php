@@ -78,11 +78,11 @@ class m160910_120958_create_page extends Migration
             $data->id_page=$terms->id;
             $data->language=Yii::$app->language;
             $data->title='Terms of Use';
-            $data->description='If you continue to browse and use this website, you are agreeing to comply with and be bound by the following terms and conditions of use.';
+            $data->description='If you continue to use this website, you certify that you have read and agree to the following terms.';
             $data->content=<<<EOB
 <p>Welcome to {APP_DOMAIN}. If you continue to browse and use this website, you are agreeing to comply with and be bound by the following terms and conditions of use, which together with our privacy policy govern {APP_NAME}'s relationship with you in relation to this website. If you disagree with any part of these terms and conditions, please do not use our website.</p>
 <p>The term '{APP_NAME}' or 'us' or 'we' refers to the owner of the website. The term 'you' refers to the user or viewer of our website.</p>
-<p><img src="https://c1.staticflickr.com/9/8106/29359142860_fe31dc06a1_o.png" alt="Terms of Use" class="img-thumbnail" /></p>
+<p><img class="img-thumbnail" title="Terms of Use" src="https://c1.staticflickr.com/9/8106/29359142860_fe31dc06a1_o.png" alt="Terms of Use" width="1200" height="630" /></p>
 <p>The use of this website is subject to the following terms of use:</p>
 <ul>
 <li>The content of the pages of this website is for your general information and use only. It is subject to change without notice.</li>
@@ -114,7 +114,7 @@ EOB;
             $data->description='This privacy policy applies solely to information collected by our website.';
             $data->content=<<<EOB
 <p>This privacy policy sets out how {APP_NAME} uses and protects any information that you give {APP_NAME} when you use this website.</p>
-<p><img src="https://c1.staticflickr.com/9/8393/29359142920_7f14649ce8_o.png" alt="Privacy Policy" class="img-thumbnail" /></p>
+<p><img class="img-thumbnail" title="Privacy Policy" src="https://c1.staticflickr.com/9/8393/29359142920_7f14649ce8_o.png" alt="Privacy Policy" width="1200" height="630" /></p>
 <p>{APP_NAME} is committed to ensuring that your privacy is protected. Should we ask you to provide certain information by which you can be identified when using this website, then you can be assured that it will only be used in accordance with this privacy statement.<br />{APP_NAME} may change this policy from time to time by updating this page. You should check this page from time to time to ensure that you are happy with any changes.<br /><br /><strong>What we collect</strong> <br />We may collect the following information:</p>
 <ul>
 <li>name and job title</li>
