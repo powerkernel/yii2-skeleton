@@ -51,8 +51,6 @@ class FlickrUploadWidget extends Widget
             else {
                 $this->alertError();
             }
-
-
         }
         else {
             $this->alertError();

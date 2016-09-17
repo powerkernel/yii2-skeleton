@@ -3,7 +3,6 @@ return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'bootstrap' => ['configuration'],
     'components' => [
-        'configuration'=>['class'=>'common\bootstrap\Configuration'],
         'cache' => ['class' => 'yii\caching\FileCache'],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
@@ -30,7 +29,7 @@ return [
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',
-            'useFileTransport' => false,
+            //'useFileTransport' => true,
         ],
         'reCaptcha' => [
             'name' => 'reCaptcha',
@@ -41,5 +40,6 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
         ],
+        'configuration'=>['class'=>'common\bootstrap\Configuration'],
     ],
 ];

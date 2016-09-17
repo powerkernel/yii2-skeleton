@@ -171,7 +171,7 @@ class Configuration extends Component
                     'username' => $user,
                     'password' => $pass,
                     'port' => $port,
-                    'encryption' => $encryption
+                    'encryption' => $encryption,
                 ],
             ]);
         }
