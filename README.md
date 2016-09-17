@@ -107,7 +107,9 @@ CONFIG
 
 ## Symlink Help
 For Linux
-```ln -s PATH_TO/frontend/web/backend PATH_TO/backend/web```
+```ln -s ~/domains/domain.com/backend/web/ ~/domains/domain.com/frontend/web/backend```
+```ln -s ~/domains/domain.com/frontend/web/ ~/domains/domain.com/public_html```
+
 
 For windows
 ```mklink /D PATH_TO\frontend\web\backend PATH_TO\backend\web```
