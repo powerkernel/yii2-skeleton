@@ -32,8 +32,7 @@ $this->title = Yii::t('app', 'Linked Accounts');
                     </tr>
                     </thead>
                     <tbody>
-
-                    <?php if(!empty(Yii::$app->authClientCollection->clients['facebook'])):?>
+                    <?php if(Yii::$app->authClientCollection->hasClient('facebook')):?>
                     <tr>
                         <td style="max-width: 50px"><?= Button::widget(['button' => 'facebook btn-xs', 'iconOnly'=>false, 'label'=>'Facebook']) ?></td>
                         <td>
@@ -52,8 +51,7 @@ $this->title = Yii::t('app', 'Linked Accounts');
                         </td>
                     </tr>
                     <?php endif;?>
-
-                    <?php if(!empty(Yii::$app->authClientCollection->clients['google'])):?>
+                    <?php if(Yii::$app->authClientCollection->hasClient('google')):?>
                     <tr>
                         <td style="max-width: 50px"><?= Button::widget(['button' => 'google btn-xs', 'iconOnly'=>false, 'label'=>'Google']) ?></td>
                         <td>

@@ -23,7 +23,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
         <?= Yii::t('app', 'Note: You can manage site services in Settings &gt; API.') ?>
     </div>
     <div class="row">
-        <?php if(!empty(Yii::$app->authClientCollection->clients['flickr-photo'])):?>
+        <?php if(Yii::$app->authClientCollection->hasClient('flickr-photo')):?>
         <div class="col-xs-6 col-sm-4 col-lg-3">
             <div class="box box-<?= isset($services['flickr-photo'])?'success':'default' ?>">
                 <div class="box-header with-border">

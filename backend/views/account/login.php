@@ -43,14 +43,14 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
     <div class="row">
         <div style="" class="col-xs-12">
 
-            <?php if(!empty(Yii::$app->authClientCollection->clients['facebook'])):?>
+            <?php if(Yii::$app->authClientCollection->hasClient('facebook')):?>
                 <?= Button::widget([
                     'button' => 'facebook',
                     'link' => Yii::$app->urlManager->createUrl(['/account/auth', 'authclient'=>'facebook']),
                     'label'=> Yii::t('app', 'Login with Facebook')
                 ]) ?>
             <?php endif;?>
-            <?php if(!empty(Yii::$app->authClientCollection->clients['google'])):?>
+            <?php if(Yii::$app->authClientCollection->hasClient('google')):?>
                 <?= Button::widget([
                     'button' => 'google',
                     'link' => Yii::$app->urlManager->createUrl(['/account/auth', 'authclient'=>'google']),

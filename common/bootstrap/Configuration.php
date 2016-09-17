@@ -105,6 +105,7 @@ class Configuration extends Component
     {
 
         $clients = [];
+
         // client facebook
         $fbAppId = Setting::getValue('facebookAppId');
         $fbAppSecret = Setting::getValue('facebookAppSecret');
@@ -115,6 +116,7 @@ class Configuration extends Component
                 'clientSecret' => $fbAppSecret,
             ];
         }
+
         // client google
         $gClientId = Setting::getValue('googleClientId');
         $gClientSecret = Setting::getValue('googleClientSecret');
@@ -137,7 +139,6 @@ class Configuration extends Component
                 'consumerSecret' => $flickrClientSecret,
             ];
         }
-
 
         // clients OK
         if (!empty($clients)) {
