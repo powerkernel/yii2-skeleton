@@ -109,6 +109,9 @@ class SiteController extends MainController
         $metaTags[] = ['property' => 'og:type', 'content' => 'article']; // article, product, profile etc
         $metaTags[] = ['property' => 'og:image', 'content' => $model->content->thumbnail]; //best 1200 x 630
         $metaTags[] = ['property' => 'og:url', 'content' => $model->content->getViewUrl(true)];
+        if($appId=Setting::getValue('fbAppId')){
+            $metaTags[]=['property' => 'fb:app_id', 'content' => $appId];
+        }
         //$metaTags[]=['property' => 'fb:app_id', 'content' => ''];
         //$metaTags[]=['property' => 'fb:admins', 'content' => ''];
         /* Twitter */

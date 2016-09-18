@@ -6,6 +6,7 @@
  */
 
 use common\models\Blog;
+use modernkernel\slugify\Slugify;
 use modernkernel\tinymce\TinyMce;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -21,7 +22,11 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'slug')->widget(\modernkernel\slugify\Slugify::className(),['source'=>'#blog-title']) ?>
+    <?php if($model->isNewRecord):?>
+    <?= $form->field($model, 'slug')->widget(Slugify::className(),['source'=>'#blog-title']) ?>
+    <?php else:?>
+    <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
+    <?php endif;?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 

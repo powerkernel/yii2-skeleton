@@ -10,7 +10,7 @@ use yii\bootstrap\Html;
         <?php foreach ($models as $model): ?>
             <url>
                 <loc><?= Html::encode($model->getViewUrl(true)) ?></loc>
-                <lastmod><?= Yii::$app->formatter->asDate($model->updated_at, 'php:c') ?></lastmod>
+                <lastmod><?= Yii::$app->formatter->asDate($model->updated_at, 'php:Y-m-d') ?></lastmod>
             </url>
         <?php endforeach; ?>
     <?php endif; ?>
