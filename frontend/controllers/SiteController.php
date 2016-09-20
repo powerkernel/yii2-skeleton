@@ -10,6 +10,7 @@ use common\models\PageData;
 use common\models\Setting;
 use nirvana\jsonld\JsonLDHelper;
 use Yii;
+use yii\bootstrap\BootstrapAsset;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
@@ -289,6 +290,10 @@ EOB;
         echo $xml;
 
     }
+
+//    public function actionTest(){
+//
+//    }
 
 
 }

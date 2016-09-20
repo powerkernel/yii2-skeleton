@@ -9,6 +9,7 @@ namespace frontend\controllers;
 
 use common\components\MainController;
 use common\Core;
+use common\models\Content;
 use common\models\Setting;
 use Yii;
 use common\models\Blog;
@@ -73,9 +74,29 @@ class BlogController extends MainController
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 
-        $title = Yii::t('app', 'Blog');
-        /* jsonld */
+        $title = Setting::getValue('blogTitle');
+        $description = Setting::getValue('blogDesc');
+        $thumbnail = Setting::getValue('blogThumbnail');
+        $keywords = Setting::getValue('blogKeywords');
 
+        $metaTags[] = ['name' => 'keywords', 'content' => $keywords];
+        $metaTags[] = ['name' => 'description', 'content' => $description];
+        /* Facebook */
+        $metaTags[] = ['property' => 'og:title', 'content' => $title];
+        $metaTags[] = ['property' => 'og:description', 'content' => $description];
+        $metaTags[] = ['property' => 'og:type', 'content' => 'website']; // website, article, product, profile etc
+        $metaTags[] = ['property' => 'og:image', 'content' => $thumbnail]; //best 1200 x 630
+        $metaTags[] = ['property' => 'og:url', 'content' => Yii::$app->urlManager->createAbsoluteUrl(['/blog'])];
+        if ($appId = Setting::getValue('fbAppId')) {
+            $metaTags[] = ['property' => 'fb:app_id', 'content' => $appId];
+        }
+        //$metaTags[]=['property' => 'fb:app_id', 'content' => ''];
+        //$metaTags[]=['property' => 'fb:admins', 'content' => ''];
+        /* Twitter */
+        $metaTags[] = ['name' => 'twitter:card', 'content' => 'summary_large_image'];
+        $metaTags[] = ['name' => 'twitter:site', 'content' => Setting::getValue('twitterSite')];
+
+        /* jsonld */
         $listItem = null;
         foreach ($dataProvider->models as $model) {
             $listItem[] = (object)[
@@ -94,6 +115,7 @@ class BlogController extends MainController
 
         /* OK */
         $data['title'] = $title;
+        $data['metaTags'] = $metaTags;
         $data['jsonLd'] = $jsonLd;
         $this->registerMetaTagJsonLD($data);
 
@@ -150,14 +172,14 @@ class BlogController extends MainController
         $metaTags[] = ['property' => 'og:type', 'content' => 'article']; // article, product, profile etc
         $metaTags[] = ['property' => 'og:image', 'content' => $model->thumbnail]; //best 1200 x 630
         $metaTags[] = ['property' => 'og:url', 'content' => $model->getViewUrl(true)];
-        if($appId=Setting::getValue('fbAppId')){
-            $metaTags[]=['property' => 'fb:app_id', 'content' => $appId];
+        if ($appId = Setting::getValue('fbAppId')) {
+            $metaTags[] = ['property' => 'fb:app_id', 'content' => $appId];
         }
         //$metaTags[]=['property' => 'fb:app_id', 'content' => ''];
         //$metaTags[]=['property' => 'fb:admins', 'content' => ''];
         /* Twitter */
-        $metaTags[]=['name'=>'twitter:card', 'content'=>'summary_large_image'];
-        $metaTags[]=['name'=>'twitter:site', 'content'=>Setting::getValue('twitterSite')];
+        $metaTags[] = ['name' => 'twitter:card', 'content' => 'summary_large_image'];
+        $metaTags[] = ['name' => 'twitter:site', 'content' => Setting::getValue('twitterSite')];
 //        $metaTags[]=['name'=>'twitter:title', 'content'=>$title];
 //        $metaTags[]=['name'=>'twitter:description', 'content'=>$description];
 //        $metaTags[]=['name'=>'twitter:card', 'content'=>'summary'];
@@ -300,8 +322,6 @@ class BlogController extends MainController
     }
 
 
-
-
     /**
      * Finds the Blog model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -329,8 +349,9 @@ class BlogController extends MainController
      * @return array|Blog|null
      * @throws NotFoundHttpException
      */
-    protected function findBySlug($slug){
-        if (($model = Blog::find()->where(['slug'=>$slug, 'status' => Blog::STATUS_PUBLISHED])->one()) !== null) {
+    protected function findBySlug($slug)
+    {
+        if (($model = Blog::find()->where(['slug' => $slug, 'status' => Blog::STATUS_PUBLISHED])->one()) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));

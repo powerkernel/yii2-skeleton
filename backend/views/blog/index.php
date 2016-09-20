@@ -16,7 +16,7 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\BlogSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $model \common\models\Content */
+/* @var $models \common\models\Content[] */
 
 $this->title = Yii::t('app', 'Blog');
 $keywords = '';
@@ -113,20 +113,6 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
             <?= \modernkernel\fontawesome\Icon::widget(['icon' => 'refresh fa-spin']) ?>
         </div>
         <!-- end loading -->
-    </div>
-
-    <div class="box box-info">
-        <div class="box-header with-border">
-            <h3 class="box-title"><?= Yii::t('app', 'Blog Page Content') ?></h3>
-        </div>
-        <div class="box-body">
-            <?php $form = ActiveForm::begin(); ?>
-            <?= $form->field($model, 'content')->widget(TinyMce::className()) ?>
-            <div class="form-group">
-                <?= Html::submitButton(Yii::t('app', 'Update'), ['class' => 'btn btn-primary']) ?>
-            </div>
-            <?php ActiveForm::end(); ?>
-        </div>
     </div>
 
 

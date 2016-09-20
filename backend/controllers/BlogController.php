@@ -28,22 +28,10 @@ class BlogController extends BackendController
         $searchModel = new BlogSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        /* content */
-        $model=Content::findOne('Blog');
-        if(!$model)
-        {
-            $content=new Content();
-            $content->id='Blog';
-        }
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', 'Information has been updated.');
-        }
-
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'model'=>$model
         ]);
     }
 
@@ -51,16 +39,18 @@ class BlogController extends BackendController
      * @param $id
      * @return \yii\web\Response
      */
-    public function actionUpdate($id){
-        return $this->redirect(Yii::$app->urlManagerFrontend->createUrl(['/blog/update', 'id'=>$id]));
+    public function actionUpdate($id)
+    {
+        return $this->redirect(Yii::$app->urlManagerFrontend->createUrl(['/blog/update', 'id' => $id]));
     }
 
     /**
      * @param $name
      * @return \yii\web\Response
      */
-    public function actionView($name){
-        return $this->redirect(Yii::$app->urlManagerFrontend->createUrl(['/blog/view', 'name'=>$name]));
+    public function actionView($name)
+    {
+        return $this->redirect(Yii::$app->urlManagerFrontend->createUrl(['/blog/view', 'name' => $name]));
     }
 
     /**
@@ -71,8 +61,8 @@ class BlogController extends BackendController
      */
     public function actionDelete($id)
     {
-        $model=Blog::findOne($id);
-        if($model){
+        $model = Blog::findOne($id);
+        if ($model) {
             $model->delete();
         }
 
