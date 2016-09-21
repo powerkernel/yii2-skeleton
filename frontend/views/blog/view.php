@@ -55,6 +55,14 @@ $this->registerCss($css);
             <div class="box box-primary">
                 <div class="box-body blog-body">
                     <div><?= $model->content ?></div>
+                    <?php if(Yii::$app->user->can('admin')):?>
+                    <div class="well well-sm">
+                        <a target="_blank" class="btn btn-xs bg-purple" href="https://developers.facebook.com/tools/debug/og/object/?q=<?= $model->getViewUrl(true)?>">Open Graph Object Debugger</a>
+                        <a target="_blank" class="btn btn-xs bg-purple" href="https://search.google.com/structured-data/testing-tool#url=<?= $model->getViewUrl(true)?>">Structured Data Testing</a>
+                        <a target="_blank" class="btn btn-xs bg-purple" href="https://cards-dev.twitter.com/validator">Twitter Card validator</a>
+                        <a class="btn btn-xs btn-primary" href="<?= Yii::$app->urlManager->createUrl(['/blog/update', 'id'=>$model->id]) ?>"><?= Yii::t('app', 'Edit') ?></a>
+                    </div>
+                    <?php endif;?>
                 </div>
                 <div class="box-footer">
                     <div class="pull-left">

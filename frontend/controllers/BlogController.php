@@ -175,6 +175,7 @@ class BlogController extends MainController
         if ($appId = Setting::getValue('fbAppId')) {
             $metaTags[] = ['property' => 'fb:app_id', 'content' => $appId];
         }
+
         //$metaTags[]=['property' => 'fb:app_id', 'content' => ''];
         //$metaTags[]=['property' => 'fb:admins', 'content' => ''];
         /* Twitter */
