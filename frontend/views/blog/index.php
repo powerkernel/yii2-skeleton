@@ -20,7 +20,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
 <div class="blog-index">
     <div class="box box-info">
         <div class="box-body">
-            <?= \common\models\Content::getData('Blog') ?>
+            <?= \common\models\Setting::getValue('blogDesc') ?>
         </div>
     </div>
 
