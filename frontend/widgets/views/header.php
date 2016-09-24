@@ -1,5 +1,6 @@
 <?php
 use common\Core;
+use common\models\Setting;
 use modernkernel\fontawesome\Icon;
 use yii\bootstrap\Nav;
 
@@ -8,9 +9,10 @@ use yii\bootstrap\Nav;
     <nav class="navbar navbar-static-top">
         <div class="container">
             <div class="navbar-header">
-                <a href="<?= Yii::$app->homeUrl ?>" title="<?= Yii::$app->name ?>" class="navbar-brand" style="width: 60px; padding: 10px 15px;">
+                <a href="<?= Yii::$app->homeUrl ?>" title="<?= Yii::$app->name ?>" class="navbar-brand"
+                   style="width: 60px; padding: 10px 15px;">
                     <img src="<?= Yii::$app->request->baseUrl ?>/images/logo-mini.svg" class="img-responsive"
-                         alt="<?= Yii::$app->name ?>" />
+                         alt="<?= Yii::$app->name ?>"/>
                 </a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                         data-target="#navbar-collapse">
@@ -27,6 +29,20 @@ use yii\bootstrap\Nav;
                 ?>
             </div>
             <!-- /.navbar-collapse -->
+
+            <?php if(!empty(Setting::getValue('googleCustomSearch'))):?>
+            <form class="navbar-form navbar-left" role="search" action="<?= Yii::$app->urlManager->createUrl(['/site/search']) ?>">
+                <div class="input-group input-group-sm">
+                    <input name="q" type="text" class="form-control" placeholder="<?= Yii::t('app', 'Search') ?>">
+                    <span class="input-group-btn">
+                      <button type="submit" class="btn btn-default btn-flat">
+                          <?= Icon::widget(['icon'=>'search']) ?>
+                      </button>
+                    </span>
+                </div>
+            </form>
+            <?php endif;?>
+
             <!-- Navbar Right Menu -->
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">

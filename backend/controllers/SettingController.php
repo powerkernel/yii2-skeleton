@@ -114,7 +114,7 @@ class SettingController extends BackendController
             /* Blog */
             ['key'=>'blogTitle',        'value'=>'My Blog',                 'title'=>'Title',           'description'=>'Blog page title',       'group'=>'Blog', 'type'=>'textInput', 'data'=>json_encode(Core::getYesNoOption()), 'default'=>'My Blog',                'rules'=>json_encode(['required'=>[]])],
             ['key'=>'blogDesc',         'value'=>'Welcome to my world.',    'title'=>'Description',     'description'=>'Blog page description', 'group'=>'Blog', 'type'=>'textInput', 'data'=>json_encode(Core::getYesNoOption()), 'default'=>'Welcome to my world.',   'rules'=>json_encode(['required'=>[]])],
-            ['key'=>'blogKeywords',     'value'=>'blog, my blog',           'title'=>'Keywords',     'description'=>'Blog page keywords',       'group'=>'Blog', 'type'=>'textInput', 'data'=>json_encode(Core::getYesNoOption()), 'default'=>'blog, my blog',          'rules'=>json_encode(['required'=>[]])],
+            ['key'=>'blogKeywords',     'value'=>'blog, my blog',           'title'=>'Keywords',        'description'=>'Blog page keywords',    'group'=>'Blog', 'type'=>'textInput', 'data'=>json_encode(Core::getYesNoOption()), 'default'=>'blog, my blog',          'rules'=>json_encode(['required'=>[]])],
             ['key'=>'blogThumbnail',    'value'=>'',                        'title'=>'Thumbnail Image', 'description'=>'Blog page thumbnail',   'group'=>'Blog', 'type'=>'textInput', 'data'=>json_encode(Core::getYesNoOption()), 'default'=>'',                       'rules'=>json_encode(['required'=>[], 'url'=>[]])],
 
             /* Mail */
@@ -152,15 +152,27 @@ class SettingController extends BackendController
             ['key'=>'safariMaskColor', 'value'=>'#3c8dbc', 'title'=>'Safari Mask Color', 'description'=>'Safari pinned tab color', 'group'=>'Theme', 'type'=>'textInput', 'data'=>'[]', 'default'=>'#3c8dbc', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
 
             /* Enhancements */
-            ['key'=>'googleAnalytics', 'value'=>'', 'title'=>'Google Analytics', 'description'=>'Google Analytics tracking code', 'group'=>'Enhancements', 'type'=>'textarea', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
-            ['key'=>'disqus', 'value'=>'', 'title'=>'Disqus', 'description'=>'Disqus Universal Code', 'group'=>'Enhancements', 'type'=>'textarea', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
-            ['key'=>'zopim', 'value'=>'', 'title'=>'Zopim Chat', 'description'=>'Zopim Chat', 'group'=>'Enhancements', 'type'=>'textarea', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
-            ['key'=>'addthisSidebar', 'value'=>'', 'title'=>'Addthis Sidebar', 'description'=>'Addthis Sidebar share buttons', 'group'=>'Enhancements', 'type'=>'textarea', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
+            ['key'=>'googleCustomSearch',   'value'=>'', 'title'=>'Google Custom Search',   'description'=>'CX code: 123456789012345678901:abcdefjh123',    'group'=>'Enhancements', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
+            ['key'=>'googleAnalytics',      'value'=>'', 'title'=>'Google Analytics',       'description'=>'Tracking ID: UA-1111111-22',                    'group'=>'Enhancements', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
+            ['key'=>'disqus',               'value'=>'', 'title'=>'Disqus',                 'description'=>'Disqus shortname',                              'group'=>'Enhancements', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
+            ['key'=>'adsense',              'value'=>'', 'title'=>'Google Adsense',         'description'=>'Client ID: ca-pub-1234567890123456',            'group'=>'Enhancements', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
+            ['key'=>'zopim',                'value'=>'', 'title'=>'Zopim Chat',             'description'=>'Zopim ID: 5d8f1e3c8f77c45608ada76d51256aad',    'group'=>'Enhancements', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
+            ['key'=>'addthis',              'value'=>'', 'title'=>'Addthis',                'description'=>'Addthis ID: ra-123a1234567890b1',               'group'=>'Enhancements', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
 
             /* System */
             ['key'=>'languageUrlCode', 'value'=>'0', 'title'=>'Language URL', 'description'=>'Include language code in URL', 'group'=>'System', 'type'=>'dropDownList', 'data'=>json_encode(Core::getYesNoOption()), 'default'=>'0', 'rules'=>json_encode(['required'=>[], 'boolean'=>[]])],
             ['key'=>'debug', 'value'=>'0', 'title'=>'Debug Mode', 'description'=>'Turn debug mode ON/OFF', 'group'=>'System', 'type'=>'dropDownList', 'data'=>json_encode(Core::getYesNoOption()), 'default'=>'0', 'rules'=>json_encode(['required'=>[], 'boolean'=>[]])],
         ];
+
+        /* delete old settings */
+        $settings=Setting::find()->all();
+        foreach ($settings as $setting){
+            if(!in_array($setting->key, array_column($s, 'key'))){
+                $setting->delete();
+            }
+        }
+
+        /* sync */
         foreach($s as $i=>$setting){
             $conf=Setting::findOne($setting['key']);
             if(!$conf){

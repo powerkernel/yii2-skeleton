@@ -10,6 +10,7 @@ use common\models\PageData;
 use common\models\Setting;
 use nirvana\jsonld\JsonLDHelper;
 use Yii;
+use yii\base\View;
 use yii\bootstrap\BootstrapAsset;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
@@ -291,9 +292,35 @@ EOB;
 
     }
 
-//    public function actionTest(){
-//
-//    }
+    /**
+     * This is page where google search result displayed
+     */
+    public function actionSearch() {
+        $data['title'] = Yii::t('app', 'Search Result');
+        $this->registerMetaTagJsonLD($data);
 
+        /* js */
+        $cx=Setting::getValue('googleCustomSearch');
+        if(empty($cx)){
+            return $this->redirect(Yii::$app->homeUrl);
+        }
+
+
+        $js=<<<EOB
+(function() {
+    var cx = "{$cx}";
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+})();
+EOB;
+        $this->view->registerJs($js, \yii\web\View::POS_HEAD);
+
+
+        return $this->render('search');
+    }
 
 }

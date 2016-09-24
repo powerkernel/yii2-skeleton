@@ -10,7 +10,6 @@ namespace common\widgets;
 
 use common\models\Setting;
 use Yii;
-use yii\base\View;
 use yii\base\Widget;
 use yii\helpers\Html;
 
@@ -28,9 +27,9 @@ class Disqus extends Widget
      */
     public function run()
     {
-        $disqus = Setting::getValue('disqus');
-        if (!empty($disqus)) {
-            $js=$this->registerVariables().$disqus;
+        $shortname = Setting::getValue('disqus');
+        if (!empty($shortname)) {
+            $js=$this->registerVariables($shortname);
             Yii::$app->view->registerJs($js, \yii\web\View::POS_END);
             echo Html::tag('div', '', ['id' => 'disqus_thread']);
         }
@@ -39,7 +38,7 @@ class Disqus extends Widget
     /**
      * register variables
      */
-    protected function registerVariables()
+    protected function registerVariables($shortname)
     {
         $pageUrl = '';
         $pageIdentifier = '';
@@ -59,6 +58,12 @@ class Disqus extends Widget
     {$pageUrl}
     {$pageIdentifier}     
  };
+(function() {
+    var d = document, s = d.createElement("script");
+    s.src = "//{$shortname}.disqus.com/embed.js";
+    s.setAttribute("data-timestamp", +new Date());
+    (d.head || d.body).appendChild(s);
+})();
 EOB;
             return $js;
         }

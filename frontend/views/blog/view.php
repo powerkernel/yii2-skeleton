@@ -7,6 +7,7 @@
 
 use common\models\Blog;
 use common\widgets\Disqus;
+use frontend\widgets\Adsense;
 use frontend\widgets\LikeButton;
 use frontend\widgets\PlusOneButton;
 
@@ -63,6 +64,7 @@ $this->registerCss($css);
                         <a class="btn btn-xs btn-primary" href="<?= Yii::$app->urlManager->createUrl(['/blog/update', 'id'=>$model->id]) ?>"><?= Yii::t('app', 'Edit') ?></a>
                     </div>
                     <?php endif;?>
+                    <?= Adsense::widget() ?>
                 </div>
                 <div class="box-footer">
                     <div class="pull-left">
@@ -101,6 +103,7 @@ $this->registerCss($css);
         </div>
         <div class="col-md-4">
             <?= \frontend\widgets\BlogPost::widget(['type' => 'mostViewed']) ?>
+            <?= \frontend\widgets\AdsBox::widget() ?>
             <?= \frontend\widgets\BlogPost::widget(['type' => 'latest']) ?>
         </div>
     </div>
