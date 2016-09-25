@@ -34,7 +34,7 @@ EOB;
 
             
             $view = Yii::$app->getView();
-            $view->registerJs($js, View::POS_END);
+            $view->registerJs($js, View::POS_HEAD);
         }
     }
 }
