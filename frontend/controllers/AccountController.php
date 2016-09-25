@@ -192,7 +192,8 @@ class AccountController extends Controller
      */
     public function actionSignup()
     {
-        $this->layout = 'main';
+        //$this->layout = 'main';
+        $this->layout = 'login';
         $model = new SignupForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
@@ -275,7 +276,6 @@ class AccountController extends Controller
                 return $this->redirect(['/account/login']);
             }
         }
-
 
         return $this->render('reset-confirm', [
             'model' => $model,

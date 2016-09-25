@@ -9,7 +9,6 @@ namespace frontend\controllers;
 
 use common\components\MainController;
 use common\Core;
-use common\models\Content;
 use common\models\Setting;
 use Yii;
 use common\models\Blog;
@@ -358,4 +357,6 @@ class BlogController extends MainController
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
     }
+
+
 }

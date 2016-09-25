@@ -39,7 +39,6 @@ return [
 
         'view' => [
             'theme' => [
-                //'class' => 'harrytang\themeinspinia\InspiniaTheme',
                 'class' => 'modernkernel\themeadminlte\AdminlteTheme',
                 'skin' => 'skin-blue',
                 'layout' => 'layout-top-nav' //fixed

@@ -4,15 +4,10 @@ namespace common;
 
 use common\models\Setting;
 use DateTime;
-use Imagine\Exception\InvalidArgumentException;
-use Imagine\Exception\RuntimeException;
-use Imagine\Image\Box;
-use Imagine\Image\ImageInterface;
 use Yii;
 use yii\helpers\FormatConverter;
 use yii\helpers\Html;
-use yii\imagine\Image;
-use yii\web\ServerErrorHttpException;
+use yii\helpers\Inflector;
 
 /**
  * core functions
@@ -163,37 +158,7 @@ class Core
         return $a;
     }
 
-    /**
-     * get Php Max File Size Limit
-     * @return mixed
-     */
-    public static function getPhpMaxFileSizeLimit()
-    {
-        /**
-         * @param $str
-         * @return int|string
-         */
-        $fn = function ($str) {
-            $val = trim($str);
-            $last = strtolower($str[strlen($str) - 1]);
-            switch ($last) {
-                case 'g':
-                    $val *= 1024;
-                case 'm':
-                    $val *= 1024;
-                case 'k':
-                    $val *= 1024;
-            }
-            return $val;
-        };
-        $post_max_size = $fn(ini_get('post_max_size'));
-        $upload_max_filesize = $fn(ini_get('upload_max_filesize'));
-        $max = $post_max_size;
-        if ($max > $upload_max_filesize) {
-            $max = $upload_max_filesize;
-        }
-        return $max;
-    }
+
 
 
     /**
@@ -265,61 +230,7 @@ class Core
     }
 
 
-    /**
-     * @param string $relativePath
-     * @param string $file
-     * @param null|array $thumbnails
-     * @return array
-     * @throws ServerErrorHttpException
-     */
-    public static function saveImageThumb($relativePath, $file, $thumbnails = null)
-    {
-        try {
-            $imagine = Image::getImagine()->open($file);
-        } catch (RuntimeException $e) {
-            throw new ServerErrorHttpException($e->getMessage());
-        } catch (InvalidArgumentException $e) {
-            throw new ServerErrorHttpException($e->getMessage());
-        }
 
-        if ($thumbnails === null) {
-            $thumbnails = Yii::$app->params['images'];
-        }
-        $images = [];
-        foreach ($thumbnails as $name => $size) {
-            $photo = $name . '.png';
-            // open
-            $s = $imagine->getSize(); // 3840x2160 px
-            preg_match('/^(\d+)x(\d+) px$/', $s, $match);
-            $w = $match[1];
-            $h = $match[2];
-            // landscape, portrait
-            $width = $size['width'];
-            $height = $size['height'];
-            if ($w < $h) // portrait
-            {
-                $height = $size['width'];
-                $width = $size['height'];
-            }
-
-            $box = new Box($width, $height);
-            //$mode=ImageInterface::THUMBNAIL_INSET;
-            $mode = ImageInterface::THUMBNAIL_OUTBOUND;
-
-            if (in_array($name, ['thumbnail', 'original'])) {
-                $mode = ImageInterface::THUMBNAIL_INSET;
-            }
-            $fullPath = Yii::$app->basePath . '/web/' . $relativePath;
-            $imagine->thumbnail($box, $mode)->save($fullPath . '/' . $photo);
-            // done
-            $images[$name] = $relativePath . $photo;
-            $box = null;
-        }
-        unlink($file);
-        //file_put_contents('D:\log.txt', json_encode($images));
-        return $images;
-
-    }
 
 
     /**
@@ -1114,6 +1025,7 @@ class Core
             'yo-NG' => 'Yoruba (Nigeria)',
         ];
         if (!empty($only)) {
+            $new=[];
             foreach ($only as $l) {
                 $new[$l] = $list[$l];
             }
@@ -1135,5 +1047,56 @@ class Core
         }
         return false;
     }
+
+    /**
+     * Disable show addthis
+     * @return bool
+     */
+    public static function isInMemberAreaPage()
+    {
+        $a = [
+            'SiteError',
+            'SiteSearch',
+
+            'AccountLogin',
+            'AccountReset',
+            'AccountSignup',
+            'AccountIndex',
+            'AccountEmail',
+            'AccountPassword',
+            'AccountLinked',
+            'AccountResetConfirm',
+            'AccountEmailConfirm',
+
+            'BlogManage',
+            'BlogCreate',
+            'BlogUpdate'
+        ];
+
+
+        if (in_array(Core::getMCA(), $a)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * get current MCA
+     * @return string
+     */
+    public static function getMCA()
+    {
+        $m = Yii::$app->controller->module->id;
+        if (in_array($m, ['app-frontend', 'app-backend'])) {
+            $m = '';
+        };
+        $c=Yii::$app->controller->id;
+        $a=Yii::$app->controller->action->id;
+
+
+        return Inflector::id2camel($m) . Inflector::id2camel($c) . Inflector::id2camel($a);
+    }
+
+
 
 }

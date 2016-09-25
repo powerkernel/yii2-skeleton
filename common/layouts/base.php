@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use common\components\Addthis;
 use common\components\GAnalytics;
 use common\widgets\Favicon;
 use nirvana\jsonld\JsonLDHelper;
@@ -33,6 +34,7 @@ use yii\helpers\Html;
     <?= Favicon::widget() ?>
     <?php JsonLDHelper::registerScripts(); ?>
     <?php GAnalytics::register() ?>
+    <?php Addthis::register() ?>
 </head>
 <?= $content ?>
 </html>

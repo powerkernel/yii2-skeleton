@@ -21,8 +21,6 @@ class GAnalytics extends Object
 
     public static function register()
     {
-        $id='UA-3331418-39';
-
         $id = Setting::getValue('googleAnalytics');
         if (!empty($id)) {
             $js=<<<EOB

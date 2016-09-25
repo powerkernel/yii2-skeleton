@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="account-signup">
     <h1><?= Html::encode($this->title) ?></h1>
     <div class="row">
-        <div class="col-sm-8 col-md-5 col-lg-5">
+        <div class="col-xs-12">
             <?php $form = ActiveForm::begin(['id' => 'signup-form', 'enableAjaxValidation' => false]); ?>
             <?= $form->field($model, 'name') ?>
             <?= $form->field($model, 'email') ?>
@@ -66,6 +66,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= Html::submitButton(Yii::t('app', 'Signup'), ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
             </div>
             <?php ActiveForm::end(); ?>
+            <div><hr /></div>
+            <p class="text-center">
+                <?= Yii::t('app', 'Already have an account?') ?>
+                <?= Html::a(Yii::t('app', 'Sign in'), Yii::$app->urlManager->createUrl(['/account/login'])) ?>
+            </p>
+
         </div>
     </div>
 </div>

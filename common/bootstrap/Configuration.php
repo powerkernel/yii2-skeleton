@@ -47,8 +47,6 @@ class Configuration extends Component
 
         $this->configHsts();
 
-        $this->configAddthis();
-
         $this->configZopim();
 
     }
@@ -56,10 +54,11 @@ class Configuration extends Component
     /**
      * Zopim
      */
-    protected function configZopim(){
-        if(Yii::$app->id=='app-frontend'){
-            if($id=Setting::getValue('zopim')){
-                $js=<<<EOB
+    protected function configZopim()
+    {
+        if (Yii::$app->id == 'app-frontend') {
+            if ($id = Setting::getValue('zopim')) {
+                $js = <<<EOB
 window.\$zopim||(function(d,s){var z=\$zopim=function(c){z._.push(c)},$=z.s=
 d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
 _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
@@ -72,16 +71,7 @@ EOB;
     }
 
 
-    /**
-     * addthis
-     */
-    protected function configAddthis(){
-        if(Yii::$app->id=='app-frontend'){
-            if($id=Setting::getValue('addthis')){
-                Yii::$app->view->registerJsFile('https://s7.addthis.com/js/300/addthis_widget.js#pubid='.$id);
-            }
-        }
-    }
+
 
     /**
      * Enable HSTS
