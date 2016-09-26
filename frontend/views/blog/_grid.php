@@ -11,7 +11,7 @@ use yii\bootstrap\Html;
 /* @var integer $index */
 
 ?>
-<div class="col-sm-4">
+<div class="col-sm-6">
     <div class="box box-primary">
         <div class="box-header">
             <h2 class="box-title">
@@ -32,6 +32,6 @@ use yii\bootstrap\Html;
         </div>
     </div>
 </div>
-<?php if (($index + 1) % 3 == 0): ?>
+<?php if (($index + 1) % 2 == 0): ?>
     <div class="clearfix hidden-xs"></div>
 <?php endif; ?>

@@ -65,7 +65,7 @@ class Blog extends ActiveRecord
     }
 
     /**
-     * get status text
+     * get the status text
      * @return string
      */
     public function getStatusText()
@@ -99,8 +99,8 @@ class Blog extends ActiveRecord
             [['content'], 'string'],
             [['created_by', 'views', 'status', 'created_at', 'updated_at', 'published_at'], 'integer'],
 
-            [['title', 'slug'], 'string', 'max' => 110],
-            [['desc', 'tags', 'thumbnail', 'thumbnail_square'], 'string', 'max' => 255],
+            [['title', 'slug', 'desc'], 'string', 'max' => 110],
+            [['tags', 'thumbnail', 'thumbnail_square'], 'string', 'max' => 255],
 
             [['thumbnail', 'thumbnail_square'], 'url'],
             [['image_object'], 'string'],
@@ -156,8 +156,9 @@ class Blog extends ActiveRecord
      * @param int $limit
      * @return Blog[]
      */
-    public static function mostViewed($limit=10){
-        return Blog::find()->orderBy(['views'=>SORT_DESC])->limit($limit)->all();
+    public static function mostViewed($limit = 10)
+    {
+        return Blog::find()->orderBy(['views' => SORT_DESC])->limit($limit)->all();
     }
 
     /**
@@ -165,8 +166,9 @@ class Blog extends ActiveRecord
      * @param int $limit
      * @return Blog[]
      */
-    public static function latest($limit=10){
-        return Blog::find()->orderBy(['published_at'=>SORT_DESC])->limit($limit)->all();
+    public static function latest($limit = 10)
+    {
+        return Blog::find()->orderBy(['published_at' => SORT_DESC])->limit($limit)->all();
     }
 
     /**
@@ -174,10 +176,10 @@ class Blog extends ActiveRecord
      * @param int $limit
      * @return Blog[]
      */
-    public static function random($limit=10){
+    public static function random($limit = 10)
+    {
         return Blog::find()->orderBy('rand()')->limit($limit)->all();
     }
-
 
 
     /**
@@ -232,11 +234,11 @@ class Blog extends ActiveRecord
      * @param bool $absolute
      * @return string
      */
-    public function getViewUrl($absolute=false)
+    public function getViewUrl($absolute = false)
     {
-        $act='createUrl';
-        if($absolute){
-            $act='createAbsoluteUrl';
+        $act = 'createUrl';
+        if ($absolute) {
+            $act = 'createAbsoluteUrl';
         }
         return Yii::$app->urlManager->$act(['/blog/view', 'name' => $this->slug]);
     }
@@ -252,26 +254,25 @@ class Blog extends ActiveRecord
         $img = Yii::$app->cache->get($key);
 
         if ($img === false) {
-            $flag=false;
+            $flag = false;
             $doc = new DOMDocument();
             $doc->loadHTML($this->content);
             $tags = $doc->getElementsByTagName('img');
-            $img = ['url'=>'', 'width'=>'', 'height'=>''];
+            $img = ['url' => '', 'width' => '', 'height' => ''];
             foreach ($tags as $i => $tag) {
                 $img['url'] = $tag->getAttribute('src');
                 $img['width'] = $tag->getAttribute('width');
                 $img['height'] = $tag->getAttribute('height');
-                $flag=true;
+                $flag = true;
                 break;
             }
-            if($flag){
+            if ($flag) {
                 /* cache */
-                $sql=(new Query())->select('updated_at')->from(Blog::tableName())->where(['id'=>$this->id])->createCommand()->rawSql;
+                $sql = (new Query())->select('updated_at')->from(Blog::tableName())->where(['id' => $this->id])->createCommand()->rawSql;
                 $dependency = new DbDependency();
-                $dependency->sql=$sql;
+                $dependency->sql = $sql;
                 Yii::$app->cache->set($key, $img, 0, $dependency);
-            }
-            else {
+            } else {
                 Yii::$app->session->setFlash('warning', Yii::t('app', 'Missing image in blog post.'));
             }
 
@@ -283,10 +284,11 @@ class Blog extends ActiveRecord
     /**
      * update views
      */
-    public function updateViews(){
-        $key='blog_viewed'.$this->id;
-        $viewed=Yii::$app->session->get($key);
-        if(empty($viewed)){
+    public function updateViews()
+    {
+        $key = 'blog_viewed' . $this->id;
+        $viewed = Yii::$app->session->get($key);
+        if (empty($viewed)) {
             Yii::$app->session->set($key, true);
             $this->updateCounters(['views' => 1]);
         }

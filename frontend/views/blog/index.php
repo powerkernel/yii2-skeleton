@@ -27,7 +27,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
     <div class="row">
         <div class="col-md-8">
             <?= ListView::widget([
-                'layout' => '<div class="row">{items}</div>{summary}{pager}',
+                'layout' => '<div class="row">{items}</div>{summary}{pager}<div><br /></div>',
                 'dataProvider' => $dataProvider,
                 'itemOptions' => ['class' => 'item'],
                 'itemView' => function ($model, $key, $index, $widget) {
