@@ -11,8 +11,8 @@ use yii\bootstrap\Html;
 /* @var $model \common\models\Account */
 
 $this->title = Yii::t('app', 'Change password');
-$keywords = '';
-$description = '';
+$keywords = Yii::t('app', 'password, change password');
+$description = Yii::t('app', 'Change your password here, please keep it safe');
 
 $this->registerMetaTag(['name' => 'keywords', 'content' => $keywords]);
 $this->registerMetaTag(['name' => 'description', 'content' => $description]);

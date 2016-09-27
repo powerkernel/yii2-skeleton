@@ -8,8 +8,8 @@ use yii\bootstrap\ActiveForm;
 /* @var $model \frontend\models\SignupForm */
 
 $this->title = Yii::t('app', 'Signup');
-$keywords = '';
-$description = '';
+$keywords = Yii::t('app', 'login, signup, create account');
+$description = Yii::t('app', 'Create an account or log into {APP}. Start using our website immediately', ['APP'=>Yii::$app->name]);
 
 $this->registerMetaTag(['name' => 'keywords', 'content' => $keywords]);
 $this->registerMetaTag(['name' => 'description', 'content' => $description]);

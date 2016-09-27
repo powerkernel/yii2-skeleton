@@ -9,8 +9,8 @@
 /* @var $model common\models\Blog */
 
 $this->title = Yii::t('app', 'Create Blog');
-$keywords = '';
-$description = '';
+$keywords = Yii::t('app', 'create blog, new blog, write blog');
+$description = Yii::t('app', 'Create new blog');
 
 $this->registerMetaTag(['name' => 'keywords', 'content' => $keywords]);
 $this->registerMetaTag(['name' => 'description', 'content' => $description]);

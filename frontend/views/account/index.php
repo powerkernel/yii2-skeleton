@@ -9,7 +9,8 @@ use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
 
 $this->title = Yii::t('app', 'My Account');
-
+$keywords = Yii::t('app', 'my profile, my account');
+$description = Yii::t('app', 'View and update your personal information');
 ?>
 <div class="account-index">
     <div class="box box-default">

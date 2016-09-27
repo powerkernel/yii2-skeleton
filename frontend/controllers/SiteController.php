@@ -8,14 +8,12 @@ use common\models\Message;
 use common\models\Page;
 use common\models\PageData;
 use common\models\Setting;
-use nirvana\jsonld\JsonLDHelper;
 use Yii;
-use yii\base\View;
-use yii\bootstrap\BootstrapAsset;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
+use yii\web\View;
 
 /**
  * Site controller
@@ -297,14 +295,22 @@ EOB;
      */
     public function actionSearch() {
         $data['title'] = Yii::t('app', 'Search Result');
+        $keywords = Yii::t('app', 'search result, search');
+        $description = Yii::t('app', 'Search our website');
+
+        $metaTags[] = ['name' => 'keywords', 'content' => $keywords];
+        $metaTags[] = ['name' => 'description', 'content' => $description];
+        $metaTags[] = ['name' => 'robots', 'content' => 'noindex, nofollow, nosnippet, noodp, noarchive, noimageindex'];
+
+        $data['metaTags'] = $metaTags;
         $this->registerMetaTagJsonLD($data);
+
 
         /* js */
         $cx=Setting::getValue('googleCustomSearch');
         if(empty($cx)){
             return $this->redirect(Yii::$app->homeUrl);
         }
-
 
         $js=<<<EOB
 (function() {
@@ -317,7 +323,7 @@ EOB;
     s.parentNode.insertBefore(gcse, s);
 })();
 EOB;
-        $this->view->registerJs($js, \yii\web\View::POS_HEAD);
+        $this->view->registerJs($js, View::POS_HEAD);
 
 
         return $this->render('search');

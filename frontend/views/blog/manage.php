@@ -16,8 +16,8 @@ use yii\widgets\Pjax;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'My Blog');
-$keywords = '';
-$description = '';
+$keywords = Yii::t('app', 'manage blog, your blog');
+$description = Yii::t('app', 'Manage your blog');
 
 $this->registerMetaTag(['name' => 'keywords', 'content' => $keywords]);
 $this->registerMetaTag(['name' => 'description', 'content' => $description]);

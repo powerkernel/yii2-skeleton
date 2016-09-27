@@ -13,8 +13,8 @@ use yii\helpers\Html;
 /* @var $model \frontend\models\ResetPasswordForm */
 
 $this->title = Yii::t('app', 'Reset Password');
-$keywords = '';
-$description = '';
+$keywords = Yii::t('app', 'reset password, forget password, lost password, account');
+$description = Yii::t('app', 'Forgot your password? Enter your email address and we will help you reset your password');
 
 $this->registerMetaTag(['name' => 'keywords', 'content' => $keywords]);
 $this->registerMetaTag(['name' => 'description', 'content' => $description]);
@@ -57,6 +57,12 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
                 <?= Html::submitButton(Yii::t('app', 'Reset Password'), ['class' => 'btn btn-primary']) ?>
             </div>
             <?php ActiveForm::end(); ?>
+            <div><hr /></div>
+            <p class="text-center">
+                <?= Yii::t('app', 'Already have an account?') ?>
+                <?= Html::a(Yii::t('app', 'Sign in'), Yii::$app->urlManager->createUrl(['/account/login'])) ?>
+            </p>
+
         </div>
     </div>
 </div>

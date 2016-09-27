@@ -11,9 +11,8 @@
 $this->title = Yii::t('app', 'Update {modelClass}: ', [
     'modelClass' => 'Blog',
 ]) . $model->title;
-$keywords = '';
-$description = '';
-
+$keywords = Yii::t('app', 'update blog, edit blog');
+$description = Yii::t('app', 'Update your blog');
 $this->registerMetaTag(['name' => 'keywords', 'content' => $keywords]);
 $this->registerMetaTag(['name' => 'description', 'content' => $description]);
 //$this->registerMetaTag(['name' => 'robots', 'content' => 'noindex, nofollow, nosnippet, noodp, noarchive, noimageindex']);

@@ -13,8 +13,8 @@ use yii\bootstrap\Html;
 /* @var $model frontend\models\ChangeEmailForm */
 
 $this->title = Yii::t('app', 'Change Email');
-$keywords = '';
-$description = '';
+$keywords = Yii::t('app', 'email, change email, new email');
+$description = Yii::t('app', 'View and change your email here');
 
 $this->registerMetaTag(['name' => 'keywords', 'content' => $keywords]);
 $this->registerMetaTag(['name' => 'description', 'content' => $description]);

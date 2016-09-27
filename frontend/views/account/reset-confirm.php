@@ -13,12 +13,12 @@ use yii\helpers\Html;
 /* @var $account \common\models\Account */
 
 $this->title = Yii::t('app', 'Set New Password');
-$keywords = '';
-$description = '';
+$keywords = Yii::t('app', 'reset password, new password');
+$description = Yii::t('app', 'You are one step away from setting your new password');
 
 $this->registerMetaTag(['name' => 'keywords', 'content' => $keywords]);
 $this->registerMetaTag(['name' => 'description', 'content' => $description]);
-//$this->registerMetaTag(['name' => 'robots', 'content' => 'noindex, nofollow, nosnippet, noodp, noarchive, noimageindex']);
+$this->registerMetaTag(['name' => 'robots', 'content' => 'noindex, nofollow, nosnippet, noodp, noarchive, noimageindex']);
 
 /* Facebook */
 //$this->registerMetaTag(['property' => 'og:title', 'content' => $this->title]);

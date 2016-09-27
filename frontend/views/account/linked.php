@@ -10,6 +10,9 @@ use yii\bootstrap\Html;
 
 
 $this->title = Yii::t('app', 'Linked Accounts');
+$keywords = Yii::t('app', 'linked account, facebook, google');
+$description = Yii::t('app', 'Add your accounts from other websites here and use them for quick login');
+
 
 ?>
 <div class="account-index">
@@ -20,7 +23,7 @@ $this->title = Yii::t('app', 'Linked Accounts');
         </div>
         <div class="box-body">
             <h4 class="no-margin"><?= Yii::t('app', 'Available Services') ?></h4>
-            <p><?= Yii::t('app', 'Add your accounts from other websites here and use them for quick login.') ?></p>
+            <p><?= Yii::t('app', 'Add your accounts from other websites here and use them for quick login') ?></p>
 
             <div class="table-responsive">
                 <table class="table">
