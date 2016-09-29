@@ -292,8 +292,14 @@ EOB;
 
     /**
      * This is page where google search result displayed
+     * @param null $q
+     * @return string|Response
      */
-    public function actionSearch() {
+    public function actionSearch($q=null) {
+        if(empty($q)){
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+
         $data['title'] = Yii::t('app', 'Search Result');
         $keywords = Yii::t('app', 'search result, search');
         $description = Yii::t('app', 'Search our website');

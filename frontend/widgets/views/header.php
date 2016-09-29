@@ -30,7 +30,7 @@ use yii\bootstrap\Nav;
                 <?php if(!empty(Setting::getValue('googleCustomSearch'))):?>
                     <form class="navbar-form navbar-left" role="search" action="<?= Yii::$app->urlManager->createUrl(['/site/search']) ?>">
                         <div class="input-group input-group-sm">
-                            <input name="q" type="text" class="form-control" placeholder="<?= Yii::t('app', 'Search') ?>">
+                            <input name="q" value="<?= Yii::$app->request->get('q') ?>" type="text" class="form-control" placeholder="<?= Yii::t('app', 'Search') ?>">
                             <span class="input-group-btn">
                       <button type="submit" class="btn btn-default btn-flat">
                           <?= Icon::widget(['icon'=>'search']) ?>
