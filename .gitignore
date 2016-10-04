@@ -33,10 +33,10 @@ phpunit.phar
 /.vagrant
 
 # misc
+ssl
+data
 frontend/web/backend
 composer.lock
-_ssl/*
-_data
 
 # favicon
 frontend/web/android-chrome-192x192.png
