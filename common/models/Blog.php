@@ -213,7 +213,11 @@ class Blog extends ActiveRecord
         }
 
         /* clean html */
-        $this->content = HtmlPurifier::process($this->content);
+        $config=[
+            'HTML.MaxImgLength'=>null,
+            'CSS.MaxImgLength'=>null
+        ];
+        $this->content = HtmlPurifier::process($this->content, $config);
 
         /* done */
         return parent::beforeSave($insert);

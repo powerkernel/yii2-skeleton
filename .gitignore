@@ -37,6 +37,7 @@ ssl
 data
 frontend/web/backend
 composer.lock
+upload.zip
 
 # favicon
 frontend/web/android-chrome-192x192.png
