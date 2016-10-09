@@ -282,6 +282,27 @@ class Blog extends ActiveRecord
     }
 
     /**
+     * get all images in blog's content
+     * @return array
+     */
+    public function getImages(){
+        $doc = new DOMDocument();
+        $doc->loadHTML($this->content);
+        $tags = $doc->getElementsByTagName('img');
+        $imgs = [];
+        foreach ($tags as $i => $tag) {
+            $imgs[]=[
+                'src'=>$tag->getAttribute('src'),
+                'width'=>$tag->getAttribute('width'),
+                'height'=>$tag->getAttribute('height'),
+                'alt'=>$tag->getAttribute('alt')
+            ];
+        }
+        return $imgs;
+    }
+
+
+    /**
      * update views
      */
     public function updateViews()

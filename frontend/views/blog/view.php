@@ -55,7 +55,7 @@ $this->registerCss($css);
         <div class="col-md-8">
             <div class="box box-primary">
                 <div class="box-body blog-body">
-                    <div><?= $model->content ?></div>
+                    <div class="blog-content"><?= $model->content ?></div>
                     <?php if(Yii::$app->user->can('admin')):?>
                     <div class="well well-sm">
                         <a target="_blank" class="btn btn-xs bg-purple" href="https://developers.facebook.com/tools/debug/og/object/?q=<?= $model->getViewUrl(true)?>">Open Graph Object Debugger</a>
@@ -107,6 +107,13 @@ $this->registerCss($css);
             <?= \frontend\widgets\BlogPost::widget(['type' => 'latest']) ?>
         </div>
     </div>
+    <?php
+    echo \modernkernel\photoswipe\Modal::widget([
+        'selector'=>'.blog-content img',
+        'images'=>$model->getImages(),
+    ]);
+    ?>
+
 
 </div>
 
