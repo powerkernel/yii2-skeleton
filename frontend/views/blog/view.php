@@ -111,6 +111,9 @@ $this->registerCss($css);
     echo \modernkernel\photoswipe\Modal::widget([
         'selector'=>'.blog-content img',
         'images'=>$model->getImages(),
+        'clientOptions'=>[
+            'shareEl'=>false,
+        ]
     ]);
     ?>
 
