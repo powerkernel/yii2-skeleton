@@ -20,6 +20,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'label')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'active_route')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'class')->textInput(['maxlength' => true]) ?>
