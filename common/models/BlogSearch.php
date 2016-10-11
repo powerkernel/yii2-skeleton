@@ -27,7 +27,7 @@ class BlogSearch extends Blog
     public function rules()
     {
         return [
-            [['id', 'created_by', 'status'], 'integer'],
+            [['id', 'created_by', 'views', 'status'], 'integer'],
             [['title', 'desc', 'content', 'tags', 'created_at', 'updated_at'], 'safe'],
             [['fullname'], 'safe']
         ];
@@ -96,6 +96,7 @@ class BlogSearch extends Blog
         $query->andFilterWhere([
             '{{%core_blog}}.id' => $this->id,
             '{{%core_blog}}.created_by' => $this->created_by,
+            '{{%core_blog}}.views' => $this->views,
             '{{%core_blog}}.status' => $this->status,
             //'created_at' => $this->created_at,
             //'updated_at' => $this->updated_at,

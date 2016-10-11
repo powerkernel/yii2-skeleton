@@ -8,7 +8,6 @@
 namespace backend\controllers;
 
 use common\models\Blog;
-use common\models\Content;
 use Yii;
 use common\models\BlogSearch;
 

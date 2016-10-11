@@ -78,6 +78,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                         // 'status',
                         // 'created_at',
                         //'updated_at:dateTime',
+                        'views',
                         ['attribute' => 'updated_at', 'value' => 'updated_at', 'format' => 'date', 'filter' => DatePicker::widget(['model' => $searchModel, 'attribute' => 'updated_at', 'dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']])],
                         ['attribute' => 'status', 'value' => function ($model) {
                             return $model->statusText;
