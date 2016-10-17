@@ -41,7 +41,7 @@ use frontend\widgets\PlusOneButton;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Blog'), 'url' => ['index']];
 //$this->params['breadcrumbs'][] = $this->title;
 
-$this->params['subtitle'] = Yii::$app->formatter->asDate($model->updated_at);
+$this->params['subtitle'] = Yii::$app->formatter->asDate($model->published_at);
 
 /* misc */
 $js = file_get_contents(__DIR__ . '/view.min.js');

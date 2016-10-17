@@ -215,7 +215,9 @@ class Blog extends ActiveRecord
         /* clean html */
         $config=[
             'HTML.MaxImgLength'=>null,
-            'CSS.MaxImgLength'=>null
+            'CSS.MaxImgLength'=>null,
+            'HTML.Trusted'=>true,
+            'Filter.YouTube'=>true,
         ];
         $this->content = HtmlPurifier::process($this->content, $config);
 
