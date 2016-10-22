@@ -4,8 +4,8 @@
 /* @var $content string */
 
 use common\components\Addthis;
-use common\components\Alexa;
 use common\components\GAnalytics;
+use common\components\HeaderJS;
 use common\widgets\Favicon;
 use nirvana\jsonld\JsonLDHelper;
 use yii\helpers\Html;
@@ -35,8 +35,8 @@ use yii\helpers\Html;
     <?= Favicon::widget() ?>
     <?php JsonLDHelper::registerScripts(); ?>
     <?php GAnalytics::register() ?>
-    <?php Alexa::register() ?>
     <?php Addthis::register() ?>
+    <?php HeaderJS::register() ?>
 </head>
 <?= $content ?>
 </html>

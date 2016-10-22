@@ -13,15 +13,15 @@ use yii\base\Object;
 use yii\web\View;
 
 /**
- * Class Alexa
+ * Class HeaderJS
  * @package common\widgets
  */
-class Alexa extends Object
+class HeaderJS extends Object
 {
 
     public static function register()
     {
-        $js = Setting::getValue('alexa');
+        $js = Setting::getValue('headJs');
         if (!empty($js)) {
             $view = Yii::$app->getView();
             $view->registerJs($js, View::POS_HEAD);
