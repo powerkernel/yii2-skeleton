@@ -24,6 +24,7 @@
         "nirvana-msu/yii2-jsonld-helper": "1.0.*@dev",
         "2amigos/yii2-tinymce-widget" : "~1.1",
         "codemix/yii2-localeurls":"*",
+        "kotchuprik/yii2-sortable-widgets": "*",
 
         "modernkernel/yii2-bootstrapsocial": "*",
         "modernkernel/yii2-theme-adminlte": "@dev",
