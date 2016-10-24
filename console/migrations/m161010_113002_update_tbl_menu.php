@@ -13,6 +13,7 @@ class m161010_113002_update_tbl_menu extends Migration
     public function up()
     {
         $this->addColumn('{{core_menu}}', 'active_route', $this->string()->null()->after('label'));
+		$this->addDefaultData();
     }
 
     /**
@@ -21,16 +22,37 @@ class m161010_113002_update_tbl_menu extends Migration
     public function down()
     {
         $this->dropColumn('{{core_menu}}', 'active_route');
+		
     }
 
-    /*
-    // Use safeUp/safeDown to run migration code within a transaction
-    public function safeUp()
+	/**
+	 * add default menus
+	 */
+	protected function addDefaultData()
     {
-    }
+        $items = [
+            [
+                'label' => 'Home',
+                'url' => '/site/index',
+                'position' => 'header',
+            ],
+            [
+                'label' => 'Blog',
+                'url' => '/blog/index',
+                'position' => 'header',
+            ],
 
-    public function safeDown()
-    {
+        ];
+
+
+        foreach ($items as $i=>$item) {
+            $menu = new \common\models\Menu();
+            $menu->label = $item['label'];
+            $menu->url = $item['url'];
+            $menu->position = $item['position'];
+            $menu->order=$i;
+            $menu->status = \common\models\Menu::STATUS_ACTIVE;
+            $menu->save();
+        }
     }
-    */
 }

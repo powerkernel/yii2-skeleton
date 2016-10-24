@@ -36,7 +36,7 @@ class m160915_024535_tbl_menu extends Migration
         $this->addForeignKey('pk_menu_created_by-account_id', '{{%core_menu}}', 'created_by', '{{%core_account}}', 'id', 'SET NULL', 'SET NULL');
         $this->addForeignKey('pk_menu_updated_by-account_id', '{{%core_menu}}', 'updated_by', '{{%core_account}}', 'id', 'SET NULL', 'SET NULL');
 
-        $this->addDefaultData();
+        
     }
 
     /**
@@ -50,31 +50,5 @@ class m160915_024535_tbl_menu extends Migration
     }
 
 
-    protected function addDefaultData()
-    {
-        $items = [
-            [
-                'label' => 'Home',
-                'url' => '/site/index',
-                'position' => 'header',
-            ],
-            [
-                'label' => 'Blog',
-                'url' => '/blog/index',
-                'position' => 'header',
-            ],
-
-        ];
-
-
-        foreach ($items as $i=>$item) {
-            $menu = new \common\models\Menu();
-            $menu->label = $item['label'];
-            $menu->url = $item['url'];
-            $menu->position = $item['position'];
-            $menu->order=$i;
-            $menu->status = \common\models\Menu::STATUS_ACTIVE;
-            $menu->save();
-        }
-    }
+    
 }
