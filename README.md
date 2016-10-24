@@ -93,17 +93,19 @@ More comming soon..
 
 HOW TO USE
 ----------
-1. Update your database information in common\config\mail-local.php
+1. Run `init`, update your database information in common\config\mail-local.php
 2. Run `php yii migrate`
 3. Config/Symlink frontend\web & backend\web to your public_html
 4. Go to frontend and sign up for new account, admin role will be auto assigned.
 5. Go to backend and update all settings (reCaptcha, API, SMTP...)
-6. Your are ready!
+6. Generate icons from http://realfavicongenerator.net/
+7. Your are ready!
 
 CONFIG
 ------
 1. Replace your icons (apple-touch-icon-57x57.png, apple-touch-icon-60x60.png, favicon-32x32.png etc)
 2. Replace your logos in /images
+3. Ignore local composer.json: `git update-index --assume-unchanged composer.json`
 
 ## Symlink Help
 For Linux
