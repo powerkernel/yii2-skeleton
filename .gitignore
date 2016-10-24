@@ -38,6 +38,7 @@ data
 frontend/web/backend
 composer.lock
 upload.zip
+upload-full.zip
 
 # favicon
 frontend/web/android-chrome-192x192.png

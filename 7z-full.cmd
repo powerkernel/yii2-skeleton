@@ -1,0 +1,1 @@
+"C:\Program Files\7-Zip\7z.exe" a upload-full.zip * -r -x!.git -x!.idea -x!data -x!ssl -x!docs -x!grunt-email-workflow -x!backend\web\assets\* -x!backend\runtime\* -x!frontend\web\assets\* -x!frontend\web\backend -x!frontend\runtime\* -x!console\runtime\*
