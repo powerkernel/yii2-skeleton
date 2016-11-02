@@ -31,7 +31,7 @@
         "modernkernel/yii2-slugify": "*",
         "modernkernel/yii2-fineuploader": "*",
         "modernkernel/yii2-tinymce": "*",
-        "modernkernel/yii2-photoswipe": "*",
+        "modernkernel/yii2-photoswipe": "*"
 
     },
     "repositories": [
