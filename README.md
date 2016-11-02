@@ -105,8 +105,8 @@ CONFIG
 ------
 1. Replace your icons (apple-touch-icon-57x57.png, apple-touch-icon-60x60.png, favicon-32x32.png etc)
 2. Replace your logos in /images
-3. Ignore local composer.json: `git update-index --assume-unchanged composer.json`
-4. Ignore local composer.json: `git update-index --assume-unchanged frontend/views/site/index.php`
+3. Ignore local composer.json: `git update-index --skip-worktree composer.json`
+4. Ignore local composer.json: `git update-index --skip-worktree frontend/views/site/index.php`
 
 ## Symlink Help
 For Linux
