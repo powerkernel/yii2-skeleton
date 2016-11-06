@@ -63,14 +63,14 @@ class SideMenu extends Widget
     protected function accountItems(){
         return [
             ['label'=>Yii::t('app', 'Personal settings')],
-            ['icon' => 'circle-o', 'label' => Yii::t('app', 'Profile'), 'url' => ['/account/index'], 'active' => Core::checkMCA(null, 'account', 'index')],
-            ['icon' => 'circle-o', 'label' => Yii::t('app', 'Email'), 'url' => ['/account/email'], 'active' => Core::checkMCA(null, 'account', 'email')],
-            ['icon' => 'circle-o', 'label' => Yii::t('app', 'Password'), 'url' => ['/account/password'], 'active' => Core::checkMCA(null, 'account', 'password')],
-            ['icon' => 'circle-o', 'label' => Yii::t('app', 'Linked Accounts'), 'url' => ['/account/linked'], 'active' => Core::checkMCA(null, 'account', 'linked')],
+            ['icon' => 'user', 'label' => Yii::t('app', 'Profile'), 'url' => ['/account/index'], 'active' => Core::checkMCA(null, 'account', 'index')],
+            ['icon' => 'envelope', 'label' => Yii::t('app', 'Email'), 'url' => ['/account/email'], 'active' => Core::checkMCA(null, 'account', 'email')],
+            ['icon' => 'lock', 'label' => Yii::t('app', 'Password'), 'url' => ['/account/password'], 'active' => Core::checkMCA(null, 'account', 'password')],
+            ['icon' => 'puzzle-piece', 'label' => Yii::t('app', 'Linked Accounts'), 'url' => ['/account/linked'], 'active' => Core::checkMCA(null, 'account', 'linked')],
 
-            ['label'=>Yii::t('app', 'Blog')],
-            ['icon' => 'circle-o', 'label' => Yii::t('app', 'My Blog'), 'url' => ['/blog/manage'], 'active' => Core::checkMCA(null, 'blog', 'manage')],
-            ['icon' => 'circle-o', 'label' => Yii::t('app', 'Write'), 'url' => ['/blog/create'], 'active' => Core::checkMCA(null, 'blog', 'create')],
+            ['label'=>Yii::t('app', 'Blog'), 'enabled'=>Yii::$app->params['enableBlog']],
+            ['icon' => 'rss-square', 'label' => Yii::t('app', 'My Blog'), 'url' => ['/blog/manage'], 'active' => Core::checkMCA(null, 'blog', 'manage'), 'enabled'=>Yii::$app->params['enableBlog']],
+            ['icon' => 'pencil-square', 'label' => Yii::t('app', 'Write'), 'url' => ['/blog/create'], 'active' => Core::checkMCA(null, 'blog', 'create'), 'enabled'=>Yii::$app->params['enableBlog']],
         ];
 
 
