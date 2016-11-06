@@ -97,6 +97,9 @@ class SettingController extends BackendController
         return $this->redirect(['index']);
     }
 
+    /**
+     * update settings
+     */
     public static function updateSetting(){
         $s=[
             /* General */
@@ -115,7 +118,7 @@ class SettingController extends BackendController
             ['key'=>'blogTitle',        'value'=>'My Blog',                 'title'=>'Title',           'description'=>'Blog page title',       'group'=>'Blog', 'type'=>'textInput', 'data'=>json_encode(Core::getYesNoOption()), 'default'=>'My Blog',                'rules'=>json_encode(['required'=>[]])],
             ['key'=>'blogDesc',         'value'=>'Welcome to my world.',    'title'=>'Description',     'description'=>'Blog page description', 'group'=>'Blog', 'type'=>'textInput', 'data'=>json_encode(Core::getYesNoOption()), 'default'=>'Welcome to my world.',   'rules'=>json_encode(['required'=>[]])],
             ['key'=>'blogKeywords',     'value'=>'blog, my blog',           'title'=>'Keywords',        'description'=>'Blog page keywords',    'group'=>'Blog', 'type'=>'textInput', 'data'=>json_encode(Core::getYesNoOption()), 'default'=>'blog, my blog',          'rules'=>json_encode(['required'=>[]])],
-            ['key'=>'blogThumbnail',    'value'=>'',                        'title'=>'Thumbnail Image', 'description'=>'Blog page thumbnail',   'group'=>'Blog', 'type'=>'textInput', 'data'=>json_encode(Core::getYesNoOption()), 'default'=>'',                       'rules'=>json_encode(['required'=>[], 'url'=>[]])],
+            ['key'=>'blogThumbnail',    'value'=>'',                        'title'=>'Thumbnail Image', 'description'=>'Blog page thumbnail',   'group'=>'Blog', 'type'=>'textInput', 'data'=>json_encode(Core::getYesNoOption()), 'default'=>'',                       'rules'=>json_encode(['url'=>[]])],
 
             /* Mail */
             ['key'=>'outgoingMail', 'value'=>'youremail@domain.com', 'title'=>'Outgoing Mail', 'description'=>'Outgoing email address', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['required'=>[], 'email'=>[]])],
@@ -208,5 +211,17 @@ class SettingController extends BackendController
         } else {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
+    }
+
+    /**
+     * check if setting tab is enabled
+     * @param $tab
+     * @return bool
+     */
+    public function isTabEnable($tab){
+        if($tab=='Blog' && Yii::$app->params['enableBlog']===false){
+            return false;
+        }
+        return true;
     }
 }

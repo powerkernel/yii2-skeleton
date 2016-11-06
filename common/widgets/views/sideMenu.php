@@ -11,19 +11,20 @@ $this->registerJs('$(".nav-home").on("click", function(){window.location.replace
 <?php if(!empty($homeTitle) && !empty($homeUrl)):?>
 <li class="header nav-home" data-url="<?= $homeUrl ?>" style="cursor: pointer;"><?= $homeTitle ?></li>
 <?php endif;?>
-<?php foreach ($items as $item): ?>
 
+<?php foreach ($items as $item): ?>
+    <?php if(!isset($item['enabled']) or $item['enabled']===true):?>
         <?php if(!empty($item['url'])):?>
-            <li class="<?= empty($item['active']) ? '' : 'active' ?>">
-            <a href="<?= Yii::$app->urlManager->createUrl($item['url']) ?>">
-                <?= Icon::widget(['icon' => $item['icon'] ? $item['icon'] : 'link']) ?>
-                <span><?= $item['label'] ?></span>
-            </a>
-        </li>
-        <?php else :?>
-        <li class="header">
-            <?= $item['label'] ?>
-        </li>
-        <?php endif;?>
+        <li class="<?= empty($item['active']) ? '' : 'active' ?>">
+        <a href="<?= Yii::$app->urlManager->createUrl($item['url']) ?>">
+            <?= Icon::widget(['icon' => $item['icon'] ? $item['icon'] : 'link']) ?>
+            <span><?= $item['label'] ?></span>
+        </a>
     </li>
+    <?php else :?>
+    <li class="header">
+        <?= $item['label'] ?>
+    </li>
+    <?php endif;?>
+    <?php endif;?>
 <?php endforeach; ?>

@@ -68,13 +68,16 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
             <?php foreach ($tabs as $i => $tab): ?>
+                <?php if($this->context->isTabEnable($tab)):?>
                 <li class="<?= $i == 0 ? 'active' : '' ?>">
                     <a href="#<?= $tab ?>" data-toggle="tab" aria-expanded="<?= $i == 0 ? 'true' : 'false' ?>"><?= $tab ?></a>
                 </li>
+                <?php endif;?>
             <?php endforeach; ?>
         </ul>
         <div class="tab-content">
             <?php foreach ($tabs as $i => $tab): ?>
+            <?php if($this->context->isTabEnable($tab)):?>
                 <div class="tab-pane <?= $i == 0 ? 'active' : '' ?>" id="<?= $tab ?>">
                     <?php foreach ($settings[$tab] as $key => $setting): ?>
 
@@ -98,6 +101,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
 
                     <?php endforeach; ?>
                 </div>
+            <?php endif;?>
             <?php endforeach; ?>
             <div><hr /></div>
             <div class="form-group">

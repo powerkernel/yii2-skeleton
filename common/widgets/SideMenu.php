@@ -47,7 +47,7 @@ class SideMenu extends Widget
         return [
             ['icon' => 'users', 'label' => Yii::t('app','Users'), 'url' => ['/account/index'], 'active' => Core::checkMCA(null, 'account', '*')],
             ['icon' => 'key', 'label' => Yii::t('app','RBAC'), 'url' => ['/rbac/index'], 'active' => Core::checkMCA(null, 'rbac', '*')],
-            ['icon' => 'edit', 'label' => Yii::t('app','Blog'), 'url' => ['/blog/index'], 'active' => Core::checkMCA(null, 'blog', '*')],
+            ['icon' => 'edit', 'label' => Yii::t('app','Blog'), 'url' => ['/blog/index'], 'active' => Core::checkMCA(null, 'blog', '*'), 'enabled'=>Yii::$app->params['enableBlog']],
             ['icon' => 'files-o', 'label' => Yii::t('app','Pages'), 'url' => ['/page/index'], 'active' => Core::checkMCA(null, 'page', '*')],
             ['icon' => 'list', 'label' => Yii::t('app','Menu'), 'url' => ['/menu/index'], 'active' => Core::checkMCA(null, 'menu', '*')],
             ['icon' => 'cog', 'label' => Yii::t('app','Settings'), 'url' => ['/setting/index'], 'active' => Core::checkMCA(null, 'setting', '*')],
