@@ -44,7 +44,7 @@ class SideMenu extends Widget
      * @return array
      */
     protected function adminItems(){
-        return [
+        $default= [
             ['icon' => 'users', 'label' => Yii::t('app','Users'), 'url' => ['/account/index'], 'active' => Core::checkMCA(null, 'account', '*')],
             ['icon' => 'key', 'label' => Yii::t('app','RBAC'), 'url' => ['/rbac/index'], 'active' => Core::checkMCA(null, 'rbac', '*')],
             ['icon' => 'edit', 'label' => Yii::t('app','Blog'), 'url' => ['/blog/index'], 'active' => Core::checkMCA(null, 'blog', '*'), 'enabled'=>Yii::$app->params['enableBlog']],
@@ -54,6 +54,41 @@ class SideMenu extends Widget
             ['icon' => 'language', 'label' => Yii::t('app','Languages'), 'url' => ['/i18n/index'], 'active' => Core::checkMCA(null, 'i18n', '*')],
             ['icon' => 'gears', 'label' => Yii::t('app','Services'), 'url' => ['/service/index'], 'active' => Core::checkMCA(null, 'service', '*')],
         ];
+        return array_merge($default, $this->loadModuleItem('admin'));
+    }
+
+    /**
+     * load module menu
+     * @param $type
+     * @return array
+     */
+    protected function loadModuleItem($type){
+        $menuFilePath='memberMenu.php';
+        if($type=='admin'){
+            $menuFilePath = 'adminMenu.php';
+        }
+        $vendors=[
+            'harrytang',
+            'modernkernel'
+        ];
+        $items=[];
+
+        foreach($vendors as $vendor){
+            $modules = scandir(Yii::$app->vendorPath . DIRECTORY_SEPARATOR . $vendor);
+            foreach ($modules as $module) {
+                if (!preg_match('/[\.]+/', $module)) {
+                    $moduleMenuFile = \Yii::$app->vendorPath . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $menuFilePath;
+                    if (is_file($moduleMenuFile)) {
+                        $menu = require($moduleMenuFile);
+                        if(is_array($menu)){
+                            $items=array_merge($items,$menu);
+                        }
+                    }
+                }
+            }
+        }
+
+        return $items;
     }
 
     /**

@@ -16,15 +16,15 @@ $this->registerJs('$(".nav-home").on("click", function(){window.location.replace
     <?php if(!isset($item['enabled']) or $item['enabled']===true):?>
         <?php if(!empty($item['url'])):?>
         <li class="<?= empty($item['active']) ? '' : 'active' ?>">
-        <a href="<?= Yii::$app->urlManager->createUrl($item['url']) ?>">
-            <?= Icon::widget(['icon' => $item['icon'] ? $item['icon'] : 'link']) ?>
-            <span><?= $item['label'] ?></span>
-        </a>
-    </li>
-    <?php else :?>
-    <li class="header">
-        <?= $item['label'] ?>
-    </li>
-    <?php endif;?>
+            <a href="<?= Yii::$app->urlManager->createUrl($item['url']) ?>">
+                <?= Icon::widget(['icon' => $item['icon'] ? $item['icon'] : 'link']) ?>
+                <span><?= $item['label'] ?></span>
+            </a>
+        </li>
+        <?php else :?>
+        <li class="header">
+            <?= $item['label'] ?>
+        </li>
+        <?php endif;?>
     <?php endif;?>
 <?php endforeach; ?>

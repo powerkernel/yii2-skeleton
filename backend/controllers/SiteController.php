@@ -10,7 +10,6 @@ use Yii;
 class SiteController extends BackendController
 {
 
-
     /**
      * @inheritdoc
      */
@@ -72,5 +71,20 @@ class SiteController extends BackendController
     {
         Yii::$app->user->logout();
         return $this->goHome();
+    }
+
+    /**
+     * toggle sidebar
+     * @param $classname string
+     */
+    public function actionToggleSidebar($classname){
+        if(Yii::$app->request->isAjax){
+            if(preg_match('/sidebar-collapse/', $classname)){
+                Yii::$app->session['sidebar-collapse']=false;
+            }
+            else {
+                Yii::$app->session['sidebar-collapse']=true;
+            }
+        }
     }
 }
