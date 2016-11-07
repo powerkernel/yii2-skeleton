@@ -21,6 +21,13 @@ return [
                         $event->sender->insertMissingTranslation($event);
                     },
                 ],
+                'main' => [
+                    'class' => 'common\components\DbMessageSource',
+                    //'basePath'=>$this->basePath.DIRECTORY_SEPARATOR.'messages',
+                    'on missingTranslation' => function ($event) {
+                        $event->sender->insertMissingTranslation($event);
+                    },
+                ],
             ],
         ],
         'authClientCollection' => [
