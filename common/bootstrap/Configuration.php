@@ -78,10 +78,12 @@ EOB;
      */
     protected function configHsts()
     {
-        if (Yii::$app->request->isSecureConnection) {
-            $response = Yii::$app->response;
-            $response->headers->set('Strict-Transport-Security', 'max-age=15552000');
-            $response->headers->set('x-content-type-options', 'nosniff');
+        if(!is_a(Yii::$app, 'yii\console\Application')){
+            if (Yii::$app->request->isSecureConnection) {
+                $response = Yii::$app->response;
+                $response->headers->set('Strict-Transport-Security', 'max-age=15552000');
+                $response->headers->set('x-content-type-options', 'nosniff');
+            }
         }
     }
 
