@@ -147,7 +147,15 @@ class PageData extends ActiveRecord
         /* text */
         $this->title=ucwords($this->title);
         $this->description=ucfirst($this->description);
-        $this->content=HtmlPurifier::process($this->content);
+        /* clean html */
+        $config=[
+            'HTML.MaxImgLength'=>null,
+            'CSS.MaxImgLength'=>null,
+            'HTML.Trusted'=>true,
+            'Filter.YouTube'=>true,
+            //'CSS.AllowedProperties'=>'style'
+        ];
+        $this->content = HtmlPurifier::process($this->content, $config);
 
         if(!empty(Yii::$app->user)){
             if(empty($this->created_by)){
