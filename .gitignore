@@ -33,9 +33,8 @@ phpunit.phar
 /.vagrant
 
 # misc
-ssl
-data
+.ssl
+.data
 frontend/web/backend
 composer.lock
 upload.zip
-upload-full.zip
