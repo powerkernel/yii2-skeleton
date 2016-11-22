@@ -37,7 +37,8 @@ class LanguageSelection extends Widget
     public function run()
     {
         //$currentLang=Yii::$app->language;
-        $langs = Message::getLocaleList();
+        $langs = array_reverse(Message::getLocaleList());
+
         echo Html::beginTag('div', ['class'=>'language-selection']);
         foreach($langs as $code=>$lang){
             $c=strtolower(substr($code, -2));
