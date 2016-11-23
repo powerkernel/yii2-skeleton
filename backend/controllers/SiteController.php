@@ -41,15 +41,14 @@ class SiteController extends BackendController
             ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/images/logo-mini.svg'],
             ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/images/logo-lg.svg'],
 
-            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/android-chrome-192x192.png'],
-            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/android-chrome-512x512.png'],
-            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/apple-touch-icon.png'],
-            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/favicon-16x16.png'],
-            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/favicon-32x32.png'],
-            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/mstile-150x150.png'],
-            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/safari-pinned-tab.svg'],
+            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/icons/android-chrome-192x192.png'],
+            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/icons/android-chrome-512x512.png'],
+            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/icons/apple-touch-icon.png'],
+            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/icons/favicon-16x16.png'],
+            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/icons/favicon-32x32.png'],
+            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/icons/mstile-150x150.png'],
+            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/icons/safari-pinned-tab.svg'],
             ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/favicon.ico'],
-
         ];
 
         foreach($files as $i=>$file){

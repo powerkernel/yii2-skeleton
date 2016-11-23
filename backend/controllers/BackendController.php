@@ -32,6 +32,15 @@ class BackendController extends MainController
                         'allow' => true,
                         'roles' => ['admin'],
                     ],
+                    [
+                        'actions' => ['logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['error'],
+                        'allow' => true,
+                    ],
                 ],
             ],
 
