@@ -1,1 +1,1 @@
-"C:\Program Files\7-Zip\7z.exe" a upload.zip * -r -x!.git -x!.idea -x!.data -x!.ssl
+"C:\Program Files\7-Zip\7z.exe" a upload.zip * -r -x!.git -x!.idea -x!.data -x!.ssl -x!localhost.php

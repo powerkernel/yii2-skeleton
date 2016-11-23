@@ -26,13 +26,13 @@ class Favicon extends Widget
         $baseUrl = Yii::$app->request->baseUrl;
         $themeColor = Setting::getValue('androidThemeColor');
         $data = <<<EOB
-<link rel="apple-touch-icon" sizes="180x180" href="{$baseUrl}/icons/apple-touch-icon.png">
-<link rel="icon" type="image/png" href="{$baseUrl}/icons/favicon-32x32.png" sizes="32x32">
-<link rel="icon" type="image/png" href="{$baseUrl}/icons/favicon-16x16.png" sizes="16x16">
-<link rel="manifest" href="{$baseUrl}/icons/manifest.json">
-<link rel="mask-icon" href="{$baseUrl}/icons/safari-pinned-tab.svg" color="{$themeColor}">
+<link rel="apple-touch-icon" sizes="180x180" href="{$baseUrl}/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" href="{$baseUrl}/favicon/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="{$baseUrl}/favicon/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="{$baseUrl}/favicon/manifest.json">
+<link rel="mask-icon" href="{$baseUrl}/favicon/safari-pinned-tab.svg" color="{$themeColor}">
 <meta name="theme-color" content="{$themeColor}">
-<link rel="shortcut icon" href="{$baseUrl}/icons/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="{$baseUrl}/favicon.ico" type="image/x-icon" />
 EOB;
         return $data;
 
