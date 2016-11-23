@@ -31,11 +31,9 @@ class Favicon extends Widget
 <link rel="icon" type="image/png" href="{$baseUrl}/favicon/favicon-16x16.png" sizes="16x16">
 <link rel="manifest" href="{$baseUrl}/favicon/manifest.json">
 <link rel="mask-icon" href="{$baseUrl}/favicon/safari-pinned-tab.svg" color="{$themeColor}">
+<meta name="msapplication-config" content="{$baseUrl}/favicon/browserconfig.xml">
 <meta name="theme-color" content="{$themeColor}">
-<link rel="shortcut icon" href="{$baseUrl}/favicon.ico" type="image/x-icon" />
 EOB;
         return $data;
-
-
     }
 }

@@ -1,1 +1,1 @@
-"C:\Program Files\7-Zip\7z.exe" a upload.zip * -r -x!.git -x!.idea -x!.data -x!.ssl -x!localhost.php
+"C:\Program Files\7-Zip\7z.exe" a upload.zip * -r -x!.git -x!.idea -x!.data -x!.ssl -x!localhost.php -x!index-test.php -x!backend\web\images -x!backend\web\favicon
