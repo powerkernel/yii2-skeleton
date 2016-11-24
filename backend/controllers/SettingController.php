@@ -158,11 +158,17 @@ class SettingController extends BackendController
             ['key'=>'googleCustomSearch',   'value'=>'', 'title'=>'Google Custom Search',   'description'=>'CX code: 123456789012345678901:abcdefjh123',    'group'=>'Enhancements', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
             ['key'=>'googleAnalytics',      'value'=>'', 'title'=>'Google Analytics',       'description'=>'Tracking ID: UA-1111111-22',                    'group'=>'Enhancements', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
             ['key'=>'disqus',               'value'=>'', 'title'=>'Disqus',                 'description'=>'Disqus shortname',                              'group'=>'Enhancements', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
-            ['key'=>'adsense',              'value'=>'', 'title'=>'Google Adsense',         'description'=>'Client ID: ca-pub-1234567890123456',            'group'=>'Enhancements', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
-            ['key'=>'amzAds',               'value'=>'', 'title'=>'Amazon Ads',             'description'=>'Native Ad Code: javascript src',                'group'=>'Enhancements', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
+
+
             ['key'=>'zopim',                'value'=>'', 'title'=>'Zopim Chat',             'description'=>'Zopim ID: 5d8f1e3c8f77c45608ada76d51256aad',    'group'=>'Enhancements', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
             ['key'=>'addthis',              'value'=>'', 'title'=>'Addthis',                'description'=>'Addthis ID: ra-123a1234567890b1',               'group'=>'Enhancements', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
             ['key'=>'headJs',               'value'=>'', 'title'=>'Header JS',              'description'=>'Header Javascript',                             'group'=>'Enhancements', 'type'=>'textarea',  'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
+
+            /* Ads */
+            ['key'=>'adsense',              'value'=>'', 'title'=>'Google Adsense',         'description'=>'Client ID: ca-pub-1234567890123456',                    'group'=>'Ads', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
+            ['key'=>'amzTracking',          'value'=>'', 'title'=>'Amazon Tracking ID',     'description'=>'Tracking ID: yourname-11',                              'group'=>'Ads', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
+            ['key'=>'amzAds',               'value'=>'', 'title'=>'Amazon Native Ads',      'description'=>'Ad Instance ID: 12abc1ab-ab12-1234-a123-1abcd123456a',  'group'=>'Ads', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
+            ['key'=>'amzSearchAds',         'value'=>'', 'title'=>'Amazon Search Ads',      'description'=>'Link ID: 12abc1ab-ab12-1234-a123-1abcd123456a',  'group'=>'Ads', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],
 
             /* System */
             ['key'=>'languageUrlCode', 'value'=>'0', 'title'=>'Language URL', 'description'=>'Include language code in URL', 'group'=>'System', 'type'=>'dropDownList', 'data'=>json_encode(Core::getYesNoOption()), 'default'=>'0', 'rules'=>json_encode(['required'=>[], 'boolean'=>[]])],

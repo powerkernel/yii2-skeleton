@@ -5,8 +5,9 @@
  * @copyright Copyright (c) 2016 Modern Kernel
  */
 
-/* @var $code string */
+/* @var $tracking string */
+/* @var $nativeAds string */
 ?>
 <div class="widget-amz-ads">
-    <script src="<?= $code ?>"></script>
+    <script src="//z-na.amazon-adsystem.com/widgets/onejs?MarketPlace=US&adInstanceId=<?= $nativeAds ?>&storeId=<?= $tracking ?>"></script>
 </div>
