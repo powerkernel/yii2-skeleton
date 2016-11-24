@@ -11,9 +11,8 @@ use frontend\widgets\Adsense;
     <div class="box-header with-border">
         <h3 class="box-title"><?= Yii::t('app', 'Advertisement') ?></h3>
     </div>
-
     <div class="box-body no-no-padding">
-        <?= Adsense::widget() ?>
+        <?php //Adsense::widget() ?>
         <?= \frontend\widgets\AmzAds::widget() ?>
     </div>
 </div>
