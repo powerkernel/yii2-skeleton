@@ -14,5 +14,6 @@ use frontend\widgets\Adsense;
 
     <div class="box-body no-no-padding">
         <?= Adsense::widget() ?>
+        <?= \frontend\widgets\AmzAds::widget() ?>
     </div>
 </div>

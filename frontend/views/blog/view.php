@@ -56,27 +56,33 @@ $this->registerCss($css);
             <div class="box box-primary">
                 <div class="box-body blog-body">
                     <div class="blog-content"><?= $model->content ?></div>
-                    <?php if(Yii::$app->user->can('admin')):?>
-                    <div class="well well-sm">
-                        <a target="_blank" class="btn btn-xs bg-purple" href="https://developers.facebook.com/tools/debug/og/object/?q=<?= $model->getViewUrl(true)?>">Open Graph Object Debugger</a>
-                        <a target="_blank" class="btn btn-xs bg-purple" href="https://search.google.com/structured-data/testing-tool#url=<?= $model->getViewUrl(true)?>">Structured Data Testing</a>
-                        <a target="_blank" class="btn btn-xs bg-purple" href="https://cards-dev.twitter.com/validator">Twitter Card validator</a>
-                        <a class="btn btn-xs btn-primary" href="<?= Yii::$app->urlManager->createUrl(['/blog/update', 'id'=>$model->id]) ?>"><?= Yii::t('app', 'Edit') ?></a>
-                    </div>
-                    <?php endif;?>
+                    <?php if (Yii::$app->user->can('admin')): ?>
+                        <div class="well well-sm">
+                            <a target="_blank" class="btn btn-xs bg-purple"
+                               href="https://developers.facebook.com/tools/debug/og/object/?q=<?= $model->getViewUrl(true) ?>">Open
+                                Graph Object Debugger</a>
+                            <a target="_blank" class="btn btn-xs bg-purple"
+                               href="https://search.google.com/structured-data/testing-tool#url=<?= $model->getViewUrl(true) ?>">Structured
+                                Data Testing</a>
+                            <a target="_blank" class="btn btn-xs bg-purple"
+                               href="https://cards-dev.twitter.com/validator">Twitter Card validator</a>
+                            <a class="btn btn-xs btn-primary"
+                               href="<?= Yii::$app->urlManager->createUrl(['/blog/update', 'id' => $model->id]) ?>"><?= Yii::t('app', 'Edit') ?></a>
+                        </div>
+                    <?php endif; ?>
                     <?= Adsense::widget() ?>
                 </div>
                 <div class="box-footer">
                     <div class="pull-left">
                         <?= LikeButton::widget([
-                            'href'=>$model->getViewUrl(true),
-                            'layout'=>'button_count',
+                            'href' => $model->getViewUrl(true),
+                            'layout' => 'button_count',
                         ]) ?>
 
                         <?=
                         PlusOneButton::widget([
-                            'href'=>$model->getViewUrl(true),
-                            'size'=>'medium'
+                            'href' => $model->getViewUrl(true),
+                            'size' => 'medium'
                         ])
                         ?>
 
@@ -102,17 +108,17 @@ $this->registerCss($css);
 
         </div>
         <div class="col-md-4">
-            <?= \frontend\widgets\BlogPost::widget(['type' => 'mostViewed']) ?>
-            <?= \frontend\widgets\AdsBox::widget() ?>
-            <?= \frontend\widgets\BlogPost::widget(['type' => 'latest']) ?>
+            <div class="hidden-xs hidden-sm"><?= \frontend\widgets\BlogPost::widget(['type' => 'mostViewed']) ?></div>
+            <div><?= \frontend\widgets\AdsBox::widget() ?></div>
+            <div><?= \frontend\widgets\BlogPost::widget(['type' => 'latest']) ?></div>
         </div>
     </div>
     <?php
     echo \modernkernel\photoswipe\Modal::widget([
-        'selector'=>'.blog-content img',
-        'images'=>$model->getImages(),
-        'clientOptions'=>[
-            'shareEl'=>false,
+        'selector' => '.blog-content img',
+        'images' => $model->getImages(),
+        'clientOptions' => [
+            'shareEl' => false,
         ]
     ]);
     ?>
