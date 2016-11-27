@@ -18,20 +18,20 @@
         "yiisoft/yii2-jui": "~2.0.0",
         "yiisoft/yii2-authclient": "~2.1.0",
 
-        "himiklab/yii2-recaptcha-widget": "*",
-        "conquer/select2": "*",
+        "himiklab/yii2-recaptcha-widget": ">=1.0.5",
+        "conquer/select2": ">=1.4.3",
         "omnilight/yii2-scheduling": "*",
         "nirvana-msu/yii2-jsonld-helper": "1.0.*@dev",
         "codemix/yii2-localeurls":"*",
-        "kotchuprik/yii2-sortable-widgets": "*",
+        "kotchuprik/yii2-sortable-widgets": ">=v2.2.2",
 
-        "modernkernel/yii2-bootstrapsocial": "*",
+        "modernkernel/yii2-bootstrapsocial": ">=1.0.2",
         "modernkernel/yii2-theme-adminlte": "@dev",
-        "modernkernel/yii2-jeditable": "*",
-        "modernkernel/yii2-slugify": "*",
-        "modernkernel/yii2-fineuploader": "*",
-        "modernkernel/yii2-tinymce": "*",
-        "modernkernel/yii2-photoswipe": "*"
+        "modernkernel/yii2-jeditable": ">=1.1.1",
+        "modernkernel/yii2-slugify": ">=1.0.0",
+        "modernkernel/yii2-fineuploader": ">=2.0.1",
+        "modernkernel/yii2-tinymce": ">=2.0.2",
+        "modernkernel/yii2-photoswipe": ">=1.1.2"
 
     },
     "repositories": [
