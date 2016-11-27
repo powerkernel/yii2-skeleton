@@ -9,7 +9,7 @@
         "issues": "https://github.com/modernkernel/yii2-skeleton/issues?state=open",
         "source": "https://github.com/modernkernel/yii2-skeleton"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
         "yiisoft/yii2": ">=2.0.6",
