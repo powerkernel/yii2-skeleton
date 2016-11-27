@@ -25,13 +25,13 @@
         "codemix/yii2-localeurls":"*",
         "kotchuprik/yii2-sortable-widgets": ">=2.2.2",
 
-        "modernkernel/yii2-bootstrapsocial": ">=1.0.2",
+        "modernkernel/yii2-bootstrapsocial": "*",
         "modernkernel/yii2-theme-adminlte": "@dev",
-        "modernkernel/yii2-jeditable": ">=1.1.1",
-        "modernkernel/yii2-slugify": ">=1.0.0",
-        "modernkernel/yii2-fineuploader": ">=2.0.1",
-        "modernkernel/yii2-tinymce": ">=2.0.2",
-        "modernkernel/yii2-photoswipe": ">=1.1.2"
+        "modernkernel/yii2-jeditable": "*",
+        "modernkernel/yii2-slugify": "*",
+        "modernkernel/yii2-fineuploader": "*",
+        "modernkernel/yii2-tinymce": "*",
+        "modernkernel/yii2-photoswipe": "*"
 
     },
     "repositories": [
