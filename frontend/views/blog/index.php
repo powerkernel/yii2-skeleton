@@ -36,9 +36,9 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
             ]) ?>
         </div>
         <div class="col-md-4">
-            <?= \frontend\widgets\BlogPost::widget(['type' => 'mostViewed']) ?>
-            <?= \frontend\widgets\AdsBox::widget() ?>
-            <?= \frontend\widgets\BlogPost::widget(['type' => 'random']) ?>
+            <div class="hidden-xs hidden-sm"><?= \frontend\widgets\BlogPost::widget(['type' => 'mostViewed']) ?></div>
+            <div><?= \frontend\widgets\AdsBox::widget() ?></div>
+            <div><?= \frontend\widgets\BlogPost::widget(['type' => 'random']) ?></div>
         </div>
     </div>
 </div>
