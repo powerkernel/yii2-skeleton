@@ -23,7 +23,7 @@
         "omnilight/yii2-scheduling": "*",
         "nirvana-msu/yii2-jsonld-helper": "1.0.*@dev",
         "codemix/yii2-localeurls":"*",
-        "kotchuprik/yii2-sortable-widgets": ">=v2.2.2",
+        "kotchuprik/yii2-sortable-widgets": ">=2.2.2",
 
         "modernkernel/yii2-bootstrapsocial": ">=1.0.2",
         "modernkernel/yii2-theme-adminlte": "@dev",
