@@ -74,14 +74,16 @@ class SideMenu extends Widget
         $items=[];
 
         foreach($vendors as $vendor){
-            $modules = scandir(Yii::$app->vendorPath . DIRECTORY_SEPARATOR . $vendor);
-            foreach ($modules as $module) {
-                if (!preg_match('/[\.]+/', $module)) {
-                    $moduleMenuFile = \Yii::$app->vendorPath . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $menuFilePath;
-                    if (is_file($moduleMenuFile)) {
-                        $menu = require($moduleMenuFile);
-                        if(is_array($menu)){
-                            $items=array_merge($items,$menu);
+            if(file_exists(Yii::$app->vendorPath . DIRECTORY_SEPARATOR . $vendor)){
+                $modules = scandir(Yii::$app->vendorPath . DIRECTORY_SEPARATOR . $vendor);
+                foreach ($modules as $module) {
+                    if (!preg_match('/[\.]+/', $module)) {
+                        $moduleMenuFile = \Yii::$app->vendorPath . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $menuFilePath;
+                        if (is_file($moduleMenuFile)) {
+                            $menu = require($moduleMenuFile);
+                            if(is_array($menu)){
+                                $items=array_merge($items,$menu);
+                            }
                         }
                     }
                 }
