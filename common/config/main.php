@@ -50,6 +50,7 @@ return [
         'configuration'=>['class'=>'common\bootstrap\Configuration'],
         'assetManager' => [
             'class' => 'yii\web\AssetManager',
+            'linkAssets' => true,
             'bundles' => [
                 'yii\web\JqueryAsset' => [
                     'js' => [
