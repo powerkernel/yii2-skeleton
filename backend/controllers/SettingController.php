@@ -121,6 +121,7 @@ class SettingController extends BackendController
             ['key'=>'blogThumbnail',    'value'=>'',                        'title'=>'Thumbnail Image', 'description'=>'Blog page thumbnail',   'group'=>'Blog', 'type'=>'textInput', 'data'=>json_encode(Core::getYesNoOption()), 'default'=>'',                       'rules'=>json_encode(['url'=>[]])],
 
             /* Mail */
+            ['key'=>'adminMail', 'value'=>'youremail@domain.com', 'title'=>'Administrator\'s Mail', 'description'=>'Admin email address', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['required'=>[], 'email'=>[]])],
             ['key'=>'outgoingMail', 'value'=>'youremail@domain.com', 'title'=>'Outgoing Mail', 'description'=>'Outgoing email address', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['required'=>[], 'email'=>[]])],
             ['key'=>'mailProtocol', 'value'=>'php', 'title'=>'Mail Protocol', 'description'=>'Outgoing email protocol', 'group'=>'Mail', 'type'=>'dropDownList', 'data'=>json_encode(['php'=>'php', 'smtp'=>'smtp']), 'default'=>'php', 'rules'=>json_encode(['required'=>[]])],
             ['key'=>'smtpHost', 'value'=>'', 'title'=>'SMTP Host', 'description'=>'SMTP host', 'group'=>'Mail', 'type'=>'textInput', 'data'=>'[]', 'default'=>'', 'rules'=>json_encode(['safe'=>[], 'string'=>[]])],

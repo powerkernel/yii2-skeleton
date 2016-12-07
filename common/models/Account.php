@@ -248,6 +248,10 @@ class Account extends ActiveRecord implements IdentityInterface
      */
     protected function sendMailNewUser()
     {
+
+        Yii::$app->mailer->setViewPath(Yii::getAlias('@common'). '/mail');
+        //Yii::$app->mailer->htmlLayout = '@common/mail/layouts/html';
+
         $subject = Yii::t('app', 'Welcome to {APP_NAME}', ['APP_NAME' => Yii::$app->name]);
         return Yii::$app->mailer
             //->compose('newUser', ['user' => $this])

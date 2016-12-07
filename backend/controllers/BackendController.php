@@ -43,7 +43,6 @@ class BackendController extends MainController
                     ],
                 ],
             ],
-
         ];
     }
 }
