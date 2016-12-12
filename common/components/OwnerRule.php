@@ -25,6 +25,17 @@ class OwnerRule extends Rule
      */
     public function execute($user, $item, $params)
     {
-        return isset($params['model']) ? $params['model']->created_by  == $user : false;
+
+        if (isset($params['model'])) {
+            $ids=[];
+            if (!empty($params['model']->created_by)) {
+                $ids[] = $params['model']->created_by;
+            }
+            if (!empty($params['model']->id_account)) {
+                $ids[] = $params['model']->id_account;
+            }
+            return in_array($user, $ids);
+        }
+        return false;
     }
 }

@@ -60,12 +60,14 @@ class BackendFilter extends Behavior
      */
     public function beforeAction($event)
     {
+
         $action = $event->action->id;
         if (in_array($action, $this->actions) or in_array('*', $this->actions)) {
             if (Yii::$app->id != 'app-backend') {
                 $event->isValid = false;
                 throw new NotFoundHttpException('The requested page does not exist.');
             }
+            $event->action->controller->layout = Yii::$app->view->theme->basePath . '/admin.php';
         }
         return $event->isValid;
     }
