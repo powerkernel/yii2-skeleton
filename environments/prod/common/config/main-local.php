@@ -11,6 +11,7 @@ return [
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',
+            'useFileTransport' => \common\Core::isLocalhost()
         ],
     ],
 ];
