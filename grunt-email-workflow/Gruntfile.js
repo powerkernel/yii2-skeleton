@@ -9,7 +9,7 @@ module.exports = function(grunt) {
       paths: {
         src:        'src',
         src_img:    'src/img',
-        dist:       '../common/mail',
+        dist:       grunt.option('dist'),
         dist_img:   'dist/img',
         preview:    'preview'
       },
