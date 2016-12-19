@@ -47,6 +47,12 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
         ],
+        'urlManagerFrontend' => [
+            'class' => 'common\components\LocaleUrl',
+            'baseUrl' => '/', // edit in main-local
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+        ],
         'configuration'=>['class'=>'common\bootstrap\Configuration'],
         'assetManager' => [
             'class' => 'yii\web\AssetManager',

@@ -415,7 +415,7 @@ class Account extends ActiveRecord implements IdentityInterface
         if (empty($token)) {
             return false;
         }
-        $expire = Setting::getValue('tokenExpiryTime');
+        $expire = (int)Setting::getValue('tokenExpiryTime');
         $parts = explode('_', $token);
         $timestamp = (int)end($parts);
         return $timestamp + $expire >= time();

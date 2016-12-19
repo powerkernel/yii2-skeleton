@@ -4,7 +4,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $user common\models\Account */
 
-$resetLink = Yii::$app->urlManager->createAbsoluteUrl(['/account/reset-confirm', 'token' => $user->password_reset_token]);
+$resetLink = Yii::$app->urlManagerFrontend->createAbsoluteUrl(['/account/reset-confirm', 'token' => $user->password_reset_token]);
 ?>
 <div itemscope="" itemtype="http://schema.org/EmailMessage">
     <div itemprop="potentialAction" itemscope="" itemtype="http://schema.org/ViewAction">

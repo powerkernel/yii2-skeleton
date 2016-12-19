@@ -3,7 +3,7 @@
 /* @var $this yii\web\View */
 /* @var $user common\models\Account */
 
-$confirmLink = Yii::$app->urlManager->createAbsoluteUrl(['/account/email-confirm', 'token' => $user->change_email_token]);
+$confirmLink = Yii::$app->urlFrontendManager->createAbsoluteUrl(['/account/email-confirm', 'token' => $user->change_email_token]);
 ?>
 <div itemscope="" itemtype="http://schema.org/EmailMessage">
     <div itemprop="potentialAction" itemscope="" itemtype="http://schema.org/ViewAction">

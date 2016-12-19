@@ -2,10 +2,9 @@
 use \yii\helpers\Html;
 
 /* @var $user \common\models\Account */
-$loginUrl = Yii::$app->urlManager->createAbsoluteUrl(Yii::$app->user->loginUrl);
-if (Yii::$app->id == 'app-backend') {
-    $loginUrl = Yii::$app->urlManagerFrontend->createAbsoluteUrl(['/account/login']);
-}
+
+$loginUrl = Yii::$app->urlManagerFrontend->createAbsoluteUrl(['/account/login']);
+
 ?>
 
 <?= Yii::t('app', 'Hello {USERNAME},', ['USERNAME' => Html::encode($user->fullname)]) ?>
