@@ -23,10 +23,13 @@ class LocaleUrl extends UrlManager
 //            }
 //        }
 //        $this->languages=$languages;
-        if(!Yii::$app->user->isGuest){
-            $this->enableLanguageDetection=false;
-            $this->enableLanguagePersistence=false;
+        if (is_a(Yii::$app, '\yii\web\Application')) {
+            if(!Yii::$app->user->isGuest){
+                $this->enableLanguageDetection=false;
+                $this->enableLanguagePersistence=false;
+            }
         }
+
         parent::init();
     }
 }

@@ -38,3 +38,4 @@ phpunit.phar
 frontend/web/backend
 composer.lock
 upload.zip
+grunt-email-workflow/Gruntfile.min.js
