@@ -270,10 +270,6 @@ EOB;
         }
 
         $enableDefaultLanguageUrlCode=(boolean)Setting::getValue('languageUrlCode');
-        if (is_a(Yii::$app, 'yii\console\Application')) {
-            $enableDefaultLanguageUrlCode=false;
-        }
-
         Yii::$container->set('common\components\LocaleUrl', [
             /* config */
             'languages' => array_keys(Message::getLocaleList()),
