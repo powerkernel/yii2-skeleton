@@ -10,7 +10,7 @@ use Yii;
  */
 class LocaleUrl extends UrlManager
 {
-    public $languages=['vi-VN', 'en-US'];
+    public $languages=['en-US'];
     /**
      * @throws \yii\base\InvalidConfigException
      */

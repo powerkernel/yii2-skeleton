@@ -269,12 +269,17 @@ EOB;
             }
         }
 
+        $enableDefaultLanguageUrlCode=(boolean)Setting::getValue('languageUrlCode');
+        if (is_a(Yii::$app, 'yii\console\Application')) {
+            $enableDefaultLanguageUrlCode=false;
+        }
+
         Yii::$container->set('common\components\LocaleUrl', [
             /* config */
             'languages' => array_keys(Message::getLocaleList()),
             'languageParam' => 'lang',
             'enableLanguagePersistence' => false, // default true
-            'enableDefaultLanguageUrlCode' => (boolean)Setting::getValue('languageUrlCode'),
+            'enableDefaultLanguageUrlCode' => $enableDefaultLanguageUrlCode,
             'enableLanguageDetection' => false, // default true
             'ignoreLanguageUrlPatterns' => $urlManager['ignoreLanguageUrlPatterns'],
             'rules' => $urlManager['rules']
