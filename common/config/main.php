@@ -52,6 +52,7 @@ return [
             'baseUrl' => '/', // edit in main-local
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'enableDefaultLanguageUrlCode'=>false
         ],
         'configuration'=>['class'=>'common\bootstrap\Configuration'],
         'assetManager' => [
