@@ -16,5 +16,12 @@ return [
             // for the mailer to send real emails.
             'useFileTransport' => \common\Core::isLocalhost()
         ],
+        'urlManagerFrontend' => [
+            'class' => 'common\components\LocaleUrl',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            //'hostInfo' => \common\Core::isLocalhost()?'https://domain.dev/':'https://domain.com/',
+            //'baseUrl' =>'',
+        ],
     ],
 ];
