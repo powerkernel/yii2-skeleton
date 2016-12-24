@@ -212,12 +212,14 @@ class SettingController extends BackendController
             }
         }
 
-        if(empty($unsave)){
-            Yii::$app->session->setFlash('success', Yii::t('app', 'All settings has been updated.'));
-        }
-        else {
-            Yii::$app->session->setFlash('warning', Yii::t('app', 'Some setting(s) can not be updated: {SETTINGS}', ['SETTINGS'=>implode(', ', $unsave)]));
-        }
+		if(is_a(Yii::$app, '\yii\web\Application')){
+			if(empty($unsave)){
+				Yii::$app->session->setFlash('success', Yii::t('app', 'All settings has been updated.'));
+			}
+			else {
+				Yii::$app->session->setFlash('warning', Yii::t('app', 'Some setting(s) can not be updated: {SETTINGS}', ['SETTINGS'=>implode(', ', $unsave)]));
+			}					
+		}
     }
 
     /**
