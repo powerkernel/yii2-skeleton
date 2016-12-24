@@ -24,4 +24,5 @@ return [
             //'baseUrl' =>'',
         ],
     ],
+    'modules' => [],
 ];

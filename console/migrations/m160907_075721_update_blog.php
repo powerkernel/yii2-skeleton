@@ -12,7 +12,7 @@ class m160907_075721_update_blog extends Migration
      */
     public function up()
     {
-        $this->addColumn('{{core_blog}}', 'thumbnail_square', $this->string()->after('thumbnail'));
+        $this->addColumn('{{%core_blog}}', 'thumbnail_square', $this->string()->after('thumbnail'));
     }
 
     /**
@@ -20,7 +20,7 @@ class m160907_075721_update_blog extends Migration
      */
     public function down()
     {
-        $this->dropColumn('{{core_blog}}', 'thumbnail_square');
+        $this->dropColumn('{{%core_blog}}', 'thumbnail_square');
     }
 
     /*
