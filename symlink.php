@@ -1,6 +1,7 @@
 <?php
 /**
  * Windows: run as administrator
+ * php symlink.php
  */
 
 $cssLink = __DIR__ . '/backend/web/css';
