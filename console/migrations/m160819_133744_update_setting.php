@@ -14,7 +14,7 @@ class m160819_133744_update_setting extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn('{{core_setting}}', 'key_order', $this->integer()->notNull()->defaultValue(0));
+        $this->addColumn('{{%core_setting}}', 'key_order', $this->integer()->notNull()->defaultValue(0));
         $this->insertSettings();
     }
 
@@ -23,7 +23,7 @@ class m160819_133744_update_setting extends Migration
      */
     public function safeDown()
     {
-        $this->dropColumn('{{core_setting}}', 'key_order');
+        $this->dropColumn('{{%core_setting}}', 'key_order');
     }
 
     protected function insertSettings(){

@@ -12,7 +12,7 @@ class m160818_132736_update_setting extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn('{{core_setting}}', 'title', $this->string()->after('value'));
+        $this->addColumn('{{%core_setting}}', 'title', $this->string()->after('value'));
     }
 
     /**
@@ -20,7 +20,7 @@ class m160818_132736_update_setting extends Migration
      */
     public function safeDown()
     {
-        $this->dropColumn('{{core_setting}}', 'title');
+        $this->dropColumn('{{%core_setting}}', 'title');
     }
 
     /*
