@@ -33,6 +33,8 @@ class Configuration extends Component
 
         Yii::$app->name = Setting::getValue('title');
 
+        $this->configApp();
+
         $this->configAuthClient();
 
         $this->configMailer();
@@ -49,6 +51,16 @@ class Configuration extends Component
 
         $this->configZopim();
 
+    }
+
+    /**
+     * config app
+     */
+    protected function configApp(){
+        $timezone = Setting::getValue('timezone');
+        $language = Setting::getValue('language');
+        Yii::$app->language = $language;
+        Yii::$app->setTimeZone($timezone);
     }
 
     /**
@@ -112,11 +124,6 @@ EOB;
                     Yii::$app->db->schema->refresh();
                     Yii::$app->user->logout();
                 }
-            } else {
-                $timezone = Setting::getValue('timezone');
-                $language = Setting::getValue('language');
-                Yii::$app->language = $language;
-                Yii::$app->setTimeZone($timezone);
             }
         }
     }
