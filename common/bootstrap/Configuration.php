@@ -276,7 +276,13 @@ EOB;
             }
         }
 
+        /* database value lang url */
         $enableDefaultLanguageUrlCode=(boolean)Setting::getValue('languageUrlCode');
+        /* disable if we are in backend */
+        if(Yii::$app->id=='app-backend'){
+            $enableDefaultLanguageUrlCode=false;
+        }
+
         Yii::$container->set('common\components\LocaleUrl', [
             /* config */
             'languages' => array_keys(Message::getLocaleList()),

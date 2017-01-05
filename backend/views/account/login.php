@@ -42,7 +42,6 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
 <div class="account-login-index">
     <div class="row">
         <div style="" class="col-xs-12">
-
             <?php if(Yii::$app->authClientCollection->hasClient('facebook')):?>
                 <?= Button::widget([
                     'button' => 'facebook',
