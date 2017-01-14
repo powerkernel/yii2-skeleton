@@ -13,7 +13,7 @@ use yii\helpers\Html;
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html prefix="og: http://ogp.me/ns#" lang="<?= Yii::$app->language ?>">
+<html amp prefix="og: http://ogp.me/ns#" lang="<?= Yii::$app->language ?>">
 <!--
 +++++++++++++++++++++++++++++++++++++++++++
 @author Harry Tang <harry@modernkernel.com>
@@ -23,7 +23,7 @@ use yii\helpers\Html;
 -->
 <head>
     <meta charset="<?= Yii::$app->charset ?>"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>

@@ -160,6 +160,9 @@ class BlogController extends MainController
         /* views ++ */
         $model->updateViews();
 
+        /* canonical */
+        Yii::$app->view->registerLinkTag(['rel' => 'canonical', 'href' => $model->getViewUrl(true)]);
+
         /* metaData */
         $title = $model->title;
         $keywords = $model->tags;
