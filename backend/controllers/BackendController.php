@@ -9,6 +9,7 @@ namespace backend\controllers;
 
 
 use common\components\MainController;
+use Yii;
 use yii\filters\AccessControl;
 
 /**
@@ -17,7 +18,16 @@ use yii\filters\AccessControl;
  */
 class BackendController extends MainController
 {
-    public $layout = 'admin';
+    //public $layout = 'admin';
+
+    /**
+     * @inheritdoc
+     */
+    public function init()
+    {
+        $this->layout = Yii::$app->view->theme->basePath.'/admin.php';
+        parent::init();
+    }
 
     /**
      * @inheritdoc
@@ -43,7 +53,6 @@ class BackendController extends MainController
                     ],
                 ],
             ],
-
         ];
     }
 }

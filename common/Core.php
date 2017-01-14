@@ -1158,7 +1158,12 @@ class Core
         ];
     }
 
-
+    /**
+     * @return bool
+     */
+    public static function isLocalhost(){
+        return file_exists(__DIR__.'/config/localhost.php');
+    }
 
 
 }

@@ -7,7 +7,7 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel modernkernel\page\models\search\PageData */
+/* @var $searchModel common\models\PageDataSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Pages');

@@ -10,7 +10,7 @@ use Yii;
  */
 class LocaleUrl extends UrlManager
 {
-    public $languages=['vi-VN', 'en-US'];
+    public $languages=['en-US'];
     /**
      * @throws \yii\base\InvalidConfigException
      */
@@ -23,10 +23,13 @@ class LocaleUrl extends UrlManager
 //            }
 //        }
 //        $this->languages=$languages;
-        if(!Yii::$app->user->isGuest){
-            $this->enableLanguageDetection=false;
-            $this->enableLanguagePersistence=false;
+        if (is_a(Yii::$app, '\yii\web\Application')) {
+            if(!Yii::$app->user->isGuest){
+                $this->enableLanguageDetection=false;
+                $this->enableLanguagePersistence=false;
+            }
         }
+
         parent::init();
     }
 }

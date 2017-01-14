@@ -47,9 +47,15 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
         ],
+        'urlManagerFrontend' => [
+            'class' => 'common\components\LocaleUrl',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+        ],
         'configuration'=>['class'=>'common\bootstrap\Configuration'],
         'assetManager' => [
             'class' => 'yii\web\AssetManager',
+            'linkAssets' => true,
             'bundles' => [
                 'yii\web\JqueryAsset' => [
                     'js' => [
@@ -69,4 +75,5 @@ return [
             ],
         ],
     ],
+    'modules' => [],
 ];

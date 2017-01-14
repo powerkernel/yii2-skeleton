@@ -14,7 +14,15 @@ return [
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'useFileTransport' => \common\Core::isLocalhost()
+        ],
+        'urlManagerFrontend' => [
+            'class' => 'common\components\LocaleUrl',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            //'hostInfo' => \common\Core::isLocalhost()?'https://domain.dev/':'https://domain.com/',
+            //'baseUrl' =>'',
         ],
     ],
+    'modules' => [],
 ];

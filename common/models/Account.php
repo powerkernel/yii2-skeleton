@@ -248,6 +248,10 @@ class Account extends ActiveRecord implements IdentityInterface
      */
     protected function sendMailNewUser()
     {
+
+        Yii::$app->mailer->setViewPath(Yii::getAlias('@common'). '/mail');
+        //Yii::$app->mailer->htmlLayout = '@common/mail/layouts/html';
+
         $subject = Yii::t('app', 'Welcome to {APP_NAME}', ['APP_NAME' => Yii::$app->name]);
         return Yii::$app->mailer
             //->compose('newUser', ['user' => $this])
@@ -411,7 +415,7 @@ class Account extends ActiveRecord implements IdentityInterface
         if (empty($token)) {
             return false;
         }
-        $expire = Setting::getValue('tokenExpiryTime');
+        $expire = (int)Setting::getValue('tokenExpiryTime');
         $parts = explode('_', $token);
         $timestamp = (int)end($parts);
         return $timestamp + $expire >= time();

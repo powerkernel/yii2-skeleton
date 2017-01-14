@@ -47,13 +47,6 @@ return [
             ],
         ],
         */
-        'urlManagerFrontend' => [
-            'class' => 'common\components\LocaleUrl',
-            'baseUrl' => '/',
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-        ],
-
         'view' => [
             'theme' => [
                 //'class' => 'harrytang\themeinspinia\InspiniaTheme',

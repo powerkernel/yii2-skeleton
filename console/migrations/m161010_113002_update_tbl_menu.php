@@ -12,7 +12,7 @@ class m161010_113002_update_tbl_menu extends Migration
      */
     public function up()
     {
-        $this->addColumn('{{core_menu}}', 'active_route', $this->string()->null()->after('label'));
+        $this->addColumn('{{%core_menu}}', 'active_route', $this->string()->null()->after('label'));
 		$this->addDefaultData();
     }
 
@@ -21,7 +21,7 @@ class m161010_113002_update_tbl_menu extends Migration
      */
     public function down()
     {
-        $this->dropColumn('{{core_menu}}', 'active_route');
+        $this->dropColumn('{{%core_menu}}', 'active_route');
 		
     }
 

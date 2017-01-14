@@ -83,7 +83,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <p class="pull-left">
                 <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-
+                <?php if(Yii::$app->hasModule('billing')):?>
+                    <?= Html::a(Yii::t('app', 'Billing Info'), Yii::$app->urlManager->createUrl(['/billing/info/check', 'id'=>$model->id]), ['class' => 'btn btn-primary']) ?>
+                <?php endif;?>
                 <?php if($model->status!=Account::STATUS_SUSPENDED):?>
                 <?= Html::a(Yii::t('app', 'Send New Password'), ['new-password', 'id' => $model->id], [
                     'class' => 'btn btn-info',

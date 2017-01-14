@@ -93,7 +93,7 @@ class PageData extends ActiveRecord
             [['content', 'thumbnail'], 'string'],
             [['thumbnail'], 'url'],
             [['language'], 'string', 'max' => 5],
-            [['title', 'description', 'keywords'], 'string', 'max' => 110],
+            [['title', 'description', 'keywords'], 'string', 'max' => 160],
             [['id_page'], 'string', 'max' => 100]
         ];
     }

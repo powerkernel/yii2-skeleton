@@ -74,14 +74,16 @@ class SideMenu extends Widget
         $items=[];
 
         foreach($vendors as $vendor){
-            $modules = scandir(Yii::$app->vendorPath . DIRECTORY_SEPARATOR . $vendor);
-            foreach ($modules as $module) {
-                if (!preg_match('/[\.]+/', $module)) {
-                    $moduleMenuFile = \Yii::$app->vendorPath . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $menuFilePath;
-                    if (is_file($moduleMenuFile)) {
-                        $menu = require($moduleMenuFile);
-                        if(is_array($menu)){
-                            $items=array_merge($items,$menu);
+            if(file_exists(Yii::$app->vendorPath . DIRECTORY_SEPARATOR . $vendor)){
+                $modules = scandir(Yii::$app->vendorPath . DIRECTORY_SEPARATOR . $vendor);
+                foreach ($modules as $module) {
+                    if (!preg_match('/[\.]+/', $module)) {
+                        $moduleMenuFile = \Yii::$app->vendorPath . DIRECTORY_SEPARATOR . $vendor . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $menuFilePath;
+                        if (is_file($moduleMenuFile)) {
+                            $menu = require($moduleMenuFile);
+                            if(is_array($menu)){
+                                $items=array_merge($items,$menu);
+                            }
                         }
                     }
                 }
@@ -96,18 +98,18 @@ class SideMenu extends Widget
      * @return array
      */
     protected function accountItems(){
-        return [
+        $default= [
             ['label'=>Yii::t('app', 'Personal settings')],
             ['icon' => 'user', 'label' => Yii::t('app', 'Profile'), 'url' => ['/account/index'], 'active' => Core::checkMCA(null, 'account', 'index')],
             ['icon' => 'envelope', 'label' => Yii::t('app', 'Email'), 'url' => ['/account/email'], 'active' => Core::checkMCA(null, 'account', 'email')],
             ['icon' => 'lock', 'label' => Yii::t('app', 'Password'), 'url' => ['/account/password'], 'active' => Core::checkMCA(null, 'account', 'password')],
             ['icon' => 'puzzle-piece', 'label' => Yii::t('app', 'Linked Accounts'), 'url' => ['/account/linked'], 'active' => Core::checkMCA(null, 'account', 'linked')],
 
-            ['label'=>Yii::t('app', 'Blog'), 'enabled'=>Yii::$app->params['enableBlog']],
-            ['icon' => 'rss-square', 'label' => Yii::t('app', 'My Blog'), 'url' => ['/blog/manage'], 'active' => Core::checkMCA(null, 'blog', 'manage'), 'enabled'=>Yii::$app->params['enableBlog']],
-            ['icon' => 'pencil-square', 'label' => Yii::t('app', 'Write'), 'url' => ['/blog/create'], 'active' => Core::checkMCA(null, 'blog', 'create'), 'enabled'=>Yii::$app->params['enableBlog']],
+            ['label'=>Yii::t('app', 'Blog'), 'enabled'=>Yii::$app->params['enableBlog']&&Yii::$app->user->can('author')],
+            ['icon' => 'rss-square', 'label' => Yii::t('app', 'My Blog'), 'url' => ['/blog/manage'], 'active' => Core::checkMCA(null, 'blog', 'manage'), 'enabled'=>Yii::$app->params['enableBlog']&&Yii::$app->user->can('author')],
+            ['icon' => 'pencil-square', 'label' => Yii::t('app', 'Write'), 'url' => ['/blog/create'], 'active' => Core::checkMCA(null, 'blog', 'create'), 'enabled'=>Yii::$app->params['enableBlog']&&Yii::$app->user->can('author')],
         ];
-
+        return array_merge($default, $this->loadModuleItem('account'));
 
     }
 
