@@ -71,6 +71,7 @@ class BlogController extends MainController
         $this->layout = 'main';
         $searchModel = new BlogSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->pageSize=10;
 
 
         $title = Setting::getValue('blogTitle');
