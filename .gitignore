@@ -37,7 +37,6 @@ phpunit.phar
 .data
 .docs
 frontend/web/backend
-composer.json
 composer.lock
 upload.zip
 grunt-email-workflow/Gruntfile.min.js
