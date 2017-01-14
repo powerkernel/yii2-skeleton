@@ -5,7 +5,6 @@
  * @copyright Copyright (c) 2016 Modern Kernel
  */
 
-
 use common\widgets\Disqus;
 use frontend\widgets\Adsense;
 use frontend\widgets\LikeButton;
@@ -44,47 +43,22 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Blog'), 'url' => ['i
 $this->params['subtitle'] = Yii::$app->formatter->asDate($model->published_at);
 
 /* misc */
-$js = file_get_contents(__DIR__ . '/view.min.js');
-$this->registerJs($js);
-$css = file_get_contents(__DIR__ . '/view.css');
-$this->registerCss($css);
+//$js = file_get_contents(__DIR__ . '/view.min.js');
+//$this->registerJs($js);
+//$css = file_get_contents(__DIR__ . '/view.css');
+//$this->registerCss($css);
 
 ?>
 <div class="blog-view">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-body blog-body">
-                    <div class="blog-content"><?= $model->content ?></div>
-                    <?php if (Yii::$app->user->can('admin')): ?>
-                        <div class="well well-sm">
-                            <a target="_blank" class="btn btn-xs bg-purple"
-                               href="https://developers.facebook.com/tools/debug/og/object/?q=<?= $model->getViewUrl(true) ?>">Open
-                                Graph Object Debugger</a>
-                            <a target="_blank" class="btn btn-xs bg-purple"
-                               href="https://search.google.com/structured-data/testing-tool#url=<?= $model->getViewUrl(true) ?>">Structured
-                                Data Testing</a>
-                            <a target="_blank" class="btn btn-xs bg-purple"
-                               href="https://cards-dev.twitter.com/validator">Twitter Card validator</a>
-                            <a class="btn btn-xs btn-primary"
-                               href="<?= Yii::$app->urlManager->createUrl(['/blog/update', 'id' => $model->id]) ?>"><?= Yii::t('app', 'Edit') ?></a>
-                        </div>
-                    <?php endif; ?>
-                    <?= Adsense::widget() ?>
+                    <div class="blog-content"><?= $model->getAmpContent() ?></div>
                 </div>
                 <div class="box-footer">
                     <div class="pull-left">
-                        <?= LikeButton::widget([
-                            'href' => $model->getViewUrl(true),
-                            'layout' => 'button_count',
-                        ]) ?>
 
-                        <?=
-                        PlusOneButton::widget([
-                            'href' => $model->getViewUrl(true),
-                            'size' => 'medium'
-                        ])
-                        ?>
 
                     </div>
                     <div class="pull-right text-right">
@@ -101,29 +75,9 @@ $this->registerCss($css);
                     </div>
                 </div>
             </div>
-            <?= Disqus::widget([
-                'pageUrl' => $model->getViewUrl(true),
-                'pageIdentifier' => $model->slug
-            ]) ?>
 
-        </div>
-        <div class="col-md-4">
-            <div class="hidden-xs hidden-sm"><?= \frontend\widgets\BlogPost::widget(['type' => 'mostViewed']) ?></div>
-            <div><?= \frontend\widgets\AdsBox::widget() ?></div>
-            <div><?= \frontend\widgets\BlogPost::widget(['type' => 'latest']) ?></div>
         </div>
     </div>
-    <?php
-    echo \modernkernel\photoswipe\Modal::widget([
-        'selector' => '.blog-content img',
-        'images' => $model->getImages(),
-        'clientOptions' => [
-            'shareEl' => false,
-        ]
-    ]);
-    ?>
-
-
 </div>
 
 
