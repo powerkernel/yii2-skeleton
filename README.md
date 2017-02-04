@@ -106,7 +106,10 @@ CONFIG
 1. Replace your icons (apple-touch-icon-57x57.png, apple-touch-icon-60x60.png, favicon-32x32.png etc)
 2. Replace your logos in /images
 3. Ignore local composer.json: `git update-index --skip-worktree composer.json`
-4. Ignore local composer.json: `git update-index --skip-worktree frontend/views/site/index.php`
+4. Ignore local site/index: `git update-index --skip-worktree frontend/views/site/index.php`
+5. Ignore local css: `git update-index --skip-worktree frontend/web/css/style.css.map`
+`git update-index --skip-worktree frontend/web/css/style.scss`
+`git update-index --skip-worktree frontend/web/css/style.css`
 
 ## Symlink Help
 For Linux
@@ -116,3 +119,14 @@ For Linux
 
 For windows
 ```mklink /D PATH_TO\frontend\web\backend PATH_TO\backend\web```
+
+Google Login Authorized redirect URIs
+https://DOMAIN.COM/account/login/google
+https://DOMAIN.COM/account/auth?authclient=google
+https://DOMAIN.COM/backend/account/login/google
+https://DOMAIN.COM/backend/account/auth?authclient=google
+
+https://DOMAIN.DEV/account/login/google
+https://DOMAIN.DEV/account/auth?authclient=google
+https://DOMAIN.DEV/backend/account/login/google
+https://DOMAIN.DEV/backend/account/auth?authclient=google

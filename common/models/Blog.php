@@ -14,6 +14,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\caching\DbDependency;
 use yii\db\ActiveRecord;
 use yii\db\Query;
+use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 
 /**
@@ -320,5 +321,47 @@ class Blog extends ActiveRecord
             $this->updateCounters(['views' => 1]);
         }
 
+    }
+
+    /**
+     * AMP Content
+     * @return mixed|string
+     */
+    public function getAmpContent(){
+        /* youtube ids */
+        $ids=$this->getEmbedYoutubeID();
+        $html = str_ireplace(
+            ['<img','<video','/video>','<audio','/audio>'],
+            ['<amp-img layout="responsive"','<amp-video','/amp-video>','<amp-audio','/amp-audio>'],
+            $this->content
+        );
+        # Add closing tags to amp-img custom element
+        $html = preg_replace('/<amp-img(.*?)>/', '<amp-img$1></amp-img>',$html);
+        # Whitelist of HTML tags allowed by AMP
+        $html = strip_tags($html,'<h1><h2><h3><h4><h5><h6><a><p><ul><ol><li><blockquote><q><cite><ins><del><strong><em><code><pre><svg><table><thead><tbody><tfoot><th><tr><td><dl><dt><dd><article><section><header><footer><aside><figure><time><abbr><div><span><hr><small><br><amp-img><amp-audio><amp-video><amp-ad><amp-anim><amp-carousel><amp-fit-rext><amp-image-lightbox><amp-instagram><amp-lightbox><amp-twitter><amp-youtube>');
+        # re-add youtube
+        $youtube='';
+        foreach($ids as $id){
+            $youtube.=Html::tag('amp-youtube', '', ['data-videoid'=>$id, 'width'=>640, 'height'=>360, 'layout'=>'responsive']);
+        }
+        return $youtube.$html;
+    }
+
+    /**
+     * get youtube ids
+     * @return array
+     */
+    public function getEmbedYoutubeID(){
+        $doc = new DOMDocument();
+        $doc->loadHTML($this->content);
+        $tags = $doc->getElementsByTagName('iframe');
+        $ids = [];
+        foreach ($tags as $i => $tag) {
+            $src=$tag->getAttribute('src');
+            if(preg_match('/embed\/(\w+)/i', $src, $matches)){
+                $ids[]=$matches[1];
+            }
+        }
+        return $ids;
     }
 }
