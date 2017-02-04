@@ -37,7 +37,7 @@ class SiteController extends BackendController
         /* check files */
         $files = [
             ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/images/logo.png'],
-            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/images/banner.png'],
+            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/images/banner.svg'],
             ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/images/logo-mini.svg'],
             ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/images/logo-lg.svg'],
 
