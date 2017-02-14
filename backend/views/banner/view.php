@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attributes' => [
                                 'id',
                                 'title',
+                                'lang',
                                 'text_content:html',
                                 'link_url:url',
                                 'link_option',
