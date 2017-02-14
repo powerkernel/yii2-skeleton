@@ -28,9 +28,9 @@ class CarouselBanner extends Widget
     {
         $query=(new Query())->select('*')
             ->from('{{%core_banner}}')
-            ->where(['status' => Banner::STATUS_ACTIVE])
-            ->andwhere('lang IS NULL')
-            ->orWhere(['lang'=>Yii::$app->language]);
+            ->where('`status`=:status AND (`lang` IS NULL OR `lang`=:lang)', [':status'=>Banner::STATUS_ACTIVE, ':lang'=>Yii::$app->language]);
+            //->andwhere('lang IS NULL')
+            //->orWhere(['lang'=>Yii::$app->language]);
         //echo $query->createCommand()->rawSql;
 
         //$banners = Banner::find()->where(['status' => Banner::STATUS_ACTIVE])->all();
@@ -53,7 +53,7 @@ class CarouselBanner extends Widget
                 if(!empty($banner['link_url'])){
                     $img=Html::a($img, $banner['link_url'], ['title'=>$banner['title'], 'target'=>$banner['link_option']]);
                 }
-                $text=\Yii::t('app', $banner['text_content']);
+                $text= $banner['text_content'];
                 $style=$banner['text_style'];
                 $html=<<<EOB
 <div class="banner-box" style="position: relative">
