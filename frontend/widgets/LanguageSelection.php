@@ -21,6 +21,9 @@ use yii\helpers\Html;
  */
 class LanguageSelection extends Widget
 {
+
+    //public $type;
+
     /**
      * @inheritdoc
      */
@@ -41,6 +44,7 @@ class LanguageSelection extends Widget
 
         echo Html::beginTag('div', ['class'=>'language-selection']);
         foreach($langs as $code=>$lang){
+            $title=locale_get_display_language($code, $code);
             $c=strtolower(substr($code, -2));
             $icon= Flag::widget([
                 'tag' => 'span', // flag tag
@@ -50,9 +54,11 @@ class LanguageSelection extends Widget
                     //'class'=>'btn btn-sm btn-default'
                 ]
             ]);
-            echo Html::a($icon, $this->langUrl($code), ['title'=>$lang]);
+            echo Html::a($icon.' '.$title, $this->langUrl($code), ['title'=>$title]);
         }
         echo Html::endTag('div');
+
+
 
     }
 
