@@ -48,7 +48,7 @@ class BlogController extends MainController
                         'roles' => ['staff'],
                     ],
                     [
-                        'actions' => ['view', 'index', 'sitemap'],
+                        'actions' => ['view', 'view-amp', 'index', 'sitemap'],
                         'allow' => true,
                     ],
                     [
@@ -71,6 +71,7 @@ class BlogController extends MainController
         $this->layout = 'main';
         $searchModel = new BlogSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->pageSize=10;
 
 
         $title = Setting::getValue('blogTitle');
@@ -159,6 +160,9 @@ class BlogController extends MainController
         /* views ++ */
         $model->updateViews();
 
+        /* amphtml */
+        Yii::$app->view->registerLinkTag(['rel' => 'amphtml', 'href' => Yii::$app->urlManager->createAbsoluteUrl(['/blog/view-amp', 'name'=>$model->slug])]);
+
         /* metaData */
         $title = $model->title;
         $keywords = $model->tags;
@@ -231,6 +235,105 @@ class BlogController extends MainController
         $this->registerMetaTagJsonLD($data);
 
         return $this->render('view', [
+            'model' => $model
+        ]);
+    }
+
+    /**
+     * Displays a single Blog model in AMP page.
+     * @param string $name
+     * @return mixed
+     */
+    public function actionViewAmp($name)
+    {
+        $this->layout = '@common/layouts/amp';
+        $model = $this->findBySlug($name);
+//        $new=new Blog();
+//        $new->attributes=$model->attributes;
+//        $new->slug=$new->slug.'-'.rand(1000,9999);
+//        $new->id=null;
+//        if(!$new->save()){
+//            var_dump($new->errors);
+//        }
+
+        /* views ++ */
+        $model->updateViews();
+
+        /* canonical */
+        Yii::$app->view->registerLinkTag(['rel' => 'canonical', 'href' => $model->getViewUrl(true)]);
+
+        /* metaData */
+        $title = $model->title;
+        $keywords = $model->tags;
+        $description = $model->desc;
+        $metaTags[] = ['name' => 'keywords', 'content' => $keywords];
+        $metaTags[] = ['name' => 'description', 'content' => $description];
+        /* Facebook */
+        $metaTags[] = ['property' => 'og:title', 'content' => $title];
+        $metaTags[] = ['property' => 'og:description', 'content' => $description];
+        $metaTags[] = ['property' => 'og:type', 'content' => 'article']; // article, product, profile etc
+        $metaTags[] = ['property' => 'og:image', 'content' => $model->thumbnail]; //best 1200 x 630
+        $metaTags[] = ['property' => 'og:url', 'content' => $model->getViewUrl(true)];
+        if ($appId = Setting::getValue('fbAppId')) {
+            $metaTags[] = ['property' => 'fb:app_id', 'content' => $appId];
+        }
+
+        //$metaTags[]=['property' => 'fb:app_id', 'content' => ''];
+        //$metaTags[]=['property' => 'fb:admins', 'content' => ''];
+        /* Twitter */
+        $metaTags[] = ['name' => 'twitter:card', 'content' => 'summary_large_image'];
+        $metaTags[] = ['name' => 'twitter:site', 'content' => Setting::getValue('twitterSite')];
+//        $metaTags[]=['name'=>'twitter:title', 'content'=>$title];
+//        $metaTags[]=['name'=>'twitter:description', 'content'=>$description];
+//        $metaTags[]=['name'=>'twitter:card', 'content'=>'summary'];
+//        $metaTags[]=['name'=>'twitter:site', 'content'=>''];
+//        $metaTags[]=['name'=>'twitter:image', 'content'=>''];
+//        $metaTags[]=['name'=>'twitter:data1', 'content'=>''];
+//        $metaTags[]=['name'=>'twitter:label1', 'content'=>''];
+//        $metaTags[]=['name'=>'twitter:data2', 'content'=>''];
+//        $metaTags[]=['name'=>'twitter:label2', 'content'=>''];
+        /* jsonld */
+        $imageObject = $model->getImageObject();
+        $jsonLd = (object)[
+            '@type' => 'Article',
+            'http://schema.org/name' => $model->title,
+            'http://schema.org/headline' => $model->desc,
+            'http://schema.org/articleBody' => $model->content,
+            'http://schema.org/dateCreated' => Yii::$app->formatter->asDate($model->created_at, 'php:c'),
+            'http://schema.org/dateModified' => Yii::$app->formatter->asDate($model->updated_at, 'php:c'),
+            'http://schema.org/datePublished' => Yii::$app->formatter->asDate($model->published_at, 'php:c'),
+            'http://schema.org/url' => $model->getViewUrl(true),
+            'http://schema.org/image' => (object)[
+                '@type' => 'ImageObject',
+                'http://schema.org/url' => $imageObject['url'],
+                'http://schema.org/width' => $imageObject['width'],
+                'http://schema.org/height' => $imageObject['height']
+            ],
+            'http://schema.org/author' => (object)[
+                '@type' => 'Person',
+                'http://schema.org/name' => $model->author->fullname,
+            ],
+            'http://schema.org/publisher' => (object)[
+                '@type' => 'Organization',
+                'http://schema.org/name' => Yii::$app->name,
+                'http://schema.org/logo' => (object)[
+                    '@type' => 'ImageObject',
+                    'http://schema.org/url' => Yii::$app->urlManager->createAbsoluteUrl(Yii::$app->homeUrl . '/images/logo.png')
+                ]
+            ],
+            'http://schema.org/mainEntityOfPage' => (object)[
+                '@type' => 'WebPage',
+                '@id' => Yii::$app->urlManager->createAbsoluteUrl($model->viewUrl)
+            ]
+        ];
+
+        /* OK */
+        $data['title'] = $title;
+        $data['metaTags'] = $metaTags;
+        $data['jsonLd'] = $jsonLd;
+        $this->registerMetaTagJsonLD($data);
+
+        return $this->render('view-amp', [
             'model' => $model
         ]);
     }

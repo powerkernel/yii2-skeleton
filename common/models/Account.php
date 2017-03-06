@@ -119,7 +119,6 @@ class Account extends ActiveRecord implements IdentityInterface
 
             /* update action */
             [['fullname', 'email', 'language', 'timezone'], 'required', 'on' => ['create','update']],
-            [['fullname', 'email', 'language', 'timezone'], 'required', 'on' => 'create'],
         ];
     }
 

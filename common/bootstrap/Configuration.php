@@ -253,6 +253,7 @@ EOB;
                 'blog/<action:(manage|create|update|delete)>' => 'blog/<action>',
                 'blog/sitemap<page:\d+>.xml' => 'blog/sitemap',
                 'blog' => 'blog/index',
+                'blog/<name:.+?>.amp' => 'blog/view-amp',
                 'blog/<name:.+?>' => 'blog/view',
 
                 /* page */
