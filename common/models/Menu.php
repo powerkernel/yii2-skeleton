@@ -12,11 +12,13 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Query;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%core_menu}}".
  *
  * @property integer $id
+ * @property integer $id_parent
  * @property string $label
  * @property string $active_route
  * @property string $url
@@ -28,6 +30,7 @@ use yii\db\Query;
  * @property integer $created_by
  * @property integer $updated_by
  *
+ * @property Menu $parent
  * @property Account $createdBy
  * @property Account $updatedBy
  */
@@ -109,7 +112,7 @@ class Menu extends ActiveRecord
     {
         return [
             [['label', 'url', 'position'], 'required'],
-            [['order', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['id_parent', 'order', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['label', 'active_route', 'url', 'class', 'position'], 'string', 'max' => 255],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['updated_by' => 'id']],
@@ -123,6 +126,7 @@ class Menu extends ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
+            'id_parent' => Yii::t('app', 'Parent'),
             'label' => Yii::t('app', 'Label'),
             'active_route' => Yii::t('app', 'Active Route'),
             'url' => Yii::t('app', 'Url'),
@@ -150,6 +154,14 @@ class Menu extends ActiveRecord
     public function getUpdatedBy()
     {
         return $this->hasOne(Account::className(), ['id' => 'updated_by']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getParent()
+    {
+        return $this->hasOne(Menu::className(), ['id' => 'id_parent']);
     }
 
     /**
@@ -238,5 +250,40 @@ class Menu extends ActiveRecord
             $this->_route = $route;
         }
         return $this->_route;
+    }
+
+
+    /**
+     * @param integer $e
+     * @return array
+     */
+    public static function getRootMenu($e=null){
+        if(empty($e)){
+            $menus=Menu::find()->where('id_parent IS NULL')->all();
+        }
+        else {
+            $menus=Menu::find()->where('id_parent IS NULL AND id!=:e', [':e'=>$e])->all();
+        }
+
+        return ArrayHelper::map($menus, 'id', 'label');
+    }
+
+
+    /**
+     * get sub menu
+     * @return array
+     */
+    public function generateSubNavItem(){
+        $items=[];
+        $menus=Menu::find()->where(['status'=>Menu::STATUS_ACTIVE, 'id_parent'=>$this->id])->orderBy('order')->all();
+        foreach ($menus as $menu){
+            $items[]=[
+                'active'=>$menu->getActiveStatus(),
+                'label' => Yii::t('main', $menu->label),
+                'url' => preg_match('/\/\//', $menu->url)?$menu->url:$menu->route,
+                'linkOptions'=>['class'=>$menu->class],
+            ];
+        }
+        return $items;
     }
 }

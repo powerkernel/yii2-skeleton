@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Menu;
 use kotchuprik\sortable\grid\Column;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -49,7 +50,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                             'class' => Column::className(),
                         ],
 
-                        //'id',
+                        ['attribute' => 'id_parent', 'value' => function ($model){return $model->parent?$model->parent->label:null;}, 'filter'=> Menu::getRootMenu()],
                         'label',
                         'url',
                         'position',
@@ -59,7 +60,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                         // 'created_by',
                         // 'updated_by',
                         //['attribute' => 'created_at', 'value' => 'created_at', 'format' => 'dateTime', 'filter' => DatePicker::widget(['model' => $searchModel, 'attribute' => 'created_at', 'dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']])],
-                        ['attribute' => 'status', 'value' => function ($model){return $model->statusText;}, 'filter'=>\common\models\Menu::getStatusOption()],
+                        ['attribute' => 'status', 'value' => function ($model){return $model->statusText;}, 'filter'=> Menu::getStatusOption()],
                         [
                             'class' => 'yii\grid\ActionColumn',
                             'template'=>'{update} {delete}'

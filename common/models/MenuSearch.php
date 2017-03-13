@@ -24,7 +24,7 @@ class MenuSearch extends Menu
     public function rules()
     {
         return [
-            [['id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['id', 'id_parent', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['label', 'url', 'position'], 'safe'],
         ];
     }
@@ -67,6 +67,7 @@ class MenuSearch extends Menu
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'id_parent' => $this->id_parent,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

@@ -26,9 +26,15 @@ class Header extends Widget
     public function run()
     {
         $items=[];
-        $menus=Menu::find()->where(['status'=>Menu::STATUS_ACTIVE, 'position'=>'header'])->orderBy('order')->all();
+        $menus=Menu::find()->where(['status'=>Menu::STATUS_ACTIVE, 'id_parent'=>null, 'position'=>'header'])->orderBy('order')->all();
         foreach ($menus as $menu){
-            $items[]=['active'=>$menu->getActiveStatus(), 'label' => Yii::t('main', $menu->label), 'url' => preg_match('/\/\//', $menu->url)?$menu->url:$menu->route, 'linkOptions'=>['class'=>$menu->class]];
+            $items[]=[
+                'active'=>$menu->getActiveStatus(),
+                'label' => Yii::t('main', $menu->label),
+                'url' => preg_match('/\/\//', $menu->url)?$menu->url:$menu->route,
+                'linkOptions'=>['class'=>$menu->class],
+                'items'=>$menu->generateSubNavItem()
+            ];
         }
         return $this->render('header', ['items'=>$items]);
     }

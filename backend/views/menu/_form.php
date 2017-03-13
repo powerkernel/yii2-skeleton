@@ -18,6 +18,8 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'id_parent')->dropDownList(Menu::getRootMenu($model->id), ['prompt'=>'']) ?>
+
     <?= $form->field($model, 'label')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'active_route')->textInput(['maxlength' => true]) ?>
