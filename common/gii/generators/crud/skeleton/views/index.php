@@ -74,7 +74,13 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
             }
         }
         ?>
-                    //['attribute' => 'created_at', 'value' => 'created_at', 'format' => 'dateTime', 'filter' => DatePicker::widget(['model' => $searchModel, 'attribute' => 'created_at', 'dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']])],
+                    //[
+                    //    'attribute' => 'created_at',
+                    //    'value' => 'created_at',
+                    //    'format' => 'dateTime',
+                    //    'filter' => DatePicker::widget(['model' => $searchModel, 'attribute' => 'created_at', 'dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']]),
+                    //    'contentOptions'=>['style'=>'min-width: 80px']
+                    //],
                     //['attribute' => 'status', 'value' => function ($model){return $model->statusText;}, 'filter'=>''],
                     ['class' => 'yii\grid\ActionColumn'],
                 ],
