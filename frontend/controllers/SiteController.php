@@ -191,6 +191,7 @@ class SiteController extends MainController
     public function actionRobots()
     {
         Yii::$app->response->format = Response::FORMAT_RAW;
+        Yii::$app->response->getHeaders()->set('Content-Type', 'text/plain;charset=UTF-8');
         $sitemap = Yii::$app->urlManager->createAbsoluteUrl('site/sitemap');
         return $this->renderPartial('robots', array('sitemap' => $sitemap));
     }
