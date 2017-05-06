@@ -84,31 +84,40 @@ class SiteController extends MainController
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
         /* found */
-        if ($model->content->language !== Yii::$app->language) {
+        $page=$model->content;
+
+        /* redirect */
+        $class=get_class(Yii::$app->urlManager);
+        if($class=='yii\web\UrlManager' && Yii::$app->request->url!=$page->getViewUrl()){
+            return $this->redirect($page->getViewUrl());
+        }
+
+        /* missing lang */
+        if ($page->language !== Yii::$app->language) {
             Yii::$app->session->setFlash(
                 'info',
                 Yii::t('app',
                     'This page has no {CUR_LANG} version. You are currently viewing the {LANGUAGE} version.',
                     [
                         'CUR_LANG' => Message::getLocaleList()[Yii::$app->language],
-                        'LANGUAGE' => Message::getLocaleList()[$model->content->language]
+                        'LANGUAGE' => Message::getLocaleList()[$page->language]
                     ]
                 ));
         }
 
         /* seo */
         /* metaData */
-        $title = $model->content->title;
-        $keywords = $model->content->keywords;
-        $description = $model->content->description;
+        $title = $page->title;
+        $keywords = $page->keywords;
+        $description = $page->description;
         $metaTags[] = ['name' => 'keywords', 'content' => $keywords];
         $metaTags[] = ['name' => 'description', 'content' => $description];
         /* Facebook */
         $metaTags[] = ['property' => 'og:title', 'content' => $title];
         $metaTags[] = ['property' => 'og:description', 'content' => $description];
         $metaTags[] = ['property' => 'og:type', 'content' => 'article']; // article, product, profile etc
-        $metaTags[] = ['property' => 'og:image', 'content' => $model->content->thumbnail]; //best 1200 x 630
-        $metaTags[] = ['property' => 'og:url', 'content' => $model->content->getViewUrl(true)];
+        $metaTags[] = ['property' => 'og:image', 'content' => $page->thumbnail]; //best 1200 x 630
+        $metaTags[] = ['property' => 'og:url', 'content' => $page->getViewUrl(true)];
         if($appId=Setting::getValue('fbAppId')){
             $metaTags[]=['property' => 'fb:app_id', 'content' => $appId];
         }
@@ -126,16 +135,16 @@ class SiteController extends MainController
 //        $metaTags[]=['name'=>'twitter:data2', 'content'=>''];
 //        $metaTags[]=['name'=>'twitter:label2', 'content'=>''];
         /* jsonld */
-        $imageObject = $model->content->getImageObject();
+        $imageObject = $page->getImageObject();
         $jsonLd = (object)[
             '@type' => 'Article',
             'http://schema.org/name' => $title,
             'http://schema.org/headline' => $description,
-            'http://schema.org/articleBody' => $model->content->content,
-            'http://schema.org/dateCreated' => Yii::$app->formatter->asDate($model->content->created_at, 'php:c'),
-            'http://schema.org/dateModified' => Yii::$app->formatter->asDate($model->content->updated_at, 'php:c'),
-            'http://schema.org/datePublished' => Yii::$app->formatter->asDate($model->content->created_at, 'php:c'),
-            'http://schema.org/url' => Yii::$app->request->absoluteUrl,
+            'http://schema.org/articleBody' => $page->content,
+            'http://schema.org/dateCreated' => Yii::$app->formatter->asDate($page->created_at, 'php:c'),
+            'http://schema.org/dateModified' => Yii::$app->formatter->asDate($page->updated_at, 'php:c'),
+            'http://schema.org/datePublished' => Yii::$app->formatter->asDate($page->created_at, 'php:c'),
+            'http://schema.org/url' => $page->getViewUrl(true),
             'http://schema.org/image' => (object)[
                 '@type' => 'ImageObject',
                 'http://schema.org/url' => !empty($imageObject['url'])?$imageObject['url']:'',
