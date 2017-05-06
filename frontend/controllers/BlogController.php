@@ -149,13 +149,8 @@ class BlogController extends MainController
     {
         $this->layout = 'main';
         $model = $this->findBySlug($name);
-//        $new=new Blog();
-//        $new->attributes=$model->attributes;
-//        $new->slug=$new->slug.'-'.rand(1000,9999);
-//        $new->id=null;
-//        if(!$new->save()){
-//            var_dump($new->errors);
-//        }
+        /* language */
+        Yii::$app->language=$model->language;
 
         /* views ++ */
         $model->updateViews();
@@ -248,13 +243,9 @@ class BlogController extends MainController
     {
         $this->layout = '@common/layouts/amp';
         $model = $this->findBySlug($name);
-//        $new=new Blog();
-//        $new->attributes=$model->attributes;
-//        $new->slug=$new->slug.'-'.rand(1000,9999);
-//        $new->id=null;
-//        if(!$new->save()){
-//            var_dump($new->errors);
-//        }
+
+        /* language */
+        Yii::$app->language=$model->language;
 
         /* views ++ */
         $model->updateViews();
@@ -346,6 +337,7 @@ class BlogController extends MainController
     public function actionCreate()
     {
         $model = new Blog();
+        $model->language=Yii::$app->language;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if ($model->status == Blog::STATUS_PUBLISHED) {
