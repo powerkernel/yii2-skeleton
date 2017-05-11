@@ -28,7 +28,7 @@ class BlogSearch extends Blog
     {
         return [
             [['id', 'created_by', 'views', 'status'], 'integer'],
-            [['title', 'desc', 'content', 'tags', 'created_at', 'updated_at'], 'safe'],
+            [['language', 'title', 'desc', 'content', 'tags', 'created_at', 'updated_at'], 'safe'],
             [['fullname'], 'safe']
         ];
     }
@@ -102,7 +102,8 @@ class BlogSearch extends Blog
             //'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', '{{%core_blog}}.title', $this->title])
+        $query->andFilterWhere(['like', '{{%core_blog}}.language', $this->language])
+            ->andFilterWhere(['like', '{{%core_blog}}.title', $this->title])
             ->andFilterWhere(['like', '{{%core_account}}.fullname', $this->fullname])
             ->andFilterWhere(['like', '{{%core_blog}}.desc', $this->desc])
             ->andFilterWhere(['like', '{{%core_blog}}.content', $this->content])

@@ -22,6 +22,7 @@ use yii\helpers\HtmlPurifier;
  *
  * @property integer $id
  * @property string $slug
+ * @property string $language
  * @property string $title
  * @property string $desc
  * @property string $content
@@ -94,12 +95,13 @@ class Blog extends ActiveRecord
     public function rules()
     {
         return [
-            [['slug', 'title', 'desc', 'content', 'tags', 'thumbnail', 'thumbnail_square'], 'required'],
+            [['slug', 'language', 'title', 'desc', 'content', 'tags', 'thumbnail', 'thumbnail_square'], 'required'],
             [['slug'], 'match', 'pattern' => '/^[a-z0-9-]+$/'],
             [['slug'], 'unique'],
             [['content'], 'string'],
             [['created_by', 'views', 'status', 'created_at', 'updated_at', 'published_at'], 'integer'],
 
+            [['language'], 'string', 'max' => 5],
             [['title', 'slug', 'desc'], 'string', 'max' => 110],
             [['tags', 'thumbnail', 'thumbnail_square'], 'string', 'max' => 255],
 
@@ -118,6 +120,7 @@ class Blog extends ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'slug' => Yii::t('app', 'Slug'),
+            'language' => Yii::t('app', 'Language'),
             'title' => Yii::t('app', 'Title'),
             'desc' => Yii::t('app', 'Desc'),
             'content' => Yii::t('app', 'Content'),

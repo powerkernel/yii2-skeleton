@@ -6,6 +6,7 @@
  */
 
 use common\models\Blog;
+use conquer\select2\Select2Widget;
 use modernkernel\slugify\Slugify;
 use modernkernel\tinymce\TinyMce;
 use yii\helpers\Html;
@@ -27,6 +28,11 @@ use yii\widgets\ActiveForm;
     <?php else:?>
     <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
     <?php endif;?>
+
+    <?= $form->field($model, 'language')->widget(Select2Widget::className(), [
+        'bootstrap'=>false,
+        'items'=>\common\Core::getLocaleList(),
+    ]) ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
