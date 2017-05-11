@@ -68,6 +68,27 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
                     'delete' => ['POST'],
                 ],
             ],
+            //'backend' => [
+            //    'class' => BackendFilter::className(),
+            //    'actions' => [
+            //        'index',
+            //    ],
+            //],
+
+            //'access' => [
+            //    'class' => AccessControl::className(),
+            //    'rules' => [
+            //        [
+            //            'roles' => ['admin'],
+            //            'allow' => true,
+            //        ],
+            //        [
+            //            'actions' => ['create', 'update'],
+            //            'roles' => ['@'],
+            //            'allow' => true,
+            //        ],
+            //    ],
+            //],
         ];
     }
 
