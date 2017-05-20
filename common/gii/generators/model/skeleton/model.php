@@ -103,7 +103,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         if (!empty($status) && in_array($status, array_keys($list))) {
             return '<span class="label label-'.$color.'">'.$list[$status].'</span>';
         }
-        return '<span class="label label-'.$color.'">'.Yii::$app->getModule('ticket')->t('Unknown').'</span>';
+        return '<span class="label label-'.$color.'">'.Yii::$app->getModule('<?= $generator->messageCategory ?>')->t('Unknown').'</span>';
     }
 
 
