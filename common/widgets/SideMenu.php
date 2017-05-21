@@ -25,7 +25,7 @@ class SideMenu extends Widget
 
     /**
      * @inheritdoc
-     * @return string|void
+     * @return string
      */
     public function run()
     {
@@ -54,6 +54,7 @@ class SideMenu extends Widget
             ['icon' => 'cog', 'label' => Yii::t('app','Settings'), 'url' => ['/setting/index'], 'active' => Core::checkMCA(null, 'setting', '*')],
             ['icon' => 'language', 'label' => Yii::t('app','Languages'), 'url' => ['/i18n/index'], 'active' => Core::checkMCA(null, 'i18n', '*')],
             ['icon' => 'gears', 'label' => Yii::t('app','Services'), 'url' => ['/service/index'], 'active' => Core::checkMCA(null, 'service', '*')],
+            ['icon' => 'tasks', 'label' => Yii::t('app','Task Logs'), 'url' => ['/task/index'], 'active' => Core::checkMCA(null, 'task', '*')],
         ];
         return array_merge($default, $this->loadModuleItem('admin'));
     }
