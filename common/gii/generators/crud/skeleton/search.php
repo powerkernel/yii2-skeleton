@@ -97,7 +97,10 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
         <?= implode("\n        ", $searchConditions) ?>
 
         //$query->andFilterWhere([
-        //    'DATE(FROM_UNIXTIME(`created_at`))' => $this->created_at,
+        //    'DATE(CONVERT_TZ(FROM_UNIXTIME(`created_at`), :UTC, :ATZ))' => $this->created_at,
+        //])->params([
+        //    ':UTC'=>'+00:00',
+        //    ':ATZ'=>date('P')
         //]);
 
         return $dataProvider;
