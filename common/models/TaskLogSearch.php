@@ -74,7 +74,10 @@ class TaskLogSearch extends TaskLog
             ->andFilterWhere(['like', 'result', $this->result]);
 
         $query->andFilterWhere([
-            'DATE(FROM_UNIXTIME(`created_at`))' => $this->created_at,
+            'DATE(CONVERT_TZ(FROM_UNIXTIME(`created_at`), :UTC, :ATZ))' => $this->created_at,
+        ])->params([
+            ':UTC'=>'+00:00',
+            ':ATZ'=>date('P')
         ]);
 
         return $dataProvider;

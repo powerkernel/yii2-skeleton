@@ -69,10 +69,6 @@ class AccountSearch extends Account
             'status' => $this->status,
             //'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'DATE(CONVERT_TZ(FROM_UNIXTIME(`created_at`), :UTC, :ATZ))' => $this->created_at,
-        ])->params([
-            ':UTC'=>'+00:00',
-            ':ATZ'=>date('P')
         ]);
 
         $query->andFilterWhere(['like', 'seo_name', $this->seo_name])
@@ -86,9 +82,12 @@ class AccountSearch extends Account
             ->andFilterWhere(['like', 'language', $this->language])
             ->andFilterWhere(['like', 'timezone', $this->timezone]);
 
-        //$query->andFilterWhere([
-        //    'DATE(FROM_UNIXTIME(`created_at`))' => $this->created_at,
-        //]);
+        $query->andFilterWhere([
+            'DATE(CONVERT_TZ(FROM_UNIXTIME(`created_at`), :UTC, :ATZ))' => $this->created_at,
+        ])->params([
+            ':UTC'=>'+00:00',
+            ':ATZ'=>date('P')
+        ]);
 
         return $dataProvider;
     }
