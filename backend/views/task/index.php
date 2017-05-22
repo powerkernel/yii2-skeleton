@@ -1,5 +1,6 @@
 <?php
 
+use common\models\TaskLog;
 use yii\grid\GridView;
 use yii\jui\DatePicker;
 use yii\widgets\Pjax;
@@ -31,7 +32,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                         //['class' => 'yii\grid\SerialColumn'],
 
                         'id',
-                        'task',
+                        ['attribute' => 'task', 'value' => function ($model){return $model->task;}, 'filter'=> TaskLog::getTaskList()],
                         'result:ntext',
                         //'created_at:dateTime',
                         //'updated_at',
