@@ -1,4 +1,5 @@
 <?php
+
 namespace frontend\controllers;
 
 
@@ -84,11 +85,11 @@ class SiteController extends MainController
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
         /* found */
-        $page=$model->content;
+        $page = $model->content;
 
         /* redirect */
-        $class=get_class(Yii::$app->urlManager);
-        if($class=='yii\web\UrlManager' && Yii::$app->request->url!=$page->getViewUrl()){
+        $class = get_class(Yii::$app->urlManager);
+        if ($class == 'yii\web\UrlManager' && Yii::$app->request->url != $page->getViewUrl()) {
             return $this->redirect($page->getViewUrl());
         }
 
@@ -118,14 +119,14 @@ class SiteController extends MainController
         $metaTags[] = ['property' => 'og:type', 'content' => 'article']; // article, product, profile etc
         $metaTags[] = ['property' => 'og:image', 'content' => $page->thumbnail]; //best 1200 x 630
         $metaTags[] = ['property' => 'og:url', 'content' => $page->getViewUrl(true)];
-        if($appId=Setting::getValue('fbAppId')){
-            $metaTags[]=['property' => 'fb:app_id', 'content' => $appId];
+        if ($appId = Setting::getValue('fbAppId')) {
+            $metaTags[] = ['property' => 'fb:app_id', 'content' => $appId];
         }
         //$metaTags[]=['property' => 'fb:app_id', 'content' => ''];
         //$metaTags[]=['property' => 'fb:admins', 'content' => ''];
         /* Twitter */
-        $metaTags[]=['name'=>'twitter:card', 'content'=>'summary_large_image'];
-        $metaTags[]=['name'=>'twitter:site', 'content'=>Setting::getValue('twitterSite')];
+        $metaTags[] = ['name' => 'twitter:card', 'content' => 'summary_large_image'];
+        $metaTags[] = ['name' => 'twitter:site', 'content' => Setting::getValue('twitterSite')];
 
 //        $metaTags[]=['name'=>'twitter:title', 'content'=>$title];
 //        $metaTags[]=['name'=>'twitter:description', 'content'=>$description];
@@ -147,9 +148,9 @@ class SiteController extends MainController
             'http://schema.org/url' => $page->getViewUrl(true),
             'http://schema.org/image' => (object)[
                 '@type' => 'ImageObject',
-                'http://schema.org/url' => !empty($imageObject['url'])?$imageObject['url']:'',
-                'http://schema.org/width' => !empty($imageObject['width'])?$imageObject['width']:'',
-                'http://schema.org/height' => !empty($imageObject['height'])?$imageObject['height']:''
+                'http://schema.org/url' => !empty($imageObject['url']) ? $imageObject['url'] : '',
+                'http://schema.org/width' => !empty($imageObject['width']) ? $imageObject['width'] : '',
+                'http://schema.org/height' => !empty($imageObject['height']) ? $imageObject['height'] : ''
             ],
             'http://schema.org/author' => (object)[
                 '@type' => 'Organization',
@@ -305,8 +306,9 @@ EOB;
      * @param null $q
      * @return string|Response
      */
-    public function actionSearch($q=null) {
-        if(empty($q)){
+    public function actionSearch($q = null)
+    {
+        if (empty($q)) {
             return $this->redirect(Yii::$app->request->referrer);
         }
 
@@ -323,12 +325,12 @@ EOB;
 
 
         /* js */
-        $cx=Setting::getValue('googleCustomSearch');
-        if(empty($cx)){
+        $cx = Setting::getValue('googleCustomSearch');
+        if (empty($cx)) {
             return $this->redirect(Yii::$app->homeUrl);
         }
 
-        $js=<<<EOB
+        $js = <<<EOB
 (function() {
     var cx = "{$cx}";
     var gcse = document.createElement('script');
@@ -345,10 +347,9 @@ EOB;
         return $this->render('search');
     }
 
-//    public function actionTest(){
-//        $url='https://www.youtube.com/embed/UODiiDFDTBg';
-//        preg_match('/embed\/(\w+)/i', $url, $matches);
-//        var_dump($matches[1]);
-//    }
+    public function actionTest()
+    {
+
+    }
 
 }

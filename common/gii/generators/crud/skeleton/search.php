@@ -96,12 +96,14 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
         // grid filtering conditions
         <?= implode("\n        ", $searchConditions) ?>
 
-        //$query->andFilterWhere([
-        //    'DATE(CONVERT_TZ(FROM_UNIXTIME(`created_at`), :UTC, :ATZ))' => $this->created_at,
-        //])->params([
-        //    ':UTC'=>'+00:00',
-        //    ':ATZ'=>date('P')
-        //]);
+        //if(!empty($this->created_at)){
+        //    $query->andFilterWhere([
+        //        'DATE(CONVERT_TZ(FROM_UNIXTIME(`created_at`), :UTC, :ATZ))' => $this->created_at,
+        //    ])->params([
+        //        ':UTC'=>'+00:00',
+        //        ':ATZ'=>date('P')
+        //    ]);
+        //}
 
         return $dataProvider;
     }
