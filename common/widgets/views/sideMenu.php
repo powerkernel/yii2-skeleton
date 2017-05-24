@@ -14,17 +14,26 @@ $this->registerJs('$(".nav-home").on("click", function(){window.location.replace
 
 <?php foreach ($items as $item): ?>
     <?php if(!isset($item['enabled']) or $item['enabled']===true):?>
-        <?php if(!empty($item['url'])):?>
-        <li class="<?= empty($item['active']) ? '' : 'active' ?>">
-            <a href="<?= Yii::$app->urlManager->createUrl($item['url']) ?>">
-                <?= Icon::widget(['icon' => $item['icon'] ? $item['icon'] : 'link']) ?>
-                <span><?= $item['label'] ?></span>
+        <li class="treeview <?= $item['active']?'active menu-open':'' ?>">
+            <a href="#">
+                <?= Icon::widget(['icon'=>$item['icon']]) ?> <span><?= $item['title'] ?></span>
+                <span class="pull-right-container">
+                    <?= Icon::widget(['icon'=>'angle-left pull-right']) ?>
+                </span>
             </a>
+            <ul class="treeview-menu">
+
+            <?php foreach ($item['items'] as $menu): ?>
+                    <li class="<?= empty($menu['active']) ? '' : 'active' ?>">
+                        <a href="<?= Yii::$app->urlManager->createUrl($menu['url']) ?>">
+                            <?= Icon::widget(['icon' => $menu['icon'] ? $menu['icon'] : 'link']) ?>
+                            <span><?= $menu['label'] ?></span>
+                        </a>
+                    </li>
+            <?php endforeach;?>
+            </ul>
         </li>
-        <?php else :?>
-        <li class="header">
-            <?= $item['label'] ?>
-        </li>
-        <?php endif;?>
+
+
     <?php endif;?>
 <?php endforeach; ?>
