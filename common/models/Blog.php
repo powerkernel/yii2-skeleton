@@ -80,6 +80,21 @@ class Blog extends ActiveRecord
         return Yii::t('app', 'Unknown');
     }
 
+    /**
+     * color status text
+     * @return mixed|string
+     */
+    public function getStatusColorText()
+    {
+        $status = $this->status;
+        if ($status == self::STATUS_PUBLISHED) {
+            return '<span class="label label-success">' . $this->statusText . '</span>';
+        }
+        if ($status == self::STATUS_DRAFT) {
+            return '<span class="label label-default">' . $this->statusText . '</span>';
+        }
+        return $this->statusText;
+    }
 
     /**
      * @inheritdoc

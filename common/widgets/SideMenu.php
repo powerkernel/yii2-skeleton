@@ -130,8 +130,7 @@ class SideMenu extends Widget
             'title' => Yii::t('app', 'My Account'),
             'icon' => 'user',
             'items' => [
-                //['label' => Yii::t('app', 'Personal settings')],
-                ['icon' => 'user', 'label' => Yii::t('app', 'Profile'), 'url' => ['/account/index'], 'active' => Core::checkMCA(null, 'account', 'index')],
+                ['icon' => 'id-card', 'label' => Yii::t('app', 'Profile'), 'url' => ['/account/index'], 'active' => Core::checkMCA(null, 'account', 'index')],
                 ['icon' => 'envelope', 'label' => Yii::t('app', 'Email'), 'url' => ['/account/email'], 'active' => Core::checkMCA(null, 'account', 'email')],
                 ['icon' => 'lock', 'label' => Yii::t('app', 'Password'), 'url' => ['/account/password'], 'active' => Core::checkMCA(null, 'account', 'password')],
                 ['icon' => 'puzzle-piece', 'label' => Yii::t('app', 'Linked Accounts'), 'url' => ['/account/linked'], 'active' => Core::checkMCA(null, 'account', 'linked')],
@@ -144,7 +143,7 @@ class SideMenu extends Widget
             'enabled'=> Yii::$app->params['enableBlog'] && Yii::$app->user->can('author'),
             'icon' => 'rss-square',
             'items' => [
-                ['icon' => 'rss-square', 'label' => Yii::t('app', 'My Blog'), 'url' => ['/blog/manage'], 'active' => Core::checkMCA(null, 'blog', 'manage'), 'enabled' => Yii::$app->params['enableBlog'] && Yii::$app->user->can('author')],
+                ['icon' => 'rss', 'label' => Yii::t('app', 'My Blog'), 'url' => ['/blog/manage'], 'active' => Core::checkMCA(null, 'blog', 'manage'), 'enabled' => Yii::$app->params['enableBlog'] && Yii::$app->user->can('author')],
                 ['icon' => 'pencil-square', 'label' => Yii::t('app', 'Write'), 'url' => ['/blog/create'], 'active' => Core::checkMCA(null, 'blog', 'create'), 'enabled' => Yii::$app->params['enableBlog'] && Yii::$app->user->can('author')],
             ]
         ];

@@ -2,7 +2,6 @@
 
 use common\models\Banner;
 use common\models\Message;
-use frontend\widgets\CarouselBanner;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
@@ -49,7 +48,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                         // 'created_at',
                         // 'updated_at',
                         //['attribute' => 'created_at', 'value' => 'created_at', 'format' => 'dateTime', 'filter' => DatePicker::widget(['model' => $searchModel, 'attribute' => 'created_at', 'dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']])],
-                        ['attribute' => 'status', 'value' => function ($model){return $model->statusText;}, 'filter'=> Banner::getStatusOption()],
+                        ['attribute' => 'status', 'value' => function ($model){return $model->statusColorText;}, 'filter'=> Banner::getStatusOption(), 'format'=>'raw'],
                         ['class' => 'yii\grid\ActionColumn'],
                     ],
                 ]); ?>
