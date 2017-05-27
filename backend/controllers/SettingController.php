@@ -144,6 +144,8 @@ class SettingController extends BackendController
             ['key' => 'twitterSite', 'value' => '', 'title' => 'Twitter Card Site', 'description' => '@username for the website used', 'group' => 'Social', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
 
             /* API */
+            ['key' => 'bitly', 'value' => '', 'title' => 'Bitly Token', 'description' => 'Bitly API token', 'group' => 'API', 'type' => 'passwordInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
+
             ['key' => 'reCaptchaKey', 'value' => '', 'title' => 'reCaptcha Site Key', 'description' => 'reCaptcha Site Key', 'group' => 'API', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
             ['key' => 'reCaptchaSecret', 'value' => '', 'title' => 'reCaptcha Secret', 'description' => 'reCaptcha Secret', 'group' => 'API', 'type' => 'passwordInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
 
@@ -170,6 +172,8 @@ class SettingController extends BackendController
             ['key' => 'zopim', 'value' => '', 'title' => 'Zopim Chat', 'description' => 'Zopim ID: 5d8f1e3c8f77c45608ada76d51256aad', 'group' => 'Enhancements', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
             ['key' => 'addthis', 'value' => '', 'title' => 'Addthis', 'description' => 'Addthis ID: ra-123a1234567890b1', 'group' => 'Enhancements', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
             ['key' => 'headJs', 'value' => '', 'title' => 'Header JS', 'description' => 'Header Javascript', 'group' => 'Enhancements', 'type' => 'textarea', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
+
+
 
             /* Ads */
             ['key' => 'adsense', 'value' => '', 'title' => 'Google Adsense', 'description' => 'Client ID: ca-pub-1234567890123456', 'group' => 'Ads', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
