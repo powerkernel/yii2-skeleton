@@ -1,4 +1,10 @@
 <?php
+/**
+ * @author Harry Tang <harry@modernkernel.com>
+ * @link https://modernkernel.com
+ * @copyright Copyright (c) 2016 Modern Kernel
+ */
+
 
 namespace common\models;
 
@@ -6,22 +12,18 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * AccountSearch represents the model behind the search form about `common\models\Account`.
+ * TaskLogSearch represents the model behind the search form about `common\models\TaskLog`.
  */
-class AccountSearch extends Account
+class TaskLogSearch extends TaskLog
 {
-
-    //public $created_at_picker;
-
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'fullname_changed', 'email_verified', 'role', 'status'], 'integer'],
-            [['seo_name', 'fullname', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'new_email', 'change_email_token', 'language', 'timezone'], 'safe'],
-            [['created_at'], 'safe']
+            [['id', 'updated_at'], 'integer'],
+            [['task', 'result', 'created_at'], 'safe'],
         ];
     }
 
@@ -43,13 +45,14 @@ class AccountSearch extends Account
      */
     public function search($params)
     {
-        $query = Account::find();
+        $query = TaskLog::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['id'=>SORT_DESC]]
+            'sort'=> ['defaultOrder' => ['id'=>SORT_DESC]],
+            //'pagination'=>['pageSize'=>20],
         ]);
 
         $this->load($params);
@@ -63,24 +66,12 @@ class AccountSearch extends Account
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'fullname_changed' => $this->fullname_changed,
-            'email_verified' => $this->email_verified,
-            'role' => $this->role,
-            'status' => $this->status,
             //'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'seo_name', $this->seo_name])
-            ->andFilterWhere(['like', 'fullname', $this->fullname])
-            ->andFilterWhere(['like', 'auth_key', $this->auth_key])
-            ->andFilterWhere(['like', 'password_hash', $this->password_hash])
-            ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token])
-            ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'new_email', $this->new_email])
-            ->andFilterWhere(['like', 'change_email_token', $this->change_email_token])
-            ->andFilterWhere(['like', 'language', $this->language])
-            ->andFilterWhere(['like', 'timezone', $this->timezone]);
+        $query->andFilterWhere(['like', 'task', $this->task])
+            ->andFilterWhere(['like', 'result', $this->result]);
 
         if(!empty($this->created_at)){
             $query->andFilterWhere([
@@ -90,6 +81,7 @@ class AccountSearch extends Account
                 ':ATZ'=>date('P')
             ]);
         }
+
 
         return $dataProvider;
     }

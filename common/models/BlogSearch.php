@@ -109,9 +109,16 @@ class BlogSearch extends Blog
             ->andFilterWhere(['like', '{{%core_blog}}.content', $this->content])
             ->andFilterWhere(['like', '{{%core_blog}}.tags', $this->tags]);
 
-        $query->andFilterWhere([
-            'DATE(FROM_UNIXTIME(`{{%core_blog}}.updated_at`))' => $this->updated_at,
-        ]);
+
+
+        if(!empty($this->updated_at)){
+            $query->andFilterWhere([
+                'DATE(CONVERT_TZ(FROM_UNIXTIME(`{{%core_blog}}.updated_at`), :UTC, :ATZ))' => $this->updated_at,
+            ])->params([
+                ':UTC'=>'+00:00',
+                ':ATZ'=>date('P')
+            ]);
+        }
 
         return $dataProvider;
     }

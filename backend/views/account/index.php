@@ -75,7 +75,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                     //'status',
                     ['attribute' => 'created_at', 'value' => 'created_at', 'format' => 'dateTime', 'filter' => DatePicker::widget(['model' => $searchModel, 'attribute' => 'created_at', 'dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']])],
                     // 'updated_at',
-                    ['attribute' => 'status', 'value' => function ($model){return $model->statusText;}, 'filter'=> Account::getStatusOption()],
+                    ['attribute' => 'status', 'value' => function ($model){return $model->statusColorText;}, 'filter'=> Account::getStatusOption(), 'format'=>'raw'],
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'template'=>'{view} {update}',

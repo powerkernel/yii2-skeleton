@@ -82,6 +82,22 @@ class Account extends ActiveRecord implements IdentityInterface
     }
 
     /**
+     * color status text
+     * @return mixed|string
+     */
+    public function getStatusColorText()
+    {
+        $status = $this->status;
+        if ($status == self::STATUS_ACTIVE) {
+            return '<span class="label label-success">' . $this->statusText . '</span>';
+        }
+        if ($status == self::STATUS_SUSPENDED) {
+            return '<span class="label label-warning">' . $this->statusText . '</span>';
+        }
+        return $this->statusText;
+    }
+
+    /**
      * @inheritdoc
      */
     public static function tableName()
