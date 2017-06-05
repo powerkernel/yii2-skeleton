@@ -4,11 +4,8 @@
  * @link https://modernkernel.com
  * @copyright Copyright (c) 2016 Modern Kernel
  */
-
-use common\widgets\Disqus;
-use frontend\widgets\Adsense;
-use frontend\widgets\LikeButton;
-use frontend\widgets\PlusOneButton;
+use frontend\assets\AMPAsset;
+use frontend\assets\AMPYouTubeAsset;
 
 
 /* @var $this yii\web\View */
@@ -47,6 +44,11 @@ $this->params['subtitle'] = Yii::$app->formatter->asDate($model->published_at);
 //$this->registerJs($js);
 //$css = file_get_contents(__DIR__ . '/view.css');
 //$this->registerCss($css);
+
+if(!empty($model->getEmbedYoutubeID())){
+    AMPYouTubeAsset::register($this);
+}
+AMPAsset::register($this);
 
 ?>
 <div class="blog-view">
