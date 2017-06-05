@@ -7,6 +7,9 @@ return [
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
+            'on afterOpen' => function($event) {
+                $event->sender->createCommand("SET time_zone='+00:00';")->execute();
+            },
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
