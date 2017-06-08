@@ -1,4 +1,5 @@
 <?php
+
 namespace frontend\controllers;
 
 
@@ -109,14 +110,14 @@ class SiteController extends MainController
         $metaTags[] = ['property' => 'og:type', 'content' => 'article']; // article, product, profile etc
         $metaTags[] = ['property' => 'og:image', 'content' => $model->content->thumbnail]; //best 1200 x 630
         $metaTags[] = ['property' => 'og:url', 'content' => $model->content->getViewUrl(true)];
-        if($appId=Setting::getValue('fbAppId')){
-            $metaTags[]=['property' => 'fb:app_id', 'content' => $appId];
+        if ($appId = Setting::getValue('fbAppId')) {
+            $metaTags[] = ['property' => 'fb:app_id', 'content' => $appId];
         }
         //$metaTags[]=['property' => 'fb:app_id', 'content' => ''];
         //$metaTags[]=['property' => 'fb:admins', 'content' => ''];
         /* Twitter */
-        $metaTags[]=['name'=>'twitter:card', 'content'=>'summary_large_image'];
-        $metaTags[]=['name'=>'twitter:site', 'content'=>Setting::getValue('twitterSite')];
+        $metaTags[] = ['name' => 'twitter:card', 'content' => 'summary_large_image'];
+        $metaTags[] = ['name' => 'twitter:site', 'content' => Setting::getValue('twitterSite')];
 
 //        $metaTags[]=['name'=>'twitter:title', 'content'=>$title];
 //        $metaTags[]=['name'=>'twitter:description', 'content'=>$description];
@@ -138,9 +139,9 @@ class SiteController extends MainController
             'http://schema.org/url' => Yii::$app->request->absoluteUrl,
             'http://schema.org/image' => (object)[
                 '@type' => 'ImageObject',
-                'http://schema.org/url' => !empty($imageObject['url'])?$imageObject['url']:'',
-                'http://schema.org/width' => !empty($imageObject['width'])?$imageObject['width']:'',
-                'http://schema.org/height' => !empty($imageObject['height'])?$imageObject['height']:''
+                'http://schema.org/url' => !empty($imageObject['url']) ? $imageObject['url'] : '',
+                'http://schema.org/width' => !empty($imageObject['width']) ? $imageObject['width'] : '',
+                'http://schema.org/height' => !empty($imageObject['height']) ? $imageObject['height'] : ''
             ],
             'http://schema.org/author' => (object)[
                 '@type' => 'Organization',
@@ -296,8 +297,9 @@ EOB;
      * @param null $q
      * @return string|Response
      */
-    public function actionSearch($q=null) {
-        if(empty($q)){
+    public function actionSearch($q = null)
+    {
+        if (empty($q)) {
             return $this->redirect(Yii::$app->request->referrer);
         }
 
@@ -314,12 +316,12 @@ EOB;
 
 
         /* js */
-        $cx=Setting::getValue('googleCustomSearch');
-        if(empty($cx)){
+        $cx = Setting::getValue('googleCustomSearch');
+        if (empty($cx)) {
             return $this->redirect(Yii::$app->homeUrl);
         }
 
-        $js=<<<EOB
+        $js = <<<EOB
 (function() {
     var cx = "{$cx}";
     var gcse = document.createElement('script');
@@ -336,10 +338,5 @@ EOB;
         return $this->render('search');
     }
 
-//    public function actionTest(){
-//        $url='https://www.youtube.com/embed/UODiiDFDTBg';
-//        preg_match('/embed\/(\w+)/i', $url, $matches);
-//        var_dump($matches[1]);
-//    }
 
 }
