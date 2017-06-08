@@ -29,6 +29,10 @@ if (!YII_ENV_TEST) {
                 'class' => 'yii\gii\generators\model\Generator',
                 'templates' => ['skeleton' => '@common/gii/generators/model/skeleton']
             ],
+            'module' => [
+                'class' => 'yii\gii\generators\module\Generator',
+                'templates' => ['skeleton' => '@common/gii/generators/module/skeleton']
+            ],
         ],
     ];
 }

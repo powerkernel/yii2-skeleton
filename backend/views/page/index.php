@@ -43,7 +43,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                     // 'updated_by',
                     // 'created_at',
                     // 'updated_at',
-                    ['attribute' => 'status', 'value' => function ($model){return $model->statusText;}, 'filter'=> PageData::getStatusOption()],
+                    ['attribute' => 'status', 'value' => function ($model){return $model->statusColorText;}, 'filter'=> PageData::getStatusOption(), 'format'=>'raw'],
                     [
                         'class' => 'yii\grid\ActionColumn',
                     ],

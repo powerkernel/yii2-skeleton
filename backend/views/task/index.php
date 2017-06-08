@@ -1,13 +1,12 @@
 <?php
 
-use common\models\Banner;
-use common\models\Message;
-use yii\helpers\Html;
+use common\models\TaskLog;
 use yii\grid\GridView;
+use yii\jui\DatePicker;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\BannerSearch */
+/* @var $searchModel common\models\TaskLogSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 
@@ -21,14 +20,9 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
 //$css=file_get_contents(__DIR__.'/index.css');
 //$this->registerCss($css);
 ?>
-<div class="banner-index">
+<div class="task-log-index">
     <div class="box box-primary">
         <div class="box-body">
-
-
-            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-
             <?php Pjax::begin(); ?>
             <div class="table-responsive">
                 <?= GridView::widget([
@@ -38,26 +32,26 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                         //['class' => 'yii\grid\SerialColumn'],
 
                         'id',
-                        'title',
-                        //'lang',
-                        ['attribute'=>'lang', 'filter'=>Message::getLocaleList()],
-                        //'text_content:ntext',
-                        //'link_url:url',
-                        //'link_option',
-                        // 'status',
-                        // 'created_at',
-                        // 'updated_at',
-                        //['attribute' => 'created_at', 'value' => 'created_at', 'format' => 'dateTime', 'filter' => DatePicker::widget(['model' => $searchModel, 'attribute' => 'created_at', 'dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']])],
-                        ['attribute' => 'status', 'value' => function ($model){return $model->statusColorText;}, 'filter'=> Banner::getStatusOption(), 'format'=>'raw'],
-                        ['class' => 'yii\grid\ActionColumn'],
+                        ['attribute' => 'task', 'value' => function ($model){return $model->task;}, 'filter'=> TaskLog::getTaskList()],
+                        'result:ntext',
+                        //'created_at:dateTime',
+                        //'updated_at',
+                        [
+                            'attribute' => 'created_at',
+                            'value' => 'created_at',
+                            'format' => 'dateTime',
+                            'filter' => DatePicker::widget(['model' => $searchModel, 'attribute' => 'created_at', 'dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']]),
+                            'contentOptions'=>['style'=>'min-width: 80px']
+                        ],
+                        //['attribute' => 'status', 'value' => function ($model){return $model->statusText;}, 'filter'=>''],
+                        [
+                                'class' => 'yii\grid\ActionColumn',
+                                'template'=>'{view} {delete}'
+                        ],
                     ],
                 ]); ?>
             </div>
             <?php Pjax::end(); ?>
-            <p>
-                <?= Html::a(Yii::t('app', 'Create Banner'), ['create'], ['class' => 'btn btn-success']) ?>
-            </p>
-
         </div>
         <!-- Loading (remove the following to stop the loading)-->
         <div class="overlay grid-view-overlay hidden">
@@ -65,5 +59,4 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
         </div>
         <!-- end loading -->
     </div>
-
 </div>

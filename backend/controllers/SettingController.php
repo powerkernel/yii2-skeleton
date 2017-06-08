@@ -109,6 +109,8 @@ class SettingController extends BackendController
             ['key' => 'description', 'value' => 'Skeleton for Yii Framework', 'title' => 'Description', 'description' => 'Homepage description', 'group' => 'General', 'type' => 'textInput', 'data' => '[]', 'default' => 'Skeleton for Yii Framework', 'rules' => json_encode(['required' => []])],
             ['key' => 'language', 'value' => 'en-US', 'title' => 'Language', 'description' => 'Site language', 'group' => 'General', 'type' => 'dropDownList', 'data' => '{LOCALE}', 'default' => 'en-US', 'rules' => json_encode(['required' => []])],
             ['key' => 'timezone', 'value' => 'Asia/Ho_Chi_Minh', 'title' => 'Timezone', 'description' => 'Server Timezone', 'group' => 'General', 'type' => 'dropDownList', 'data' => '{TIMEZONE}', 'default' => 'Asia/Ho_Chi_Minh', 'rules' => json_encode(['required' => []])],
+
+            //['key' => 'urlManagerClass', 'value' => 'common\components\LocaleUrl', 'title' => 'URL Manager Class', 'description' => 'System URL manager class', 'group' => 'General', 'type' => 'dropDownList', 'data' => json_encode(['common\components\LocaleUrl' => 'common\components\LocaleUrl', 'yii\web\UrlManager' => 'yii\web\UrlManager']), 'default' => 'common\components\LocaleUrl', 'rules' => json_encode(['required' => []])],
             ['key' => 'languageUrlCode', 'value' => '0', 'title' => 'Language URL', 'description' => 'Include language code in URL', 'group' => 'General', 'type' => 'dropDownList', 'data' => json_encode(Core::getYesNoOption()), 'default' => '0', 'rules' => json_encode(['required' => [], 'boolean' => []])],
             ['key' => 'debug', 'value' => '0', 'title' => 'Debug Mode', 'description' => 'Turn debug mode ON/OFF', 'group' => 'General', 'type' => 'dropDownList', 'data' => json_encode(Core::getYesNoOption()), 'default' => '0', 'rules' => json_encode(['required' => [], 'boolean' => []])],
 
@@ -142,6 +144,8 @@ class SettingController extends BackendController
             ['key' => 'twitterSite', 'value' => '', 'title' => 'Twitter Card Site', 'description' => '@username for the website used', 'group' => 'Social', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
 
             /* API */
+            ['key' => 'bitly', 'value' => '', 'title' => 'Bitly Token', 'description' => 'Bitly API token', 'group' => 'API', 'type' => 'passwordInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
+
             ['key' => 'reCaptchaKey', 'value' => '', 'title' => 'reCaptcha Site Key', 'description' => 'reCaptcha Site Key', 'group' => 'API', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
             ['key' => 'reCaptchaSecret', 'value' => '', 'title' => 'reCaptcha Secret', 'description' => 'reCaptcha Secret', 'group' => 'API', 'type' => 'passwordInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
 
@@ -168,6 +172,8 @@ class SettingController extends BackendController
             ['key' => 'zopim', 'value' => '', 'title' => 'Zopim Chat', 'description' => 'Zopim ID: 5d8f1e3c8f77c45608ada76d51256aad', 'group' => 'Enhancements', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
             ['key' => 'addthis', 'value' => '', 'title' => 'Addthis', 'description' => 'Addthis ID: ra-123a1234567890b1', 'group' => 'Enhancements', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
             ['key' => 'headJs', 'value' => '', 'title' => 'Header JS', 'description' => 'Header Javascript', 'group' => 'Enhancements', 'type' => 'textarea', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
+
+
 
             /* Ads */
             ['key' => 'adsense', 'value' => '', 'title' => 'Google Adsense', 'description' => 'Client ID: ca-pub-1234567890123456', 'group' => 'Ads', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],

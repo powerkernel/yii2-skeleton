@@ -28,7 +28,7 @@ class BlogSearch extends Blog
     {
         return [
             [['id', 'created_by', 'views', 'status'], 'integer'],
-            [['title', 'desc', 'content', 'tags', 'created_at', 'updated_at'], 'safe'],
+            [['language', 'title', 'desc', 'content', 'tags', 'created_at', 'updated_at'], 'safe'],
             [['fullname'], 'safe']
         ];
     }
@@ -102,15 +102,23 @@ class BlogSearch extends Blog
             //'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', '{{%core_blog}}.title', $this->title])
+        $query->andFilterWhere(['like', '{{%core_blog}}.language', $this->language])
+            ->andFilterWhere(['like', '{{%core_blog}}.title', $this->title])
             ->andFilterWhere(['like', '{{%core_account}}.fullname', $this->fullname])
             ->andFilterWhere(['like', '{{%core_blog}}.desc', $this->desc])
             ->andFilterWhere(['like', '{{%core_blog}}.content', $this->content])
             ->andFilterWhere(['like', '{{%core_blog}}.tags', $this->tags]);
 
-        $query->andFilterWhere([
-            'DATE(FROM_UNIXTIME(`{{%core_blog}}.updated_at`))' => $this->updated_at,
-        ]);
+
+
+        if(!empty($this->updated_at)){
+            $query->andFilterWhere([
+                'DATE(CONVERT_TZ(FROM_UNIXTIME(`{{%core_blog}}.updated_at`), :UTC, :ATZ))' => $this->updated_at,
+            ])->params([
+                ':UTC'=>'+00:00',
+                ':ATZ'=>date('P')
+            ]);
+        }
 
         return $dataProvider;
     }

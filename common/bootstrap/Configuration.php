@@ -56,7 +56,8 @@ class Configuration extends Component
     /**
      * config app
      */
-    protected function configApp(){
+    protected function configApp()
+    {
         $timezone = Setting::getValue('timezone');
         $language = Setting::getValue('language');
         Yii::$app->language = $language;
@@ -83,14 +84,12 @@ EOB;
     }
 
 
-
-
     /**
      * Enable HSTS
      */
     protected function configHsts()
     {
-        if(!is_a(Yii::$app, 'yii\console\Application')){
+        if (!is_a(Yii::$app, 'yii\console\Application')) {
             if (Yii::$app->request->isSecureConnection) {
                 $response = Yii::$app->response;
                 $response->headers->set('Strict-Transport-Security', 'max-age=15552000');
@@ -278,11 +277,16 @@ EOB;
         }
 
         /* database value lang url */
-        $enableDefaultLanguageUrlCode=(boolean)Setting::getValue('languageUrlCode');
+        $enableDefaultLanguageUrlCode = (boolean)Setting::getValue('languageUrlCode');
         /* disable if we are in backend */
-        if(Yii::$app->id=='app-backend'){
-            $enableDefaultLanguageUrlCode=false;
+        if (Yii::$app->id == 'app-backend') {
+            $enableDefaultLanguageUrlCode = false;
         }
+
+        Yii::$container->set('yii\web\UrlManager', [
+            /* config */
+            'rules' => $urlManager['rules']
+        ]);
 
         Yii::$container->set('common\components\LocaleUrl', [
             /* config */
@@ -294,6 +298,8 @@ EOB;
             'ignoreLanguageUrlPatterns' => $urlManager['ignoreLanguageUrlPatterns'],
             'rules' => $urlManager['rules']
         ]);
+
+
     }
 
     /**

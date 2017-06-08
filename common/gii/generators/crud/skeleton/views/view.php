@@ -55,6 +55,7 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
     }
 }
 ?>
+                //['attribute' => 'status', 'value' => $model->statusColorText, 'format'=>'raw'],
         ],
     ]) ?>
             </div>

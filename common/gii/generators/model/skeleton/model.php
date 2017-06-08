@@ -61,8 +61,8 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     public static function getStatusOption($e = null)
     {
         $option = [
-         self::STATUS_ACTIVE => <?= $generator->enableI18N?"Yii::t('$generator->messageCategory', 'Active')":"'Active'" ?>,
-         self::STATUS_INACTIVE => <?= $generator->enableI18N?"Yii::t('$generator->messageCategory', 'Inactive')":"'Inactive'" ?>,
+         self::STATUS_ACTIVE => <?= $generator->enableI18N?"Yii::\$app->getModule('$generator->messageCategory')->t('Active')":"'Active'" ?>,
+         self::STATUS_INACTIVE => <?= $generator->enableI18N?"Yii::\$app->getModule('$generator->messageCategory')->t('Inactive')":"'Inactive'" ?>,
         ];
         if (is_array($e))
             foreach ($e as $i)
@@ -81,10 +81,30 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
         if(!empty($status) && in_array($status, array_keys($list))){
             return $list[$status];
         }
-        return Yii::t('<?= $generator->messageCategory ?>', 'Unknown');
+        return Yii::$app->getModule('<?= $generator->messageCategory ?>')->t('Unknown');
     }
 
+    /**
+     * get status color text
+     * @return string
+     */
+    public function getStatusColorText(){
+        $status = $this->status;
+        $list = self::getStatusOption();
 
+        $color='default';
+        if($status==self::STATUS_ACTIVE){
+            $color='primary';
+        }
+        if($status==self::STATUS_INACTIVE){
+            $color='danger';
+        }
+
+        if (!empty($status) && in_array($status, array_keys($list))) {
+            return '<span class="label label-'.$color.'">'.$list[$status].'</span>';
+        }
+        return '<span class="label label-'.$color.'">'.Yii::$app->getModule('<?= $generator->messageCategory ?>')->t('Unknown').'</span>';
+    }
 
 
 
@@ -121,7 +141,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     {
         return [
 <?php foreach ($labels as $name => $label): ?>
-            <?= "'$name' => " . $generator->generateString($label) . ",\n" ?>
+            <?= "'$name' => Yii::\$app->getModule('$generator->messageCategory')->t('$label'),\n" ?>
 <?php endforeach; ?>
         ];
     }
