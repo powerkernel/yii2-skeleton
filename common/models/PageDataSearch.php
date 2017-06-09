@@ -50,7 +50,7 @@ class PageDataSearch extends PageData
         }
 
         $query->andFilterWhere([
-            'id_page' => $this->id_page,
+            //'id_page' => $this->id_page,
             'status' => $this->status,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
@@ -58,7 +58,8 @@ class PageDataSearch extends PageData
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'language', $this->language])
+        $query->andFilterWhere(['like', 'id_page', $this->id_page])
+            ->andFilterWhere(['like', 'language', $this->language])
             ->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'content', $this->content])

@@ -24,12 +24,14 @@ $this->registerJs('$(".nav-home").on("click", function(){window.location.replace
             <ul class="treeview-menu">
 
             <?php foreach ($item['items'] as $menu): ?>
+                <?php if(!isset($menu['enabled']) or $menu['enabled']===true):?>
                     <li class="<?= empty($menu['active']) ? '' : 'active' ?>">
                         <a href="<?= Yii::$app->urlManager->createUrl($menu['url']) ?>">
                             <?= Icon::widget(['icon' => $menu['icon'] ? $menu['icon'] : 'link']) ?>
                             <span><?= $menu['label'] ?></span>
                         </a>
                     </li>
+                <?php endif;?>
             <?php endforeach;?>
             </ul>
         </li>
