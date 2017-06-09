@@ -1,0 +1,32 @@
+<?php
+/**
+ * @var \omnilight\scheduling\Schedule $schedule
+ */
+
+
+use common\Core;
+
+$local = Core::isLocalhost();
+$time = $local ? '* * * * *' : '0 0 1 * *';
+
+$schedule->call(function (\yii\console\Application $app) {
+
+    Yii::$app->cache->flush();
+    Yii::$app->db->schema->refresh();
+
+    $output = Yii::t('app','All values from cache deleted.');
+
+    $log = new \common\models\TaskLog();
+    $log->task = basename(__FILE__, '.php');
+    $log->result = $output;
+    $log->save();
+    /* delete old logs never bad */
+    $period = 7 * 24 * 60 * 60; // 7 days
+    $point = time() - $period;
+    \common\models\TaskLog::deleteAll('task=:task AND created_at<=:point', [
+        ':task' => basename(__FILE__, '.php'),
+        ':point' => $point
+    ]);
+
+
+})->cron($time);
