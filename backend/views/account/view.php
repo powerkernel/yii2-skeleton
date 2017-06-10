@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Account;
+use common\models\Setting;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -86,7 +87,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php if(Yii::$app->hasModule('billing')):?>
                     <?= Html::a(Yii::t('app', 'Billing Info'), Yii::$app->urlManager->createUrl(['/billing/info/check', 'id'=>$model->id]), ['class' => 'btn btn-primary']) ?>
                 <?php endif;?>
-                <?php if($model->status!=Account::STATUS_SUSPENDED):?>
+
+                <?php if($model->status!=Account::STATUS_SUSPENDED && !Setting::getValue('passwordLessLogin')):?>
                 <?= Html::a(Yii::t('app', 'Send New Password'), ['new-password', 'id' => $model->id], [
                     'class' => 'btn btn-info',
                     'data' => [

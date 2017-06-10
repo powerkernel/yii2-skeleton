@@ -7,6 +7,7 @@ use common\models\Account;
 use common\models\Auth;
 use common\models\LoginForm;
 
+use common\models\Setting;
 use frontend\models\ChangeEmailForm;
 use frontend\models\ChangePasswordForm;
 use frontend\models\PasswordResetRequestForm;
@@ -79,6 +80,9 @@ class AccountController extends Controller
      */
     public function actionPassword()
     {
+        if(Setting::getValue('passwordLessLogin')){
+            return $this->redirect(['index']);
+        }
         $model = new ChangePasswordForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->changePassword()) {
             Yii::$app->session->setFlash('success', Yii::t('app', 'Success! Your Password has been changed!'));
@@ -192,6 +196,9 @@ class AccountController extends Controller
      */
     public function actionSignup()
     {
+        if(Setting::getValue('passwordLessLogin')){
+            return $this->redirect(['login']);
+        }
         //$this->layout = 'main';
         $this->layout = 'login';
         $model = new SignupForm();
@@ -226,9 +233,20 @@ class AccountController extends Controller
         }
 
         $model = new LoginForm();
+        $model->setScenario('default');
+        $passLess=Setting::getValue('passwordLessLogin');
+        if($passLess){
+            $model->setScenario('passwordLess');
+        }
 
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->login()){
+                return $this->goBack();
+            }
+            else {
+                $this->redirect(['login']);
+            }
+
         } else {
             return $this->render('login', [
                 'model' => $model,
@@ -244,6 +262,9 @@ class AccountController extends Controller
      */
     public function actionReset()
     {
+        if(Setting::getValue('passwordLessLogin')){
+            return $this->redirect(['login']);
+        }
         $this->layout = 'login';
         $model = new PasswordResetRequestForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {

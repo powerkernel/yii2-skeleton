@@ -1,4 +1,5 @@
 <?php
+use common\models\Setting;
 use modernkernel\bootstrapsocial\Button;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -42,6 +43,9 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
 <div class="account-login-index">
     <div class="row">
         <div style="" class="col-xs-12">
+            <h1 class="box-title text-center"><?= Yii::t('app', 'Login / Register') ?></h1>
+            <div><hr /></div>
+
             <?php if(Yii::$app->authClientCollection->hasClient('facebook')):?>
                 <?= Button::widget([
                     'button' => 'facebook',
@@ -62,23 +66,28 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
                 <hr/>
             </div>
 
+            <?php if(!Yii::$app->session->hasFlash('info')):?>
             <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
             <?= $form->field($model, 'email') ?>
-            <?= $form->field($model, 'password')->passwordInput() ?>
+            <?php if($model->scenario=='default'):?>
+                <?= $form->field($model, 'password')->passwordInput() ?>
+            <?php endif;?>
             <?= $form->field($model, 'rememberMe')->checkbox() ?>
             <div class="form-group text-center">
-                <?= Html::submitButton($this->title, ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                <?= Html::submitButton(Yii::t('app', 'Login'), ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
             </div>
             <?php ActiveForm::end(); ?>
+            <?php endif;?>
 
+            <?php if(!Setting::getValue('passwordLessLogin')):?>
             <div>
                 <hr/>
             </div>
-
             <div class="text-center">
                 <?= Html::a(Yii::t('app', 'Sign up'), Yii::$app->urlManagerFrontend->createUrl(['/account/signup']), ['class' => 'btn btn-danger']); ?>
                 <?= Html::a(Yii::t('app', 'Forgot password?'), Yii::$app->urlManagerFrontend->createUrl(['/account/reset']), ['class' => 'btn btn-default']); ?>
             </div>
+            <?php endif;?>
 
         </div>
     </div>

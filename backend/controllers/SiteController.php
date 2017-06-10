@@ -19,6 +19,9 @@ class SiteController extends BackendController
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
+            'login' => [
+                'class' => 'common\components\LoginAction',
+            ],
             'flickr-upload' => [
                 'class' => 'common\components\FlickrUploadAction',
             ],

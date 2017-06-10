@@ -481,8 +481,4 @@ class Account extends ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(Auth::className(), ['user_id' => 'id']);
     }
-
-
-
-
 }

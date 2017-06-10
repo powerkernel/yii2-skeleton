@@ -8,6 +8,7 @@
 namespace common\widgets;
 
 use common\Core;
+use common\models\Setting;
 use Yii;
 use \yii\bootstrap\Widget;
 
@@ -132,7 +133,7 @@ class SideMenu extends Widget
             'items' => [
                 ['icon' => 'id-card', 'label' => Yii::t('app', 'Profile'), 'url' => ['/account/index'], 'active' => Core::checkMCA(null, 'account', 'index')],
                 ['icon' => 'envelope', 'label' => Yii::t('app', 'Email'), 'url' => ['/account/email'], 'active' => Core::checkMCA(null, 'account', 'email')],
-                ['icon' => 'lock', 'label' => Yii::t('app', 'Password'), 'url' => ['/account/password'], 'active' => Core::checkMCA(null, 'account', 'password')],
+                ['icon' => 'lock', 'label' => Yii::t('app', 'Password'), 'url' => ['/account/password'], 'active' => Core::checkMCA(null, 'account', 'password'), 'enabled'=>!Setting::getValue('passwordLessLogin')],
                 ['icon' => 'puzzle-piece', 'label' => Yii::t('app', 'Linked Accounts'), 'url' => ['/account/linked'], 'active' => Core::checkMCA(null, 'account', 'linked')],
             ]
         ];

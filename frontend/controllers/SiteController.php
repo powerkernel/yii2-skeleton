@@ -50,6 +50,9 @@ class SiteController extends MainController
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
+            'login' => [
+                'class' => 'common\components\LoginAction',
+            ],
             'flickr-upload' => [
                 'class' => 'common\components\FlickrUploadAction',
             ],
@@ -288,7 +291,7 @@ class SiteController extends MainController
 
         $xml = <<<EOB
 <?xml version="1.0" encoding="utf-8"?>
-<browserconfig>        
+<browserconfig>
     <msapplication>
         <tile>
           <square150x150logo src="{$baseUrl}/mstile-150x150.png"/>
@@ -349,7 +352,6 @@ EOB;
 
     public function actionTest()
     {
-
     }
 
 }

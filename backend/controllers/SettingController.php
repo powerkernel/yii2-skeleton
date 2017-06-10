@@ -119,6 +119,7 @@ class SettingController extends BackendController
             ['key' => 'maxNameChange', 'value' => '1', 'title' => 'Max Name Change', 'description' => 'Max name change allowed', 'group' => 'Account', 'type' => 'textInput', 'data' => '[]', 'default' => '1', 'rules' => json_encode(['required' => [], 'number' => ['min' => -1]])],
             ['key' => 'tokenExpiryTime', 'value' => '3600', 'title' => 'Token Expiry Time', 'description' => 'Expiration time in seconds', 'group' => 'Account', 'type' => 'textInput', 'data' => '[]', 'default' => '3600', 'rules' => json_encode(['required' => [], 'number' => ['min' => 3600]])],
             ['key' => 'rememberMeDuration', 'value' => '2592000', 'title' => 'Remember Me Duration', 'description' => 'Customize the duration of the Remember Me in seconds', 'group' => 'Account', 'type' => 'textInput', 'data' => '[]', 'default' => '2592000', 'rules' => json_encode(['required' => [], 'number' => ['min' => 86400]])],
+            ['key' => 'passwordLessLogin', 'value' => '1', 'title' => 'Password Less Login', 'description' => 'Login without password', 'group' => 'Account', 'type' => 'dropDownList', 'data' => json_encode(Core::getYesNoOption()), 'default' => '1', 'rules' => json_encode(['required' => [], 'boolean' => []])],
 
             /* Blog */
             ['key' => 'blogTitle', 'value' => 'My Blog', 'title' => 'Title', 'description' => 'Blog page title', 'group' => 'Blog', 'type' => 'textInput', 'data' => json_encode(Core::getYesNoOption()), 'default' => 'My Blog', 'rules' => json_encode(['required' => []])],

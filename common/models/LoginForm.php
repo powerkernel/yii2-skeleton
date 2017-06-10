@@ -15,15 +15,18 @@ class LoginForm extends Model
 
     private $_account = false;
 
+    public $admin=false;
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['email', 'password'], 'required'],
-            ['rememberMe', 'boolean'],
-            ['password', 'validatePassword'],
+            [['email'], 'required', 'on'=>['default', 'passwordLess']],
+            [['password'], 'required', 'on'=>['default']],
+            [['rememberMe'], 'boolean'],
+            [['password'], 'validatePassword', 'on'=>['default']],
         ];
     }
 
@@ -67,15 +70,49 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
-            $account=$this->getAccount();
-            /* success login mask email as verified */
-            $account->email_verified=1;
-            $account->save();
-
-            return Yii::$app->user->login($account, $this->rememberMe ? 3600*24*30 : 0);
+            if($this->scenario=='default'){
+                return $this->defaultLogin();
+            }
+            else { // password less login
+                return $this->passwordLessLogin();
+            }
         } else {
             return false;
         }
+    }
+
+    /**
+     * password login
+     * @return bool
+     */
+    protected function defaultLogin(){
+        $account=$this->getAccount();
+        /* success login mask email as verified */
+        $account->email_verified=1;
+        $account->save();
+        return Yii::$app->user->login($account, $this->rememberMe ? Setting::getValue('rememberMeDuration') : 0);
+    }
+
+    /**
+     * password less login
+     */
+    protected function passwordLessLogin(){
+        $login=new Login();
+        $login->email=$this->email;
+        if($this->rememberMe){
+            $login->remember=true;
+        }
+        /* admin ? */
+        if($this->admin){
+            $login->admin=$this->admin;
+        }
+        if($login->save()){
+            Yii::$app->session->setFlash('info', Yii::t('app', 'We have emailed the link to login to {EMAIL}. Click on the button inside the email and you will be all set. Check spam box too if you can\'t find the email in your inbox.', ['EMAIL'=>$this->email]));
+        }
+        else {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'We can not email the link to login to {EMAIL}.', ['EMAIL'=>$this->email]));
+        }
+        return false;
     }
 
     /**
