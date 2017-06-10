@@ -75,6 +75,16 @@ class TaskLog extends ActiveRecord
         $vendors=['harrytang','modernkernel'];
         $options=[];
 
+        /* main */
+        $mainTasks = scandir(Yii::$app->basePath.'/../console/cronjobs');
+        foreach ($mainTasks as $mainTask) {
+            if (preg_match('/^(Task\w+).php$/', $mainTask, $match)) {
+                $name=str_ireplace('.php', '', $mainTask);
+                $options[$name]=$name;
+            }
+        }
+
+        /* vendors */
         foreach($vendors as $vendor){
             $dir = \Yii::$app->vendorPath . '/'.$vendor;
             if (file_exists($dir)) {
