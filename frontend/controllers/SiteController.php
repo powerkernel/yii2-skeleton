@@ -349,9 +349,4 @@ EOB;
 
         return $this->render('search');
     }
-
-    public function actionTest()
-    {
-    }
-
 }

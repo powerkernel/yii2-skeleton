@@ -3,8 +3,16 @@
  * @var \omnilight\scheduling\Schedule $schedule
  */
 
-$vendors=['harrytang','modernkernel'];
+/* main task */
+$mainTasks = scandir(__DIR__);
+foreach ($mainTasks as $mainTask) {
+    if (preg_match('/^(Task\w+).php$/', $mainTask, $match)) {
+        require(__DIR__ .'/'. $mainTask);
+    }
+}
 
+/* vendors tasks */
+$vendors=['harrytang','modernkernel'];
 foreach($vendors as $vendor){
     $dir = \Yii::$app->vendorPath . '/'.$vendor;
     if (file_exists($dir)) {
