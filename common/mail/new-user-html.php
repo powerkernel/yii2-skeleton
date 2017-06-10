@@ -1,4 +1,5 @@
 <?php
+use common\models\Setting;
 use \yii\helpers\Html;
 
 /* @var $user \common\models\Account */
@@ -38,8 +39,10 @@ $loginUrl=Yii::$app->urlManagerFrontend->createAbsoluteUrl(['/account/login']);
                                     <td class="content-block" style="vertical-align: top; padding: 0 0 20px;" valign="top">
                                         <?= Yii::t('app', 'Email: {EMAIL}', ['EMAIL' => Html::encode($user->email)]) ?>
                                         <br>
+                                        <?php if(!Setting::getValue('passwordLessLogin')):?>
                                         <?= Yii::t('app', 'Password: {PASSWORD}', ['PASSWORD' => Html::encode($user->passwordText)]) ?>
                                         <br>
+                                        <?php endif;?>
                                     </td>
                                 </tr>
                                 <tr>
