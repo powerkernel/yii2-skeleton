@@ -8,6 +8,22 @@ $cssLink = __DIR__ . '/backend/web/css';
 $faviconLink = __DIR__ . '/backend/web/favicon';
 $imageLink = __DIR__ . '/backend/web/images';
 $backendLink = __DIR__ . '/frontend/web/backend';
+
+/* rm */
+if(file_exists()){
+	unlink($cssLink);
+}
+if(file_exists()){
+	unlink($faviconLink);
+}
+if(file_exists()){
+	unlink($imageLink);
+}
+if(file_exists()){
+	unlink($backendLink);
+}
+
+/* create links */
 if (!is_link($cssLink)) {
     symlink(__DIR__ . '/frontend/web/css', $cssLink);
 }
