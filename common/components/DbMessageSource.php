@@ -22,10 +22,10 @@ class DbMessageSource extends \yii\i18n\DbMessageSource
     public $enableCaching=true;
 
     /**
-     * Insert missing translation to php file
+     * handle missing translation
      * @param $event MissingTranslationEvent
      */
-    public function insertMissingTranslation($event)
+    public function handleMissingTranslation($event)
     {
         Yii::$app->cache->flush();
         /* find source */
