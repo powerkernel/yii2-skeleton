@@ -35,6 +35,8 @@ class Configuration extends Component
 
         $this->configApp();
 
+        $this->configI18n();
+
         $this->configAuthClient();
 
         $this->configMailer();
@@ -300,6 +302,49 @@ EOB;
         ]);
 
 
+    }
+
+    /**
+     * config i18n
+     */
+    protected function configI18n()
+    {
+        if (Yii::$app->params['mongodb']['i18n']) {
+            Yii::$container->set('yii\i18n\I18N', [
+                'translations' => [
+                    'app*' => [
+                        'class' => 'common\components\MongoDbMessageSource',
+                        'on missingTranslation' => function ($event) {
+                            $event->sender->handleMissingTranslation($event);
+                        },
+                    ],
+                    'main' => [
+                        'class' => 'common\components\MongoDbMessageSource',
+                        'on missingTranslation' => function ($event) {
+                            $event->sender->handleMissingTranslation($event);
+                        },
+                    ],
+                ],
+            ]);
+
+        } else {
+            Yii::$container->set('yii\i18n\I18N', [
+                'translations' => [
+                    'app*' => [
+                        'class' => 'common\components\DbMessageSource',
+                        'on missingTranslation' => function ($event) {
+                            $event->sender->insertMissingTranslation($event);
+                        },
+                    ],
+                    'main' => [
+                        'class' => 'common\components\DbMessageSource',
+                        'on missingTranslation' => function ($event) {
+                            $event->sender->insertMissingTranslation($event);
+                        },
+                    ],
+                ],
+            ]);
+        }
     }
 
     /**

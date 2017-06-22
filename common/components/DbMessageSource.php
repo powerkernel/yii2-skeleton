@@ -46,7 +46,11 @@ class DbMessageSource extends \yii\i18n\DbMessageSource
         //file_put_contents('d:\log1.txt', $event->message);
 
         /* add translate message */
-        Yii::$app->db->createCommand()->insert($this->messageTable, ['id' => $source->id, 'language' => $event->language, 'translation' => $event->message])->execute();
+        try {
+            Yii::$app->db->createCommand()->insert($this->messageTable, ['id' => $source->id, 'language' => $event->language, 'translation' => $event->message])->execute();
+        }catch (yii\db\Exception $e){
+            // just do nothing
+        }
         //file_put_contents('D:\log.txt', 'mission');
 
     }

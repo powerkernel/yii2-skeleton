@@ -12,24 +12,22 @@ return [
             'itemTable'=>'{{%core_auth_item}}',
             'defaultRoles'=>['member']
         ],
-        'i18n' => [
-            'translations' => [
-                'app*' => [
-                    'class' => 'common\components\DbMessageSource',
-                    //'basePath'=>$this->basePath.DIRECTORY_SEPARATOR.'messages',
-                    'on missingTranslation' => function ($event) {
-                        $event->sender->insertMissingTranslation($event);
-                    },
-                ],
-                'main' => [
-                    'class' => 'common\components\DbMessageSource',
-                    //'basePath'=>$this->basePath.DIRECTORY_SEPARATOR.'messages',
-                    'on missingTranslation' => function ($event) {
-                        $event->sender->insertMissingTranslation($event);
-                    },
-                ],
-            ],
-        ],
+//        'i18n' => [
+//            'translations' => [
+//                'app*' => [
+//                    'class' => 'common\components\DbMessageSource',
+//                    'on missingTranslation' => function ($event) {
+//                        $event->sender->insertMissingTranslation($event);
+//                    },
+//                ],
+//                'main' => [
+//                    'class' => 'common\components\DbMessageSource',
+//                    'on missingTranslation' => function ($event) {
+//                        $event->sender->insertMissingTranslation($event);
+//                    },
+//                ],
+//            ],
+//        ],
         'authClientCollection' => [
             'class' => 'yii\authclient\Collection',
         ],
