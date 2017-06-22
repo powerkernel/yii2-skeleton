@@ -13,11 +13,6 @@ return [
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
-        'session' => [
-            'class' => 'yii\web\DbSession',
-            'sessionTable' => '{{%core_session}}',
-            'name' => 'PHPBACKSESSID'
-        ],
         'request'=>[
             'csrfParam'=>'_csrf_b'
         ],

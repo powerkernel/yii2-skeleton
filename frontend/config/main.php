@@ -13,11 +13,6 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
-        'session' => [
-            'class' => 'yii\web\DbSession',
-            'sessionTable' => '{{%core_session}}',
-            'name' => 'PHPFRONTSESSID'
-        ],
 
         'user' => [
             'identityClass' => 'common\models\Account',
