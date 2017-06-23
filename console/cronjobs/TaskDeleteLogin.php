@@ -28,22 +28,20 @@ $schedule->call(function (\yii\console\Application $app) {
         $output = implode(', ', $obj);
     }
 
-    if(empty($output)){
-        $output = Yii::t('app','No login link deleted.');
+    if(!empty($output)){
+        $log = new \common\models\TaskLog();
+        $log->task = basename(__FILE__, '.php');
+        $log->result = $output;
+        $log->save();
     }
 
-
-    $log = new \common\models\TaskLog();
-    $log->task = basename(__FILE__, '.php');
-    $log->result = $output;
-    $log->save();
     /* delete old logs never bad */
-    $period = 7 * 24 * 60 * 60; // 7 days
+    $period = 30 * 24 * 60 * 60; // 30 days
     $point = time() - $period;
     \common\models\TaskLog::deleteAll('task=:task AND created_at<=:point', [
         ':task' => basename(__FILE__, '.php'),
         ':point' => $point
     ]);
 
-
+    unset($app);
 })->cron($time);
