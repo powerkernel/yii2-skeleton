@@ -79,6 +79,9 @@ class BlogController extends MainController
         $thumbnail = Setting::getValue('blogThumbnail');
         $keywords = Setting::getValue('blogKeywords');
 
+        /* canonical */
+        Yii::$app->view->registerLinkTag(['rel' => 'canonical', 'href' => Yii::$app->urlManager->createAbsoluteUrl(['/blog/index'])]);
+
         $metaTags[] = ['name' => 'keywords', 'content' => $keywords];
         $metaTags[] = ['name' => 'description', 'content' => $description];
         /* Facebook */
