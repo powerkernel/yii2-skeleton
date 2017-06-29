@@ -10,6 +10,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\TaskLog;
 use common\models\TaskLogSearch;
+use yii\db\Query;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -52,6 +53,25 @@ class TaskController extends BackendController
             //    ],
             //],
         ];
+    }
+
+    /**
+     * migrate to mongodb
+     */
+    public function actionMgMigrate(){
+        $logs=(new Query())->select('*')->from('{{%core_task_logs}}')->all();
+        $collection = Yii::$app->mongodb->getCollection('tasklogs');
+        foreach($logs as $log){
+            $collection->insert([
+                'task' => $log['task'],
+                'result' => $log['result'],
+                'created_at' => (integer)$log['created_at'],
+                'updated_at' => (integer)$log['updated_at'],
+            ]);
+        }
+        Yii::$app->db->createCommand()->truncateTable('{{%core_task_logs}}')->execute();
+        Yii::$app->session->setFlash('success', 'Migration completed!');
+        return $this->redirect(['index']);
     }
 
     /**

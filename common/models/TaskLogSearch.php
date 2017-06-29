@@ -8,6 +8,7 @@
 
 namespace common\models;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -22,7 +23,8 @@ class TaskLogSearch extends TaskLog
     public function rules()
     {
         return [
-            [['id', 'updated_at'], 'integer'],
+            Yii::$app->params['mongodb']['taskLog'] ? [['_id'], 'safe'] : [['id'], 'integer'],
+            [['updated_at'], 'integer'],
             [['task', 'result', 'created_at'], 'safe'],
         ];
     }
@@ -51,7 +53,7 @@ class TaskLogSearch extends TaskLog
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['id'=>SORT_DESC]],
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
             //'pagination'=>['pageSize'=>20],
         ]);
 
@@ -63,23 +65,38 @@ class TaskLogSearch extends TaskLog
             return $dataProvider;
         }
 
+        if (Yii::$app->params['mongodb']['taskLog']) {
+            $query->andFilterWhere(['like', '_id', $this->_id]);
+        } else {
+            $query->andFilterWhere([
+                'id' => $this->id,
+            ]);
+        }
+
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            //'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
+
 
         $query->andFilterWhere(['like', 'task', $this->task])
             ->andFilterWhere(['like', 'result', $this->result]);
 
-        if(!empty($this->created_at)){
-            $query->andFilterWhere([
-                'DATE(CONVERT_TZ(FROM_UNIXTIME(`created_at`), :UTC, :ATZ))' => $this->created_at,
-            ])->params([
-                ':UTC'=>'+00:00',
-                ':ATZ'=>date('P')
-            ]);
+        if (!empty($this->created_at)) {
+            if (Yii::$app->params['mongodb']['taskLog']) {
+                $d1 = strtotime($this->created_at);
+                $d2 = $d1 + 86400;
+                $query->andFilterWhere(['>=', 'created_at', $d1])
+                    ->andFilterWhere(['<', 'created_at', $d2]);
+            } else {
+
+                $query->andFilterWhere([
+                    'DATE(CONVERT_TZ(FROM_UNIXTIME(`created_at`), :UTC, :ATZ))' => $this->created_at,
+                ])->params([
+                    ':UTC' => '+00:00',
+                    ':ATZ' => date('P')
+                ]);
+            }
         }
 
 

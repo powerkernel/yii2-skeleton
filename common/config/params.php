@@ -8,7 +8,8 @@ return [
     'showPowered'=>true,
 
     'mongodb'=>[
-        'i18n'=>false, // set i18n uses mongodb
+        'i18n'=>false, // set i18n uses mongodb,
+        'taskLog'=>false
     ]
 
 
