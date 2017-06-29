@@ -142,6 +142,7 @@ class SettingController extends BackendController
             ['key' => 'fbAppId', 'value' => '', 'title' => 'Facebook App ID', 'description' => 'Facebook App ID', 'group' => 'Social', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
             ['key' => 'fbAdmins', 'value' => '', 'title' => 'Facebook Admins', 'description' => 'Facebook Admins ID', 'group' => 'Social', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
             ['key' => 'gpPageUrl', 'value' => '', 'title' => 'Google+ Page URL', 'description' => 'Google+ Page URL', 'group' => 'Social', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'url' => []])],
+            ['key' => 'youtubeUrl', 'value' => '', 'title' => 'YouTube Channel URL', 'description' => 'YouTube Channel URL', 'group' => 'Social', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'url' => []])],
             ['key' => 'twitterSite', 'value' => '', 'title' => 'Twitter Card Site', 'description' => '@username for the website used', 'group' => 'Social', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
 
             /* API */

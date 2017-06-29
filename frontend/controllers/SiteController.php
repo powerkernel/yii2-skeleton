@@ -70,7 +70,7 @@ class SiteController extends MainController
      * @return mixed
      */
     public function actionIndex()
-    {
+    {z
         return $this->render('index');
     }
 
