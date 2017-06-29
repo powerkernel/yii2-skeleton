@@ -25,13 +25,13 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
         <div class="box-body">
             <?php Pjax::begin(); ?>
             <div class="table-responsive">
+
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
                     'columns' => [
                         //['class' => 'yii\grid\SerialColumn'],
-
-                        'id',
+                        Yii::$app->params['mongodb']['taskLog']?['class' => 'yii\grid\SerialColumn']:'id',
                         ['attribute' => 'task', 'value' => function ($model){return $model->task;}, 'filter'=> TaskLog::getTaskList()],
                         'result:ntext',
                         //'created_at:dateTime',

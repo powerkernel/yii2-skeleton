@@ -7,29 +7,23 @@
 
 namespace common\models;
 
+
 use Yii;
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
+
+
 
 /**
  * This is the model class for table "{{%core_cron_job_logs}}".
  *
- * @property integer $id
+ * @property mixed $id
  * @property string $task
  * @property string $result
  * @property integer $created_at
  * @property integer $updated_at
  */
-class TaskLog extends ActiveRecord
+class TaskLog extends TaskLogBase
 {
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return '{{%core_task_logs}}';
-    }
-
     /**
      * @inheritdoc
      */
@@ -49,7 +43,7 @@ class TaskLog extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
+            Yii::$app->params['mongodb']['taskLog']?'_id':'id' => Yii::t('app', 'ID'),
             'task' => Yii::t('app', 'Task'),
             'result' => Yii::t('app', 'Result'),
             'created_at' => Yii::t('app', 'Created At'),
