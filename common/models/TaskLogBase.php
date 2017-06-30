@@ -23,7 +23,7 @@ if(Yii::$app->params['mongodb']['taskLog']) {
          */
         public static function collectionName()
         {
-            return 'tasklogs';
+            return 'task_logs';
         }
 
         /**

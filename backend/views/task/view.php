@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-                        'id',
+                        Yii::$app->params['mongodb']['taskLog']?'_id':'id',
                         'task',
                         'result:ntext',
                         'created_at:dateTime',

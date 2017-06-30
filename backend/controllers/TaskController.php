@@ -10,70 +10,14 @@ namespace backend\controllers;
 use Yii;
 use common\models\TaskLog;
 use common\models\TaskLogSearch;
-use yii\db\Query;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+
 
 /**
  * TaskController implements the CRUD actions for TaskLog model.
  */
 class TaskController extends BackendController
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-            //'backend' => [
-            //    'class' => BackendFilter::className(),
-            //    'actions' => [
-            //        'index',
-            //    ],
-            //],
-
-            //'access' => [
-            //    'class' => AccessControl::className(),
-            //    'rules' => [
-            //        [
-            //            'roles' => ['admin'],
-            //            'allow' => true,
-            //        ],
-            //        [
-            //            'actions' => ['create', 'update'],
-            //            'roles' => ['@'],
-            //            'allow' => true,
-            //        ],
-            //    ],
-            //],
-        ];
-    }
-
-    /**
-     * migrate to mongodb
-     */
-    public function actionMgMigrate(){
-        $logs=(new Query())->select('*')->from('{{%core_task_logs}}')->all();
-        $collection = Yii::$app->mongodb->getCollection('tasklogs');
-        foreach($logs as $log){
-            $collection->insert([
-                'task' => $log['task'],
-                'result' => $log['result'],
-                'created_at' => (integer)$log['created_at'],
-                'updated_at' => (integer)$log['updated_at'],
-            ]);
-        }
-        Yii::$app->db->createCommand()->truncateTable('{{%core_task_logs}}')->execute();
-        Yii::$app->session->setFlash('success', 'Migration completed!');
-        return $this->redirect(['index']);
-    }
-
     /**
      * Lists all TaskLog models.
      * @return mixed

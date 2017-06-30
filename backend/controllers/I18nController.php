@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\Core;
 use Yii;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 
 
@@ -32,6 +33,8 @@ class I18nController extends BackendController
      */
     public function behaviors()
     {
+        $adminRules = parent::behaviors()['access']['rules'];
+
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
@@ -40,7 +43,10 @@ class I18nController extends BackendController
                     'delete' => ['post'],
                 ],
             ],
-
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => $adminRules,
+            ],
         ];
     }
 

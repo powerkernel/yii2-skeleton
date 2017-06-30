@@ -10,6 +10,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\Banner;
 use common\models\BannerSearch;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -23,7 +24,12 @@ class BannerController extends BackendController
      */
     public function behaviors()
     {
+        $adminRules = parent::behaviors()['access']['rules'];
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => $adminRules,
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

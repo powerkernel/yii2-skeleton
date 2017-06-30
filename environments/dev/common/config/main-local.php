@@ -10,7 +10,7 @@ $config =  [
         ],
 //        'mongodb' => [
 //            'class' => '\yii\mongodb\Connection',
-//            'dsn'=>'mongodb://u6353857_mg:xM5mVgcRAFx4WHLe@localhost:27017/u6353857_db'
+//            'dsn'=>'mongodb://user_mg:password@localhost:27017/dbname'
 //        ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
@@ -27,6 +27,16 @@ $config =  [
             //'hostInfo' => \common\Core::isLocalhost()?'https://domain.dev/':'https://domain.com/',
             //'baseUrl' =>'',
         ],
+        'authManager' => [
+            //'class' => 'yii\mongodb\rbac\MongoDbManager',
+            'class' => 'yii\rbac\DbManager',
+            'ruleTable'=>'{{%core_auth_rule}}',
+            'assignmentTable'=>'{{%core_auth_assignment}}',
+            'itemChildTable'=>'{{%core_auth_item_child}}',
+            'itemTable'=>'{{%core_auth_item}}',
+            'defaultRoles'=>['member']
+        ],
+
     ],
     'modules' => [],
 ];

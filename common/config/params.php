@@ -1,8 +1,8 @@
 <?php
 return [
     'rootAdmin'=>[1],
-    'version'=>'0.3dev',
-    'releaseDate'=>mktime(12,0,0, 06,22,2017),
+    'version'=>'0.3.1dev',
+    'releaseDate'=>mktime(12,0,0, 06,30,2017),
     'sitemapPageSize'=>200,
     'enableBlog'=>true,
     'showPowered'=>true,
