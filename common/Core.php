@@ -5,6 +5,8 @@ namespace common;
 use common\models\Setting;
 use DateTime;
 use Yii;
+use yii\db\Query;
+use yii\helpers\ArrayHelper;
 use yii\helpers\FormatConverter;
 use yii\helpers\Html;
 use yii\helpers\Inflector;
@@ -315,6 +317,57 @@ class Core
         return $locations;
     }
 
+    /**
+     * get city list
+     * @param $country
+     * @return array
+     */
+    public static function getCityList($country){
+        $data= (new Query())->select('id, name')
+            ->from('{{%core_city}}')
+            ->where(['country'=>$country])
+            ->all();
+        return ArrayHelper::map($data, 'id', 'name');
+    }
+
+    /**
+     * get city text
+     * @param $id
+     * @return false|null|string
+     */
+    public static function getCityText($id){
+        return (new Query())
+            ->select('name')
+            ->from('{{%core_city}}')
+            ->where(['id'=>$id])
+            ->scalar();
+    }
+
+    /**
+     * get state text
+     * @param $id
+     * @return false|null|string
+     */
+    public static function getStateText($id){
+        return (new Query())
+            ->select('name')
+            ->from('{{%core_state}}')
+            ->where(['id'=>$id])
+            ->scalar();
+    }
+
+    /**
+     * get ward text
+     * @param $id
+     * @return false|null|string
+     */
+    public static function getWardText($id){
+        return (new Query())
+            ->select('name')
+            ->from('{{%core_ward}}')
+            ->where(['id'=>$id])
+            ->scalar();
+    }
 
     /**
      * get country array list
