@@ -1,2 +1,5 @@
 main-local.php
 params-local.php
+ca-cert.pem
+client-cert.pem
+client-key.pen

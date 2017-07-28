@@ -55,8 +55,8 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'RBAC');
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($roles as $i => $role): ?>
-                        <tr role="row" class="<?= ($i % 2) ? 'odd' : 'even' ?>">
+                    <?php foreach ($roles as $role): ?>
+                        <tr role="row">
                             <td class="sorting_1"><?= ucfirst($role->name) ?></td>
                             <td><?= $role->type == \yii\rbac\Role::TYPE_ROLE ? Yii::t('app', 'Role') : Yii::t('app', 'Permission') ?></td>
                             <td><?= $role->description ?></td>
