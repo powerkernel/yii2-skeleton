@@ -78,7 +78,7 @@ _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
 $.src="//v2.zopim.com/?{$id}";z.t=+new Date;$.
 type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
 EOB;
-                Yii::$app->view->registerJs($js, View::POS_END);
+                Yii::$app->view->registerJs($js, View::POS_END, 'zopim');
             }
         }
     }
