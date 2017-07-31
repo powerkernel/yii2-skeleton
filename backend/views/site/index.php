@@ -4,6 +4,7 @@
 use modernkernel\fontawesome\Icon;
 
 /* @var $files [] */
+/* @var $v [] */
 
 
 $this->title = Yii::t('app', 'Dashboard');
@@ -26,11 +27,11 @@ $this->title = Yii::t('app', 'Dashboard');
                             </tr>
                             <tr>
                                 <th>Version</th>
-                                <td><?= Yii::$app->params['version'] ?></td>
+                                <td><?= $v['version'] ?> build <?= $v['build'] ?></td>
                             </tr>
                             <tr>
                                 <th>Release date</th>
-                                <td><?= Yii::$app->formatter->asDate(Yii::$app->params['releaseDate']) ?></td>
+                                <td><?= Yii::$app->formatter->asDate($v['build']) ?></td>
                             </tr>
 
 

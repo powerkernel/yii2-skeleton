@@ -62,8 +62,11 @@ class SiteController extends BackendController
             }
         }
 
+        /* version */
+        $version=file_get_contents(Yii::$app->basePath.'/../version.json');
+        $v=json_decode($version, true);
 
-        return $this->render('index', ['files'=>$files]);
+        return $this->render('index', ['files'=>$files, 'v'=>$v]);
     }
 
 
