@@ -41,6 +41,3 @@ composer.lock
 upload.zip
 grunt-email-workflow/Gruntfile.min.js
 console/controllers/UpdateController.php
-common/config/ca-cert.pem
-common/config/client-cert.pem
-common/config/client-key.pem
