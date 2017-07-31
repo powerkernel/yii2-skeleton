@@ -11,5 +11,15 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
         ],
+//        'session' => [
+//            'class' => 'yii\mongodb\Session',
+//            'sessionCollection'=>'backend_session'
+//        ],
+        'session' => [
+            'class' => 'yii\web\DbSession',
+            'sessionTable' => '{{%core_session}}',
+            'name' => 'PHPBACKSESSID'
+        ],
     ],
 ];
+

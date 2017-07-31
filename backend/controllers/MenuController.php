@@ -11,6 +11,7 @@ use kotchuprik\sortable\actions\Sorting;
 use Yii;
 use common\models\Menu;
 use common\models\MenuSearch;
+use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -24,7 +25,12 @@ class MenuController extends BackendController
      */
     public function behaviors()
     {
+        $adminRules = parent::behaviors()['access']['rules'];
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => $adminRules,
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

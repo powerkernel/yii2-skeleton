@@ -177,7 +177,7 @@ class Blog extends ActiveRecord
      */
     public static function mostViewed($limit = 10)
     {
-        return Blog::find()->orderBy(['views' => SORT_DESC])->limit($limit)->all();
+        return Blog::find()->where(['status'=>Blog::STATUS_PUBLISHED])->orderBy(['views' => SORT_DESC])->limit($limit)->all();
     }
 
     /**
@@ -187,7 +187,7 @@ class Blog extends ActiveRecord
      */
     public static function latest($limit = 10)
     {
-        return Blog::find()->orderBy(['published_at' => SORT_DESC])->limit($limit)->all();
+        return Blog::find()->where(['status'=>Blog::STATUS_PUBLISHED])->orderBy(['published_at' => SORT_DESC])->limit($limit)->all();
     }
 
     /**
@@ -197,7 +197,7 @@ class Blog extends ActiveRecord
      */
     public static function random($limit = 10)
     {
-        return Blog::find()->orderBy('rand()')->limit($limit)->all();
+        return Blog::find()->where(['status'=>Blog::STATUS_PUBLISHED])->orderBy('rand()')->limit($limit)->all();
     }
 
 

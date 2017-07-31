@@ -8,7 +8,6 @@
 namespace common\bootstrap;
 
 
-use common\models\Message;
 use common\models\Setting;
 use Yii;
 use yii\base\Component;
@@ -34,6 +33,8 @@ class Configuration extends Component
         Yii::$app->name = Setting::getValue('title');
 
         $this->configApp();
+
+        $this->configI18n();
 
         $this->configAuthClient();
 
@@ -109,7 +110,11 @@ EOB;
                 try {
                     $user = Yii::$app->user->identity;
                     /* if user local not exist, set default */
-                    $locales = Message::getLocaleList();
+                    $locales = \common\models\Message::getLocaleList();
+                    if(Yii::$app->params['mongodb']['i18n']){
+                        $locales = \common\models\mongodb\Message::getLocaleList();
+                    }
+
                     if (!in_array($user->language, array_keys($locales))) {
                         $user->language = Setting::getValue('language');
                         $user->save();
@@ -290,13 +295,44 @@ EOB;
 
         Yii::$container->set('common\components\LocaleUrl', [
             /* config */
-            'languages' => array_keys(Message::getLocaleList()),
+            'languages' => array_keys(Yii::$app->params['mongodb']['i18n']?\common\models\mongodb\Message::getLocaleList():\common\models\Message::getLocaleList()),
             'languageParam' => 'lang',
             'enableLanguagePersistence' => false, // default true
             'enableDefaultLanguageUrlCode' => $enableDefaultLanguageUrlCode,
             'enableLanguageDetection' => false, // default true
             'ignoreLanguageUrlPatterns' => $urlManager['ignoreLanguageUrlPatterns'],
             'rules' => $urlManager['rules']
+        ]);
+
+
+    }
+
+    /**
+     * config i18n
+     */
+    protected function configI18n()
+    {
+        if (Yii::$app->params['mongodb']['i18n']) {
+            $class = 'common\components\MongoDbMessageSource';
+        } else {
+            $class = 'common\components\DbMessageSource';
+        }
+
+        Yii::$container->set('yii\i18n\I18N', [
+            'translations' => [
+                'app*' => [
+                    'class' => $class,
+                    'on missingTranslation' => function ($event) {
+                        $event->sender->handleMissingTranslation($event);
+                    },
+                ],
+                'main' => [
+                    'class' => $class,
+                    'on missingTranslation' => function ($event) {
+                        $event->sender->handleMissingTranslation($event);
+                    },
+                ],
+            ],
         ]);
 
 
