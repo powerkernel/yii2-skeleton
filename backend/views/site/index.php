@@ -31,7 +31,7 @@ $this->title = Yii::t('app', 'Dashboard');
                             </tr>
                             <tr>
                                 <th>Release date</th>
-                                <td><?= Yii::$app->formatter->asDate($v['build']) ?></td>
+                                <td><?= Yii::$app->formatter->asDate($v['date']) ?></td>
                             </tr>
 
 
