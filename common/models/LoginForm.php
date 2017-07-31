@@ -23,8 +23,10 @@ class LoginForm extends Model
     public function rules()
     {
         return [
+
             [['email'], 'required', 'on'=>['default', 'passwordLess']],
             [['password'], 'required', 'on'=>['default']],
+            [['email'], 'email'],
             [['rememberMe'], 'boolean'],
             [['password'], 'validatePassword', 'on'=>['default']],
         ];
@@ -106,6 +108,8 @@ class LoginForm extends Model
         if($this->admin){
             $login->admin=$this->admin;
         }
+
+        /* save and send email */
         if($login->save()){
             Yii::$app->session->setFlash('info', Yii::t('app', 'We have emailed the link to login to {EMAIL}. Click on the button inside the email and you will be all set. Check spam box too if you can\'t find the email in your inbox.', ['EMAIL'=>$this->email]));
         }

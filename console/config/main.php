@@ -6,7 +6,16 @@ $params = array_merge(
     require(__DIR__ . '/params-local.php')
 );
 
-return [
+$map=[];
+if(class_exists('yii\mongodb\console\controllers\MigrateController')){
+    $map=[
+        'controllerMap' => [
+            'mongodb-migrate' => 'yii\mongodb\console\controllers\MigrateController'
+        ],
+    ];
+}
+
+return array_merge($map, [
     'id' => 'app-console',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
@@ -22,4 +31,4 @@ return [
         ],
     ],
     'params' => $params,
-];
+]);

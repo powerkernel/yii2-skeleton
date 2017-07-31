@@ -232,6 +232,11 @@ class AccountController extends Controller
             return $this->goHome();
         }
 
+        return $this->render('login', [
+            //'model' => $model,
+        ]);
+
+
         $model = new LoginForm();
         $model->setScenario('default');
         $passLess=Setting::getValue('passwordLessLogin');

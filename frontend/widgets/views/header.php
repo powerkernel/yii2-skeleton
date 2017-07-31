@@ -61,12 +61,21 @@ use yii\bootstrap\Nav;
                             </a>
                         </li>
                     <?php else: ?>
-                        <li>
-                            <a href="<?= Yii::$app->urlManager->createUrl(Yii::$app->user->loginUrl) ?>">
-                                <?= Icon::widget(['icon' => 'key']) ?>
-                                <span><?= Yii::t('app', 'Login') ?></span>
-                            </a>
-                        </li>
+                        <?php if(Yii::$app->params['modalLogin']):?>
+                            <li>
+                                <a href="#login-modal" data-toggle="modal">
+                                    <?= Icon::widget(['icon' => 'key']) ?>
+                                    <span><?= Yii::t('app', 'Login') ?></span>
+                                </a>
+                            </li>
+                        <?php else:?>
+                            <li>
+                                <a href="<?= Yii::$app->urlManager->createUrl(Yii::$app->user->loginUrl) ?>">
+                                    <?= Icon::widget(['icon' => 'key']) ?>
+                                    <span><?= Yii::t('app', 'Login') ?></span>
+                                </a>
+                            </li>
+                        <?php endif;?>
                     <?php endif; ?>
                 </ul>
             </div>

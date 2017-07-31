@@ -52,7 +52,7 @@ class SideMenu extends Widget
             'items' => [
                 ['icon' => 'users', 'label' => Yii::t('app', 'Users'), 'url' => ['/account/index'], 'active' => Core::checkMCA(null, 'account', '*')],
                 ['icon' => 'key', 'label' => Yii::t('app', 'RBAC'), 'url' => ['/rbac/index'], 'active' => Core::checkMCA(null, 'rbac', '*')],
-                ['icon' => 'edit', 'label' => Yii::t('app', 'Blog'), 'url' => ['/blog/index'], 'active' => Core::checkMCA(null, 'blog', '*'), 'enabled' => Yii::$app->params['enableBlog']],
+                ['icon' => 'edit', 'label' => Yii::t('app', 'Blog/News'), 'url' => ['/blog/index'], 'active' => Core::checkMCA(null, 'blog', '*'), 'enabled' => Yii::$app->params['enableBlog']],
                 ['icon' => 'files-o', 'label' => Yii::t('app', 'Pages'), 'url' => ['/page/index'], 'active' => Core::checkMCA(null, 'page', '*')],
                 ['icon' => 'list', 'label' => Yii::t('app', 'Menu'), 'url' => ['/menu/index'], 'active' => Core::checkMCA(null, 'menu', '*')],
                 ['icon' => 'image', 'label' => Yii::t('app', 'Banners'), 'url' => ['/banner/index'], 'active' => Core::checkMCA(null, 'banner', '*')],
@@ -140,11 +140,11 @@ class SideMenu extends Widget
         $menu['active'] = SideMenu::isActive($menu['items']);
         /* blog */
         $blog = [
-            'title' => Yii::t('app', 'Blog'),
+            'title' => Yii::t('app', 'Blog/News'),
             'enabled'=> Yii::$app->params['enableBlog'] && Yii::$app->user->can('author'),
             'icon' => 'rss-square',
             'items' => [
-                ['icon' => 'rss', 'label' => Yii::t('app', 'My Blog'), 'url' => ['/blog/manage'], 'active' => Core::checkMCA(null, 'blog', 'manage'), 'enabled' => Yii::$app->params['enableBlog'] && Yii::$app->user->can('author')],
+                ['icon' => 'rss', 'label' => Yii::t('app', 'My Articles'), 'url' => ['/blog/manage'], 'active' => Core::checkMCA(null, 'blog', 'manage'), 'enabled' => Yii::$app->params['enableBlog'] && Yii::$app->user->can('author')],
                 ['icon' => 'pencil-square', 'label' => Yii::t('app', 'Write'), 'url' => ['/blog/create'], 'active' => Core::checkMCA(null, 'blog', 'create'), 'enabled' => Yii::$app->params['enableBlog'] && Yii::$app->user->can('author')],
             ]
         ];

@@ -9,8 +9,10 @@ use common\models\Message;
 use common\models\Page;
 use common\models\PageData;
 use common\models\Setting;
+use conquer\select2\Select2Action;
 use Yii;
 use yii\data\Pagination;
+use yii\db\Query;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -52,6 +54,12 @@ class SiteController extends MainController
             ],
             'login' => [
                 'class' => 'common\components\LoginAction',
+            ],
+            'state-list' => [
+                'class' => 'common\components\StateAction',
+            ],
+            'ward-list' => [
+                'class' => 'common\components\WardAction',
             ],
             'flickr-upload' => [
                 'class' => 'common\components\FlickrUploadAction',

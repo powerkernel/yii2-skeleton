@@ -23,6 +23,7 @@ class MessageSearch extends Message
     {
         return [
             [['_id', 'category', 'language', 'message', 'translation', 'is_translated'], 'safe'],
+            //[['is_translated'], 'boolean'],
         ];
     }
 
@@ -62,13 +63,14 @@ class MessageSearch extends Message
             return $dataProvider;
         }
 
+        $query->andFilterWhere(['is_translated' => in_array($this->is_translated, [null, ''], true) ? null : (boolean)$this->is_translated]);
+
         // grid filtering conditions
         $query->andFilterWhere(['like', '_id', $this->_id])
             ->andFilterWhere(['like', 'category', $this->category])
             ->andFilterWhere(['like', 'language', $this->language])
             ->andFilterWhere(['like', 'message', $this->message])
-            ->andFilterWhere(['like', 'translation', $this->translation])
-            ->andFilterWhere(['like', 'is_translated', $this->is_translated]);
+            ->andFilterWhere(['like', 'translation', $this->translation]);
 
         //if(!empty($this->created_at)){
         //    $query->andFilterWhere([

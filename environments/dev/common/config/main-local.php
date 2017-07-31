@@ -1,4 +1,13 @@
 <?php
+//use u1234567_db
+//db.createUser(
+//     {
+//          user: "u1234567_mg",
+//          pwd: "abcd1234xxx",
+//          roles: [ { role: "readWrite", db: "u1234567_db" } ]
+//    }
+//)
+$dbHost=file_exists(__DIR__.'/../../common/config/localhost.php')?'localhost':'live-db-host.com';
 $config =  [
     'components' => [
         'db' => [
@@ -10,7 +19,8 @@ $config =  [
         ],
 //        'mongodb' => [
 //            'class' => '\yii\mongodb\Connection',
-//            'dsn'=>'mongodb://u6353857_mg:xM5mVgcRAFx4WHLe@localhost:27017/u6353857_db'
+//            'dsn'=>'mongodb://user_mg:password@localhost:27017/dbname',
+//            'options'=>['ssl'=>true]
 //        ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
@@ -24,9 +34,26 @@ $config =  [
             'class' => 'common\components\LocaleUrl',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            //'hostInfo' => \common\Core::isLocalhost()?'https://domain.dev/':'https://domain.com/',
+            //'hostInfo' => \common\Core::isLocalhost()?'https://dev.domain.com/':'https://domain.com/',
             //'baseUrl' =>'',
         ],
+        'urlManagerBackend' => [
+            'class' => 'common\components\LocaleUrl',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            //'hostInfo' => \common\Core::isLocalhost()?'https://dev.backend.domain.com/':'https://backend.domain.com/',
+            //'baseUrl' =>'',
+        ],
+        'authManager' => [
+            //'class' => 'yii\mongodb\rbac\MongoDbManager',
+            'class' => 'yii\rbac\DbManager',
+            'ruleTable'=>'{{%core_auth_rule}}', // cm when using mg
+            'assignmentTable'=>'{{%core_auth_assignment}}', // cm when using mg
+            'itemChildTable'=>'{{%core_auth_item_child}}', // cm when using mg
+            'itemTable'=>'{{%core_auth_item}}', // cm when using mg
+            'defaultRoles'=>['member']
+        ],
+
     ],
     'modules' => [],
 ];
