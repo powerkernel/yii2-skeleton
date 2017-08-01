@@ -4,8 +4,6 @@ return [
     'bootstrap' => ['configuration'],
     'components' => [
         'cache' => ['class' => 'yii\caching\FileCache'],
-
-
         'authClientCollection' => [
             'class' => 'yii\authclient\Collection',
         ],
@@ -27,6 +25,11 @@ return [
             'showScriptName' => false,
         ],
         'urlManagerFrontend' => [
+            'class' => 'common\components\LocaleUrl',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+        ],
+        'urlManagerBackend' => [
             'class' => 'common\components\LocaleUrl',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
