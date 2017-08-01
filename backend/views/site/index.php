@@ -73,7 +73,12 @@ $this->title = Yii::t('app', 'Dashboard');
                             </tr>
                             <tr>
                                 <th>Database</th>
-                                <td><?= Yii::$app->db->driverName ?></td>
+                                <td>
+                                    <?php if(!empty(Yii::$app->db->driverName)):?>
+                                        <?= Yii::$app->db->driverName=='mysql'?'MySQL':Yii::$app->db->driverName ?>
+                                    <?php endif;?>
+                                    <?= !empty(Yii::$app->mongodb)?'MongoDB':'' ?>
+                                </td>
                             </tr>
 
                             <tr>
