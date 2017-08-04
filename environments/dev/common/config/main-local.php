@@ -58,7 +58,7 @@ $config =  [
     'modules' => [],
 ];
 
-if (!YII_ENV_TEST) {
+if (file_exists(__DIR__.'/../../common/config/localhost.php')) {
     // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
