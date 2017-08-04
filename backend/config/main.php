@@ -34,19 +34,10 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
-        ],
-        */
+
         'view' => [
             'theme' => [
-                //'class' => 'harrytang\themeinspinia\InspiniaTheme',
                 'class' => 'modernkernel\themeadminlte\AdminlteTheme',
-                //'skin'=>'skin-red-light',
                 'layout'=>'sidebar-mini' //fixed
             ],
         ],

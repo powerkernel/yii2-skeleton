@@ -7,12 +7,12 @@
 //          roles: [ { role: "readWrite", db: "u1234567_db" } ]
 //    }
 //)
-$dbHost=file_exists(__DIR__.'/../../common/config/localhost.php')?'localhost':'live-db-host.com';
+// add file hosts 127.0.0.1 dbserver
 $config =  [
     'components' => [
         'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=yii2advanced',
+            'dsn' => 'mysql:host=dbserver;dbname=yii2advanced',
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
@@ -34,15 +34,13 @@ $config =  [
             'class' => 'common\components\LocaleUrl',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            //'hostInfo' => \common\Core::isLocalhost()?'https://dev.domain.com/':'https://domain.com/',
-            //'baseUrl' =>'',
+            //'baseUrl' => \common\Core::isLocalhost()?'https://dev.domain.com/':'https://domain.com/',
         ],
         'urlManagerBackend' => [
             'class' => 'common\components\LocaleUrl',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            //'hostInfo' => \common\Core::isLocalhost()?'https://dev.backend.domain.com/':'https://backend.domain.com/',
-            //'baseUrl' =>'',
+            //'baseUrl' => \common\Core::isLocalhost()?'https://dev.backend.domain.com/':'https://backend.domain.com/',
         ],
         'authManager' => [
             //'class' => 'yii\mongodb\rbac\MongoDbManager',

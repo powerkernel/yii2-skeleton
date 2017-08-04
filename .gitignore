@@ -36,6 +36,7 @@ phpunit.phar
 .ssl
 .data
 .docs
+version.json
 frontend/web/backend
 composer.lock
 upload.zip
