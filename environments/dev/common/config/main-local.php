@@ -86,7 +86,8 @@ if (file_exists(__DIR__.'/../../common/config/localhost.php')) {
                 'templates' => ['skeleton' => '@common/gii/generators/module/skeleton']
             ],
 //            'mongoDbModel' => [
-//                'class' => 'yii\mongodb\gii\model\Generator'
+//                'class' => 'yii\mongodb\gii\model\Generator',
+//                'templates' => ['skeleton' => '@common/gii/generators/mongoDbModel/skeleton']
 //            ]
         ],
     ];
