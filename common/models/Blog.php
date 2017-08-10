@@ -9,18 +9,15 @@ namespace common\models;
 
 use common\Core;
 use DOMDocument;
+use MongoDB\BSON\UTCDateTime;
 use Yii;
-use yii\behaviors\TimestampBehavior;
 use yii\caching\DbDependency;
-use yii\db\ActiveRecord;
 use yii\db\Query;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 
 /**
- * This is the model class for table "{{%core_blog}}".
- *
- * @property integer $id
+ * @property mixed $id
  * @property string $slug
  * @property string $language
  * @property string $title
@@ -41,7 +38,7 @@ use yii\helpers\HtmlPurifier;
  * @property string $viewUrl
  * @property string $updateUrl
  */
-class Blog extends ActiveRecord
+class Blog extends BlogBase
 {
 
 
@@ -99,14 +96,6 @@ class Blog extends ActiveRecord
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
-        return '{{%core_blog}}';
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -114,7 +103,7 @@ class Blog extends ActiveRecord
             [['slug'], 'match', 'pattern' => '/^[a-z0-9-]+$/'],
             [['slug'], 'unique'],
             [['content'], 'string'],
-            [['created_by', 'views', 'status', 'created_at', 'updated_at', 'published_at'], 'integer'],
+            [['created_by', 'views', 'status'], 'integer'],
 
             [['language'], 'string', 'max' => 5],
             [['title', 'slug', 'desc'], 'string', 'max' => 110],
@@ -133,7 +122,6 @@ class Blog extends ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
             'slug' => Yii::t('app', 'Slug'),
             'language' => Yii::t('app', 'Language'),
             'title' => Yii::t('app', 'Title'),
@@ -149,7 +137,6 @@ class Blog extends ActiveRecord
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
             'published_at' => Yii::t('app', 'Published At'),
-
         ];
     }
 
@@ -161,14 +148,7 @@ class Blog extends ActiveRecord
         return $this->hasOne(Account::className(), ['id' => 'created_by']);
     }
 
-    /**
-     * @inheritdoc
-     * @return BlogQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new BlogQuery(get_called_class());
-    }
+
 
     /**
      * get most viewed blog
@@ -202,13 +182,21 @@ class Blog extends ActiveRecord
 
 
     /**
-     * @inheritdoc
+     * Update date
+     * @param $insert
      */
-    public function behaviors()
+    public function updateDate ($insert)
     {
-        return [
-            TimestampBehavior::className(),
-        ];
+        if(is_a($this, '\yii\db\ActiveRecord')){
+            $time=time();
+        }
+        else {
+            $time=new \MongoDB\BSON\UTCDateTime();
+        }
+        if($insert){
+            $this->created_at=$time;
+        }
+        $this->updated_at=$time;
     }
 
     /**
@@ -228,7 +216,13 @@ class Blog extends ActiveRecord
 
         /* published_at */
         if ($this->status == Blog::STATUS_PUBLISHED && empty($this->published_at)) {
-            $this->published_at = time();
+            if(is_a($this, '\yii\db\ActiveRecord')){
+                $time=time();
+            }
+            else {
+                $time=new UTCDateTime();
+            }
+            $this->published_at = $time;
         }
 
         /* clean html */
@@ -241,6 +235,8 @@ class Blog extends ActiveRecord
         $this->content = HtmlPurifier::process($this->content, $config);
 
         /* done */
+        $this->updateDate($insert);
+        $this->status=(int)$this->status;
         return parent::beforeSave($insert);
 
     }
@@ -275,10 +271,10 @@ class Blog extends ActiveRecord
      */
     public function getImageObject()
     {
-        $key = 'cache_blog_image_object_' . $this->id;
-        $img = Yii::$app->cache->get($key);
+        //$key = 'cache_blog_image_object_' . $this->id;
+        //$img = Yii::$app->cache->get($key);
 
-        if ($img === false) {
+        //if ($img === false) {
             $flag = false;
             $doc = new DOMDocument();
             $doc->loadHTML($this->content);
@@ -293,15 +289,15 @@ class Blog extends ActiveRecord
             }
             if ($flag) {
                 /* cache */
-                $sql = (new Query())->select('updated_at')->from(Blog::tableName())->where(['id' => $this->id])->createCommand()->rawSql;
-                $dependency = new DbDependency();
-                $dependency->sql = $sql;
-                Yii::$app->cache->set($key, $img, 0, $dependency);
+                //$sql = (new Query())->select('updated_at')->from(Blog::tableName())->where(['id' => $this->id])->createCommand()->rawSql;
+                //$dependency = new DbDependency();
+                //$dependency->sql = $sql;
+                //Yii::$app->cache->set($key, $img, 0, $dependency);
             } else {
                 Yii::$app->session->setFlash('warning', Yii::t('app', 'Missing image in blog post.'));
             }
 
-        }
+        //}
 
         return $img;
     }
@@ -381,5 +377,26 @@ class Blog extends ActiveRecord
             }
         }
         return $ids;
+    }
+
+    /**
+     * @return int timestamp
+     */
+    public function getUpdatedAt(){
+        return is_a($this, '\yii\db\ActiveRecord')?$this->updated_at:$this->updated_at->toDateTime()->format('U');
+    }
+
+    /**
+     * @return int timestamp
+     */
+    public function getCreatedAt(){
+        return is_a($this, '\yii\db\ActiveRecord')?$this->created_at:$this->created_at->toDateTime()->format('U');
+    }
+
+    /**
+     * @return int timestamp
+     */
+    public function getPublishedAt(){
+        return is_a($this, '\yii\db\ActiveRecord')?$this->published_at:$this->published_at->toDateTime()->format('U');
     }
 }

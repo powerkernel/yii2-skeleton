@@ -8,6 +8,7 @@
 
 namespace console\controllers;
 
+use MongoDB\BSON\UTCDateTime;
 use Yii;
 use yii\console\Controller;
 use yii\db\Query;
@@ -25,14 +26,15 @@ class MgMigrateController extends Controller
      * then run: php yii mg-migrate
      */
     public function actionIndex(){
-        $this->migrateRbac();
-        $this->migrateTasks();
+        echo "yii mg-migrate/rbac\n";
+        echo "yii mg-migrate/tasks\n";
+        echo "yii mg-migrate/blog\n";
     }
 
     /**
      * rbac
      */
-    protected function migrateRbac(){
+    public function actionRbac(){
         echo "Migrating RBAC...\n";
 
         /* rule */
@@ -105,7 +107,7 @@ class MgMigrateController extends Controller
     /**
      * task log
      */
-    protected function migrateTasks(){
+    public function actionTasks(){
         echo "Migrating Task log...\n";
 
         $logs=(new Query())->select('*')->from('{{%core_task_logs}}')->all();
@@ -121,5 +123,35 @@ class MgMigrateController extends Controller
         Yii::$app->db->createCommand()->truncateTable('{{%core_task_logs}}')->execute();
 
         echo "Task log migration completed.\n";
+    }
+
+    /**
+     * blog
+     */
+    public function actionBlog(){
+        echo "Migrating Blog...\n";
+
+        $rows=(new Query())->select('*')->from('{{%core_blog}}')->all();
+        $collection = Yii::$app->mongodb->getCollection('blog');
+        foreach($rows as $row){
+            $collection->insert([
+                'slug' => $row['slug'],
+                'language' => $row['language'],
+                'title' => $row['title'],
+                'desc' => $row['desc'],
+                'content' => $row['content'],
+                'tags' => $row['tags'],
+                'thumbnail' => $row['thumbnail'],
+                'thumbnail_square' => $row['thumbnail_square'],
+                'image_object' => $row['image_object'],
+                'created_by' => (integer)$row['created_by'],
+                'views' => (integer)$row['views'],
+                'status' => (integer)$row['status'],
+                'created_at' => new UTCDateTime($row['created_at']*1000),
+                'updated_at' => new UTCDateTime($row['updated_at']*1000),
+                'published_at'=> new UTCDateTime($row['published_at']*1000),
+            ]);
+        }
+        echo "Blog migration completed.\n";
     }
 }

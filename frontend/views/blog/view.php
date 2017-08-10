@@ -41,7 +41,7 @@ use frontend\widgets\PlusOneButton;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Blog'), 'url' => ['index']];
 //$this->params['breadcrumbs'][] = $this->title;
 
-$this->params['subtitle'] = Yii::$app->formatter->asDate($model->published_at);
+$this->params['subtitle'] = Yii::$app->formatter->asDate($model->publishedAt);
 
 /* misc */
 $js = file_get_contents(__DIR__ . '/view.min.js');
@@ -67,7 +67,7 @@ $this->registerCss($css);
                             <a target="_blank" class="btn btn-xs bg-purple"
                                href="https://cards-dev.twitter.com/validator">Twitter Card validator</a>
                             <a class="btn btn-xs btn-primary"
-                               href="<?= Yii::$app->urlManager->createUrl(['/blog/update', 'id' => $model->id]) ?>"><?= Yii::t('app', 'Edit') ?></a>
+                               href="<?= Yii::$app->urlManager->createUrl(['/blog/update', 'id' => (string)$model->id]) ?>"><?= Yii::t('app', 'Edit') ?></a>
                         </div>
                     <?php endif; ?>
                     <?= Adsense::widget() ?>
@@ -94,7 +94,7 @@ $this->registerCss($css);
                                 'By {AUTHOR}, last updated {DATE}',
                                 [
                                     'AUTHOR' => $model->author->fullname,
-                                    'DATE' => Yii::$app->formatter->asDate($model->updated_at)
+                                    'DATE' => Yii::$app->formatter->asDate($model->updatedAt)
                                 ])
                             ?>
                         </small>

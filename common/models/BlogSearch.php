@@ -2,13 +2,14 @@
 /**
  * @author Harry Tang <harry@modernkernel.com>
  * @link https://modernkernel.com
- * @copyright Copyright (c) 2016 Modern Kernel
+ * @copyright Copyright (c) 2017 Modern Kernel
  */
 
 
 namespace common\models;
 
 use common\Core;
+use MongoDB\BSON\UTCDateTime;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -27,8 +28,8 @@ class BlogSearch extends Blog
     public function rules()
     {
         return [
-            [['id', 'created_by', 'views', 'status'], 'integer'],
-            [['language', 'title', 'desc', 'content', 'tags', 'created_at', 'updated_at'], 'safe'],
+            [['views', 'status'], 'integer'],
+            [['language', 'title', 'desc', 'content', 'tags', 'created_by', 'created_at', 'updated_at'], 'safe'],
             [['fullname'], 'safe']
         ];
     }
@@ -52,35 +53,34 @@ class BlogSearch extends Blog
     public function search($params)
     {
         $query = Blog::find();
-        $query->joinWith(['author']);
-
+        //$query->joinWith(['author']);
 
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['defaultOrder' => ['id' => SORT_DESC]]
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]]
         ]);
 
-        $dataProvider->sort->attributes['fullname'] = [
-            // The tables are the ones our relation are configured to
-            // in my case they are prefixed with "tbl_"
-            'asc' => ['{{%core_account}}.fullname' => SORT_ASC],
-            'desc' => ['{{%core_account}}.fullname' => SORT_DESC],
-        ];
+//        $dataProvider->sort->attributes['fullname'] = [
+//            // The tables are the ones our relation are configured to
+//            // in my case they are prefixed with "tbl_"
+//            'asc' => ['{{%core_account}}.fullname' => SORT_ASC],
+//            'desc' => ['{{%core_account}}.fullname' => SORT_DESC],
+//        ];
 
         /* user's blog */
         if (Core::checkMCA(null, 'blog', 'manage')) {
             $query->andFilterWhere([
-                '{{%core_blog}}.created_by' => Yii::$app->user->id,
+                'created_by' => Yii::$app->user->id,
             ]);
         }
 
         /* list all public blog */
         if (Core::checkMCA(null, 'blog', 'index')) {
             $query->andFilterWhere([
-                '{{%core_blog}}.status' => Blog::STATUS_PUBLISHED,
+                'status' => Blog::STATUS_PUBLISHED,
             ]);
         }
 
@@ -93,31 +93,37 @@ class BlogSearch extends Blog
         }
 
         // grid filtering conditions
+
         $query->andFilterWhere([
-            '{{%core_blog}}.id' => $this->id,
-            '{{%core_blog}}.created_by' => $this->created_by,
-            '{{%core_blog}}.views' => $this->views,
-            '{{%core_blog}}.status' => $this->status,
-            //'created_at' => $this->created_at,
-            //'updated_at' => $this->updated_at,
+            //'id' => $this->id,
+            'created_by' => $this->created_by > 0 ? (int)$this->created_by : null,
+            'views' => $this->views > 0 ? (int)$this->views : null,
+            'status' => $this->status > 0 ? (int)$this->status : null,
         ]);
 
-        $query->andFilterWhere(['like', '{{%core_blog}}.language', $this->language])
-            ->andFilterWhere(['like', '{{%core_blog}}.title', $this->title])
-            ->andFilterWhere(['like', '{{%core_account}}.fullname', $this->fullname])
-            ->andFilterWhere(['like', '{{%core_blog}}.desc', $this->desc])
-            ->andFilterWhere(['like', '{{%core_blog}}.content', $this->content])
-            ->andFilterWhere(['like', '{{%core_blog}}.tags', $this->tags]);
+        $query->andFilterWhere(['like', 'language', $this->language])
+            ->andFilterWhere(['like', 'title', $this->title])
+            ->andFilterWhere(['like', 'desc', $this->desc])
+            ->andFilterWhere(['like', 'content', $this->content])
+            ->andFilterWhere(['like', 'tags', $this->tags]);
 
 
-
-        if(!empty($this->updated_at)){
-            $query->andFilterWhere([
-                'DATE(CONVERT_TZ(FROM_UNIXTIME(`{{%core_blog}}.updated_at`), :UTC, :ATZ))' => $this->updated_at,
-            ])->params([
-                ':UTC'=>'+00:00',
-                ':ATZ'=>date('P')
-            ]);
+        if (!empty($this->updated_at)) {
+            if (is_a($this, '\yii\db\ActiveRecord')) {
+                $query->andFilterWhere([
+                    'DATE(CONVERT_TZ(FROM_UNIXTIME({{%core_blog}}.updated_at), :UTC, :ATZ))' => $this->updated_at,
+                ])->params([
+                    ':UTC' => '+00:00',
+                    ':ATZ' => date('P')
+                ]);
+            }
+            else {
+                $query->andFilterWhere([
+                    'updated_at' => ['$gte'=>new UTCDateTime(strtotime($this->updated_at)*1000)],
+                ])->andFilterWhere([
+                    'updated_at' => ['$lt'=>new UTCDateTime((strtotime($this->updated_at)+86400)*1000)],
+                ]);
+            }
         }
 
         return $dataProvider;

@@ -7,5 +7,6 @@ return [
     'mongodb'=>[
         'i18n'=>false,
         'taskLog'=>false,
+        'blog'=>false,
     ]
 ];

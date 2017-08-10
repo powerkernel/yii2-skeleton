@@ -1,7 +1,5 @@
 <?php
 /* @var $this \yii\web\View */
-use yii\helpers\Url;
-
 /* @var \common\models\Blog[] $models */
 ?>
 <?= '<?xml version="1.0" encoding="UTF-8"?>' ?>
@@ -10,7 +8,7 @@ use yii\helpers\Url;
         <?php foreach ($models as $model): ?>
             <url>
                 <loc><?= \yii\bootstrap\Html::encode($model->getViewUrl(true)) ?></loc>
-                <lastmod><?= Yii::$app->formatter->asDate($model->updated_at, 'php:Y-m-d') ?></lastmod>
+                <lastmod><?= Yii::$app->formatter->asDate($model->updatedAt, 'php:Y-m-d') ?></lastmod>
             </url>
         <?php endforeach; ?>
     <?php endif; ?>

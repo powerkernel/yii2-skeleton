@@ -5,9 +5,11 @@ namespace backend\controllers;
 use common\components\AuthHandler;
 use common\models\LoginForm;
 use common\models\Setting;
+use conquer\select2\Select2Action;
 use Yii;
 use common\models\Account;
 use common\models\AccountSearch;
+use yii\db\ActiveQuery;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 
@@ -50,6 +52,24 @@ class AccountController extends BackendController
                 'class' => 'yii\authclient\AuthAction',
                 'successCallback' => [$this, 'onAuthSuccess'],
             ],
+            'list' => [
+                'class' => Select2Action::className(),
+                'dataCallback' => [$this, 'listUser'],
+            ],
+        ];
+    }
+
+    public function listUser($q){
+        $query = new ActiveQuery(Account::className());
+        return [
+            'results' => $query->select([
+                'id as id',
+                'fullname as text',
+            ])
+                ->filterWhere(['like', 'fullname', $q])
+                ->asArray()
+                ->limit(20)
+                ->all(),
         ];
     }
 

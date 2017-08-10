@@ -26,7 +26,7 @@ use yii\bootstrap\Html;
         <div class="box-footer">
             <div class="box-tools pull-right">
                 <small class="text-muted">
-                    <?= Yii::t('app', 'By {AUTHOR}, last updated {DATE}', ['AUTHOR' => $model->author->fullname, 'DATE' => Yii::$app->formatter->asDate($model->updated_at)]) ?>
+                    <?= Yii::t('app', 'By {AUTHOR}, last updated {DATE}', ['AUTHOR' => $model->author->fullname, 'DATE' => Yii::$app->formatter->asDate($model->updatedAt)]) ?>
                 </small>
             </div>
         </div>

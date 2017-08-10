@@ -67,9 +67,9 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
                     'columns' => [
-                        //['class' => 'yii\grid\SerialColumn'],
+                        ['class' => 'yii\grid\SerialColumn'],
 
-                        'id',
+                        //'id',
                         'title',
                         'desc',
                         //'content:ntext',
@@ -79,10 +79,8 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                         // 'created_at',
                         //'updated_at:dateTime',
                         'views',
-                        ['attribute' => 'updated_at', 'value' => 'updated_at', 'format' => 'date', 'filter' => DatePicker::widget(['model' => $searchModel, 'attribute' => 'updated_at', 'dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']])],
-                        ['attribute' => 'status', 'value' => function ($model) {
-                            return $model->statusText;
-                        }, 'filter' => Blog::getStatusOption()],
+                        ['attribute' => 'updated_at', 'value' => function($model){return is_a($model, '\yii\db\ActiveRecord')?$model->updated_at:$model->updated_at->toDateTime()->format('U');}, 'format' => 'date', 'filter' => DatePicker::widget(['model' => $searchModel, 'attribute' => 'updated_at', 'dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']])],
+                        ['attribute' => 'status', 'value' => function ($model) {return $model->statusColorText;}, 'filter' => Blog::getStatusOption(), 'format'=>'raw'],
                         [
                             'class' => 'yii\grid\ActionColumn',
                             'template'=>'{view} {update} {delete}',
@@ -95,7 +93,8 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                                     unset($url);
                                     return $model->status==Blog::STATUS_PUBLISHED ? $view : '';
                                 }
-                            ]
+                            ],
+                            'contentOptions'=>['style'=>'min-width: 70px']
                         ],
                     ],
                 ]); ?>

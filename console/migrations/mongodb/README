@@ -1,0 +1,2 @@
+yii mongodb-migrate --migrationPath=@console/migrations/mongodb
+yii mg-migrate

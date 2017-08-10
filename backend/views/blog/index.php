@@ -6,8 +6,6 @@
  */
 
 use common\models\Blog;
-use modernkernel\tinymce\TinyMce;
-use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\jui\DatePicker;
@@ -70,22 +68,33 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
                     'columns' => [
-                        //['class' => 'yii\grid\SerialColumn'],
+                        ['class' => 'yii\grid\SerialColumn'],
 
-                        'id',
+                        //'id',
                         'title',
                         //'desc',
-                        ['attribute' => 'fullname', 'label' => Yii::t('app', 'Author'), 'value' => 'author.fullname'],
+                        [
+                            'attribute' => 'created_by',
+                            'value' => function($model){return Html::a($model->author->fullname, Yii::$app->urlManager->createUrl(['/account/view', 'id'=>$model->author->id]), ['data-pjax'=>0]);},
+                            'format'=>'raw',
+                            'filter'=>\conquer\select2\Select2Widget::widget([
+                                'model'=>$searchModel,
+                                'attribute'=>'created_by',
+                                'bootstrap'=>false,
+                                'ajax' => ['/account/list'],
+                                'settings'=>['minimumInputLength' => 2],
+                                'options' => ['class' => 'form-control', 'style'=>'width: 100%'],
+                            ])
+                        ],
                         //'content:ntext',
                         //'tags',
                         //'author_id',
                         // 'status',
                         // 'created_at',
                         //'updated_at:dateTime',
-                        ['attribute' => 'updated_at', 'value' => 'updated_at', 'format' => 'date', 'filter' => DatePicker::widget(['model' => $searchModel, 'attribute' => 'updated_at', 'dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']])],
-                        ['attribute' => 'status', 'value' => function ($model) {
-                            return $model->statusColorText;
-                        }, 'filter' => Blog::getStatusOption(), 'format'=>'raw'],
+                        //['attribute' => 'updated_at', 'value' => 'updated_at', 'format' => 'date', 'filter' => DatePicker::widget(['model' => $searchModel, 'attribute' => 'updated_at', 'dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']])],
+                        ['attribute' => 'updated_at', 'value' => function($model){return is_a($model, '\yii\db\ActiveRecord')?$model->updated_at:$model->updated_at->toDateTime()->format('U');}, 'format' => 'date', 'filter' => DatePicker::widget(['model' => $searchModel, 'attribute' => 'updated_at', 'dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']])],
+                        ['attribute' => 'status', 'value' => function ($model) {return $model->statusColorText;}, 'filter' => Blog::getStatusOption(), 'format'=>'raw'],
                         [
                             'class' => 'yii\grid\ActionColumn',
                             'template' => '{view} {update} {delete}',

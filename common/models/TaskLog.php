@@ -14,8 +14,6 @@ use yii\behaviors\TimestampBehavior;
 
 
 /**
- * This is the model class for table "{{%core_cron_job_logs}}".
- *
  * @property mixed $id
  * @property string $task
  * @property string $result

@@ -198,9 +198,9 @@ class BlogController extends MainController
             'http://schema.org/name' => $model->title,
             'http://schema.org/headline' => $model->desc,
             'http://schema.org/articleBody' => $model->content,
-            'http://schema.org/dateCreated' => Yii::$app->formatter->asDate($model->created_at, 'php:c'),
-            'http://schema.org/dateModified' => Yii::$app->formatter->asDate($model->updated_at, 'php:c'),
-            'http://schema.org/datePublished' => Yii::$app->formatter->asDate($model->published_at, 'php:c'),
+            'http://schema.org/dateCreated' => Yii::$app->formatter->asDate($model->createdAt, 'php:c'),
+            'http://schema.org/dateModified' => Yii::$app->formatter->asDate($model->updatedAt, 'php:c'),
+            'http://schema.org/datePublished' => Yii::$app->formatter->asDate($model->publishedAt, 'php:c'),
             'http://schema.org/url' => $model->getViewUrl(true),
             'http://schema.org/image' => (object)[
                 '@type' => 'ImageObject',
@@ -293,9 +293,9 @@ class BlogController extends MainController
             'http://schema.org/name' => $model->title,
             'http://schema.org/headline' => $model->desc,
             'http://schema.org/articleBody' => $model->content,
-            'http://schema.org/dateCreated' => Yii::$app->formatter->asDate($model->created_at, 'php:c'),
-            'http://schema.org/dateModified' => Yii::$app->formatter->asDate($model->updated_at, 'php:c'),
-            'http://schema.org/datePublished' => Yii::$app->formatter->asDate($model->published_at, 'php:c'),
+            'http://schema.org/dateCreated' => Yii::$app->formatter->asDate($model->createdAt, 'php:c'),
+            'http://schema.org/dateModified' => Yii::$app->formatter->asDate($model->updatedAt, 'php:c'),
+            'http://schema.org/datePublished' => Yii::$app->formatter->asDate($model->publishedAt, 'php:c'),
             'http://schema.org/url' => $model->getViewUrl(true),
             'http://schema.org/image' => (object)[
                 '@type' => 'ImageObject',
@@ -424,14 +424,20 @@ class BlogController extends MainController
      * Finds the Blog model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Blog the loaded model
+     * @return array|null|\yii\mongodb\ActiveRecord
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        $condition = ['id' => $id];
+        if(Yii::$app->params['mongodb']['blog']){
+            $key='_id';
+        }
+        else {
+            $key='id';
+        }
+        $condition = [$key => $id];
         if (Core::checkMCA(null, 'blog', 'view')) {
-            $condition = ['id' => $id, 'status' => Blog::STATUS_PUBLISHED];
+            $condition = [$key => $id, 'status' => Blog::STATUS_PUBLISHED];
         }
 
         if (($model = Blog::find()->where($condition)->one()) !== null) {
