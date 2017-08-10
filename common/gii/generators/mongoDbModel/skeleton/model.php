@@ -22,6 +22,7 @@ echo "<?php\n";
 namespace <?= $generator->ns ?>;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for collection "<?= $collectionName ?>".
@@ -32,6 +33,63 @@ use Yii;
  */
 class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
+
+    const STATUS_ACTIVE = 10;
+    const STATUS_INACTIVE = 20;
+
+    /**
+     * get status list
+     * @param null $e
+     * @return array
+     */
+    public static function getStatusOption($e = null)
+    {
+        $option = [
+            self::STATUS_ACTIVE => <?= $generator->enableI18N?"Yii::\$app->getModule('$generator->messageCategory')->t('Active')":"'Active'" ?>,
+            self::STATUS_INACTIVE => <?= $generator->enableI18N?"Yii::\$app->getModule('$generator->messageCategory')->t('Inactive')":"'Inactive'" ?>,
+        ];
+        if (is_array($e))
+            foreach ($e as $i)
+                unset($option[$i]);
+        return $option;
+    }
+
+    /**
+     * get status text
+     * @return string
+     */
+    public function getStatusText()
+    {
+        $status=$this->status;
+        $list=self::getStatusOption();
+        if(!empty($status) && in_array($status, array_keys($list))){
+            return $list[$status];
+        }
+        return Yii::$app->getModule('<?= $generator->messageCategory ?>')->t('Unknown');
+    }
+
+    /**
+     * get status color text
+     * @return string
+     */
+    public function getStatusColorText(){
+        $status = $this->status;
+        $list = self::getStatusOption();
+
+        $color='default';
+        if($status==self::STATUS_ACTIVE){
+            $color='primary';
+        }
+        if($status==self::STATUS_INACTIVE){
+            $color='danger';
+        }
+
+        if (!empty($status) && in_array($status, array_keys($list))) {
+            return '<span class="label label-'.$color.'">'.$list[$status].'</span>';
+        }
+        return '<span class="label label-'.$color.'">'.Yii::$app->getModule('<?= $generator->messageCategory ?>')->t('Unknown').'</span>';
+    }
+
     /**
      * @inheritdoc
      */
@@ -83,6 +141,16 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
 <?php foreach ($labels as $name => $label): ?>
             <?= "'$name' => Yii::\$app->getModule('$generator->messageCategory')->t('$label'),\n" ?>
 <?php endforeach; ?>
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
         ];
     }
 }

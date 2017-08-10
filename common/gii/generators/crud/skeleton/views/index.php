@@ -82,7 +82,10 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                     //    'contentOptions'=>['style'=>'min-width: 80px']
                     //],
                     //['attribute' => 'status', 'value' => function ($model){return $model->statusText;}, 'filter'=>''],
-                    ['class' => 'yii\grid\ActionColumn'],
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'contentOptions'=>['style'=>'min-width: 70px']
+                    ],
                 ],
             ]); ?>
             </div>
