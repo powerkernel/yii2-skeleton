@@ -37,7 +37,7 @@ use frontend\assets\AMPYouTubeAsset;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Blog'), 'url' => ['index']];
 //$this->params['breadcrumbs'][] = $this->title;
 
-$this->params['subtitle'] = Yii::$app->formatter->asDate($model->published_at);
+$this->params['subtitle'] = Yii::$app->formatter->asDate($model->publishedAt);
 
 /* misc */
 //$js = file_get_contents(__DIR__ . '/view.min.js');
@@ -70,7 +70,7 @@ AMPAsset::register($this);
                                 'By {AUTHOR}, last updated {DATE}',
                                 [
                                     'AUTHOR' => $model->author->fullname,
-                                    'DATE' => Yii::$app->formatter->asDate($model->updated_at)
+                                    'DATE' => Yii::$app->formatter->asDate($model->updatedAt)
                                 ])
                             ?>
                         </small>
