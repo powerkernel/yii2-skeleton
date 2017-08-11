@@ -48,7 +48,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
 $this->params['breadcrumbs'][] = $this->title;
 
 /* misc */
-$this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay").removeClass("hidden");});$(document).on("pjax:complete", function(){ $(".grid-view-overlay").addClass("hidden");})');
+$this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay").removeClass("hidden");});$(document).on("pjax:complete", function(){ $(".grid-view-overlay").addClass("hidden");  $(".author-select").select2({minimumInputLength:2, data:[{id: $(".user-selected").data("id"), text: $(".user-selected").data("text")}]}); })');
 //$js=file_get_contents(__DIR__.'/index.min.js');
 //$this->registerJs($js);
 //$css=file_get_contents(__DIR__.'/index.css');
@@ -61,7 +61,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
 
             <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-
+            <div class="user-selected"></div>
             <?php Pjax::begin(); ?>
             <div class="table-responsive sort-ordinal">
                 <?= GridView::widget([
@@ -83,7 +83,11 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                                 'bootstrap'=>false,
                                 'ajax' => ['/account/list'],
                                 'settings'=>['minimumInputLength' => 2],
-                                'options' => ['class' => 'form-control', 'style'=>'width: 100%'],
+                                'options' => ['class' => 'form-control author-select', 'style'=>'width: 100%'],
+                                'events'=>['select2:select'=>'function(evt){
+                                    $(".user-selected").data("id", evt.params.data.id);
+                                    $(".user-selected").data("text", evt.params.data.text);
+                                }']
                             ])
                         ],
                         //'content:ntext',

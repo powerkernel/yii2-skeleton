@@ -59,18 +59,28 @@ class AccountController extends BackendController
         ];
     }
 
+    /**
+     * ajax list user
+     * @param $q
+     * @return array
+     */
     public function listUser($q){
-        $query = new ActiveQuery(Account::className());
-        return [
-            'results' => $query->select([
-                'id as id',
-                'fullname as text',
-            ])
-                ->filterWhere(['like', 'fullname', $q])
-                ->asArray()
-                ->limit(20)
-                ->all(),
-        ];
+
+        if(!empty($q)){
+            $query = new ActiveQuery(Account::className());
+            return [
+                'results' => $query->select([
+                    'id as id',
+                    'fullname as text',
+                ])
+                    ->filterWhere(['like', 'fullname', $q])
+                    ->asArray()
+                    ->limit(20)
+                    ->all(),
+            ];
+        }
+        return [];
+
     }
 
     /**
