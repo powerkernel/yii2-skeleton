@@ -48,7 +48,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
 $this->params['breadcrumbs'][] = $this->title;
 
 /* misc */
-$this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay").removeClass("hidden");});$(document).on("pjax:complete", function(){ $(".grid-view-overlay").addClass("hidden");  $(".author-select").select2({minimumInputLength:2, data:[{id: $(".user-selected").data("id"), text: $(".user-selected").data("text")}]}); })');
+$this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay").removeClass("hidden");});$(document).on("pjax:complete", function(){ $(".grid-view-overlay").addClass("hidden");})');
 //$js=file_get_contents(__DIR__.'/index.min.js');
 //$this->registerJs($js);
 //$css=file_get_contents(__DIR__.'/index.css');
@@ -60,8 +60,6 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
 
 
             <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-            <div class="user-selected"></div>
             <?php Pjax::begin(); ?>
             <div class="table-responsive sort-ordinal">
                 <?= GridView::widget([
@@ -77,18 +75,6 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                             'attribute' => 'created_by',
                             'value' => function($model){return Html::a($model->author->fullname, Yii::$app->urlManager->createUrl(['/account/view', 'id'=>$model->author->id]), ['data-pjax'=>0]);},
                             'format'=>'raw',
-                            'filter'=>\conquer\select2\Select2Widget::widget([
-                                'model'=>$searchModel,
-                                'attribute'=>'created_by',
-                                'bootstrap'=>false,
-                                'ajax' => ['/account/list'],
-                                'settings'=>['minimumInputLength' => 2],
-                                'options' => ['class' => 'form-control author-select', 'style'=>'width: 100%'],
-                                'events'=>['select2:select'=>'function(evt){
-                                    $(".user-selected").data("id", evt.params.data.id);
-                                    $(".user-selected").data("text", evt.params.data.text);
-                                }']
-                            ])
                         ],
                         //'content:ntext',
                         //'tags',

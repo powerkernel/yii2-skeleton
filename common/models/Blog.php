@@ -149,7 +149,6 @@ class Blog extends BlogBase
     }
 
 
-
     /**
      * get most viewed blog
      * @param int $limit
@@ -157,7 +156,7 @@ class Blog extends BlogBase
      */
     public static function mostViewed($limit = 10)
     {
-        return Blog::find()->where(['status'=>Blog::STATUS_PUBLISHED])->orderBy(['views' => SORT_DESC])->limit($limit)->all();
+        return Blog::find()->where(['status' => Blog::STATUS_PUBLISHED])->orderBy(['views' => SORT_DESC])->limit($limit)->all();
     }
 
     /**
@@ -167,7 +166,7 @@ class Blog extends BlogBase
      */
     public static function latest($limit = 10)
     {
-        return Blog::find()->where(['status'=>Blog::STATUS_PUBLISHED])->orderBy(['published_at' => SORT_DESC])->limit($limit)->all();
+        return Blog::find()->where(['status' => Blog::STATUS_PUBLISHED])->orderBy(['published_at' => SORT_DESC])->limit($limit)->all();
     }
 
     /**
@@ -177,26 +176,25 @@ class Blog extends BlogBase
      */
     public static function random($limit = 10)
     {
-        return Blog::find()->where(['status'=>Blog::STATUS_PUBLISHED])->orderBy('rand()')->limit($limit)->all();
+        return Blog::find()->where(['status' => Blog::STATUS_PUBLISHED])->orderBy('rand()')->limit($limit)->all();
     }
 
 
     /**
      * Update date
-     * @param $insert
+     * @param $insert boolean
      */
-    public function updateDate ($insert)
+    protected function updateDate($insert)
     {
-        if(is_a($this, '\yii\db\ActiveRecord')){
-            $time=time();
+        if (is_a($this, '\yii\db\ActiveRecord')) {
+            $time = time();
+        } else {
+            $time = new \MongoDB\BSON\UTCDateTime();
         }
-        else {
-            $time=new \MongoDB\BSON\UTCDateTime();
+        if ($insert) {
+            $this->created_at = $time;
         }
-        if($insert){
-            $this->created_at=$time;
-        }
-        $this->updated_at=$time;
+        $this->updated_at = $time;
     }
 
     /**
@@ -216,27 +214,26 @@ class Blog extends BlogBase
 
         /* published_at */
         if ($this->status == Blog::STATUS_PUBLISHED && empty($this->published_at)) {
-            if(is_a($this, '\yii\db\ActiveRecord')){
-                $time=time();
-            }
-            else {
-                $time=new UTCDateTime();
+            if (is_a($this, '\yii\db\ActiveRecord')) {
+                $time = time();
+            } else {
+                $time = new UTCDateTime();
             }
             $this->published_at = $time;
         }
 
         /* clean html */
-        $config=[
-            'HTML.MaxImgLength'=>null,
-            'CSS.MaxImgLength'=>null,
-            'HTML.Trusted'=>true,
-            'Filter.YouTube'=>true,
+        $config = [
+            'HTML.MaxImgLength' => null,
+            'CSS.MaxImgLength' => null,
+            'HTML.Trusted' => true,
+            'Filter.YouTube' => true,
         ];
         $this->content = HtmlPurifier::process($this->content, $config);
 
         /* done */
         $this->updateDate($insert);
-        $this->status=(int)$this->status;
+        $this->status = (int)$this->status;
         return parent::beforeSave($insert);
 
     }
@@ -275,27 +272,27 @@ class Blog extends BlogBase
         //$img = Yii::$app->cache->get($key);
 
         //if ($img === false) {
-            $flag = false;
-            $doc = new DOMDocument();
-            $doc->loadHTML($this->content);
-            $tags = $doc->getElementsByTagName('img');
-            $img = ['url' => '', 'width' => '', 'height' => ''];
-            foreach ($tags as $i => $tag) {
-                $img['url'] = $tag->getAttribute('src');
-                $img['width'] = $tag->getAttribute('width');
-                $img['height'] = $tag->getAttribute('height');
-                $flag = true;
-                break;
-            }
-            if ($flag) {
-                /* cache */
-                //$sql = (new Query())->select('updated_at')->from(Blog::tableName())->where(['id' => $this->id])->createCommand()->rawSql;
-                //$dependency = new DbDependency();
-                //$dependency->sql = $sql;
-                //Yii::$app->cache->set($key, $img, 0, $dependency);
-            } else {
-                Yii::$app->session->setFlash('warning', Yii::t('app', 'Missing image in blog post.'));
-            }
+        $flag = false;
+        $doc = new DOMDocument();
+        $doc->loadHTML($this->content);
+        $tags = $doc->getElementsByTagName('img');
+        $img = ['url' => '', 'width' => '', 'height' => ''];
+        foreach ($tags as $i => $tag) {
+            $img['url'] = $tag->getAttribute('src');
+            $img['width'] = $tag->getAttribute('width');
+            $img['height'] = $tag->getAttribute('height');
+            $flag = true;
+            break;
+        }
+        if ($flag) {
+            /* cache */
+            //$sql = (new Query())->select('updated_at')->from(Blog::tableName())->where(['id' => $this->id])->createCommand()->rawSql;
+            //$dependency = new DbDependency();
+            //$dependency->sql = $sql;
+            //Yii::$app->cache->set($key, $img, 0, $dependency);
+        } else {
+            Yii::$app->session->setFlash('warning', Yii::t('app', 'Missing image in blog post.'));
+        }
 
         //}
 
@@ -306,17 +303,18 @@ class Blog extends BlogBase
      * get all images in blog's content
      * @return array
      */
-    public function getImages(){
+    public function getImages()
+    {
         $doc = new DOMDocument();
         $doc->loadHTML($this->content);
         $tags = $doc->getElementsByTagName('img');
         $imgs = [];
         foreach ($tags as $i => $tag) {
-            $imgs[]=[
-                'src'=>$tag->getAttribute('src'),
-                'width'=>$tag->getAttribute('width'),
-                'height'=>$tag->getAttribute('height'),
-                'alt'=>$tag->getAttribute('alt')
+            $imgs[] = [
+                'src' => $tag->getAttribute('src'),
+                'width' => $tag->getAttribute('width'),
+                'height' => $tag->getAttribute('height'),
+                'alt' => $tag->getAttribute('alt')
             ];
         }
         return $imgs;
@@ -341,39 +339,41 @@ class Blog extends BlogBase
      * AMP Content
      * @return mixed|string
      */
-    public function getAmpContent(){
+    public function getAmpContent()
+    {
         /* youtube ids */
-        $ids=$this->getEmbedYoutubeID();
+        $ids = $this->getEmbedYoutubeID();
         $html = str_ireplace(
-            ['<img','<video','/video>','<audio','/audio>'],
-            ['<amp-img layout="responsive"','<amp-video','/amp-video>','<amp-audio','/amp-audio>'],
+            ['<img', '<video', '/video>', '<audio', '/audio>'],
+            ['<amp-img layout="responsive"', '<amp-video', '/amp-video>', '<amp-audio', '/amp-audio>'],
             $this->content
         );
         # Add closing tags to amp-img custom element
-        $html = preg_replace('/<amp-img(.*?)>/', '<amp-img$1></amp-img>',$html);
+        $html = preg_replace('/<amp-img(.*?)>/', '<amp-img$1></amp-img>', $html);
         # Whitelist of HTML tags allowed by AMP
-        $html = strip_tags($html,'<h1><h2><h3><h4><h5><h6><a><p><ul><ol><li><blockquote><q><cite><ins><del><strong><em><code><pre><svg><table><thead><tbody><tfoot><th><tr><td><dl><dt><dd><article><section><header><footer><aside><figure><time><abbr><div><span><hr><small><br><amp-img><amp-audio><amp-video><amp-ad><amp-anim><amp-carousel><amp-fit-rext><amp-image-lightbox><amp-instagram><amp-lightbox><amp-twitter><amp-youtube>');
+        $html = strip_tags($html, '<h1><h2><h3><h4><h5><h6><a><p><ul><ol><li><blockquote><q><cite><ins><del><strong><em><code><pre><svg><table><thead><tbody><tfoot><th><tr><td><dl><dt><dd><article><section><header><footer><aside><figure><time><abbr><div><span><hr><small><br><amp-img><amp-audio><amp-video><amp-ad><amp-anim><amp-carousel><amp-fit-rext><amp-image-lightbox><amp-instagram><amp-lightbox><amp-twitter><amp-youtube>');
         # re-add youtube
-        $youtube='';
-        foreach($ids as $id){
-            $youtube.=Html::tag('amp-youtube', '', ['data-videoid'=>$id, 'width'=>640, 'height'=>360, 'layout'=>'responsive']);
+        $youtube = '';
+        foreach ($ids as $id) {
+            $youtube .= Html::tag('amp-youtube', '', ['data-videoid' => $id, 'width' => 640, 'height' => 360, 'layout' => 'responsive']);
         }
-        return $youtube.$html;
+        return $youtube . $html;
     }
 
     /**
      * get youtube ids
      * @return array
      */
-    public function getEmbedYoutubeID(){
+    public function getEmbedYoutubeID()
+    {
         $doc = new DOMDocument();
         $doc->loadHTML($this->content);
         $tags = $doc->getElementsByTagName('iframe');
         $ids = [];
         foreach ($tags as $i => $tag) {
-            $src=$tag->getAttribute('src');
-            if(preg_match('/embed\/(\w+)/i', $src, $matches)){
-                $ids[]=$matches[1];
+            $src = $tag->getAttribute('src');
+            if (preg_match('/embed\/(\w+)/i', $src, $matches)) {
+                $ids[] = $matches[1];
             }
         }
         return $ids;
@@ -382,21 +382,24 @@ class Blog extends BlogBase
     /**
      * @return int timestamp
      */
-    public function getUpdatedAt(){
-        return is_a($this, '\yii\db\ActiveRecord')?$this->updated_at:$this->updated_at->toDateTime()->format('U');
+    public function getUpdatedAt()
+    {
+        return is_a($this, '\yii\db\ActiveRecord') ? $this->updated_at : $this->updated_at->toDateTime()->format('U');
     }
 
     /**
      * @return int timestamp
      */
-    public function getCreatedAt(){
-        return is_a($this, '\yii\db\ActiveRecord')?$this->created_at:$this->created_at->toDateTime()->format('U');
+    public function getCreatedAt()
+    {
+        return is_a($this, '\yii\db\ActiveRecord') ? $this->created_at : $this->created_at->toDateTime()->format('U');
     }
 
     /**
      * @return int timestamp
      */
-    public function getPublishedAt(){
-        return is_a($this, '\yii\db\ActiveRecord')?$this->published_at:$this->published_at->toDateTime()->format('U');
+    public function getPublishedAt()
+    {
+        return is_a($this, '\yii\db\ActiveRecord') ? $this->published_at : $this->published_at->toDateTime()->format('U');
     }
 }

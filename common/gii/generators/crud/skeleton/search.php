@@ -105,6 +105,15 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
         //    ]);
         //}
 
+        //if(!empty($this->created_by)) {
+        //    $owners=Account::find()->select('id')->where(['like', 'fullname', $this->created_by])->asArray()->all();
+        //    $ids = [0];
+        //    foreach ($owners as $owner) {
+        //        $ids[] = (integer)$owner['id'];
+        //    }
+        //    $query->andFilterWhere(['created_by' => $ids]);
+        //}
+
         return $dataProvider;
     }
 }

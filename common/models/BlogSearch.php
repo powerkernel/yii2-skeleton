@@ -93,10 +93,18 @@ class BlogSearch extends Blog
         }
 
         // grid filtering conditions
+        if(!empty($this->created_by)) {
+            $owners=Account::find()->select('id')->where(['like', 'fullname', $this->created_by])->asArray()->all();
+            $ids = [0];
+            foreach ($owners as $owner) {
+                $ids[] = (integer)$owner['id'];
+            }
+            $query->andFilterWhere(['created_by' => $ids]);
+        }
 
         $query->andFilterWhere([
             //'id' => $this->id,
-            'created_by' => $this->created_by > 0 ? (int)$this->created_by : null,
+            //'created_by' => $this->created_by > 0 ? (int)$this->created_by : null,
             'views' => $this->views > 0 ? (int)$this->views : null,
             'status' => $this->status > 0 ? (int)$this->status : null,
         ]);
