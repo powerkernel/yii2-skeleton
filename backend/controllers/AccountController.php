@@ -9,7 +9,6 @@ use conquer\select2\Select2Action;
 use Yii;
 use common\models\Account;
 use common\models\AccountSearch;
-use yii\db\ActiveQuery;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 
@@ -60,30 +59,6 @@ class AccountController extends BackendController
     }
 
     /**
-     * ajax list user
-     * @param $q
-     * @return array
-     */
-    public function listUser($q){
-
-        if(!empty($q)){
-            $query = new ActiveQuery(Account::className());
-            return [
-                'results' => $query->select([
-                    'id as id',
-                    'fullname as text',
-                ])
-                    ->filterWhere(['like', 'fullname', $q])
-                    ->asArray()
-                    ->limit(20)
-                    ->all(),
-            ];
-        }
-        return [];
-
-    }
-
-    /**
      * @param $client \yii\authclient\ClientInterface
      */
     public function onAuthSuccess($client)
@@ -115,7 +90,7 @@ class AccountController extends BackendController
                 return $this->goBack();
             }
             else {
-                $this->redirect(['login']);
+                return $this->redirect(['login']);
             }
 
         } else {

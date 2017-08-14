@@ -1,7 +1,7 @@
 <?php
 $build=exec('git rev-list HEAD --count');
 $a = [
-    'version' => '0.3.1dev',
+    'version' => '1.0.0',
     'build'=>$build++,
     'date'=>time()
 ];
