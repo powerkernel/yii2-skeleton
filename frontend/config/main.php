@@ -25,6 +25,10 @@ return [
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
+                    'except' => [
+                        'yii\web\HttpException:404',
+                        'yii\debug\Module::checkAccess'
+                    ],
                 ],
             ],
         ],
