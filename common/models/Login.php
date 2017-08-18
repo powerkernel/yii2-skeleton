@@ -165,6 +165,7 @@ class Login extends ActiveRecord
             $account = Account::findByEmail($this->email);
             if ($account) {
                 $name = $account->fullname;
+                Yii::$app->language=$account->language;
             }
 
             /* send email */
