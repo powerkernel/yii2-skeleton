@@ -46,6 +46,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                     ['attribute' => 'status', 'value' => function ($model){return $model->statusColorText;}, 'filter'=> PageData::getStatusOption(), 'format'=>'raw'],
                     [
                         'class' => 'yii\grid\ActionColumn',
+                        'contentOptions' => ['style' => 'min-width: 70px']
                     ],
                 ],
             ]); ?>

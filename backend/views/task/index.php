@@ -31,8 +31,10 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                     'filterModel' => $searchModel,
                     'columns' => [
                         //['class' => 'yii\grid\SerialColumn'],
-                        Yii::$app->params['mongodb']['taskLog']?['class' => 'yii\grid\SerialColumn']:'id',
-                        ['attribute' => 'task', 'value' => function ($model){return $model->task;}, 'filter'=> TaskLog::getTaskList()],
+                        Yii::$app->params['mongodb']['taskLog'] ? ['class' => 'yii\grid\SerialColumn'] : 'id',
+                        ['attribute' => 'task', 'value' => function ($model) {
+                            return $model->task;
+                        }, 'filter' => TaskLog::getTaskList()],
                         'result:ntext',
                         //'created_at:dateTime',
                         //'updated_at',
@@ -41,12 +43,13 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                             'value' => 'created_at',
                             'format' => 'dateTime',
                             'filter' => DatePicker::widget(['model' => $searchModel, 'attribute' => 'created_at', 'dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']]),
-                            'contentOptions'=>['style'=>'min-width: 80px']
+                            'contentOptions' => ['style' => 'min-width: 160px']
                         ],
                         //['attribute' => 'status', 'value' => function ($model){return $model->statusText;}, 'filter'=>''],
                         [
-                                'class' => 'yii\grid\ActionColumn',
-                                'template'=>'{view} {delete}'
+                            'class' => 'yii\grid\ActionColumn',
+                            'template' => '{view} {delete}',
+                            'contentOptions' => ['style' => 'min-width: 50px']
                         ],
                     ],
                 ]); ?>
