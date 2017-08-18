@@ -180,7 +180,7 @@ class AccountController extends BackendController
         $model = $this->findModel($id);
         $model->generateAccessToken();
         $model->save(false);
-        return $this->redirect(Yii::$app->urlManagerFrontend->createUrl(['/account/login-as', 'token' => $model->access_token]));
+        return $this->redirect(Yii::$app->urlManagerFrontend->createAbsoluteUrl(['/account/login-as', 'token' => $model->access_token]));
     }
 
     /**

@@ -41,7 +41,7 @@ class BlogController extends BackendController
      */
     public function actionUpdate($id)
     {
-        return $this->redirect(Yii::$app->urlManagerFrontend->createUrl(['/blog/update', 'id' => $id]));
+        return $this->redirect(Yii::$app->urlManagerFrontend->createAbsoluteUrl(['/blog/update', 'id' => $id]));
     }
 
     /**
@@ -50,7 +50,7 @@ class BlogController extends BackendController
      */
     public function actionView($name)
     {
-        return $this->redirect(Yii::$app->urlManagerFrontend->createUrl(['/blog/view', 'name' => $name]));
+        return $this->redirect(Yii::$app->urlManagerFrontend->createAbsoluteUrl(['/blog/view', 'name' => $name]));
     }
 
     /**

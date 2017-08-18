@@ -84,8 +84,8 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
                 <hr/>
             </div>
             <div class="text-center">
-                <?= Html::a(Yii::t('app', 'Sign up'), Yii::$app->urlManagerFrontend->createUrl(['/account/signup']), ['class' => 'btn btn-danger']); ?>
-                <?= Html::a(Yii::t('app', 'Forgot password?'), Yii::$app->urlManagerFrontend->createUrl(['/account/reset']), ['class' => 'btn btn-default']); ?>
+                <?= Html::a(Yii::t('app', 'Sign up'), Yii::$app->urlManagerFrontend->createAbsoluteUrl(['/account/signup']), ['class' => 'btn btn-danger']); ?>
+                <?= Html::a(Yii::t('app', 'Forgot password?'), Yii::$app->urlManagerFrontend->createAbsoluteUrl(['/account/reset']), ['class' => 'btn btn-default']); ?>
             </div>
             <?php endif;?>
 
