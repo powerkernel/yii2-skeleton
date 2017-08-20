@@ -15,20 +15,29 @@ $schedule->call(function (\yii\console\Application $app) {
     $now = time();
     $expire = (int)Setting::getValue('tokenExpiryTime');
     $point = $now - $expire;
-    $links = \common\models\Login::find()->where('status=:status OR updated_at<=:point', [
-        ':status'=>\common\models\Login::STATUS_USED,
-        ':point' => $point
-    ])->all();
-    if($links){
+
+    if (Yii::$app->params['mongodb']['login']) {
+        $links = \common\models\Login::find()->where([
+            'status'=>\common\models\Login::STATUS_USED,
+        ])->orWhere([
+            'updated_at'=>['$lt'=>new \MongoDB\BSON\UTCDateTime($point*1000)]
+        ])->all();
+    } else {
+        $links = \common\models\Login::find()->where('status=:status OR updated_at<=:point', [
+            ':status' => \common\models\Login::STATUS_USED,
+            ':point' => $point
+        ])->all();
+    }
+    if ($links) {
         $obj = [];
-        foreach($links as $link){
+        foreach ($links as $link) {
             $obj[] = $link->token;
             $link->delete();
         }
         $output = implode(', ', $obj);
     }
 
-    if(!empty($output)){
+    if (!empty($output)) {
         $log = new \common\models\TaskLog();
         $log->task = basename(__FILE__, '.php');
         $log->result = $output;

@@ -8,8 +8,6 @@
 namespace common\models;
 
 use Yii;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%core_login}}".
@@ -17,10 +15,10 @@ use yii\db\ActiveRecord;
  * @property string $email
  * @property string $token
  * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
+ * @property integer|\MongoDB\BSON\UTCDateTime $created_at
+ * @property integer|\MongoDB\BSON\UTCDateTime $updated_at
  */
-class Login extends ActiveRecord
+class Login extends LoginBase
 {
 
 
@@ -86,13 +84,7 @@ class Login extends ActiveRecord
     }
 
 
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return '{{%core_login}}';
-    }
+
 
     /**
      * @inheritdoc
@@ -101,8 +93,10 @@ class Login extends ActiveRecord
     {
         return [
             [['email'], 'required'],
-            [['status', 'created_at', 'updated_at'], 'integer'],
+            [['email'], 'email'],
+            [['status'], 'integer'],
             [['email', 'token'], 'string', 'max' => 255],
+            [['created_at', 'updated_at'], 'safe']
         ];
     }
 
@@ -122,16 +116,6 @@ class Login extends ActiveRecord
 
     /**
      * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::className(),
-        ];
-    }
-
-    /**
-     * @inheritdoc
      * @param bool $insert
      * @return bool
      */
@@ -139,6 +123,7 @@ class Login extends ActiveRecord
     {
         if ($insert) {
             $this->token = Yii::$app->security->generateRandomString() . '_' . time();
+            $this->status=self::STATUS_NEW;
             /* admin ?*/
             if ($this->admin) {
                 $account = Account::findByEmail($this->email);

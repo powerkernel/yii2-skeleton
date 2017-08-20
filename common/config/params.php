@@ -8,5 +8,6 @@ return [
         'i18n'=>false,
         'taskLog'=>false,
         'blog'=>false,
+        'login'=>false,
     ]
 ];

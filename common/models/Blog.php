@@ -11,8 +11,6 @@ use common\Core;
 use DOMDocument;
 use MongoDB\BSON\UTCDateTime;
 use Yii;
-use yii\caching\DbDependency;
-use yii\db\Query;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 
@@ -30,9 +28,9 @@ use yii\helpers\HtmlPurifier;
  * @property integer $created_by
  * @property integer $views
  * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
- * @property integer $published_at
+ * @property integer|\MongoDB\BSON\UTCDateTime $created_at
+ * @property integer|\MongoDB\BSON\UTCDateTime $updated_at
+ * @property integer|\MongoDB\BSON\UTCDateTime $published_at
  *
  * @property Account $author
  * @property string $viewUrl
@@ -141,7 +139,7 @@ class Blog extends BlogBase
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return \yii\db\ActiveQueryInterface
      */
     public function getAuthor()
     {
