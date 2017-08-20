@@ -37,6 +37,10 @@ return [
         'configuration'=>['class'=>'common\bootstrap\Configuration'],
         'assetManager' => [
             'class' => 'yii\web\AssetManager',
+            'hashCallback' => function ($path) {
+                return hash('md4', $path);
+            },
+            'appendTimestamp' => true,
             'linkAssets' => true,
             'bundles' => [
                 'yii\web\JqueryAsset' => [
