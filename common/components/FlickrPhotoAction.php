@@ -67,8 +67,11 @@ class FlickrPhotoAction extends FlickrAction
         ?>
         <div class="row">
             <?php foreach ($photos as $id => $photo): ?>
-                <div class="col-sm-2">
+                <div class="col-sm-2 text-center">
                     <img style="width: 100%; cursor: pointer" data-toggle="modal" data-target="#flickr-<?= $id ?>" src="<?= $photo['sizes']['size'][array_search('Thumbnail', array_column($photo['sizes']['size'], 'label'))]['source'] ?>" class="flickr-photo img-responsive img-thumbnail"/>
+                    <a href="#delete" class="btn-flickr-delete" data-flickr="<?= $id ?>">
+                        <span class="label label-danger">Delete</span>
+                    </a>
                     <div id="flickr-<?= $id ?>" class="modal fade" tabindex="-1" role="dialog">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -82,7 +85,7 @@ class FlickrPhotoAction extends FlickrAction
                                             <div class="form-group">
                                                 <label for="<?= $size['label'] ?>" class="col-sm-4 control-label"><?= $size['label'] ?>: <?= $size['width'] ?>x<?= $size['height'] ?></label>
                                                 <div class="col-sm-8">
-                                                    <?= Html::textInput($size['label'], $size['source'], ['class' => 'form-control  input-sm photo-url', 'readonly' => true]) ?>
+                                                    <?= Html::textInput($size['label'], $size['source'], ['class' => 'form-control  input-sm photo-url', 'data-copy-text'=>Yii::t('app', 'URL copied') ,'readonly' => true]) ?>
                                                 </div>
                                             </div>
                                         <?php endforeach; ?>

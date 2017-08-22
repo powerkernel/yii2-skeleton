@@ -186,7 +186,7 @@ EOB;
         if (!empty($flickrClientKey) && !empty($flickrClientSecret)) {
             $clients['flickr-photo'] = [
                 'class' => 'common\components\FlickrPhoto',
-                'perms' => 'write',
+                //'perms' => 'write',
                 'consumerKey' => $flickrClientKey,
                 'consumerSecret' => $flickrClientSecret,
             ];

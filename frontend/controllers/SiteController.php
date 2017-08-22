@@ -67,6 +67,9 @@ class SiteController extends MainController
             'flickr-photo' => [
                 'class' => 'common\components\FlickrPhotoAction',
             ],
+            'flickr-delete' => [
+                'class' => 'common\components\FlickrDeleteAction',
+            ],
 
         ];
     }

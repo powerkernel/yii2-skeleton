@@ -34,7 +34,7 @@ namespace common\components;
  */
 class FlickrPhoto extends FlickrAuth
 {
-    public $perms='write';
+    public $perms='delete';
 
 
     /**
