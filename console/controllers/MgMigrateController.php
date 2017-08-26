@@ -105,6 +105,31 @@ class MgMigrateController extends Controller
     }
 
     /**
+     * migrate banner
+     */
+    public function actionBanner(){
+        echo "Migrating Banner...\n";
+        $rows=(new Query())->select('*')->from('{{%core_banner}}')->all();
+        $collection = Yii::$app->mongodb->getCollection('banner');
+        foreach($rows as $row){
+            $collection->insert([
+                'title' => $row['title'],
+                'lang' => $row['lang'],
+                'text_content' => $row['text_content'],
+                'text_style' => $row['text_style'],
+                'banner_url' => $row['banner_url'],
+                'link_url' => $row['link_url'],
+                'link_option' => $row['link_option'],
+                'status' => $row['status'],
+                'created_at' => new \MongoDB\BSON\UTCDateTime($row['created_at']*1000),
+                'updated_at' => new \MongoDB\BSON\UTCDateTime($row['updated_at']*1000),
+            ]);
+        }
+
+        echo "Banner migration completed.\n";
+    }
+
+    /**
      * task log
      */
     public function actionTasks(){
@@ -120,7 +145,7 @@ class MgMigrateController extends Controller
                 'updated_at' => (integer)$log['updated_at'],
             ]);
         }
-        Yii::$app->db->createCommand()->truncateTable('{{%core_task_logs}}')->execute();
+        //Yii::$app->db->createCommand()->truncateTable('{{%core_task_logs}}')->execute();
 
         echo "Task log migration completed.\n";
     }

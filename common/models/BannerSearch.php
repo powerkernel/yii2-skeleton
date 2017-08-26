@@ -22,7 +22,7 @@ class BannerSearch extends Banner
     public function rules()
     {
         return [
-            [['id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['status'], 'integer'],
             [['lang', 'title', 'text_content', 'banner_url', 'link_url', 'link_option'], 'safe'],
         ];
     }
@@ -64,7 +64,7 @@ class BannerSearch extends Banner
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
+            //'id' => $this->id,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

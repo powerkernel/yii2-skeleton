@@ -29,15 +29,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         <?= DetailView::widget([
                             'model' => $model,
                             'attributes' => [
-                                'id',
+                                //'id',
                                 'title',
                                 'lang',
                                 'text_content:html',
                                 'link_url:url',
                                 'link_option',
-                                ['attribute' => 'status', 'value' => $model->statusText],
-                                'created_at:dateTime',
-                                'updated_at:dateTime',
+                                ['attribute' => 'status', 'value' => $model->statusColorText, 'format'=>'raw'],
+                                'createdAt:dateTime',
+                                'updatedAt:dateTime',
                             ],
                         ]) ?>
                     </div>
@@ -48,8 +48,8 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
 
             <p>
-                <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-                <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
+                <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => Yii::$app->params['mongodb']['banner']?(string)$model->id:$model->id], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => Yii::$app->params['mongodb']['banner']?(string)$model->id:$model->id], [
                     'class' => 'btn btn-danger',
                     'data' => [
                         'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),

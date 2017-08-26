@@ -35,12 +35,11 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
                     'columns' => [
-                        //['class' => 'yii\grid\SerialColumn'],
-
-                        'id',
+                        ['class' => 'yii\grid\SerialColumn'],
+                        //'id',
                         'title',
                         //'lang',
-                        ['attribute'=>'lang', 'filter'=>Message::getLocaleList()],
+                        ['attribute' => 'lang', 'filter' => Message::getLocaleList()],
                         //'text_content:ntext',
                         //'link_url:url',
                         //'link_option',
@@ -48,7 +47,9 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                         // 'created_at',
                         // 'updated_at',
                         //['attribute' => 'created_at', 'value' => 'created_at', 'format' => 'dateTime', 'filter' => DatePicker::widget(['model' => $searchModel, 'attribute' => 'created_at', 'dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']])],
-                        ['attribute' => 'status', 'value' => function ($model){return $model->statusColorText;}, 'filter'=> Banner::getStatusOption(), 'format'=>'raw'],
+                        ['attribute' => 'status', 'value' => function ($model) {
+                            return $model->statusColorText;
+                        }, 'filter' => Banner::getStatusOption(), 'format' => 'raw'],
                         ['class' => 'yii\grid\ActionColumn'],
                     ],
                 ]); ?>

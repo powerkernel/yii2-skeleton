@@ -66,7 +66,7 @@ class BannerController extends BackendController
 
         /* metaData */
         //$title=$model->title;
-        $this->view->title = Yii::t('app', 'Banner');
+        $this->view->title = $model->title;
         //$keywords = $model->tags;
         //$description = $model->desc;
         //$metaTags[]=['name'=>'keywords', 'content'=>$keywords];
@@ -148,7 +148,7 @@ class BannerController extends BackendController
         $model = new Banner();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => Yii::$app->params['mongodb']['banner']?(string)$model->id:$model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -168,7 +168,7 @@ class BannerController extends BackendController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => Yii::$app->params['mongodb']['banner']?(string)$model->id:$model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
