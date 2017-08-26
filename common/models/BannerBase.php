@@ -25,7 +25,7 @@ if (Yii::$app->params['mongodb']['banner']) {
          */
         public static function collectionName()
         {
-            return 'banner';
+            return 'banners';
         }
 
         /**

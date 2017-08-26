@@ -6,7 +6,6 @@ use common\Core;
 use Yii;
 use common\models\Setting;
 use yii\base\DynamicModel;
-use yii\db\Query;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -37,11 +36,16 @@ class SettingController extends BackendController
      */
     public function actionIndex()
     {
-        $tabs = (new Query())->select('group')->from('{{%core_setting}}')->orderBy('key_order')->distinct()->column();
-        $attributes = (new Query())->select('key')->from('{{%core_setting}}')->orderBy('key_order')->column();
-
-        //var_dump($tabs);
-
+        if(Yii::$app->params['mongodb']['setting']){
+            $query=new yii\mongodb\Query;
+            $tabs = $query->select(['group'])->from('settings')->orderBy('key_order')->distinct('group');
+            $attributes = $query->select(['key'])->from('settings')->orderBy('key_order')->column();
+        }
+        else {
+            $query=new yii\db\Query;
+            $tabs = $query->select('group')->from('{{%core_setting}}')->orderBy('key_order')->distinct()->column();
+            $attributes = $query->select('key')->from('{{%core_setting}}')->orderBy('key_order')->column();
+        }
 
         $model = new DynamicModel($attributes);
         $settings = [];
@@ -49,11 +53,9 @@ class SettingController extends BackendController
             $setting = Setting::find()->where(['key' => $attribute])->asArray()->one();
             $settings[$setting['group']][$attribute] = $setting;
             $model->$attribute = $setting['value'];
-            //$model->la
 
             if (!empty($rules = json_decode($setting['rules'], true))) {
                 foreach ($rules as $rule => $conf) {
-                    //var_dump($conf);
                     $model->addRule($attribute, $rule, $conf);
                 }
             } else {
@@ -64,7 +66,7 @@ class SettingController extends BackendController
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             foreach ($attributes as $attribute) {
-                $s = Setting::findOne($attribute);
+                $s = Setting::find()->where(['key'=>$attribute])->one();
                 $s->value = $model->$attribute;
                 if ($s->save(false)) {
                     Yii::$app->session->setFlash('success', Yii::t('app', 'Settings saved successfully.'));
@@ -200,7 +202,7 @@ class SettingController extends BackendController
         /* sync */
         $unsave=[];
         foreach ($s as $i => $setting) {
-            $conf = Setting::findOne($setting['key']);
+            $conf = Setting::find()->where(['key'=>$setting['key']])->one();
             if (!$conf) {
                 $conf = new Setting();
                 $conf->key = $setting['key'];
@@ -214,7 +216,7 @@ class SettingController extends BackendController
             $conf->data = $setting['data'];
             $conf->default = $setting['default'];
             $conf->rules = $setting['rules'];
-            $conf->key_order = $i;
+            $conf->key_order = (int)$i;
             if(!$conf->save()){
                 $unsave[]=$conf->key;
             }

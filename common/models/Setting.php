@@ -4,7 +4,6 @@ namespace common\models;
 
 use common\Core;
 use Yii;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "{{%core_setting}}".
@@ -20,15 +19,9 @@ use yii\db\ActiveRecord;
  * @property string $rules
  * @property string $key_order
  */
-class Setting extends ActiveRecord
+class Setting extends SettingBase
 {
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return '{{%core_setting}}';
-    }
+
 
     /**
      * @inheritdoc
@@ -57,14 +50,6 @@ class Setting extends ActiveRecord
         ];
     }
 
-//    /**
-//     * @inheritdoc
-//     * @return SettingQuery the active query used by this AR class.
-//     */
-//    public static function find()
-//    {
-//        return new SettingQuery(get_called_class());
-//    }
 
     /**
      * get setting value
@@ -72,7 +57,7 @@ class Setting extends ActiveRecord
      * @return string
      */
     public static function getValue($key){
-        $setting=self::findOne($key);
+        $setting=self::find()->where(['key'=>$key])->one();
         if($setting){
             return $setting->value;
         }

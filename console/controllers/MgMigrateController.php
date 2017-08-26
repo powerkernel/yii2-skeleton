@@ -105,6 +105,32 @@ class MgMigrateController extends Controller
     }
 
     /**
+     * migrate Setting model
+     */
+    public function actionSetting(){
+        echo "Migrating Setting model...\n";
+        $rows=(new Query())->select('*')->from('{{%core_setting}}')->all();
+        $collection = Yii::$app->mongodb->getCollection('settings');
+        foreach($rows as $row){
+            $collection->insert([
+                'key' => $row['key'],
+                'value' => $row['value'],
+                'title' => $row['title'],
+                'description' => $row['description'],
+                'group' => $row['group'],
+                'type' => $row['type'],
+                'data' => $row['data'],
+                'default' => $row['default'],
+                'rules' => $row['rules'],
+                'key_order' => $row['key_order'],
+            ]);
+        }
+
+        echo "Setting model migration completed.\n";
+    }
+
+
+    /**
      * migrate banner
      */
     public function actionBanner(){

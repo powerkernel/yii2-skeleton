@@ -11,5 +11,6 @@ return [
         'login'=>false,
         'banner'=>false,
         'service'=>false,
+        'setting'=>false,
     ]
 ];
