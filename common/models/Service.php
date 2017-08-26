@@ -8,21 +8,20 @@
 namespace common\models;
 
 use Yii;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "{{%core_services}}".
+ * Service model class.
  *
+ * @property \MongoDB\BSON\ObjectID|string $_id
  * @property string $name
  * @property string $title
  * @property string $token
  * @property string $data
  * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
+ * @property integer|\MongoDB\BSON\UTCDateTime $created_at
+ * @property integer|\MongoDB\BSON\UTCDateTime $updated_at
  */
-class Service extends ActiveRecord
+class Service extends ServiceBase
 {
 
 
@@ -65,22 +64,24 @@ class Service extends ActiveRecord
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
-        return '{{%core_services}}';
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
-        return [
+        if (is_a($this, '\yii\mongodb\ActiveRecord')) {
+            $date = [
+                [['created_at', 'updated_at'], 'yii\mongodb\validators\MongoDateValidator']
+            ];
+        } else {
+            $date = [
+                [['created_at', 'updated_at'], 'integer']
+            ];
+        }
+        $default = [
             [['name', 'title'], 'required'],
             [['token', 'data'], 'string'],
             [['status', 'created_at', 'updated_at'], 'integer'],
             [['name', 'title'], 'string', 'max' => 255],
         ];
+        return array_merge($default, $date);
     }
 
     /**
@@ -99,13 +100,5 @@ class Service extends ActiveRecord
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::className(),
-        ];
-    }
+
 }

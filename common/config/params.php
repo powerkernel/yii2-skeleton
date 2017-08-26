@@ -9,6 +9,7 @@ return [
         'taskLog'=>false,
         'blog'=>false,
         'login'=>false,
-        'banner'=>false
+        'banner'=>false,
+        'service'=>false,
     ]
 ];

@@ -8,10 +8,8 @@
 
 namespace common\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Service;
 
 /**
  * ServiceSearch represents the model behind the search form about `common\models\Service`.
@@ -25,7 +23,7 @@ class ServiceSearch extends Service
     {
         return [
             [['name', 'title', 'token', 'data'], 'safe'],
-            [['status', 'created_at', 'updated_at'], 'integer'],
+            [['status'], 'integer'],
         ];
     }
 
@@ -67,8 +65,6 @@ class ServiceSearch extends Service
         // grid filtering conditions
         $query->andFilterWhere([
             'status' => $this->status,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
