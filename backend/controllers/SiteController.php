@@ -28,6 +28,9 @@ class SiteController extends BackendController
             'flickr-photo' => [
                 'class' => 'common\components\FlickrPhotoAction',
             ],
+            'flickr-delete' => [
+                'class' => 'common\components\FlickrDeleteAction',
+            ],
         ];
     }
 
