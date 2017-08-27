@@ -15,10 +15,10 @@ use yii\behaviors\TimestampBehavior;
 
 if (Yii::$app->params['mongodb']['menu']) {
     /**
-     * Class MenuBase
+     * Class ActiveRecord
      * @package common\models
      */
-    class MenuBase extends \yii\mongodb\ActiveRecord
+    class ActiveRecord extends \yii\mongodb\ActiveRecord
     {
         /**
          * @inheritdoc
@@ -101,10 +101,10 @@ if (Yii::$app->params['mongodb']['menu']) {
     }
 } else {
     /**
-     * Class MenuBase
+     * Class ActiveRecord
      * @package common\models
      */
-    class MenuBase extends \yii\db\ActiveRecord
+    class ActiveRecord extends \yii\db\ActiveRecord
     {
         /**
          * @inheritdoc
@@ -140,4 +140,14 @@ if (Yii::$app->params['mongodb']['menu']) {
             return $this->created_at;
         }
     }
+}
+
+
+/**
+ * Class MenuBase
+ * @package common\models
+ */
+class MenuBase extends ActiveRecord
+{
+
 }

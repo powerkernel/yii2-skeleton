@@ -12,7 +12,7 @@ use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
- * This is the model class for table "{{%core_menu}}".
+ * This is the model class for Menu.
  *
  * @property integer|string $id
  * @property integer|string $id_parent
@@ -158,30 +158,13 @@ class Menu extends MenuBase
     }
 
     /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCreatedBy()
-    {
-        return $this->hasOne(Account::className(), ['id' => 'created_by']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUpdatedBy()
-    {
-        return $this->hasOne(Account::className(), ['id' => 'updated_by']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery|\yii\mongodb\ActiveQuery
+     * @return \yii\db\ActiveQueryInterface
      */
     public function getParent()
     {
-        if(is_a($this, '\yii\mongodb\ActiveRecord')){
+        if (is_a($this, '\yii\mongodb\ActiveRecord')) {
             return $this->hasOne(Menu::className(), ['_id' => 'id_parent']);
-        }
-        else {
+        } else {
             return $this->hasOne(Menu::className(), ['id' => 'id_parent']);
         }
     }
