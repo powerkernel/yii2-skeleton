@@ -12,5 +12,6 @@ return [
         'banner'=>false,
         'service'=>false,
         'setting'=>false,
+        'menu'=>false
     ]
 ];

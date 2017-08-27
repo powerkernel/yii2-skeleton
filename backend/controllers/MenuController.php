@@ -7,7 +7,7 @@
 
 namespace backend\controllers;
 
-use kotchuprik\sortable\actions\Sorting;
+use common\actions\Sorting;
 use Yii;
 use common\models\Menu;
 use common\models\MenuSearch;

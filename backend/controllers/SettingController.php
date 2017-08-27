@@ -38,7 +38,7 @@ class SettingController extends BackendController
     {
         if(Yii::$app->params['mongodb']['setting']){
             $query=new yii\mongodb\Query;
-            $tabs = $query->select(['group'])->from('settings')->orderBy('key_order')->distinct('group');
+            $tabs = $query->from('settings')->orderBy(['key_order'=>SORT_DESC])->distinct('group');
             $attributes = $query->select(['key'])->from('settings')->orderBy('key_order')->column();
         }
         else {
