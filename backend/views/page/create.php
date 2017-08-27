@@ -3,6 +3,7 @@
 use common\Core;
 use common\models\Message;
 use common\models\PageData;
+use modernkernel\slugify\Slugify;
 use modernkernel\tinymce\TinyMce;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -29,11 +30,11 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="page-data-form">
                 <?php $form = ActiveForm::begin(); ?>
 
-                <?= $form->field($page, 'id')->textInput(['maxlength' => true]) ?>
-
                 <?= $form->field($model, 'language')->dropDownList(Message::getLocaleList()) ?>
 
                 <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+
+                <?= $form->field($model, 'slug')->widget(Slugify::className(),['source'=>'#pagedata-title']) ?>
 
                 <?= $form->field($model, 'description')->textarea(['rows' => 3]) ?>
 

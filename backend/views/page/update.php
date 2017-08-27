@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 
 $this->title = Yii::t('app', 'Update: {TITLE}', ['TITLE' => $model->title]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Pages'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id_page' => $model->id_page, 'language' => $model->language]];
+$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id_page' => $model->slug, 'language' => $model->language]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 
 //$js = file_get_contents(__DIR__ . '/_form.min.js');
@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
         <div class="box-body">
             <div class="page-data-form">
                 <?php $form = ActiveForm::begin(); ?>
-                <?= $form->field($model, 'id_page')->textInput(['readonly' => true]) ?>
+                <?= $form->field($model, 'slug')->textInput(['readonly' => true]) ?>
                 <?= $form->field($model, 'language')->textInput(['maxlength' => true, 'readonly' => true]) ?>
                 <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
                 <?= $form->field($model, 'description')->textarea(['rows' => 3]) ?>
@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
                             <ul class="dropdown-menu">
                                 <?php foreach ($languages as $key => $language): ?>
                                     <li>
-                                        <a href="<?= Yii::$app->urlManager->createUrl(['/page/add-language', 'id' => $model->id_page, 'from' => $model->language, 'to' => $key]) ?>"><?= Yii::t('app', 'Add') ?> <?= $language ?></a>
+                                        <a href="<?= Yii::$app->urlManager->createUrl(['/page/add-language', 'slug' => $model->slug, 'from' => $model->language, 'to' => $key]) ?>"><?= Yii::t('app', 'Add') ?> <?= $language ?></a>
                                     </li>
                                 <?php endforeach; ?>
                             </ul>

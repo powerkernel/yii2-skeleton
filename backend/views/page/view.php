@@ -28,15 +28,15 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php if ($model->page->show_update_date): ?>
             <div class="box-footer">
                 <div class="pull-right font-light text-sm">
-                    <?= Yii::t('app', 'Last updated: {DATE}', ['DATE' => Yii::$app->formatter->asDate($model->updated_at)]) ?>
+                    <?= Yii::t('app', 'Last updated: {DATE}', ['DATE' => Yii::$app->formatter->asDate($model->updatedAt)]) ?>
                 </div>
             </div>
         <?php endif; ?>
     </div>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id_page' => $model->id_page, 'language' => $model->language], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id_page' => $model->id_page, 'language' => $model->language], [
+        <?= Html::a(Yii::t('app', 'Update'), ['update', 'slug' => $model->slug, 'language' => $model->language], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'slug' => $model->slug, 'language' => $model->language], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => Yii::t('app', 'Are you sure you want to delete this page?'),

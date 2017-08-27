@@ -12,6 +12,7 @@ return [
         'banner'=>false,
         'service'=>false,
         'setting'=>false,
-        'menu'=>false
+        'menu'=>false,
+        'page'=>false
     ]
 ];

@@ -63,7 +63,7 @@ $this->registerCss($css);
         <?php if ($model->show_update_date): ?>
             <div class="box-footer">
                 <div class="pull-right font-light text-sm">
-                    <?= Yii::t('app', 'Last updated: {DATE}', ['DATE' => Yii::$app->formatter->asDate($model->content->updated_at)]) ?>
+                    <?= Yii::t('app', 'Last updated: {DATE}', ['DATE' => Yii::$app->formatter->asDate($model->content->updatedAt)]) ?>
                 </div>
             </div>
         <?php endif; ?>

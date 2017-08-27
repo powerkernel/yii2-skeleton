@@ -30,7 +30,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
 
-                    'id_page',
+                    'slug',
                     ['attribute' => 'language', 'value' => function ($model) {
                         return Message::getLocaleList()[$model->language];
                     }, 'filter' => Message::getLocaleList()],
@@ -43,9 +43,38 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                     // 'updated_by',
                     // 'created_at',
                     // 'updated_at',
-                    ['attribute' => 'status', 'value' => function ($model){return $model->statusColorText;}, 'filter'=> PageData::getStatusOption(), 'format'=>'raw'],
+                    ['attribute' => 'status', 'value' => function ($model) {
+                        return $model->statusColorText;
+                    }, 'filter' => PageData::getStatusOption(), 'format' => 'raw'],
                     [
                         'class' => 'yii\grid\ActionColumn',
+                        'buttons' => [
+                            'view' => function ($url, $model, $key) {
+                                $view = Html::a('<span class="glyphicon glyphicon-eye-open"></span>', Yii::$app->urlManager->createUrl(['page/view', 'slug' => $model->slug, 'language' => $model->language]), [
+                                    'title' => Yii::t('yii', 'View'),
+                                    'data-pjax' => 0,
+                                ]);
+                                unset($key, $url);
+                                return $view;
+                            },
+                            'update' => function ($url, $model, $key) {
+                                $update = Html::a('<span class="glyphicon glyphicon-pencil"></span>', Yii::$app->urlManager->createUrl(['page/update', 'slug' => $model->slug, 'language' => $model->language]), [
+                                    'title' => Yii::t('yii', 'UPdate'),
+                                    'data-pjax' => 0,
+                                ]);
+                                unset($key, $url);
+                                return $update;
+                            },
+                            'delete' => function ($url, $model, $key) {
+                                $delete = Html::a('<span class="glyphicon glyphicon-trash"></span>', Yii::$app->urlManager->createUrl(['page/delete', 'slug'=>$model->slug, 'language'=>$model->language]), [
+                                    'title' => Yii::t('yii', 'Delete'),
+                                    'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                                    'data-method' => 'post',
+                                ]);
+                                unset($key, $url);
+                                return $delete;
+                            }
+                        ],
                         'contentOptions' => ['style' => 'min-width: 70px']
                     ],
                 ],
@@ -64,7 +93,6 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
 
 
     </div>
-
 
 
 </div>

@@ -94,7 +94,7 @@ class SiteController extends MainController
      */
     public function actionPage($id)
     {
-        $model = Page::findOne($id);
+        $model = Page::find()->where(['slug'=>$id])->one();
         if (!$model) {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
@@ -156,9 +156,9 @@ class SiteController extends MainController
             'http://schema.org/name' => $title,
             'http://schema.org/headline' => $description,
             'http://schema.org/articleBody' => $page->content,
-            'http://schema.org/dateCreated' => Yii::$app->formatter->asDate($page->created_at, 'php:c'),
-            'http://schema.org/dateModified' => Yii::$app->formatter->asDate($page->updated_at, 'php:c'),
-            'http://schema.org/datePublished' => Yii::$app->formatter->asDate($page->created_at, 'php:c'),
+            'http://schema.org/dateCreated' => Yii::$app->formatter->asDate($page->createdAt, 'php:c'),
+            'http://schema.org/dateModified' => Yii::$app->formatter->asDate($page->updatedAt, 'php:c'),
+            'http://schema.org/datePublished' => Yii::$app->formatter->asDate($page->createdAt, 'php:c'),
             'http://schema.org/url' => $page->getViewUrl(true),
             'http://schema.org/image' => (object)[
                 '@type' => 'ImageObject',

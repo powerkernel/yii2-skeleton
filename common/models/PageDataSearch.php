@@ -17,7 +17,7 @@ class PageDataSearch extends PageData
     {
         return [
             [['status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
-            [['id_page', 'language', 'title', 'description', 'content', 'keywords'], 'safe'],
+            [['slug', 'language', 'title', 'description', 'content', 'keywords'], 'safe'],
         ];
     }
 
@@ -58,7 +58,7 @@ class PageDataSearch extends PageData
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'id_page', $this->id_page])
+        $query->andFilterWhere(['like', 'slug', $this->slug])
             ->andFilterWhere(['like', 'language', $this->language])
             ->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
