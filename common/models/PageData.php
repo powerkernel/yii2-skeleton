@@ -204,7 +204,7 @@ class PageData extends PageDataBase
         if ($absolute) {
             $act = 'createAbsoluteUrl';
         }
-        return Yii::$app->urlManager->$act(['/site/page', 'id' => $this->slug, 'lang' => $this->language]);
+        return Yii::$app->urlManager->$act(['site/page', 'id' => $this->slug, 'lang' => $this->language]);
     }
 
     /**

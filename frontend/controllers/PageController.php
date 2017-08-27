@@ -32,7 +32,7 @@ class PageController extends Controller
         $headers->add('Content-Type', 'application/xml');
 
         /* ok */
-        $query = PageData::find()->select(['id_page', 'language', 'updated_at'])->where(['status' => PageData::STATUS_ACTIVE]);
+        $query = PageData::find()->select(['slug', 'language', 'updated_at'])->where(['status' => PageData::STATUS_ACTIVE]);
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count()]);
         $pages->setPageSize(Yii::$app->params['sitemapPageSize']);

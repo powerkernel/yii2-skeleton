@@ -104,6 +104,40 @@ class MgMigrateController extends Controller
         echo "RBAC migration completed.\n";
     }
 
+    public function actionPages(){
+        echo "Migrating Page model...\n";
+        /* PAGE ID */
+        $rows=(new Query())->select('*')->from('{{%core_page_id}}')->all();
+        $collection = Yii::$app->mongodb->getCollection('page_id');
+        foreach($rows as $row){
+            $collection->insert([
+                'slug' => $row['slug'],
+                'show_description' => $row['show_description'],
+                'show_update_date' => $row['show_update_date'],
+            ]);
+        }
+        /* Page DATA */
+        $rows=(new Query())->select('*')->from('{{%core_page_data}}')->all();
+        $collection = Yii::$app->mongodb->getCollection('page_data');
+        foreach($rows as $row){
+            $collection->insert([
+                'slug' => $row['slug'],
+                'language' => $row['language'],
+                'title' => $row['title'],
+                'description' => $row['description'],
+                'content' => $row['content'],
+                'keywords' => $row['keywords'],
+                'thumbnail' => $row['thumbnail'],
+                'status' => (int)$row['status'],
+                'created_by' => (int)$row['created_by'],
+                'updated_by' => (int)$row['updated_by'],
+                'created_at' => new UTCDateTime($row['created_at']*1000),
+                'updated_at' => new UTCDateTime($row['updated_at']*1000),
+            ]);
+        }
+        echo "Page model migration completed.\n";
+    }
+
     /**
      * migrate Setting model
      */
