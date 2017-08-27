@@ -9,13 +9,12 @@ namespace common\models;
 
 use common\Core;
 use DOMDocument;
-use MongoDB\BSON\UTCDateTime;
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 
 /**
- * @property mixed $id
+ * @property integer|string $id
  * @property string $slug
  * @property string $language
  * @property string $title
@@ -25,7 +24,7 @@ use yii\helpers\HtmlPurifier;
  * @property string $thumbnail
  * @property string $thumbnail_square
  * @property string $image_object
- * @property integer $created_by
+ * @property integer|string $created_by
  * @property integer $views
  * @property integer $status
  * @property integer|\MongoDB\BSON\UTCDateTime $created_at
@@ -178,22 +177,7 @@ class Blog extends BlogBase
     }
 
 
-    /**
-     * Update date
-     * @param $insert boolean
-     */
-    protected function updateDate($insert)
-    {
-        if (is_a($this, '\yii\db\ActiveRecord')) {
-            $time = time();
-        } else {
-            $time = new \MongoDB\BSON\UTCDateTime();
-        }
-        if ($insert) {
-            $this->created_at = $time;
-        }
-        $this->updated_at = $time;
-    }
+
 
     /**
      * @inheritdoc
@@ -212,12 +196,7 @@ class Blog extends BlogBase
 
         /* published_at */
         if ($this->status == Blog::STATUS_PUBLISHED && empty($this->published_at)) {
-            if (is_a($this, '\yii\db\ActiveRecord')) {
-                $time = time();
-            } else {
-                $time = new UTCDateTime();
-            }
-            $this->published_at = $time;
+            $this->touch('published_at');
         }
 
         /* clean html */
@@ -230,7 +209,6 @@ class Blog extends BlogBase
         $this->content = HtmlPurifier::process($this->content, $config);
 
         /* done */
-        $this->updateDate($insert);
         $this->status = (int)$this->status;
         return parent::beforeSave($insert);
 
@@ -377,27 +355,5 @@ class Blog extends BlogBase
         return $ids;
     }
 
-    /**
-     * @return int timestamp
-     */
-    public function getUpdatedAt()
-    {
-        return is_a($this, '\yii\db\ActiveRecord') ? $this->updated_at : $this->updated_at->toDateTime()->format('U');
-    }
 
-    /**
-     * @return int timestamp
-     */
-    public function getCreatedAt()
-    {
-        return is_a($this, '\yii\db\ActiveRecord') ? $this->created_at : $this->created_at->toDateTime()->format('U');
-    }
-
-    /**
-     * @return int timestamp
-     */
-    public function getPublishedAt()
-    {
-        return is_a($this, '\yii\db\ActiveRecord') ? $this->published_at : $this->published_at->toDateTime()->format('U');
-    }
 }

@@ -12,7 +12,7 @@ use Yii;
 /**
  * Service model class.
  *
- * @property \MongoDB\BSON\ObjectID|string $_id
+ * @property integer|string $id
  * @property string $name
  * @property string $title
  * @property string $token

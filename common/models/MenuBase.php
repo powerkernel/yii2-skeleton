@@ -9,16 +9,17 @@
 namespace common\models;
 
 
+use common\behaviors\UTCDateTimeBehavior;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 
 
 if (Yii::$app->params['mongodb']['menu']) {
     /**
-     * Class ActiveRecord
+     * Class MenuActiveRecord
      * @package common\models
      */
-    class ActiveRecord extends \yii\mongodb\ActiveRecord
+    class MenuActiveRecord extends \yii\mongodb\ActiveRecord
     {
         /**
          * @inheritdoc
@@ -61,26 +62,12 @@ if (Yii::$app->params['mongodb']['menu']) {
 
         /**
          * @inheritdoc
-         * @param bool $insert
-         * @return bool
          */
-        public function beforeSave($insert)
+        public function behaviors()
         {
-            $this->updateDate($insert);
-            return parent::beforeSave($insert);
-        }
-
-        /**
-         * Update date
-         * @param $insert boolean
-         */
-        protected function updateDate($insert)
-        {
-            $time = new \MongoDB\BSON\UTCDateTime();
-            if ($insert) {
-                $this->created_at = $time;
-            }
-            $this->updated_at = $time;
+            return [
+                UTCDateTimeBehavior::className(),
+            ];
         }
 
         /**
@@ -101,10 +88,10 @@ if (Yii::$app->params['mongodb']['menu']) {
     }
 } else {
     /**
-     * Class ActiveRecord
+     * Class MenuActiveRecord
      * @package common\models
      */
-    class ActiveRecord extends \yii\db\ActiveRecord
+    class MenuActiveRecord extends \yii\db\ActiveRecord
     {
         /**
          * @inheritdoc
@@ -147,7 +134,7 @@ if (Yii::$app->params['mongodb']['menu']) {
  * Class MenuBase
  * @package common\models
  */
-class MenuBase extends ActiveRecord
+class MenuBase extends MenuActiveRecord
 {
 
 }

@@ -14,10 +14,10 @@ use Yii;
 
 if (Yii::$app->params['mongodb']['setting']) {
     /**
-     * Class SettingBase
+     * Class SettingActiveRecord
      * @package common\models
      */
-    class SettingBase extends \yii\mongodb\ActiveRecord
+    class SettingActiveRecord extends \yii\mongodb\ActiveRecord
     {
         /**
          * @inheritdoc
@@ -60,10 +60,10 @@ if (Yii::$app->params['mongodb']['setting']) {
     }
 } else {
     /**
-     * Class SettingBase
+     * Class ActiveRecord
      * @package common\models
      */
-    class SettingBase extends \yii\db\ActiveRecord
+    class SettingActiveRecord extends \yii\db\ActiveRecord
     {
         /**
          * @inheritdoc
@@ -75,4 +75,13 @@ if (Yii::$app->params['mongodb']['setting']) {
 
 
     }
+}
+
+/**
+ * Class SettingBase
+ * @package common\models
+ */
+class SettingBase extends SettingActiveRecord
+{
+
 }

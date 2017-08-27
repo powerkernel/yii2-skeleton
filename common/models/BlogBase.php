@@ -8,15 +8,17 @@
 namespace common\models;
 
 
+use common\behaviors\UTCDateTimeBehavior;
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 
 if (Yii::$app->params['mongodb']['blog']) {
     /**
-     * Class BlogBase
+     * Class BlogActiveRecord
      * @package common\models
      */
-    class BlogBase extends \yii\mongodb\ActiveRecord
+    class BlogActiveRecord extends \yii\mongodb\ActiveRecord
     {
         /**
          * @inheritdoc
@@ -59,13 +61,47 @@ if (Yii::$app->params['mongodb']['blog']) {
         {
             return $this->_id;
         }
+
+        /**
+         * @inheritdoc
+         */
+        public function behaviors()
+        {
+            return [
+                UTCDateTimeBehavior::className(),
+            ];
+        }
+
+        /**
+         * @return int timestamp
+         */
+        public function getUpdatedAt()
+        {
+            return $this->updated_at->toDateTime()->format('U');
+        }
+
+        /**
+         * @return int timestamp
+         */
+        public function getCreatedAt()
+        {
+            return $this->created_at->toDateTime()->format('U');
+        }
+
+        /**
+         * @return int timestamp
+         */
+        public function getPublishedAt()
+        {
+            return $this->published_at->toDateTime()->format('U');
+        }
     }
 } else {
     /**
-     * Class BlogBase
+     * Class BlogActiveRecord
      * @package common\models
      */
-    class BlogBase extends \yii\db\ActiveRecord
+    class BlogActiveRecord extends \yii\db\ActiveRecord
     {
         /**
          * @inheritdoc
@@ -74,5 +110,48 @@ if (Yii::$app->params['mongodb']['blog']) {
         {
             return '{{%core_blog}}';
         }
+
+        /**
+         * @inheritdoc
+         */
+        public function behaviors()
+        {
+            return [
+                TimestampBehavior::className(),
+            ];
+        }
+
+        /**
+         * @return int timestamp
+         */
+        public function getUpdatedAt()
+        {
+            return $this->updated_at;
+        }
+
+        /**
+         * @return int timestamp
+         */
+        public function getCreatedAt()
+        {
+            return $this->created_at;
+        }
+
+        /**
+         * @return int timestamp
+         */
+        public function getPublishedAt()
+        {
+            return $this->published_at;
+        }
     }
+}
+
+/**
+ * Class BlogBase
+ * @package common\models
+ */
+class BlogBase extends BlogActiveRecord
+{
+
 }

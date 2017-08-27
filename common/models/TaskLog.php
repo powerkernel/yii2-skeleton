@@ -14,11 +14,11 @@ use yii\behaviors\TimestampBehavior;
 
 
 /**
- * @property mixed $id
+ * @property integer|string $id
  * @property string $task
  * @property string $result
- * @property integer $created_at
- * @property integer $updated_at
+ * @property integer|\MongoDB\BSON\UTCDateTime $created_at
+ * @property integer|\MongoDB\BSON\UTCDateTime $updated_at
  */
 class TaskLog extends TaskLogBase
 {
@@ -49,15 +49,7 @@ class TaskLog extends TaskLogBase
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::className(),
-        ];
-    }
+
 
     /**
      * get task list

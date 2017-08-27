@@ -21,7 +21,7 @@ use yii\helpers\ArrayHelper;
  * @property string $url
  * @property string $class
  * @property string $position
- * @property string $order
+ * @property integer $order
  * @property integer $status
  * @property integer|\MongoDB\BSON\UTCDateTime $created_at
  * @property integer|\MongoDB\BSON\UTCDateTime $updated_at

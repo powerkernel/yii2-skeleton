@@ -9,16 +9,17 @@
 namespace common\models;
 
 
+use common\behaviors\UTCDateTimeBehavior;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 
 
 if (Yii::$app->params['mongodb']['service']) {
     /**
-     * Class ServiceBase
+     * Class ServiceActiveRecord
      * @package common\models
      */
-    class ServiceBase extends \yii\mongodb\ActiveRecord
+    class ServiceActiveRecord extends \yii\mongodb\ActiveRecord
     {
         /**
          * @inheritdoc
@@ -56,26 +57,12 @@ if (Yii::$app->params['mongodb']['service']) {
 
         /**
          * @inheritdoc
-         * @param bool $insert
-         * @return bool
          */
-        public function beforeSave($insert)
+        public function behaviors()
         {
-            $this->updateDate($insert);
-            return parent::beforeSave($insert);
-        }
-
-        /**
-         * Update date
-         * @param $insert boolean
-         */
-        protected function updateDate($insert)
-        {
-            $time = new \MongoDB\BSON\UTCDateTime();
-            if ($insert) {
-                $this->created_at = $time;
-            }
-            $this->updated_at = $time;
+            return [
+                UTCDateTimeBehavior::className(),
+            ];
         }
 
         /**
@@ -96,10 +83,10 @@ if (Yii::$app->params['mongodb']['service']) {
     }
 } else {
     /**
-     * Class ServiceBase
+     * Class ServiceActiveRecord
      * @package common\models
      */
-    class ServiceBase extends \yii\db\ActiveRecord
+    class ServiceActiveRecord extends \yii\db\ActiveRecord
     {
         /**
          * @inheritdoc
@@ -135,4 +122,13 @@ if (Yii::$app->params['mongodb']['service']) {
             return $this->created_at;
         }
     }
+}
+
+/**
+ * Class ServiceBase
+ * @package common\models
+ */
+class ServiceBase extends ServiceActiveRecord
+{
+
 }

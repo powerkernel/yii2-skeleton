@@ -9,16 +9,17 @@
 namespace common\models;
 
 
+use common\behaviors\UTCDateTimeBehavior;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 
 
 if (Yii::$app->params['mongodb']['banner']) {
     /**
-     * Class BannerBase
+     * Class BannerActiveRecord
      * @package common\models
      */
-    class BannerBase extends \yii\mongodb\ActiveRecord
+    class BannerActiveRecord extends \yii\mongodb\ActiveRecord
     {
         /**
          * @inheritdoc
@@ -57,28 +58,15 @@ if (Yii::$app->params['mongodb']['banner']) {
             return $this->_id;
         }
 
-        /**
-         * @inheritdoc
-         * @param bool $insert
-         * @return bool
-         */
-        public function beforeSave($insert)
-        {
-            $this->updateDate($insert);
-            return parent::beforeSave($insert);
-        }
 
         /**
-         * Update date
-         * @param $insert boolean
+         * @inheritdoc
          */
-        protected function updateDate($insert)
+        public function behaviors()
         {
-            $time = new \MongoDB\BSON\UTCDateTime();
-            if ($insert) {
-                $this->created_at = $time;
-            }
-            $this->updated_at = $time;
+            return [
+                UTCDateTimeBehavior::className(),
+            ];
         }
 
         /**
@@ -99,10 +87,10 @@ if (Yii::$app->params['mongodb']['banner']) {
     }
 } else {
     /**
-     * Class BannerBase
+     * Class BannerActiveRecord
      * @package common\models
      */
-    class BannerBase extends \yii\db\ActiveRecord
+    class BannerActiveRecord extends \yii\db\ActiveRecord
     {
         /**
          * @inheritdoc
@@ -138,4 +126,13 @@ if (Yii::$app->params['mongodb']['banner']) {
             return $this->created_at;
         }
     }
+}
+
+/**
+ * Class BannerBase
+ * @package common\models
+ */
+class BannerBase extends BannerActiveRecord
+{
+
 }

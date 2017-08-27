@@ -8,16 +8,18 @@
 namespace common\models;
 
 
+use common\behaviors\UTCDateTimeBehavior;
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 
-
-if(Yii::$app->params['mongodb']['taskLog']) {
+if (Yii::$app->params['mongodb']['taskLog']) {
     /**
-     * Class TaskLogBase
+     * Class TaskLogActiveRecord
      * @package common\models
      */
-    class TaskLogBase extends \yii\mongodb\ActiveRecord {
+    class TaskLogActiveRecord extends \yii\mongodb\ActiveRecord
+    {
         /**
          * @inheritdoc
          */
@@ -44,17 +46,44 @@ if(Yii::$app->params['mongodb']['taskLog']) {
          * get id
          * @return \MongoDB\BSON\ObjectID|string
          */
-        public function getId(){
+        public function getId()
+        {
             return $this->_id;
         }
+
+        /**
+         * @inheritdoc
+         */
+        public function behaviors()
+        {
+            return [
+                UTCDateTimeBehavior::className(),
+            ];
+        }
+
+        /**
+         * @return int timestamp
+         */
+        public function getUpdatedAt()
+        {
+            return $this->updated_at->toDateTime()->format('U');
+        }
+
+        /**
+         * @return int timestamp
+         */
+        public function getCreatedAt()
+        {
+            return $this->created_at->toDateTime()->format('U');
+        }
     }
-}
-else {
+} else {
     /**
-     * Class TaskLogBase
+     * Class TaskLogActiveRecord
      * @package common\models
      */
-    class TaskLogBase extends \yii\db\ActiveRecord {
+    class TaskLogActiveRecord extends \yii\db\ActiveRecord
+    {
         /**
          * @inheritdoc
          */
@@ -62,5 +91,40 @@ else {
         {
             return '{{%core_task_logs}}';
         }
+
+        /**
+         * @inheritdoc
+         */
+        public function behaviors()
+        {
+            return [
+                TimestampBehavior::className(),
+            ];
+        }
+
+        /**
+         * @return int timestamp
+         */
+        public function getUpdatedAt()
+        {
+            return $this->updated_at;
+        }
+
+        /**
+         * @return int timestamp
+         */
+        public function getCreatedAt()
+        {
+            return $this->created_at;
+        }
     }
+}
+
+/**
+ * Class TaskLogBase
+ * @package common\models
+ */
+class TaskLogBase extends TaskLogActiveRecord
+{
+
 }
