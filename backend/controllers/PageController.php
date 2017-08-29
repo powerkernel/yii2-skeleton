@@ -61,10 +61,11 @@ class PageController extends BackendController
             $model->load(Yii::$app->request->post());
             $page->slug = $model->slug;
 
-            if ($page->save() && $model->save()) {
-                return $this->redirect(['index']);
+            if($model->validate() && $page->validate()){
+                if ($page->save() && $model->save()) {
+                    return $this->redirect(['index']);
+                }
             }
-
         }
 
 
@@ -104,7 +105,9 @@ class PageController extends BackendController
             $model->load(Yii::$app->request->post());
             $model->page->load(Yii::$app->request->post());
             $model->page->save();
-            $model->save();
+            if($model->save()){
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Page has been saved successfully.'));
+            }
             return $this->redirect(['update', 'slug' => $model->slug, 'language' => $model->language]);
         } else {
             return $this->render('update', [

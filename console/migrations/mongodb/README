@@ -1,2 +1,2 @@
-yii mongodb-migrate --migrationPath=@console/migrations/mongodb
-yii mg-migrate
+php yii mongodb-migrate --migrationPath=@console/migrations/mongodb
+php yii mg-migrate

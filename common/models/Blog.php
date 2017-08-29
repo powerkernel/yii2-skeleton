@@ -95,12 +95,21 @@ class Blog extends BlogBase
      */
     public function rules()
     {
-        return [
+        if (Yii::$app->params['mongodb']['account']) {
+            $author = [
+                [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['created_by' => '_id']],
+            ];
+        } else {
+            $author = [
+                [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['created_by' => 'id']],
+            ];
+        }
+        $default = [
             [['slug', 'language', 'title', 'desc', 'content', 'tags', 'thumbnail', 'thumbnail_square'], 'required'],
             [['slug'], 'match', 'pattern' => '/^[a-z0-9-]+$/'],
             [['slug'], 'unique'],
             [['content'], 'string'],
-            [['created_by', 'views', 'status'], 'integer'],
+            [['views', 'status'], 'integer'],
 
             [['language'], 'string', 'max' => 5],
             [['title', 'slug', 'desc'], 'string', 'max' => 110],
@@ -109,8 +118,10 @@ class Blog extends BlogBase
             [['thumbnail', 'thumbnail_square'], 'url'],
             [['image_object'], 'string'],
 
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['created_by' => 'id']],
+
         ];
+
+        return array_merge($default, $author);
     }
 
     /**
@@ -142,7 +153,11 @@ class Blog extends BlogBase
      */
     public function getAuthor()
     {
-        return $this->hasOne(Account::className(), ['id' => 'created_by']);
+        if (Yii::$app->params['mongodb']['account']) {
+            return $this->hasOne(Account::className(), ['_id' => 'created_by']);
+        } else {
+            return $this->hasOne(Account::className(), ['id' => 'created_by']);
+        }
     }
 
 
@@ -175,8 +190,6 @@ class Blog extends BlogBase
     {
         return Blog::find()->where(['status' => Blog::STATUS_PUBLISHED])->orderBy('rand()')->limit($limit)->all();
     }
-
-
 
 
     /**

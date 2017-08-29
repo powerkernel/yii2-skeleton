@@ -100,7 +100,8 @@ class PageData extends PageDataBase
             [['thumbnail'], 'url'],
             [['language'], 'string', 'max' => 5],
             [['title', 'description', 'keywords'], 'string', 'max' => 160],
-            [['slug'], 'string', 'max' => 100]
+            [['slug'], 'string', 'max' => 100],
+            [['slug'], 'unique', 'on'=>['create']]
         ];
     }
 

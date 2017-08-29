@@ -165,8 +165,8 @@ class MgMigrateController extends Controller
         foreach ($rows as $row) {
             $collection->insert([
                 'slug' => $row['slug'],
-                'show_description' => $row['show_description'],
-                'show_update_date' => $row['show_update_date'],
+                'show_description' => (int)$row['show_description'],
+                'show_update_date' => (int)$row['show_update_date'],
             ]);
         }
         /* Page DATA */
@@ -297,6 +297,32 @@ class MgMigrateController extends Controller
         echo "Blog migration completed.\n";
     }
 
+    /**
+     * migrate menu
+     */
+    public function actionMenu()
+    {
+        echo "Migrating Menu...\n";
+        $rows = (new Query())->select('*')->from('{{%core_menu}}')->all();
+        $collection = Yii::$app->mongodb->getCollection('menu');
+        foreach ($rows as $row) {
+            $collection->insert([
+                'id_parent' => null,
+                'label' => $row['label'],
+                'active_route' => $row['active_route'],
+                'url' => $row['url'],
+                'class' => $row['class'],
+                'position' => $row['position'],
+                'order' => (int)$row['order'],
+                'status' => (int)$row['status'],
+                'created_at' => new UTCDateTime($row['created_at'] * 1000),
+                'updated_at' => new UTCDateTime($row['updated_at'] * 1000),
+                'created_by' => (int)$row['created_by'],
+                'updated_by' => (int)$row['updated_by'],
+            ]);
+        }
+        echo "Menu migration completed.\n";
+    }
 
     /**
      * update auth user id
@@ -332,8 +358,7 @@ class MgMigrateController extends Controller
             $id = $this->getUserId((int)$row);
             if ($id) {
                 Yii::$app->mongodb->createCommand()
-                    ->update(['user_id' => $row], ['user_id' => $id])
-                    ->execute('auth_assignment');
+                    ->update('auth_assignment', ['user_id' => $row], ['user_id' => $id]);
             }
         }
         echo "Assignment user updated.\n";
@@ -342,7 +367,8 @@ class MgMigrateController extends Controller
     /**
      * update page data user id
      */
-    public function actionPageId(){
+    public function actionPageId()
+    {
         echo "Updating Page Data user id....\n";
         // created by
         $rows = (new \yii\mongodb\Query())->select(['created_by'])->from('page_data')->distinct('created_by');
@@ -350,8 +376,7 @@ class MgMigrateController extends Controller
             $id = $this->getUserId((int)$row);
             if ($id) {
                 Yii::$app->mongodb->createCommand()
-                    ->update(['created_by' => $row], ['created_by' => $id])
-                    ->execute('page_data');
+                    ->update('page_data', ['created_by' => $row], ['created_by' => $id]);
             }
         }
         // updated by
@@ -360,8 +385,7 @@ class MgMigrateController extends Controller
             $id = $this->getUserId((int)$row);
             if ($id) {
                 Yii::$app->mongodb->createCommand()
-                    ->update(['updated_by' => $row], ['updated_by' => $id])
-                    ->execute('page_data');
+                    ->update('page_data', ['updated_by' => $row], ['updated_by' => $id]);
             }
         }
         echo "Page Data user id updated.\n";
@@ -370,15 +394,15 @@ class MgMigrateController extends Controller
     /**
      * update blog user id
      */
-    public function actionBlogId(){
+    public function actionBlogId()
+    {
         echo "Updating Blog user id...\n";
         $rows = (new \yii\mongodb\Query())->select(['created_by'])->from('blog')->distinct('created_by');
         foreach ($rows as $row) {
             $id = $this->getUserId((int)$row);
             if ($id) {
                 Yii::$app->mongodb->createCommand()
-                    ->update(['created_by' => $row], ['created_by' => $id])
-                    ->execute('blog');
+                    ->update('blog', ['created_by' => $row], ['created_by' => $id]);
             }
         }
         echo "Blog user id updated.\n";

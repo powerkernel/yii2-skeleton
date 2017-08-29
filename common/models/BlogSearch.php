@@ -94,10 +94,23 @@ class BlogSearch extends Blog
 
         // grid filtering conditions
         if(!empty($this->created_by)) {
-            $owners=Account::find()->select('id')->where(['like', 'fullname', $this->created_by])->asArray()->all();
-            $ids = [0];
+
+            if(Yii::$app->params['mongodb']['account']){
+                $key='_id';
+            }
+            else {
+                $key='id';
+            }
+            $ids = [];
+            $owners=Account::find()->select([$key])->where(['like', 'fullname', $this->created_by])->asArray()->all();
             foreach ($owners as $owner) {
-                $ids[] = (integer)$owner['id'];
+                if(Yii::$app->params['mongodb']['account']){
+                    $ids[] = (string)$owner[$key];
+                }
+                else {
+                    $ids[] = (int)$owner[$key];
+                }
+
             }
             $query->andFilterWhere(['created_by' => $ids]);
         }
