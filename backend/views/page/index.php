@@ -1,6 +1,5 @@
 <?php
 
-use common\models\Message;
 use common\models\PageData;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -32,8 +31,13 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
 
                     'slug',
                     ['attribute' => 'language', 'value' => function ($model) {
-                        return Message::getLocaleList()[$model->language];
-                    }, 'filter' => Message::getLocaleList()],
+                        if (Yii::$app->params['mongodb']['i18n']) {
+                            return \common\models\mongodb\Message::getLocaleList()[$model->language];
+                        } else {
+                            return \common\models\Message::getLocaleList()[$model->language];
+                        }
+                    }, 'filter' => Yii::$app->params['mongodb']['i18n'] ? \common\models\mongodb\Message::getLocaleList() : \common\models\Message::getLocaleList()
+                    ],
                     //'seo_name',
                     'title',
                     'description',
@@ -66,7 +70,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                                 return $update;
                             },
                             'delete' => function ($url, $model, $key) {
-                                $delete = Html::a('<span class="glyphicon glyphicon-trash"></span>', Yii::$app->urlManager->createUrl(['page/delete', 'slug'=>$model->slug, 'language'=>$model->language]), [
+                                $delete = Html::a('<span class="glyphicon glyphicon-trash"></span>', Yii::$app->urlManager->createUrl(['page/delete', 'slug' => $model->slug, 'language' => $model->language]), [
                                     'title' => Yii::t('yii', 'Delete'),
                                     'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
                                     'data-method' => 'post',

@@ -2,7 +2,6 @@
 
 namespace backend\controllers;
 
-use common\models\Message;
 use common\models\Page;
 use common\models\PageDataSearch;
 use Yii;
@@ -89,7 +88,13 @@ class PageController extends BackendController
         $model->setScenario('update');
 
         /* copy to other languages */
-        $languages = Message::getLocaleList();
+        if (Yii::$app->params['mongodb']['i18n']){
+            $languages = \common\models\mongodb\Message::getLocaleList();
+        }
+        else {
+            $languages = \common\models\Message::getLocaleList();
+        }
+
 
         $pageLang = PageData::find()->where(['slug' => $slug])->select(['language'])->all();
         foreach ($pageLang as $pl) {

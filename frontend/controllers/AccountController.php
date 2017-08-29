@@ -175,7 +175,13 @@ class AccountController extends Controller
         $auths=[];
         if($model->auths){
             foreach($model->auths as $auth){
-                $auths[$auth->source]=$auth->id;
+                if(is_a($auth, '\yii\mongodb\ActiveRecord')){
+                    $auths[$auth->source]=(string)$auth->_id;
+                }
+                else {
+                    $auths[$auth->source]=$auth->id;
+                }
+
 
                 if(!empty($remove) && $remove==$auth->id){
                     Auth::findOne($remove)->delete();

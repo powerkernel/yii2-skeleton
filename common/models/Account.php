@@ -221,8 +221,7 @@ class Account extends AccountBase implements IdentityInterface
             if (!$this->canChangeName()) {
                 if (is_a($this, '\yii\mongodb\ActiveRecord')) {
                     Yii::$app->mongodb->createCommand()
-                        ->addUpdate(['_id' => $this->_id], ['fullname' => $changedAttributes['fullname']])
-                        ->execute();
+                        ->update('accounts', ['_id' => $this->_id], ['fullname' => $changedAttributes['fullname']]);
                 } else {
                     Yii::$app->db->createCommand()
                         ->update('{{%core_account}}', ['fullname' => $changedAttributes['fullname']], ['id' => $this->id])
@@ -233,8 +232,7 @@ class Account extends AccountBase implements IdentityInterface
                 /* count changed ++ */
                 if (is_a($this, '\yii\mongodb\ActiveRecord')) {
                     Yii::$app->mongodb->createCommand()
-                        ->addUpdate(['_id' => $this->_id], ['fullname_changed' => $this->fullname_changed + 1])
-                        ->execute();
+                        ->update('accounts', ['_id' => $this->_id], ['fullname_changed' => $this->fullname_changed + 1]);
 
                 } else {
                     Yii::$app->db->createCommand()
@@ -498,18 +496,11 @@ class Account extends AccountBase implements IdentityInterface
         return true;
     }
 
-
     /**
-     * @return yii\db\ActiveQuery
+     * @return yii\db\ActiveQuery|yii\mongodb\ActiveQuery
      */
     public function getAuths()
     {
-        if(is_a($this, '\yii\mongodb\ActiveRecord')){
-            return $this->hasMany(Auth::className(), ['user_id' => '_id']);
-        }
-        else {
             return $this->hasMany(Auth::className(), ['user_id' => 'id']);
-        }
-
     }
 }

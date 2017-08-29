@@ -37,17 +37,17 @@ $description = Yii::t('app', 'Add your accounts from other websites here and use
                     <tbody>
                     <?php if(Yii::$app->authClientCollection->hasClient('facebook')):?>
                     <tr>
-                        <td style="max-width: 50px"><?= Button::widget(['button' => 'facebook btn-xs', 'iconOnly'=>false, 'label'=>'Facebook']) ?></td>
+                        <td style="max-width: 50px"><?= Button::widget(['button' => 'facebook', 'iconOnly'=>false, 'label'=>'Facebook']) ?></td>
                         <td>
                             <?php if(in_array('facebook', array_keys($auths))):?>
-                                <?= Yii::t('app', 'Account linked') ?>
+                                <span class="label label-success"><?= Yii::t('app', 'Account linked') ?></span>
                             <?php else:?>
-                                <?= Yii::t('app', 'Account not linked') ?>
+                                <span class="label label-danger"><?= Yii::t('app', 'Account not linked') ?></span>
                             <?php endif;?>
                         </td>
                         <td class="text-right">
                             <?php if(in_array('facebook', array_keys($auths))):?>
-                                <?= Html::a(Yii::t('app', Icon::widget(['icon'=>'remove']).' '.'Remove account'), Yii::$app->urlManager->createUrl(['/account/linked', 'remove'=>$auths['facebook']]), ['class'=>'btn btn-warning btn-xs'])  ?>
+                                <?= Html::a(Yii::t('app', Icon::widget(['icon'=>'remove']).' '.'Remove account'), Yii::$app->urlManager->createUrl(['/account/linked', 'remove'=>$auths['facebook']]), ['class'=>'btn btn-warning btn-xs', 'data-confirm'=>Yii::t('app', 'Are you sure want to remove this link?')])  ?>
                             <?php else:?>
                                 <?= Html::a(Yii::t('app', Icon::widget(['icon'=>'plus']).' '.'Add account'), Yii::$app->urlManager->createUrl(['/account/auth', 'authclient'=>'facebook']), ['class'=>'btn btn-success btn-xs'])  ?>
                             <?php endif;?>
@@ -56,17 +56,17 @@ $description = Yii::t('app', 'Add your accounts from other websites here and use
                     <?php endif;?>
                     <?php if(Yii::$app->authClientCollection->hasClient('google')):?>
                     <tr>
-                        <td style="max-width: 50px"><?= Button::widget(['button' => 'google btn-xs', 'iconOnly'=>false, 'label'=>'Google']) ?></td>
+                        <td style="max-width: 50px"><?= Button::widget(['button' => 'google', 'iconOnly'=>false, 'label'=>'Google']) ?></td>
                         <td>
                             <?php if(in_array('google', array_keys($auths))):?>
-                                <?= Yii::t('app', 'Account linked') ?>
+                                <span class="label label-success"><?= Yii::t('app', 'Account linked') ?></span>
                             <?php else:?>
-                                <?= Yii::t('app', 'Account not linked') ?>
+                                <span class="label label-danger"><?= Yii::t('app', 'Account not linked') ?></span>
                             <?php endif;?>
                         </td>
                         <td class="text-right">
                             <?php if(in_array('google', array_keys($auths))):?>
-                                <?= Html::a(Yii::t('app', Icon::widget(['icon'=>'remove']).' '.'Remove account'), Yii::$app->urlManager->createUrl(['/account/linked', 'remove'=>$auths['google']]), ['class'=>'btn btn-warning btn-xs'])  ?>
+                                <?= Html::a(Yii::t('app', Icon::widget(['icon'=>'remove']).' '.'Remove account'), Yii::$app->urlManager->createUrl(['/account/linked', 'remove'=>$auths['google']]), ['class'=>'btn btn-warning btn-xs', 'data-confirm'=>Yii::t('app', 'Are you sure want to remove this link?')])  ?>
                             <?php else:?>
                                 <?= Html::a(Yii::t('app', Icon::widget(['icon'=>'plus']).' '.'Add account'), Yii::$app->urlManager->createUrl(['/account/auth', 'authclient'=>'google']), ['class'=>'btn btn-success btn-xs'])  ?>
                             <?php endif;?>

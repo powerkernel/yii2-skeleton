@@ -110,9 +110,11 @@ EOB;
                 try {
                     $user = Yii::$app->user->identity;
                     /* if user local not exist, set default */
-                    $locales = \common\models\Message::getLocaleList();
                     if(Yii::$app->params['mongodb']['i18n']){
                         $locales = \common\models\mongodb\Message::getLocaleList();
+                    }
+                    else {
+                        $locales = \common\models\Message::getLocaleList();
                     }
 
                     if (!in_array($user->language, array_keys($locales))) {
@@ -125,7 +127,6 @@ EOB;
 
                 } catch (Exception $e) {
                     Yii::$app->cache->flush();
-                    Yii::$app->db->schema->refresh();
                     Yii::$app->user->logout();
                 }
             }
