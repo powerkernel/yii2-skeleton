@@ -39,7 +39,14 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                         //'id',
                         'title',
                         //'lang',
-                        ['attribute' => 'lang', 'filter' => Message::getLocaleList()],
+                        ['attribute' => 'lang', 'value' => function ($model) {
+                            if (Yii::$app->params['mongodb']['i18n']) {
+                                return \common\models\mongodb\Message::getLocaleList()[$model->language];
+                            } else {
+                                return \common\models\Message::getLocaleList()[$model->language];
+                            }
+                        }, 'filter' => Yii::$app->params['mongodb']['i18n'] ? \common\models\mongodb\Message::getLocaleList() : \common\models\Message::getLocaleList()
+                        ],
                         //'text_content:ntext',
                         //'link_url:url',
                         //'link_option',

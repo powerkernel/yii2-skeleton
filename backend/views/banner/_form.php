@@ -6,7 +6,6 @@
  */
 
 use common\models\Banner;
-use common\models\Message;
 use modernkernel\tinymce\TinyMce;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -21,7 +20,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'lang')->dropDownList(Message::getLocaleList(), ['prompt'=>'Any']) ?>
+    <?= $form->field($model, 'lang')->dropDownList(Yii::$app->params['mongodb']['i18n']?\common\models\mongodb\Message::getLocaleList():\common\models\Message::getLocaleList(), ['prompt'=>'Any']) ?>
 
     <?= $form->field($model, 'text_content')->widget(TinyMce::className())  ?>
     <?= $form->field($model, 'text_style')->textInput(['maxlength' => true, 'placeholder'=>'top: 10px; left: 10px;']) ?>

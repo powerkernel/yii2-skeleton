@@ -28,7 +28,7 @@ class FlickrUploadWidget extends Widget
         /* @var \common\components\FlickrPhoto $client */
 
 
-        $flickr=Service::findOne('flickr-photo');
+        $flickr=Service::find()->where(['name'=>'flickr-photo'])->one();
         if($flickr){
             $client=Yii::$app->authClientCollection->getClient('flickr-photo');
             if($client){
