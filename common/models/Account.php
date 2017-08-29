@@ -312,6 +312,9 @@ class Account extends AccountBase implements IdentityInterface
      */
     public static function findIdentity($id)
     {
+        if(is_array($id)){
+            $id=array_values($id)[0];
+        }
         if (Yii::$app->params['mongodb']['account']) {
             return static::findOne(['_id' => $id, 'status' => self::STATUS_ACTIVE]);
         } else {
@@ -345,7 +348,12 @@ class Account extends AccountBase implements IdentityInterface
      */
     public function getId()
     {
-        return $this->getPrimaryKey();
+        if(is_a($this, '\yii\mongodb\ActiveRecord')){
+            return (string)$this->_id;
+        }
+        else {
+            return $this->id;
+        }
     }
 
     /**
