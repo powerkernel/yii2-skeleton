@@ -14,6 +14,13 @@ if(class_exists('yii\mongodb\console\controllers\MigrateController')){
         ],
     ];
 }
+if(class_exists('modernkernel\contact\console\MigrateController')){
+    $map=[
+        'controllerMap' => [
+            'contact-migrate' => 'modernkernel\contact\console\MigrateController'
+        ],
+    ];
+}
 
 return array_merge($map, [
     'id' => 'app-console',

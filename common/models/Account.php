@@ -497,7 +497,7 @@ class Account extends AccountBase implements IdentityInterface
     }
 
     /**
-     * @return yii\db\ActiveQuery|yii\mongodb\ActiveQuery
+     * @return yii\db\ActiveQueryInterface
      */
     public function getAuths()
     {
