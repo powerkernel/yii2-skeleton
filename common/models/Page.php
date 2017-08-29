@@ -7,7 +7,7 @@ use Yii;
 /**
  * This is the model class for Page.
  *
- * @property string|null $id
+ * @property \MongoDB\BSON\ObjectID|string|null $id
  * @property string $slug
  * @property integer $show_description
  * @property integer $show_update_date

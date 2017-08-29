@@ -9,7 +9,7 @@ use yii\helpers\HtmlPurifier;
 /**
  * This is the model class for PageData.
  *
- * @property string|null $id
+ * @property \MongoDB\BSON\ObjectID|string|null $id
  * @property string $slug
  * @property string $language
  * @property string $title

@@ -14,7 +14,7 @@ use yii\helpers\ArrayHelper;
 /**
  * This is the model class for Menu.
  *
- * @property integer|string $id
+ * @property integer|\MongoDB\BSON\ObjectID|string $id
  * @property integer|string $id_parent
  * @property string $label
  * @property string $active_route

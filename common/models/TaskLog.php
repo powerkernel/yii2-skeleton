@@ -14,7 +14,7 @@ use yii\behaviors\TimestampBehavior;
 
 
 /**
- * @property integer|string $id
+ * @property integer|\MongoDB\BSON\ObjectID|string $id
  * @property string $task
  * @property string $result
  * @property integer|\MongoDB\BSON\UTCDateTime $created_at

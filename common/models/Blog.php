@@ -14,7 +14,7 @@ use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 
 /**
- * @property integer|string $id
+ * @property integer|\MongoDB\BSON\ObjectID|string $id
  * @property string $slug
  * @property string $language
  * @property string $title

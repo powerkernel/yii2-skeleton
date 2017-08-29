@@ -54,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-                        'id',
+                        //'id',
                         'seo_name',
                         'fullname',
                         //'fullname_changed:boolean',
@@ -76,20 +76,20 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute'=>'status',
                             'value' => $model->statusText,
                         ],
-                        'created_at:dateTime',
-                        'updated_at:dateTime',
+                        'createdAt:dateTime',
+                        //'updatedAt:dateTime',
                     ],
                 ]) ?>
             </div>
 
             <p class="pull-left">
-                <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => is_a($model, '\yii\mongodb\ActiveRecord')?(string)$model->_id:$model->id], ['class' => 'btn btn-primary']) ?>
                 <?php if(Yii::$app->hasModule('billing')):?>
-                    <?= Html::a(Yii::t('app', 'Billing Info'), Yii::$app->urlManager->createUrl(['/billing/info/check', 'id'=>$model->id]), ['class' => 'btn btn-primary']) ?>
+                    <?= Html::a(Yii::t('app', 'Billing Info'), Yii::$app->urlManager->createUrl(['/billing/info/check', 'id'=>is_a($model, '\yii\mongodb\ActiveRecord')?(string)$model->_id:$model->id]), ['class' => 'btn btn-primary']) ?>
                 <?php endif;?>
 
                 <?php if($model->status!=Account::STATUS_SUSPENDED && !Setting::getValue('passwordLessLogin')):?>
-                <?= Html::a(Yii::t('app', 'Send New Password'), ['new-password', 'id' => $model->id], [
+                <?= Html::a(Yii::t('app', 'Send New Password'), ['new-password', 'id' => is_a($model, '\yii\mongodb\ActiveRecord')?(string)$model->_id:$model->id], [
                     'class' => 'btn btn-info',
                     'data' => [
                         'confirm' => Yii::t('app', 'Send new password to this user?'),
@@ -99,7 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php endif;?>
 
                 <?php if($model->canSuspend()):?>
-                <?= Html::a(Yii::t('app', 'Suspend'), ['suspend', 'id' => $model->id], [
+                <?= Html::a(Yii::t('app', 'Suspend'), ['suspend', 'id' => is_a($model, '\yii\mongodb\ActiveRecord')?(string)$model->_id:$model->id], [
                     'class' => 'btn btn-danger',
                     'data' => [
                         'confirm' => Yii::t('app', 'Are you sure you want to suspend this user?'),
@@ -108,7 +108,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]) ?>
                 <?php endif;?>
                 <?php if($model->status== Account::STATUS_SUSPENDED):?>
-                    <?= Html::a(Yii::t('app', 'Unsuspend'), ['unsuspend', 'id' => $model->id], [
+                    <?= Html::a(Yii::t('app', 'Unsuspend'), ['unsuspend', 'id' => is_a($model, '\yii\mongodb\ActiveRecord')?(string)$model->_id:$model->id], [
                         'class' => 'btn btn-success',
                         'data' => [
                             'confirm' => Yii::t('app', 'Are you sure you want to reactivate this user?'),
@@ -120,7 +120,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?php if($model->status!=Account::STATUS_SUSPENDED):?>
             <p class="pull-right">
-                <?= Html::a(Yii::t('app', 'Login'), ['login-as', 'id' => $model->id], ['class' => 'btn btn-warning', 'target'=>'_blank']) ?>
+                <?= Html::a(Yii::t('app', 'Login'), ['login-as', 'id' => is_a($model, '\yii\mongodb\ActiveRecord')?(string)$model->_id:$model->id], ['class' => 'btn btn-warning', 'target'=>'_blank']) ?>
             </p>
             <?php endif;?>
         </div>

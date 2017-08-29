@@ -101,8 +101,7 @@ class AuthHandler
                     $user->generatePasswordResetToken();
 
 
-                    $transaction = Account::getDb()->beginTransaction();
-                    //file_put_contents('D:\log', json_encode($transaction));
+                    //$transaction = Account::getDb()->beginTransaction();
 
                     if ($user->save()) {
 
@@ -112,11 +111,11 @@ class AuthHandler
                             'source_id' => (string)$id,
                         ]);
                         if ($auth->save()) {
-                            $transaction->commit();
+                            //$transaction->commit();
 
                             Yii::$app->user->login($user, Setting::getValue('rememberMeDuration'));
                         } else {
-                            $transaction->rollBack();
+                            //$transaction->rollBack();
                             Yii::$app->getSession()->setFlash('error', [
                                 Yii::t('app', 'Unable to save {client} account: {errors}', [
                                     'client' => $this->client->getTitle(),
@@ -125,7 +124,7 @@ class AuthHandler
                             ]);
                         }
                     } else {
-                        $transaction->rollBack();
+                        //$transaction->rollBack();
                         Yii::$app->getSession()->setFlash('error', [
                             Yii::t('app', 'Unable to save user: {errors}', [
                                 'client' => $this->client->getTitle(),

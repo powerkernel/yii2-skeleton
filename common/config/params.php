@@ -13,6 +13,8 @@ return [
         'service'=>false,
         'setting'=>false,
         'menu'=>false,
-        'page'=>false
+        'page'=>false,
+        'account'=>false,
+        'auth'=>true,
     ]
 ];

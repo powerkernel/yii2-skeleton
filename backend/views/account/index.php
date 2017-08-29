@@ -57,8 +57,8 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                 'dataProvider' => $dataProvider,
                 'filterModel' => $searchModel,
                 'columns' => [
-                    //['class' => 'yii\grid\SerialColumn'],
-                    'id',
+                    ['class' => 'yii\grid\SerialColumn'],
+                    //'id',
                     //'seo_name',
                     'fullname',
                     //'fullname_changed',
@@ -73,23 +73,12 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                     // 'language',
                     // 'timezone',
                     //'status',
-                    ['attribute' => 'created_at', 'value' => 'created_at', 'format' => 'dateTime', 'filter' => DatePicker::widget(['model' => $searchModel, 'attribute' => 'created_at', 'dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']])],
+                    ['attribute' => 'created_at', 'value' => 'createdAt', 'format' => 'dateTime', 'filter' => DatePicker::widget(['model' => $searchModel, 'attribute' => 'created_at', 'dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']])],
                     // 'updated_at',
                     ['attribute' => 'status', 'value' => function ($model){return $model->statusColorText;}, 'filter'=> Account::getStatusOption(), 'format'=>'raw'],
                     [
                         'class' => 'yii\grid\ActionColumn',
                         'template'=>'{view} {update}',
-//                        'buttons' => [
-//                            'delete' => function ($url, $model, $key) {
-//                                $delete = Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
-//                                    'title' => Yii::t('yii', 'Delete'),
-//                                    'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
-//                                    'data-method' => 'post',
-//                                ]);
-//                                unset($key);
-//                                return $model->canDelete() ? $delete : '';
-//                            }
-//                        ]
                     ],
                 ],
             ]); ?>

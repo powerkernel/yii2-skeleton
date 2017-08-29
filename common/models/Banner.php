@@ -12,7 +12,7 @@ use Yii;
 /**
  * Banner model class.
  *
- * @property integer|string $id
+ * @property integer|\MongoDB\BSON\ObjectID|string $id
  * @property string $lang
  * @property string $title
  * @property string $text_content
