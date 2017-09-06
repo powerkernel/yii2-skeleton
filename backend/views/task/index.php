@@ -40,7 +40,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                         //'updated_at',
                         [
                             'attribute' => 'created_at',
-                            'value' => 'created_at',
+                            'value' => 'createdAt',
                             'format' => 'dateTime',
                             'filter' => DatePicker::widget(['model' => $searchModel, 'attribute' => 'created_at', 'dateFormat' => 'yyyy-MM-dd', 'options' => ['class' => 'form-control']]),
                             'contentOptions' => ['style' => 'min-width: 160px']

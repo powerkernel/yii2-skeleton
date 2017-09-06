@@ -199,6 +199,7 @@ class MgMigrateController extends Controller
         echo "Migrating Setting model...\n";
         $rows = (new Query())->select('*')->from('{{%core_setting}}')->all();
         $collection = Yii::$app->mongodb->getCollection('settings');
+        $collection->remove();
         foreach ($rows as $row) {
             $collection->insert([
                 'key' => $row['key'],
@@ -210,7 +211,7 @@ class MgMigrateController extends Controller
                 'data' => $row['data'],
                 'default' => $row['default'],
                 'rules' => $row['rules'],
-                'key_order' => $row['key_order'],
+                'key_order' => (int)$row['key_order'],
             ]);
         }
 
