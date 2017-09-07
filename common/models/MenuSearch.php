@@ -24,7 +24,7 @@ class MenuSearch extends Menu
     public function rules()
     {
         return [
-            [['status'], 'integer'],
+            [['status'], 'safe'],
             [['id', 'id_parent', 'label', 'url', 'position','created_at', 'updated_at', 'created_by', 'updated_by'], 'safe'],
         ];
     }

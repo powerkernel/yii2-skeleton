@@ -17,7 +17,7 @@ use Yii;
  * @property string $title
  * @property string $token
  * @property string $data
- * @property integer $status
+ * @property string $status
  * @property integer|\MongoDB\BSON\UTCDateTime $created_at
  * @property integer|\MongoDB\BSON\UTCDateTime $updated_at
  */
@@ -25,8 +25,8 @@ class Service extends ServiceBase
 {
 
 
-    const STATUS_ACTIVE = 10;
-    const STATUS_INACTIVE = 20;
+    const STATUS_ACTIVE = 'STATUS_ACTIVE';//10;
+    const STATUS_INACTIVE = 'STATUS_INACTIVE';//20;
 
 
     /**
@@ -78,8 +78,7 @@ class Service extends ServiceBase
         $default = [
             [['name', 'title'], 'required'],
             [['token', 'data'], 'string'],
-            [['status', 'created_at', 'updated_at'], 'integer'],
-            [['name', 'title'], 'string', 'max' => 255],
+            [['name', 'title', 'status'], 'string', 'max' => 255],
         ];
         return array_merge($default, $date);
     }

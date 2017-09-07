@@ -14,7 +14,7 @@ use Yii;
  *
  * @property string $email
  * @property string $token
- * @property integer $status
+ * @property string $status
  * @property integer|\MongoDB\BSON\UTCDateTime $created_at
  * @property integer|\MongoDB\BSON\UTCDateTime $updated_at
  */
@@ -22,8 +22,8 @@ class Login extends LoginBase
 {
 
 
-    const STATUS_NEW = 10;
-    const STATUS_USED = 20;
+    const STATUS_NEW = 'STATUS_NEW';//10;
+    const STATUS_USED = 'STATUS_USED';//20;
 
     public $remember = false;
     public $admin = false;
@@ -84,20 +84,29 @@ class Login extends LoginBase
     }
 
 
-
-
     /**
      * @inheritdoc
      */
     public function rules()
     {
-        return [
+        if (is_a($this, '\yii\mongodb\ActiveRecord')) {
+            $date = [
+                [['created_at', 'updated_at'], 'yii\mongodb\validators\MongoDateValidator']
+            ];
+        } else {
+            $date = [
+                [['created_at', 'updated_at'], 'integer']
+            ];
+        }
+
+        $default = [
             [['email'], 'required'],
             [['email'], 'email'],
-            [['status'], 'integer'],
-            [['email', 'token'], 'string', 'max' => 255],
+            [['email', 'token', 'status'], 'string', 'max' => 255],
             [['created_at', 'updated_at'], 'safe']
         ];
+
+        return array_merge($default, $date);
     }
 
     /**
@@ -123,7 +132,7 @@ class Login extends LoginBase
     {
         if ($insert) {
             $this->token = Yii::$app->security->generateRandomString() . '_' . time();
-            $this->status=self::STATUS_NEW;
+            $this->status = self::STATUS_NEW;
             /* admin ?*/
             if ($this->admin) {
                 $account = Account::findByEmail($this->email);
@@ -150,7 +159,7 @@ class Login extends LoginBase
             $account = Account::findByEmail($this->email);
             if ($account) {
                 $name = $account->fullname;
-                Yii::$app->language=$account->language;
+                Yii::$app->language = $account->language;
             }
 
             /* send email */

@@ -24,7 +24,7 @@ use yii\web\IdentityInterface;
  * @property integer $role
  * @property string $language
  * @property string $timezone
- * @property integer $status
+ * @property string $status
  * @property integer|\MongoDB\BSON\UTCDateTime $created_at
  * @property integer|\MongoDB\BSON\UTCDateTime $updated_at
  *
@@ -35,8 +35,8 @@ use yii\web\IdentityInterface;
 class Account extends AccountBase implements IdentityInterface
 {
 
-    const STATUS_ACTIVE = 10;
-    const STATUS_SUSPENDED = 20;
+    const STATUS_ACTIVE = 'STATUS_ACTIVE';//10;
+    const STATUS_SUSPENDED = 'STATUS_SUSPENDED';//20;
 
     public $passwordText;
     public $emailNewAccount = true;
@@ -102,13 +102,24 @@ class Account extends AccountBase implements IdentityInterface
      */
     public function rules()
     {
-        return [
+        if(is_a($this, '\yii\mongodb\ActiveRecord')){
+            $date=[
+                [['created_at', 'updated_at'], 'yii\mongodb\validators\MongoDateValidator']
+            ];
+        }
+        else {
+            $date=[
+                [['created_at', 'updated_at'], 'integer']
+            ];
+        }
+
+        $default =  [
             [['fullname', 'email'], 'required'],
             [['fullname', 'email'], 'filter', 'filter' => 'trim'],
 
-            [['fullname_changed', 'role', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['fullname_changed', 'role'], 'integer'],
 
-            [['seo_name', 'fullname', 'password_hash', 'password_reset_token', 'access_token', 'email'], 'string', 'max' => 255],
+            [['seo_name', 'fullname', 'password_hash', 'password_reset_token', 'access_token', 'email', 'status'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['language'], 'string', 'max' => 5],
 
@@ -118,6 +129,7 @@ class Account extends AccountBase implements IdentityInterface
             /* update action */
             [['fullname', 'email', 'language', 'timezone'], 'required', 'on' => ['create', 'update']],
         ];
+        return array_merge($default, $date);
     }
 
     /**

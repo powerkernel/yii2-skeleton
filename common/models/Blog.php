@@ -26,7 +26,7 @@ use yii\helpers\HtmlPurifier;
  * @property string $image_object
  * @property integer|string $created_by
  * @property integer $views
- * @property integer $status
+ * @property string $status
  * @property integer|\MongoDB\BSON\UTCDateTime $created_at
  * @property integer|\MongoDB\BSON\UTCDateTime $updated_at
  * @property integer|\MongoDB\BSON\UTCDateTime $published_at
@@ -39,8 +39,8 @@ class Blog extends BlogBase
 {
 
 
-    const STATUS_PUBLISHED = 10;
-    const STATUS_DRAFT = 20;
+    const STATUS_PUBLISHED = 'STATUS_PUBLISHED';//10;
+    const STATUS_DRAFT = 'STATUS_DRAFT';//20;
 
 
     /**
@@ -95,25 +95,43 @@ class Blog extends BlogBase
      */
     public function rules()
     {
+        /* author */
         if (Yii::$app->params['mongodb']['account']) {
             $author = [
+                [['created_by'], 'string'],
                 [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['created_by' => '_id']],
             ];
-        } else {
+        }
+        else {
             $author = [
+                [['created_by'], 'integer'],
                 [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['created_by' => 'id']],
             ];
         }
+
+        /* date */
+        if(is_a($this, '\yii\mongodb\ActiveRecord')){
+            $date=[
+                [['created_at', 'updated_at', 'published_at'], 'yii\mongodb\validators\MongoDateValidator']
+            ];
+        }
+        else {
+            $date=[
+                [['created_at', 'updated_at', 'published_at'], 'integer']
+            ];
+        }
+
+        /* default */
         $default = [
             [['slug', 'language', 'title', 'desc', 'content', 'tags', 'thumbnail', 'thumbnail_square'], 'required'],
             [['slug'], 'match', 'pattern' => '/^[a-z0-9-]+$/'],
             [['slug'], 'unique'],
             [['content'], 'string'],
-            [['views', 'status'], 'integer'],
+            [['views'], 'integer'],
 
             [['language'], 'string', 'max' => 5],
             [['title', 'slug', 'desc'], 'string', 'max' => 110],
-            [['tags', 'thumbnail', 'thumbnail_square'], 'string', 'max' => 255],
+            [['tags', 'thumbnail', 'thumbnail_square', 'status'], 'string', 'max' => 255],
 
             [['thumbnail', 'thumbnail_square'], 'url'],
             [['image_object'], 'string'],
@@ -121,7 +139,7 @@ class Blog extends BlogBase
 
         ];
 
-        return array_merge($default, $author);
+        return array_merge($default, $author, $date);
     }
 
     /**

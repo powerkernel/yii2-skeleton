@@ -20,7 +20,7 @@ use Yii;
  * @property string $banner_url
  * @property string $link_url
  * @property string $link_option
- * @property integer $status
+ * @property string $status
  * @property integer|\MongoDB\BSON\UTCDateTime $created_at
  * @property integer|\MongoDB\BSON\UTCDateTime $updated_at
  */
@@ -28,8 +28,8 @@ class Banner extends BannerBase
 {
 
 
-    const STATUS_ACTIVE = 10;
-    const STATUS_INACTIVE = 20;
+    const STATUS_ACTIVE = 'STATUS_ACTIVE';//10;
+    const STATUS_INACTIVE = 'STATUS_INACTIVE';//20;
 
 
     /**
@@ -97,8 +97,7 @@ class Banner extends BannerBase
             [['lang', 'text_content', 'text_style', 'link_url'], 'default', 'value' => null],
             [['title', 'banner_url', 'status'], 'required'],
             [['text_content', 'text_style', 'lang'], 'string'],
-            [['status'], 'integer'],
-            [['title', 'link_url', 'link_option'], 'string', 'max' => 255],
+            [['title', 'link_url', 'link_option', 'status'], 'string', 'max' => 255],
             [['banner_url', 'link_url'], 'url'],
         ];
         return array_merge($default, $date);
