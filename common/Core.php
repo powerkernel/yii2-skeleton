@@ -74,7 +74,7 @@ class Core
             $module = $m;
         }
 
-        /* go */
+        /* in module */
         if (!in_array(Yii::$app->controller->module->id, ['app-frontend', 'app-backend'])) {
             return (
                 (in_array(Yii::$app->controller->module->id, $module) || in_array('*', $module)) &&
@@ -83,9 +83,10 @@ class Core
             );
         }
 
+        /* in frontend/backend */
         if (isset(Yii::$app->controller->id, Yii::$app->controller->action->id)) {
-
             return (
+                (in_array('', $module) || in_array('*', $module)) &&
                 (in_array(Yii::$app->controller->id, $controller) || in_array('*', $controller)) &&
                 (in_array(Yii::$app->controller->action->id, $action) || in_array('*', $action))
             );
