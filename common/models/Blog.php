@@ -9,6 +9,7 @@ namespace common\models;
 
 use common\Core;
 use DOMDocument;
+use MongoDB\BSON\UTCDateTime;
 use Yii;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
@@ -209,7 +210,13 @@ class Blog extends BlogBase
 
         /* published_at */
         if ($this->status == Blog::STATUS_PUBLISHED && empty($this->published_at)) {
-            $this->touch('published_at');
+            if(Yii::$app->params['mongodb']['blog']){
+                $this->published_at=new UTCDateTime();
+            }
+            else {
+                $this->published_at=time();
+            }
+
         }
 
         /* clean html */
