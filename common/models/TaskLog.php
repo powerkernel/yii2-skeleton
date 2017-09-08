@@ -9,8 +9,6 @@ namespace common\models;
 
 
 use Yii;
-use yii\behaviors\TimestampBehavior;
-
 
 
 /**
@@ -27,12 +25,22 @@ class TaskLog extends TaskLogBase
      */
     public function rules()
     {
-        return [
+        if (is_a($this, '\yii\mongodb\ActiveRecord')) {
+            $date = [
+                [['created_at', 'updated_at'], 'yii\mongodb\validators\MongoDateValidator'],
+            ];
+        } else {
+            $date = [
+                [['created_at', 'updated_at'], 'integer'],
+            ];
+        }
+        $default = [
             [['task', 'result'], 'required'],
             [['result'], 'string'],
-            [['created_at', 'updated_at'], 'integer'],
+
             [['task'], 'string', 'max' => 255],
         ];
+        return array_merge($default, $date);
     }
 
     /**
@@ -41,7 +49,7 @@ class TaskLog extends TaskLogBase
     public function attributeLabels()
     {
         return [
-            Yii::$app->params['mongodb']['taskLog']?'_id':'id' => Yii::t('app', 'ID'),
+            Yii::$app->params['mongodb']['taskLog'] ? '_id' : 'id' => Yii::t('app', 'ID'),
             'task' => Yii::t('app', 'Task'),
             'result' => Yii::t('app', 'Result'),
             'created_at' => Yii::t('app', 'Created At'),
@@ -50,39 +58,39 @@ class TaskLog extends TaskLogBase
     }
 
 
-
     /**
      * get task list
      * @return array
      */
-    public static function getTaskList(){
-        $vendors=['harrytang','modernkernel'];
-        $options=[];
+    public static function getTaskList()
+    {
+        $vendors = ['harrytang', 'modernkernel'];
+        $options = [];
 
         /* main */
-        $mainTasks = scandir(Yii::$app->basePath.'/../console/cronjobs');
+        $mainTasks = scandir(Yii::$app->basePath . '/../console/cronjobs');
         foreach ($mainTasks as $mainTask) {
             if (preg_match('/^(Task\w+).php$/', $mainTask, $match)) {
-                $name=str_ireplace('.php', '', $mainTask);
-                $options[$name]=$name;
+                $name = str_ireplace('.php', '', $mainTask);
+                $options[$name] = $name;
             }
         }
 
         /* vendors */
-        foreach($vendors as $vendor){
-            $dir = \Yii::$app->vendorPath . '/'.$vendor;
+        foreach ($vendors as $vendor) {
+            $dir = \Yii::$app->vendorPath . '/' . $vendor;
             if (file_exists($dir)) {
                 $modules = scandir($dir);
                 foreach ($modules as $module) {
                     if (!preg_match('/[\.]+/', $module)) {
-                        $cronjobs = $dir.'/' . $module . '/cronjobs';
+                        $cronjobs = $dir . '/' . $module . '/cronjobs';
                         if (is_dir($cronjobs)) {
                             $tasks = scandir($cronjobs);
                             foreach ($tasks as $task) {
                                 if (preg_match('/^(Task\w+).php$/', $task, $match)) {
                                     //require($dir.'/' . $module . '/cronjobs/' . $task);
-                                    $name=str_ireplace('.php', '', $task);
-                                    $options[$name]=$name;
+                                    $name = str_ireplace('.php', '', $task);
+                                    $options[$name] = $name;
                                 }
                             }
                         }

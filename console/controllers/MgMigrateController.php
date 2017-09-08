@@ -31,6 +31,15 @@ class MgMigrateController extends Controller
     {
     }
 
+    public function actionMongoDateTask(){
+        $logs=\common\models\TaskLog::find()->all();
+        foreach ($logs as $log){
+            $log->created_at=new UTCDateTime($log->created_at*1000);
+            $log->updated_at=new UTCDateTime($log->updated_at*1000);
+            $log->save();
+        }
+    }
+
     /**
      * rbac
      */
