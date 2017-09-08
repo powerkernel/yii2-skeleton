@@ -17,7 +17,7 @@ use yii\helpers\HtmlPurifier;
  * @property string $content
  * @property string $keywords
  * @property string $thumbnail
- * @property integer $status
+ * @property string $status
  * @property integer|string $created_by
  * @property integer|string $updated_by
  * @property integer|\MongoDB\BSON\UTCDateTime $created_at
@@ -28,8 +28,8 @@ use yii\helpers\HtmlPurifier;
 class PageData extends PageDataBase
 {
 
-    const STATUS_ACTIVE = 10;
-    const STATUS_INACTIVE = 20;
+    const STATUS_ACTIVE = 'STATUS_ACTIVE';//10;
+    const STATUS_INACTIVE = 'STATUS_INACTIVE';//20;
 
 
     /**
@@ -93,9 +93,24 @@ class PageData extends PageDataBase
      */
     public function rules()
     {
-        return [
+
+        /* account */
+        if (Yii::$app->params['mongodb']['account']) {
+            $account = [
+                [['created_by', 'updated_by'], 'string'],
+                [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['created_by' => '_id']],
+            ];
+        }
+        else {
+            $account = [
+                [['created_by', 'updated_by'], 'integer'],
+                [['created_by', 'updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['created_by' => 'id']],
+            ];
+        }
+
+        $default =  [
             [['slug', 'language', 'title', 'description', 'content', 'keywords'], 'required', 'on' => ['update', 'create']],
-            [['status'], 'integer'],
+            [['status'], 'string', 'max'=>255],
             [['content', 'thumbnail'], 'string'],
             [['thumbnail'], 'url'],
             [['language'], 'string', 'max' => 5],
@@ -103,6 +118,8 @@ class PageData extends PageDataBase
             [['slug'], 'string', 'max' => 100],
             [['slug'], 'unique', 'on'=>['create']]
         ];
+
+        return array_merge($default, $account);
     }
 
     /**
@@ -127,7 +144,7 @@ class PageData extends PageDataBase
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * @return \yii\db\ActiveQueryInterface
      */
     public function getPage()
     {

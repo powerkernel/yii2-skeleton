@@ -28,7 +28,7 @@ class BlogSearch extends Blog
     public function rules()
     {
         return [
-            [['views', 'status'], 'integer'],
+            [['views', 'status'], 'safe'],
             [['language', 'title', 'desc', 'content', 'tags', 'created_by', 'created_at', 'updated_at'], 'safe'],
             [['fullname'], 'safe']
         ];

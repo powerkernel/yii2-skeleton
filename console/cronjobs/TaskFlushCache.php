@@ -24,10 +24,18 @@ $schedule->call(function (\yii\console\Application $app) {
     /* delete old logs never bad */
     $period = 30 * 24 * 60 * 60; // 7 days
     $point = time() - $period;
-    \common\models\TaskLog::deleteAll('task=:task AND created_at<=:point', [
-        ':task' => basename(__FILE__, '.php'),
-        ':point' => $point
-    ]);
+    if(Yii::$app->params['mongodb']['taskLog']){
+        \common\models\TaskLog::deleteAll([
+            'task'=>basename(__FILE__, '.php'),
+            'created_at'=>['$lte', new \MongoDB\BSON\UTCDateTime($point)]
+        ]);
+    }
+    else {
+        \common\models\TaskLog::deleteAll('task=:task AND created_at<=:point', [
+            ':task' => basename(__FILE__, '.php'),
+            ':point' => $point
+        ]);
+    }
 
     unset($app);
 })->cron($time);

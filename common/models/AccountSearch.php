@@ -19,7 +19,7 @@ class AccountSearch extends Account
     public function rules()
     {
         return [
-            [['fullname_changed', 'email_verified', 'role', 'status'], 'integer'],
+            [['fullname_changed', 'email_verified', 'role', 'status'], 'safe'],
             [['seo_name', 'fullname', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'new_email', 'change_email_token', 'language', 'timezone'], 'safe'],
             [['created_at'], 'safe']
         ];

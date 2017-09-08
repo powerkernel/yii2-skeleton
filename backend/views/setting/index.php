@@ -2,7 +2,6 @@
 
 
 use common\models\Setting;
-use conquer\select2\Select2Widget;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 

@@ -5,14 +5,11 @@ namespace frontend\controllers;
 
 use common\components\MainController;
 use common\models\Blog;
-use common\models\Message;
 use common\models\Page;
 use common\models\PageData;
 use common\models\Setting;
-use conquer\select2\Select2Action;
 use Yii;
 use yii\data\Pagination;
-use yii\db\Query;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -109,13 +106,20 @@ class SiteController extends MainController
 
         /* missing lang */
         if ($page->language !== Yii::$app->language) {
+            if(Yii::$app->params['mongodb']['i18n']){
+                $locales=\common\models\mongodb\Message::getLocaleList();
+            }
+            else {
+                $locales=\common\models\Message::getLocaleList();
+            }
+
             Yii::$app->session->setFlash(
                 'info',
                 Yii::t('app',
                     'This page has no {CUR_LANG} version. You are currently viewing the {LANGUAGE} version.',
                     [
-                        'CUR_LANG' => Message::getLocaleList()[Yii::$app->language],
-                        'LANGUAGE' => Message::getLocaleList()[$page->language]
+                        'CUR_LANG' => $locales[Yii::$app->language],
+                        'LANGUAGE' => $locales[$page->language]
                     ]
                 ));
         }

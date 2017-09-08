@@ -22,7 +22,7 @@ use yii\helpers\ArrayHelper;
  * @property string $class
  * @property string $position
  * @property integer $order
- * @property integer $status
+ * @property string $status
  * @property integer|\MongoDB\BSON\UTCDateTime $created_at
  * @property integer|\MongoDB\BSON\UTCDateTime $updated_at
  * @property integer|string $created_by
@@ -34,8 +34,8 @@ use yii\helpers\ArrayHelper;
  */
 class Menu extends MenuBase
 {
-    const STATUS_ACTIVE = 10;
-    const STATUS_INACTIVE = 20;
+    const STATUS_ACTIVE = 'STATUS_ACTIVE';//10;
+    const STATUS_INACTIVE = 'STATUS_INACTIVE';//20;
 
     private $_route;
     private $_path;
@@ -124,16 +124,42 @@ class Menu extends MenuBase
      */
     public function rules()
     {
-        return [
+        if (is_a($this, '\yii\mongodb\ActiveRecord')) {
+            $date = [
+                [['created_at', 'updated_at'], 'yii\mongodb\validators\MongoDateValidator']
+            ];
+        } else {
+            $date = [
+                [['created_at', 'updated_at'], 'integer']
+            ];
+        }
+
+        /* account */
+        if (Yii::$app->params['mongodb']['account']) {
+            $account = [
+                [['created_by', 'updated_by'], 'string'],
+                [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['created_by' => '_id']],
+            ];
+        }
+        else {
+            $account = [
+                [['created_by', 'updated_by'], 'integer'],
+                [['created_by', 'updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['created_by' => 'id']],
+            ];
+        }
+
+        $default =  [
             [['id_parent', 'class', 'active_route'], 'default', 'value' => null],
             [['label', 'url', 'position'], 'required'],
 
-            [['order', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['order'], 'integer'],
 
-            [['label', 'active_route', 'url', 'class', 'position'], 'string', 'max' => 255],
+            [['label', 'active_route', 'url', 'class', 'position', 'status'], 'string', 'max' => 255],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['updated_by' => 'id']],
         ];
+
+        return array_merge($default, $date, $account);
     }
 
     /**

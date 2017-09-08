@@ -127,7 +127,7 @@ class MgMigrateController extends Controller
                 'role' => (int)$row['role'],
                 'language' => $row['language'],
                 'timezone' => $row['timezone'],
-                'status' => (int)$row['status'],
+                'status' => $row['status'],
                 'created_at' => new UTCDateTime($row['created_at'] * 1000),
                 'updated_at' => new UTCDateTime($row['updated_at'] * 1000),
             ]);
@@ -181,7 +181,7 @@ class MgMigrateController extends Controller
                 'content' => $row['content'],
                 'keywords' => $row['keywords'],
                 'thumbnail' => $row['thumbnail'],
-                'status' => (int)$row['status'],
+                'status' => $row['status'],
                 'created_by' => (int)$row['created_by'],
                 'updated_by' => (int)$row['updated_by'],
                 'created_at' => new UTCDateTime($row['created_at'] * 1000),
@@ -199,6 +199,7 @@ class MgMigrateController extends Controller
         echo "Migrating Setting model...\n";
         $rows = (new Query())->select('*')->from('{{%core_setting}}')->all();
         $collection = Yii::$app->mongodb->getCollection('settings');
+        $collection->remove();
         foreach ($rows as $row) {
             $collection->insert([
                 'key' => $row['key'],
@@ -210,7 +211,7 @@ class MgMigrateController extends Controller
                 'data' => $row['data'],
                 'default' => $row['default'],
                 'rules' => $row['rules'],
-                'key_order' => $row['key_order'],
+                'key_order' => (int)$row['key_order'],
             ]);
         }
 
@@ -257,8 +258,8 @@ class MgMigrateController extends Controller
             $collection->insert([
                 'task' => $log['task'],
                 'result' => $log['result'],
-                'created_at' => (integer)$log['created_at'],
-                'updated_at' => (integer)$log['updated_at'],
+                'created_at' => new UTCDateTime($log['created_at']*1000),
+                'updated_at' => new UTCDateTime($log['updated_at']*1000),
             ]);
         }
         //Yii::$app->db->createCommand()->truncateTable('{{%core_task_logs}}')->execute();
@@ -288,7 +289,7 @@ class MgMigrateController extends Controller
                 'image_object' => $row['image_object'],
                 'created_by' => (integer)$row['created_by'],
                 'views' => (integer)$row['views'],
-                'status' => (integer)$row['status'],
+                'status' => $row['status'],
                 'created_at' => new UTCDateTime($row['created_at'] * 1000),
                 'updated_at' => new UTCDateTime($row['updated_at'] * 1000),
                 'published_at' => new UTCDateTime($row['published_at'] * 1000),
@@ -314,7 +315,7 @@ class MgMigrateController extends Controller
                 'class' => $row['class'],
                 'position' => $row['position'],
                 'order' => (int)$row['order'],
-                'status' => (int)$row['status'],
+                'status' => $row['status'],
                 'created_at' => new UTCDateTime($row['created_at'] * 1000),
                 'updated_at' => new UTCDateTime($row['updated_at'] * 1000),
                 'created_by' => (int)$row['created_by'],

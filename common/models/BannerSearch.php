@@ -22,7 +22,7 @@ class BannerSearch extends Banner
     public function rules()
     {
         return [
-            [['status'], 'integer'],
+            [['status'], 'safe'],
             [['lang', 'title', 'text_content', 'banner_url', 'link_url', 'link_option'], 'safe'],
         ];
     }

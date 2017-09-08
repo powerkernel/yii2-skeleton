@@ -16,7 +16,7 @@ class PageDataSearch extends PageData
     public function rules()
     {
         return [
-            [['status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            [['status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'safe'],
             [['slug', 'language', 'title', 'description', 'content', 'keywords'], 'safe'],
         ];
     }
