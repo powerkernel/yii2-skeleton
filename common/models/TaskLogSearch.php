@@ -8,6 +8,7 @@
 
 namespace common\models;
 
+use MongoDB\BSON\UTCDateTime;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -84,10 +85,11 @@ class TaskLogSearch extends TaskLog
 
         if (!empty($this->created_at)) {
             if (Yii::$app->params['mongodb']['taskLog']) {
-                $d1 = strtotime($this->created_at);
-                $d2 = $d1 + 86400;
-                $query->andFilterWhere(['>=', 'created_at', $d1])
-                    ->andFilterWhere(['<', 'created_at', $d2]);
+                $query->andFilterWhere([
+                    'created_at' => ['$gte'=>new UTCDateTime(strtotime($this->created_at)*1000)],
+                ])->andFilterWhere([
+                    'created_at' => ['$lt'=>new UTCDateTime((strtotime($this->created_at)+86400)*1000)],
+                ]);
             } else {
 
                 $query->andFilterWhere([

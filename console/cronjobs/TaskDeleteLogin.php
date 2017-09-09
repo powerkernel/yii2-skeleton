@@ -50,7 +50,7 @@ $schedule->call(function (\yii\console\Application $app) {
     if(Yii::$app->params['mongodb']['taskLog']){
         \common\models\TaskLog::deleteAll([
             'task'=>basename(__FILE__, '.php'),
-            'created_at'=>['$lte', new \MongoDB\BSON\UTCDateTime($point)]
+            'created_at'=>['$lte', new \MongoDB\BSON\UTCDateTime($point*1000)]
         ]);
     }
     else {
