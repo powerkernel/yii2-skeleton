@@ -48,6 +48,7 @@ class SDK extends Widget
      */
     protected function register()
     {
+        $lang=str_replace('-', '_', Yii::$app->language);
         $js = <<<EOB
 window.fbAsyncInit = function() {
     FB.init({
@@ -65,7 +66,7 @@ window.fbAsyncInit = function() {
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 EOB;
-        $js = Core::translateMessage($js, ['APP_ID' => $this->appId, 'LANG_ID' => Yii::$app->language]);
+        $js = Core::translateMessage($js, ['APP_ID' => $this->appId, 'LANG_ID' => $lang]);
         $this->view->registerJs($js);
     }
 }
