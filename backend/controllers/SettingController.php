@@ -141,6 +141,7 @@ class SettingController extends BackendController
 
             /* Social */
             ['key' => 'fbPageUrl', 'value' => '', 'title' => 'Facebook Page URL', 'description' => 'Facebook Page URL', 'group' => 'Social', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'url' => []])],
+            ['key' => 'fbPageId', 'value' => '', 'title' => 'Facebook Page ID', 'description' => 'Facebook Page ID', 'group' => 'Social', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
             ['key' => 'fbAppId', 'value' => '', 'title' => 'Facebook App ID', 'description' => 'Facebook App ID', 'group' => 'Social', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
             ['key' => 'fbAdmins', 'value' => '', 'title' => 'Facebook Admins', 'description' => 'Facebook Admins ID', 'group' => 'Social', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
             ['key' => 'gpPageUrl', 'value' => '', 'title' => 'Google+ Page URL', 'description' => 'Google+ Page URL', 'group' => 'Social', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'url' => []])],
