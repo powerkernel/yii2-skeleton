@@ -1081,7 +1081,9 @@ class Core
         if (!empty($only)) {
             $new=[];
             foreach ($only as $l) {
-                $new[$l] = $list[$l];
+                if(isset($list[$l])){
+                    $new[$l] = $list[$l];
+                }
             }
             return $new;
         }

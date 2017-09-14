@@ -57,16 +57,7 @@ class m160810_022938_rbac extends Migration
         $this->addForeignKey('fk_item_name', '{{%core_auth_assignment}}', 'item_name', '{{%core_auth_item}}', 'name', 'CASCADE', 'CASCADE');
         $this->addForeignKey('fk_user_id', '{{%core_auth_assignment}}', 'user_id', '{{%core_account}}', 'id', 'CASCADE', 'CASCADE');
 
-        /* authManager */
-        $auth = Yii::$app->authManager;
-        $staff = $auth->createRole('staff');
-        $staff->description=Yii::t('app', 'Only frontend access');
 
-        $auth->add($staff);
-        $admin = $auth->createRole('admin');
-        $admin->description=Yii::t('app', 'Full access frontend and backend');
-        $auth->add($admin);
-        $auth->addChild($admin, $staff);
     }
 
     /**
@@ -74,14 +65,6 @@ class m160810_022938_rbac extends Migration
      */
     public function down()
     {
-        /* authManager */
-        $auth = Yii::$app->authManager;
-        $admin = $auth->getRole('admin');
-        $staff = $auth->getRole('staff');
-        $auth->removeChild($admin, $staff);
-        $auth->remove($staff);
-        $auth->remove($admin);
-
         /* database */
         $this->dropForeignKey('fk_user_id', '{{%core_auth_assignment}}');
         $this->dropForeignKey('fk_item_name', '{{%core_auth_assignment}}');

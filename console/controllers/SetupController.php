@@ -8,6 +8,7 @@
 
 namespace console\controllers;
 
+use backend\controllers\SettingController;
 use Yii;
 use yii\console\Controller;
 
@@ -22,7 +23,70 @@ class SetupController extends Controller
      * Index
      */
     public function actionIndex(){
+        $this->addRbac();
+        $this->addSetting();
         $this->addDefaultPage();
+    }
+
+    /**
+     * add settings
+     */
+    protected function addSetting(){
+        SettingController::updateSetting();
+    }
+
+
+    /**
+     * add RBAC
+     */
+    protected function addRbac(){
+        /* authManager */
+        $auth = Yii::$app->authManager;
+        $staff = $auth->createRole('staff');
+        $staff->description=Yii::t('app', 'Only frontend access');
+
+        $auth->add($staff);
+        $admin = $auth->createRole('admin');
+        $admin->description=Yii::t('app', 'Full access frontend and backend');
+        $auth->add($admin);
+        $auth->addChild($admin, $staff);
+
+        // add "createBlog" permission
+        $createBlog = $auth->createPermission('createBlog');
+        $createBlog->description = 'Create a blog';
+        $auth->add($createBlog);
+
+        // add "updatePost" permission
+        $updateBlog = $auth->createPermission('updateBlog');
+        $updateBlog->description = 'Update blog';
+        $auth->add($updateBlog);
+
+        // add "author" role and give this role the "createBlog" permission
+        $author = $auth->createRole('author');
+        $author->description='Can write and update their blog';
+        $auth->add($author);
+        $auth->addChild($author, $createBlog);
+
+        // give admin role the "updateBlog" permission
+        // as well as the permissions of the "author" role
+        $auth->addChild($staff, $updateBlog);
+        $auth->addChild($staff, $author);
+
+        // add the rule
+        $rule = new \common\components\OwnerRule();
+        $auth->add($rule);
+
+        // add the "updateOwnItem" permission and associate the rule with it.
+        $updateOwnItem = $auth->createPermission('updateOwnItem');
+        $updateOwnItem->description = 'Update own item';
+        $updateOwnItem->ruleName = $rule->name;
+        $auth->add($updateOwnItem);
+
+        // "$updateOwnItem" will be used from "updateBlog"
+        $auth->addChild($updateOwnItem, $updateBlog);
+
+        // allow "author" to update their own blog
+        $auth->addChild($author, $updateOwnItem);
     }
 
     /**
@@ -107,4 +171,5 @@ EOB;
             $data->save();
         }
     }
+
 }

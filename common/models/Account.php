@@ -219,7 +219,7 @@ class Account extends AccountBase implements IdentityInterface
             }
 
             /* Admin */
-            if (in_array($id, Yii::$app->params['rootAdmin'])) {
+            if (Account::find()->count()==1) {
                 $auth = Yii::$app->authManager;
                 $admin = $auth->getRole('admin');
                 $auth->assign($admin, $id);
