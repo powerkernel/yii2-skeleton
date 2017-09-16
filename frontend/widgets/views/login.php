@@ -35,7 +35,7 @@ use yii\bootstrap\ActiveForm;
                 <hr/>
             </div>
             <?php if(!Yii::$app->session->hasFlash('info')):?>
-                <?php $form = ActiveForm::begin(['id' => 'login-form', 'action'=>Setting::getValue('passwordLessLogin')?'':'?login-modal=true']); ?>
+                <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
                 <?= $form->field($model, 'email') ?>
                 <?php if($model->scenario=='default'):?>
                     <?= $form->field($model, 'password')->passwordInput() ?>
