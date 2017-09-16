@@ -37,5 +37,5 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="account-login">
-    <?php echo \frontend\widgets\Login::widget() ?>
+    <?= \frontend\widgets\Login::widget() ?>
 </div>

@@ -247,7 +247,6 @@ class Blog extends BlogBase
         $this->content = HtmlPurifier::process($this->content, $config);
 
         /* done */
-        $this->status = (int)$this->status;
         return parent::beforeSave($insert);
 
     }

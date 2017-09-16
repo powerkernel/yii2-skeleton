@@ -204,7 +204,7 @@ class Core
      */
     public static function getYesNoText($value)
     {
-        if ($value == 1) {
+        if (in_array($value, [1, 'YES', true])) {
             return Yii::t('app', 'Yes');
         }
         return Yii::t('app', 'No');
@@ -212,13 +212,20 @@ class Core
 
     /**
      * Get Yes/No Option
+     * @param string $type
      * @return array
      */
-    public static function getYesNoOption()
+    public static function getYesNoOption($type='number')
     {
+        if($type=='number'){
+            return [
+                '1' => Yii::t('app', 'Yes'),
+                '0' => Yii::t('app', 'No')
+            ];
+        }
         return [
-            '1' => Yii::t('app', 'Yes'),
-            '0' => Yii::t('app', 'No')
+            'YES' => Yii::t('app', 'Yes'),
+            'NO' => Yii::t('app', 'No')
         ];
     }
 

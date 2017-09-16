@@ -33,11 +33,13 @@ class Login extends Widget
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $model->login();
+            //$model->login();
             //Yii::$app->controller->refresh();
-            //if($model->login()){
-            //    return Yii::$app->controller->goBack();
-            //}
+            if($model->login()){
+                //Yii::$app->session->setFlash('success', Yii::t('app', 'You have been successfully logged in.'));
+                Yii::$app->controller->goBack();
+                Yii::$app->end();
+            }
         }
 
         return $this->render('login', [
