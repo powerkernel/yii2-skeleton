@@ -179,6 +179,9 @@ class SettingController extends BackendController
             ['key' => 'headJs', 'value' => '', 'title' => 'Header JS', 'description' => 'Header Javascript', 'group' => 'Enhancements', 'type' => 'textarea', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
 
 
+            /* dmca */
+            ['key' => 'dmca', 'value' => '', 'title' => 'DMCA Protection', 'description' => 'DMCA.com ID', 'group' => 'Enhancements', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
+
 
             /* Ads */
             ['key' => 'adsense', 'value' => '', 'title' => 'Google Adsense', 'description' => 'Client ID: ca-pub-1234567890123456', 'group' => 'Ads', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
