@@ -3,6 +3,7 @@
         <?php if(Yii::$app->params['showPowered']===true):?>
         <div class="pull-right hidden-xs">
             <?= \common\Core::powered() ?>
+            <?= \frontend\widgets\DMCA::widget() ?>
         </div>
         <?php endif;?>
         <div><strong>&copy; <?= date('Y') ?> <?= Yii::$app->name ?>.</strong> <?= Yii::t('app', 'All rights reserved.') ?></div>
