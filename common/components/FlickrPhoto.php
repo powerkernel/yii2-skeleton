@@ -1,8 +1,8 @@
 <?php
 /**
- * @author Harry Tang <harry@modernkernel.com>
- * @link https://modernkernel.com
- * @copyright Copyright (c) 2016 Modern Kernel
+ * @author Harry Tang <harry@powerkernel.com>
+ * @link https://powerkernel.com
+ * @copyright Copyright (c) 2016 Power Kernel
  */
 
 namespace common\components;
@@ -30,7 +30,7 @@ namespace common\components;
  *     ...
  * ]
  * ```
- * @author Harry Tang <harry@modernkernel.com>
+ * @author Harry Tang <harry@powerkernel.com>
  */
 class FlickrPhoto extends FlickrAuth
 {

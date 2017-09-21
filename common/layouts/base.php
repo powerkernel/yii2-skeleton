@@ -16,7 +16,7 @@ use yii\helpers\Html;
 <html prefix="og: http://ogp.me/ns#" lang="<?= Yii::$app->language ?>">
 <!--
 +++++++++++++++++++++++++++++++++++++++++++
-@author Harry Tang <harry@modernkernel.com>
+@author Harry Tang <harry@powerkernel.com>
 @link https://modernkernel.com
 @copyright Copyright (c) 2016 Modern Kernel
 +++++++++++++++++++++++++++++++++++++++++++

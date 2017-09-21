@@ -1,2 +1,17 @@
 php yii mongodb-migrate --migrationPath=@console/migrations/mongodb
 php yii mg-migrate
+
+migrate existing project:
+php yii migrate --interactive=0
+php yii mg-migrate/account
+php yii mg-migrate/assignment-id
+php yii mg-migrate/auth
+php yii mg-migrate/auth-id
+php yii mg-migrate/banner
+php yii mg-migrate/pages
+php yii mg-migrate/page-id
+php yii mg-migrate/setting
+php yii mg-migrate/menu
+php yii mg-migrate/mongo-date-task
+
+run all modules migration

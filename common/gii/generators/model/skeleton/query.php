@@ -1,7 +1,7 @@
 <?php
 /**
- * @author Harry Tang <harry@modernkernel.com>
- * @link https://modernkernel.com
+ * @author Harry Tang <harry@powerkernel.com>
+ * @link https://powerkernel.com
  * @copyright Copyright (c) <?= date('Y') ?> Modern Kernel
  */
 
@@ -28,8 +28,8 @@ if ($generator->ns !== $generator->queryNs) {
 echo "<?php\n";
 ?>
 /**
-* @author Harry Tang <harry@modernkernel.com>
-* @link https://modernkernel.com
+* @author Harry Tang <harry@powerkernel.com>
+* @link https://powerkernel.com
 * @copyright Copyright (c) <?= date('Y') ?> Modern Kernel
 */
 

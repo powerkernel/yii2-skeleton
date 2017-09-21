@@ -1,8 +1,8 @@
 <?php
 /**
- * @author Harry Tang <harry@modernkernel.com>
- * @link https://modernkernel.com
- * @copyright Copyright (c) 2016 Modern Kernel
+ * @author Harry Tang <harry@powerkernel.com>
+ * @link https://powerkernel.com
+ * @copyright Copyright (c) 2016 Power Kernel
  */
 
 use yii\helpers\Inflector;
@@ -16,9 +16,9 @@ $urlParams = $generator->generateUrlParams();
 echo "<?php\n";
 ?>
 /**
- * @author Harry Tang <harry@modernkernel.com>
- * @link https://modernkernel.com
- * @copyright Copyright (c) 2016 Modern Kernel
+ * @author Harry Tang <harry@powerkernel.com>
+ * @link https://powerkernel.com
+ * @copyright Copyright (c) 2016 Power Kernel
  */
 
 use yii\helpers\Html;
