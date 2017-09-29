@@ -53,10 +53,13 @@ class SiteController extends MainController
                 'class' => 'common\components\LoginAction',
             ],
             'state-list' => [
-                'class' => 'common\components\StateAction',
+                'class' => 'common\actions\StateAction',
+            ],
+            'district-list' => [
+                'class' => 'common\actions\DistrictAction',
             ],
             'ward-list' => [
-                'class' => 'common\components\WardAction',
+                'class' => 'common\actions\WardAction',
             ],
             'flickr-upload' => [
                 'class' => 'common\components\FlickrUploadAction',

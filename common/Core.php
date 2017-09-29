@@ -5,7 +5,6 @@ namespace common;
 use common\models\Setting;
 use DateTime;
 use Yii;
-use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\helpers\FormatConverter;
 use yii\helpers\Html;
@@ -327,54 +326,142 @@ class Core
 
     /**
      * get city list
-     * @param $country
+     * @param string $country
+     * @param null $state
      * @return array
      */
-    public static function getCityList($country){
-        $data= (new Query())->select('id, name')
-            ->from('{{%core_city}}')
-            ->where(['country'=>$country])
-            ->all();
-        return ArrayHelper::map($data, 'id', 'name');
+    public static function getCityList($country, $state=null){
+        $file=Yii::$aliases['@common'].DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'location'.DIRECTORY_SEPARATOR.$country.'.php';
+        if(file_exists($file)){
+            $data=require_once($file);
+            return ArrayHelper::map($data['city'], 'id', 'name');
+        }
+        return [];
     }
 
     /**
      * get city text
-     * @param $id
-     * @return false|null|string
+     * @param string $country
+     * @param string $id
+     * @return mixed
      */
-    public static function getCityText($id){
-        return (new Query())
-            ->select('name')
-            ->from('{{%core_city}}')
-            ->where(['id'=>$id])
-            ->scalar();
+    public static function getCityText($country, $id){
+        $file=Yii::$aliases['@common'].DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'location'.DIRECTORY_SEPARATOR.$country.'.php';
+        if(file_exists($file)){
+            $data=require_once($file);
+            $key = array_search($id, array_column($data['city'], 'id'));
+            if($key){
+                return $data['city'][$key]['name'];
+            }
+            return [];
+        }
+        return [];
+    }
+
+    /**
+     * get state list
+     * @param $country
+     * @return array
+     */
+    public static function getStateList($country){
+        $file=Yii::$aliases['@common'].DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'location'.DIRECTORY_SEPARATOR.$country.'.php';
+        if(file_exists($file)){
+            $data=require($file);
+            return ArrayHelper::map($data['state'], 'id', 'name');
+        }
+        return [];
+    }
+
+
+
+    /**
+     * get district list
+     * @param string $country
+     * @param string $city
+     * @return array
+     */
+    public static function getDistrictList($country, $city=null){
+        $file=Yii::$aliases['@common'].DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'location'.DIRECTORY_SEPARATOR.$country.'.php';
+        if(file_exists($file)){
+            $data=require_once($file);
+            if($data){
+                if($city){
+                    $result = ArrayHelper::index($data['district'], 'id', 'id_city');
+                    ArrayHelper::multisort($result[$city], 'name');
+                    return $result[$city];
+                }
+                ArrayHelper::multisort($data['district'], 'name');
+                return ArrayHelper::map($data['district'], 'id', 'name');
+            }
+            return [];
+        }
+        return [];
+    }
+
+    /**
+     * get ward list
+     * @param $country
+     * @param null $district
+     * @return array
+     */
+    public static function getWardList($country, $district=null){
+        $file=Yii::$aliases['@common'].DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'location'.DIRECTORY_SEPARATOR.$country.'.php';
+        if(file_exists($file)){
+            $data=require_once($file);
+            if($data){
+                if($district){
+                    $result = ArrayHelper::index($data['ward'], 'id', 'id_district');
+                    ArrayHelper::multisort($result[$district], 'name');
+                    return $result[$district];
+                }
+                ArrayHelper::multisort($data['ward'], 'name');
+                return ArrayHelper::map($data['ward'], 'id', 'name');
+            }
+            return [];
+        }
+        return [];
     }
 
     /**
      * get state text
+     * @param $country
      * @param $id
-     * @return false|null|string
+     * @return array
      */
-    public static function getStateText($id){
-        return (new Query())
-            ->select('name')
-            ->from('{{%core_state}}')
-            ->where(['id'=>$id])
-            ->scalar();
+    public static function getDistrictText($country,$id){
+        $file=Yii::$aliases['@common'].DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'location'.DIRECTORY_SEPARATOR.$country.'.php';
+        if(file_exists($file)){
+            $data=require($file);
+            if($data){
+                $key = array_search($id, array_column($data['district'], 'id'));
+                if($key){
+                    return $data['district'][$key]['name'];
+                }
+            }
+            return [];
+        }
+        return [];
     }
 
     /**
      * get ward text
+     * @param $country
      * @param $id
-     * @return false|null|string
+     * @return array
      */
-    public static function getWardText($id){
-        return (new Query())
-            ->select('name')
-            ->from('{{%core_ward}}')
-            ->where(['id'=>$id])
-            ->scalar();
+    public static function getWardText($country, $id){
+        $file=Yii::$aliases['@common'].DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'location'.DIRECTORY_SEPARATOR.$country.'.php';
+        if(file_exists($file)){
+            $data=require($file);
+            if($data){
+                $key = array_search($id, array_column($data['ward'], 'id'));
+                if($key){
+                    return $data['ward'][$key]['name'];
+                }
+            }
+            return [];
+        }
+        return [];
     }
 
     /**
