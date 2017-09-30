@@ -235,7 +235,7 @@ class Core
      */
     public static function powered()
     {
-        return 'Powered by <a target="_blank" href="https://powerkernel.com/" rel="external" title="Modern Kernel">Modern Kernel</a>';
+        return 'Powered by <a target="_blank" href="https://powerkernel.com/" rel="external" title="Power Kernel">Power Kernel</a>';
     }
 
 
