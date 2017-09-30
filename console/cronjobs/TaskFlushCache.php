@@ -7,12 +7,16 @@
 use common\Core;
 
 $local = Core::isLocalhost();
-$time = $local ? '* * * * *' : '0 0 1 * *';
+$time = $local ? '* * * * *' : '1 1 1 * *';
 
 $schedule->call(function (\yii\console\Application $app) {
 
     Yii::$app->cache->flush();
-    Yii::$app->db->schema->refresh();
+
+    if(Yii::$app->has('db')){
+        Yii::$app->db->schema->refresh();
+    }
+
 
     $output = Yii::t('app','All values from cache deleted.');
 
