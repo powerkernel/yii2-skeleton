@@ -37,7 +37,7 @@ $this->title = Yii::t('app', 'Dashboard');
 
                             <tr>
                                 <th>Developer</th>
-                                <td>Harry Tang (harry@modernkernel.com)</td>
+                                <td>Harry Tang (harry@powerkernel.com)</td>
                             </tr>
                             <tr>
                                 <th>Powered by</th>
