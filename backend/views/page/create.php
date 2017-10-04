@@ -1,7 +1,6 @@
 <?php
 
 use common\Core;
-use common\models\Message;
 use common\models\PageData;
 use modernkernel\slugify\Slugify;
 use modernkernel\tinymce\TinyMce;
@@ -30,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="page-data-form">
                 <?php $form = ActiveForm::begin(); ?>
 
-                <?= $form->field($model, 'language')->dropDownList(Message::getLocaleList()) ?>
+                <?= $form->field($model, 'language')->dropDownList(Yii::$app->params['mongodb']['i18n']?\common\models\mongodb\Message::getLocaleList():\common\models\Message::getLocaleList()) ?>
 
                 <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 

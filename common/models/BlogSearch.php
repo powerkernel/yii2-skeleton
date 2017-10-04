@@ -119,13 +119,13 @@ class BlogSearch extends Blog
             //'id' => $this->id,
             //'created_by' => $this->created_by > 0 ? (int)$this->created_by : null,
             'views' => $this->views > 0 ? (int)$this->views : null,
-            'status' => $this->status > 0 ? (int)$this->status : null,
         ]);
 
         $query->andFilterWhere(['like', 'language', $this->language])
             ->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'desc', $this->desc])
             ->andFilterWhere(['like', 'content', $this->content])
+            ->andFilterWhere(['like', 'status', $this->status])
             ->andFilterWhere(['like', 'tags', $this->tags]);
 
 

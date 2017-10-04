@@ -94,12 +94,13 @@ More comming soon..
 HOW TO USE
 ----------
 1. Run `init`, update your database information in common\config\mail-local.php
-2. Run `php yii migrate`
-3. Config/Symlink frontend\web & backend\web to your public_html
-4. Go to frontend and sign up for new account, admin role will be auto assigned.
-5. Go to backend and update all settings (reCaptcha, API, SMTP...)
-6. Generate icons from http://realfavicongenerator.net/
-7. Your are ready!
+2. Run `php yii migrate` or `php yii mongodb-migrate --migrationPath=@console/migrations/mongodb`
+3. Run `php yii setup`
+4. Config/Symlink frontend\web & backend\web to your public_html
+5. Go to frontend and sign up for new account, admin role will be auto assigned.
+6. Go to backend and update all settings (reCaptcha, API, SMTP...)
+7. Generate icons from http://realfavicongenerator.net/
+8. Your are ready!
 
 CONFIG
 ------

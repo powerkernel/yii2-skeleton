@@ -26,6 +26,7 @@ class SetupController extends Controller
         $this->addRbac();
         $this->addSetting();
         $this->addDefaultPage();
+        echo "Application has been installed!";
     }
 
     /**

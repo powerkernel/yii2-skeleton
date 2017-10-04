@@ -214,9 +214,7 @@ class Account extends AccountBase implements IdentityInterface
         }
 
         if ($insert) {
-            if ($this->emailNewAccount) {
-                $this->sendMailNewUser();
-            }
+
 
             /* Admin */
             if (Account::find()->count()==1) {
@@ -224,6 +222,11 @@ class Account extends AccountBase implements IdentityInterface
                 $admin = $auth->getRole('admin');
                 $auth->assign($admin, $id);
                 Yii::$app->session->setFlash('info', Yii::t('app', 'Your admin account password is {PASS}', ['PASS' => $this->passwordText]));
+            }
+            else {
+                if ($this->emailNewAccount) {
+                    $this->sendMailNewUser();
+                }
             }
         }
 
