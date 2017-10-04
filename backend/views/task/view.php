@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         Yii::$app->params['mongodb']['taskLog']?'_id':'id',
                         'task',
                         'result:ntext',
-                        'created_at:dateTime',
+                        'createdAt:dateTime',
                         //'updated_at',
                     ],
                 ]) ?>
