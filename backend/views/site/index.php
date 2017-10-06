@@ -41,11 +41,11 @@ $this->title = Yii::t('app', 'Dashboard');
                             </tr>
                             <tr>
                                 <th>Powered by</th>
-                                <td>modernkernel.com</td>
+                                <td>powerkernel.com</td>
                             </tr>
                             <tr>
                                 <th>Support</th>
-                                <td>modernkernel.com</td>
+                                <td>powerkernel.com</td>
                             </tr>
 
 
