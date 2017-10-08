@@ -203,7 +203,7 @@ class Core
      */
     public static function getYesNoText($value)
     {
-        if (in_array($value, [1, 'YES', true])) {
+        if (in_array($value, [1, '1', 'YES', 'yes', true, 'true'], true)) {
             return Yii::t('app', 'Yes');
         }
         return Yii::t('app', 'No');
