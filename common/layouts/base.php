@@ -18,7 +18,7 @@ use yii\helpers\Html;
 +++++++++++++++++++++++++++++++++++++++++++
 @author Harry Tang <harry@powerkernel.com>
 @link https://powerkernel.com
-@copyright Copyright (c) 2016 Modern Kernel
+@copyright Copyright (c) 2017 Power Kernel
 +++++++++++++++++++++++++++++++++++++++++++
 -->
 <head>
