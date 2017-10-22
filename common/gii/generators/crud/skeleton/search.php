@@ -2,7 +2,7 @@
 /**
  * @author Harry Tang <harry@powerkernel.com>
  * @link https://powerkernel.com
- * @copyright Copyright (c) 2016 Power Kernel
+ * @copyright Copyright (c) 2017 Power Kernel
  */
 
 /**
@@ -30,7 +30,7 @@ echo "<?php\n";
 /**
  * @author Harry Tang <harry@powerkernel.com>
  * @link https://powerkernel.com
- * @copyright Copyright (c) 2016 Power Kernel
+ * @copyright Copyright (c) <?= date('Y') ?> Power Kernel
  */
 
 

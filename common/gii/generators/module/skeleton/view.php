@@ -2,6 +2,19 @@
 /* @var $this yii\web\View */
 /* @var $generator yii\gii\generators\module\Generator */
 ?>
+
+<?php
+echo "<?php\n";
+?>
+/**
+ * @author Harry Tang <harry@powerkernel.com>
+ * @link https://powerkernel.com
+ * @copyright Copyright (c) <?= date('Y') ?> Power Kernel
+ */
+<?php
+echo "?>\n";
+?>
+
 <div class="<?= $generator->moduleID . '-default-index' ?>">
     <h1><?= "<?= " ?>$this->context->action->uniqueId ?></h1>
     <p>

@@ -9,6 +9,12 @@
 echo "<?php\n";
 ?>
 
+/**
+ * @author Harry Tang <harry@powerkernel.com>
+ * @link https://powerkernel.com
+ * @copyright Copyright (c) <?= date('Y') ?> Power Kernel
+ */
+
 namespace <?= $generator->getControllerNamespace() ?>;
 
 use yii\web\Controller;

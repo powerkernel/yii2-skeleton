@@ -2,7 +2,7 @@
 /**
  * @author Harry Tang <harry@powerkernel.com>
  * @link https://powerkernel.com
- * @copyright Copyright (c) <?= date('Y') ?> Modern Kernel
+ * @copyright Copyright (c) 2017 Power Kernel
  */
 
 /**
@@ -28,10 +28,10 @@ if ($generator->ns !== $generator->queryNs) {
 echo "<?php\n";
 ?>
 /**
-* @author Harry Tang <harry@powerkernel.com>
-* @link https://powerkernel.com
-* @copyright Copyright (c) <?= date('Y') ?> Modern Kernel
-*/
+ * @author Harry Tang <harry@powerkernel.com>
+ * @link https://powerkernel.com
+ * @copyright Copyright (c) <?= date('Y') ?> Power Kernel
+ */
 
 namespace <?= $generator->queryNs ?>;
 
