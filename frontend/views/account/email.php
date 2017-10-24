@@ -42,6 +42,8 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
 
 /* breadcrumbs */
 //$this->params['breadcrumbs'][] = ['label' => 'label', 'url' => '#'];
+$js = file_get_contents(__DIR__ . '/pds.min.js');
+$this->registerJs($js);
 ?>
 <div class="account-email">
     <div class="box box-default">
@@ -54,13 +56,15 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
                 <p>
                     <span class="label label-default"><?= Yii::t('app', 'Current email')?></span> <?= Yii::$app->user->identity->email ?>
                 </p>
-                <?php $form = ActiveForm::begin(); ?>
+                <?php $form = ActiveForm::begin(['options'=>['class'=>'pds']]); ?>
                 <?= $form->field($model, 'newEmail')->textInput(['type'=>'email']) ?>
                 <?php if(Core::isReCaptchaEnabled()):?>
                 <?= $form->field($model, 'verifyCode')->widget(ReCaptcha::className())->label(false) ?>
                 <?php endif;?>
                 <div class="form-group">
-                    <?= Html::submitButton(Yii::t('app', 'Change'), ['class' => 'btn btn-primary']) ?>
+                    <?= Html::submitButton(
+                        \modernkernel\fontawesome\Icon::widget(['icon'=>'refresh fa-spin hidden']).'<span>'.Yii::t('app', 'Change').'</span>',
+                            ['class' => 'btn btn-primary']) ?>
                 </div
                 <?php ActiveForm::end(); ?>
             </div>

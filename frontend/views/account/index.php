@@ -11,6 +11,8 @@ use yii\bootstrap\Html;
 $this->title = Yii::t('app', 'My Account');
 $keywords = Yii::t('app', 'my profile, my account');
 $description = Yii::t('app', 'View and update your personal information');
+$js = file_get_contents(__DIR__ . '/pds.min.js');
+$this->registerJs($js);
 ?>
 <div class="account-index">
     <div class="box box-default">
@@ -19,7 +21,10 @@ $description = Yii::t('app', 'View and update your personal information');
         </div>
         <div class="box-body">
             <div class="account-form">
-                <?php $form = ActiveForm::begin(['action'=>Yii::$app->urlManager->createUrl(['/account'])]); ?>
+                <?php $form = ActiveForm::begin([
+                    'action'=>Yii::$app->urlManager->createUrl(['/account']),
+                    'options'=>['class'=>'pds']
+                ]); ?>
                 <?= $form->field($model, 'fullname')->textInput(['maxlength' => true, 'disabled'=>!$model->canChangeName()]) ?>
                 <?= $form->field($model, 'language')->widget(Select2Widget::className(), [
                     'bootstrap'=>false,
@@ -32,7 +37,9 @@ $description = Yii::t('app', 'View and update your personal information');
                     ])
                 ?>
                 <div class="form-group">
-                    <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary']) ?>
+                    <?= Html::submitButton(
+                        \modernkernel\fontawesome\Icon::widget(['icon'=>'refresh fa-spin hidden']).'<span>'.Yii::t('app', 'Save').'</span>',
+                            ['class' => 'btn btn-primary']) ?>
                 </div
                 <?php ActiveForm::end(); ?>
             </div>
