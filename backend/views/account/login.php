@@ -74,7 +74,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
             <?php endif;?>
             <?= $form->field($model, 'rememberMe')->checkbox() ?>
             <div class="form-group text-center">
-                <?= Html::submitButton(Yii::t('app', 'Login'), ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                <?= \common\components\SubmitButton::widget(['text'=>Yii::t('app', 'Login'), 'options'=>['class' => 'btn btn-primary', 'name' => 'login-button']]) ?>
             </div>
             <?php ActiveForm::end(); ?>
             <?php endif;?>

@@ -4,7 +4,6 @@ use common\Core;
 use common\models\PageData;
 use modernkernel\slugify\Slugify;
 use modernkernel\tinymce\TinyMce;
-use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 
@@ -68,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
                 <div class="form-group">
-                    <?= Html::submitButton($model->scenario == 'create' ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->scenario == 'create' ? 'btn btn-success' : 'btn btn-primary']) ?>
+                    <?= \common\components\SubmitButton::widget(['text'=>$model->scenario == 'create' ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), 'options'=>['class' => $model->scenario == 'create' ? 'btn btn-success' : 'btn btn-primary']]) ?>
                 </div>
 
                 <?php ActiveForm::end(); ?>

@@ -3,7 +3,6 @@
 
 use common\models\Setting;
 use yii\bootstrap\ActiveForm;
-use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
@@ -105,7 +104,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
             <div><hr /></div>
             <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <?= Html::submitButton(Yii::t('app', 'Save Settings'), ['class' => 'btn btn-primary']) ?>
+                <?= \common\components\SubmitButton::widget(['text'=>Yii::t('app', 'Save Settings'), 'options'=>['class' => 'btn btn-primary']]) ?>
             </div>
             </div>
         </div>

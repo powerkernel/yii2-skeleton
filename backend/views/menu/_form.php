@@ -6,7 +6,6 @@
  */
 
 use common\models\Menu;
-use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -33,7 +32,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'status')->dropDownList(Menu::getStatusOption()) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= \common\components\SubmitButton::widget(['text'=>$model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), 'options'=>['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']]) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

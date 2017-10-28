@@ -3,7 +3,6 @@
 use common\Core;
 use common\models\PageData;
 use modernkernel\tinymce\TinyMce;
-use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -59,7 +58,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
                 <?= $form->field($model->page, 'show_update_date')->dropDownList(Core::getYesNoOption()) ?>
                 <div class="form-group">
                     <p class="pull-left">
-                        <?= Html::submitButton($model->scenario == 'create' ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->scenario == 'create' ? 'btn btn-success' : 'btn btn-primary']) ?>
+                        <?= \common\components\SubmitButton::widget(['text'=>$model->scenario == 'create' ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), 'options'=>['class' => $model->scenario == 'create' ? 'btn btn-success' : 'btn btn-primary']]) ?>
                     </p>
                     <?php if (count($languages) > 0): ?>
                         <div class="btn-group pull-right">
