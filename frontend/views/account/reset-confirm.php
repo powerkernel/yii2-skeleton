@@ -53,7 +53,7 @@ $this->registerMetaTag(['name' => 'robots', 'content' => 'noindex, nofollow, nos
             <?= $form->field($model, 'password')->passwordInput() ?>
             <?= $form->field($model, 'passwordConfirm')->passwordInput() ?>
             <div class="form-group">
-                <?= Html::submitButton(Yii::t('app', 'Save Password'), ['class' => 'btn btn-primary']) ?>
+                <?= \common\components\SubmitButton::widget(['text'=>Yii::t('app', 'Save Password'), 'options'=>['class' => 'btn btn-primary']]) ?>
             </div>
             <?php ActiveForm::end(); ?>
             <?php else: ?>

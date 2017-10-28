@@ -42,8 +42,6 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
 
 /* breadcrumbs */
 //$this->params['breadcrumbs'][] = ['label' => 'label', 'url' => '#'];
-$js = file_get_contents(__DIR__ . '/pds.min.js');
-$this->registerJs($js);
 ?>
 <div class="account-email">
     <div class="box box-default">
@@ -62,10 +60,8 @@ $this->registerJs($js);
                 <?= $form->field($model, 'verifyCode')->widget(ReCaptcha::className())->label(false) ?>
                 <?php endif;?>
                 <div class="form-group">
-                    <?= Html::submitButton(
-                        \modernkernel\fontawesome\Icon::widget(['icon'=>'refresh fa-spin hidden']).'<span>'.Yii::t('app', 'Change').'</span>',
-                            ['class' => 'btn btn-primary']) ?>
-                </div
+                    <?= \common\components\SubmitButton::widget(['text'=>Yii::t('app', 'Change'), 'options'=>['class' => 'btn btn-primary']]) ?>
+                </div>
                 <?php ActiveForm::end(); ?>
             </div>
         </div>

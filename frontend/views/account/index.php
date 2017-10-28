@@ -11,8 +11,8 @@ use yii\bootstrap\Html;
 $this->title = Yii::t('app', 'My Account');
 $keywords = Yii::t('app', 'my profile, my account');
 $description = Yii::t('app', 'View and update your personal information');
-$js = file_get_contents(__DIR__ . '/pds.min.js');
-$this->registerJs($js);
+//$js = file_get_contents(__DIR__ . '/pds.min.js');
+//$this->registerJs($js);
 ?>
 <div class="account-index">
     <div class="box box-default">
@@ -37,10 +37,8 @@ $this->registerJs($js);
                     ])
                 ?>
                 <div class="form-group">
-                    <?= Html::submitButton(
-                        \modernkernel\fontawesome\Icon::widget(['icon'=>'refresh fa-spin hidden']).'<span>'.Yii::t('app', 'Save').'</span>',
-                            ['class' => 'btn btn-primary']) ?>
-                </div
+                    <?= \common\components\SubmitButton::widget(['text'=>Yii::t('app', 'Save'), 'options'=>['class' => 'btn btn-primary']]) ?>
+                </div>
                 <?php ActiveForm::end(); ?>
             </div>
         </div>

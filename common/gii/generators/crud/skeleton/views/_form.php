@@ -47,7 +47,7 @@ $this->registerJs($js);
     }
 } ?>
     <div class="form-group">
-        <?= "<?= " ?>Html::submitButton(\modernkernel\fontawesome\Icon::widget(['icon'=>'refresh fa-spin hidden']).'<span>'.$model->isNewRecord ? <?= $generator->generateString('Create') ?> : <?= $generator->generateString('Update').'</span>' ?>, ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= "<?= " ?>\common\components\SubmitButton::widget(['text'=>$model->isNewRecord ? <?= $generator->generateString('Create') ?> : <?= $generator->generateString('Update') ?>, 'options'=>['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']]) ?>
     </div>
 
     <?= "<?php " ?>ActiveForm::end(); ?>

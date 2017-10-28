@@ -54,7 +54,7 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
             <?= $form->field($model, 'verifyCode')->widget(ReCaptcha::className())->label(false) ?>
             <?php endif;?>
             <div class="form-group">
-                <?= Html::submitButton(Yii::t('app', 'Reset Password'), ['class' => 'btn btn-primary']) ?>
+                <?= \common\components\SubmitButton::widget(['text'=>Yii::t('app', 'Reset Password'), 'options'=>['class' => 'btn btn-primary']]) ?>
             </div>
             <?php ActiveForm::end(); ?>
             <div><hr /></div>
