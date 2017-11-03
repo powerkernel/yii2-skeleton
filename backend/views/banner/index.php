@@ -1,7 +1,6 @@
 <?php
 
 use common\models\Banner;
-use common\models\Message;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
@@ -41,9 +40,9 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                         //'lang',
                         ['attribute' => 'lang', 'value' => function ($model) {
                             if (Yii::$app->params['mongodb']['i18n']) {
-                                return \common\models\mongodb\Message::getLocaleList()[$model->language];
+                                return !empty($model->lang)?\common\models\mongodb\Message::getLocaleList()[$model->lang]:null;
                             } else {
-                                return \common\models\Message::getLocaleList()[$model->language];
+                                return !empty($model->lang)?\common\models\Message::getLocaleList()[$model->lang]:null;
                             }
                         }, 'filter' => Yii::$app->params['mongodb']['i18n'] ? \common\models\mongodb\Message::getLocaleList() : \common\models\Message::getLocaleList()
                         ],

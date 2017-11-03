@@ -4,6 +4,7 @@
  * @link https://powerkernel.com
  * @copyright Copyright (c) 2017 Power Kernel
  */
+
 use common\Core;
 use himiklab\yii2\recaptcha\ReCaptcha;
 use yii\bootstrap\ActiveForm;
@@ -50,20 +51,24 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
         <div class="box-body">
             <div class="account-form">
                 <p><?= Yii::t('app', 'Please enter your new, valid phone number, we will send a verification code to your new phone.') ?></p>
-                <?php $form = ActiveForm::begin(['action'=>Yii::$app->urlManager->createUrl(['account/phone', 'act'=>'validate'])]); ?>
-                <?= $form->field($model, 'phone')->textInput(['readOnly'=>$model->scenario=='validation']) ?>
-                <?php if($model->scenario=='validation'):?>
-                    <?= $form->field($model, 'code')->textInput(['maxlength'=>6]) ?>
-                <?php endif;?>
-                <?php if(Core::isReCaptchaEnabled()):?>
-                <?= $form->field($model, 'captcha')->widget(ReCaptcha::className())->label(false) ?>
-                <?php endif;?>
+                <?php $form = ActiveForm::begin(['action' => Yii::$app->urlManager->createUrl(['account/phone', 'act' => 'validate'])]); ?>
+                <?=
+                $form->field($model, 'phone')
+                    ->textInput(['readOnly' => $model->scenario == 'validation'])
+                    ->hint(Yii::t('app', 'Phone number should begin with a country prefix code'))
+                ?>
+                <?php if ($model->scenario == 'validation'): ?>
+                    <?= $form->field($model, 'code')->textInput(['maxlength' => 6]) ?>
+                <?php endif; ?>
+                <?php if (Core::isReCaptchaEnabled()): ?>
+                    <?= $form->field($model, 'captcha')->widget(ReCaptcha::className())->label(false) ?>
+                <?php endif; ?>
                 <div class="form-group">
-                    <?php if($model->scenario!='validation'):?>
-                    <?= \common\components\SubmitButton::widget(['text'=>Yii::t('app', 'Send Code'), 'options'=>['class' => 'btn btn-primary', 'name'=>'send-code']]) ?>
-                    <?php else:?>
-                    <?= \common\components\SubmitButton::widget(['text'=>Yii::t('app', 'Verify'), 'options'=>['class' => 'btn btn-primary', 'name'=>'validate']]) ?>
-                    <?php endif;?>
+                    <?php if ($model->scenario != 'validation'): ?>
+                        <?= \common\components\SubmitButton::widget(['text' => Yii::t('app', 'Send Code'), 'options' => ['class' => 'btn btn-primary', 'name' => 'send-code']]) ?>
+                    <?php else: ?>
+                        <?= \common\components\SubmitButton::widget(['text' => Yii::t('app', 'Verify'), 'options' => ['class' => 'btn btn-primary', 'name' => 'validate']]) ?>
+                    <?php endif; ?>
                 </div>
                 <?php ActiveForm::end(); ?>
             </div>
