@@ -5,28 +5,26 @@
  * @copyright Copyright (c) 2017 Power Kernel
  */
 
-
 namespace common\models;
 
-
 use Yii;
-use yii\behaviors\TimestampBehavior;
 use common\behaviors\UTCDateTimeBehavior;
+use yii\behaviors\TimestampBehavior;
 
 
-if (Yii::$app->params['mongodb']['account']) {
+if (Yii::$app->params['mongodb']['signin']) {
     /**
-     * Class AccountActiveRecord
+     * Class LoginActiveRecord
      * @package common\models
      */
-    class AccountActiveRecord extends \yii\mongodb\ActiveRecord
+    class SignInActiveRecord extends \yii\mongodb\ActiveRecord
     {
         /**
          * @inheritdoc
          */
         public static function collectionName()
         {
-            return 'accounts';
+            return 'signin';
         }
 
         /**
@@ -36,24 +34,9 @@ if (Yii::$app->params['mongodb']['account']) {
         {
             return [
                 '_id',
-                'seo_name',
-                'fullname',
-                'fullname_changed',
-                'auth_key',
-                'access_token',
-                'password_hash',
-                'password_reset_token',
-                'email',
-                'email_verified',
-                'phone',
-                'phone_verified',
-                'new_phone',
-                'new_phone_code',
-                'new_email',
-                'change_email_token',
-                'role',
-                'language',
-                'timezone',
+                'login',
+                'code',
+                'attempts',
                 'status',
                 'created_at',
                 'updated_at',
@@ -97,17 +80,17 @@ if (Yii::$app->params['mongodb']['account']) {
     }
 } else {
     /**
-     * Class AccountActiveRecord
+     * Class SignInActiveRecord
      * @package common\models
      */
-    class AccountActiveRecord extends \yii\db\ActiveRecord
+    class SignInActiveRecord extends \yii\db\ActiveRecord
     {
         /**
          * @inheritdoc
          */
         public static function tableName()
         {
-            return '{{%core_account}}';
+            return '{{%core_sign_in}}';
         }
 
         /**
@@ -139,9 +122,10 @@ if (Yii::$app->params['mongodb']['account']) {
 }
 
 /**
- * Class AccountBase
+ * Class SignInBase
  * @package common\models
  */
-class AccountBase extends AccountActiveRecord
+class SignInBase extends SignInActiveRecord
 {
+
 }

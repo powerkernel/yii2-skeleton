@@ -33,7 +33,6 @@ class ChangeEmailForm extends Model {
             $captcha=[
                 ['verifyCode', 'required', 'message' => Yii::t('app', 'Prove you are NOT a robot')],
                 ['verifyCode', ReCaptchaValidator::className(), 'message' => Yii::t('app', 'Prove you are NOT a robot')]
-
             ];
         }
 

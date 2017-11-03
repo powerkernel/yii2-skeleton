@@ -6,7 +6,6 @@
 use common\Core;
 use conquer\select2\Select2Widget;
 use yii\bootstrap\ActiveForm;
-use yii\bootstrap\Html;
 
 $this->title = Yii::t('app', 'My Account');
 $keywords = Yii::t('app', 'my profile, my account');
@@ -26,6 +25,8 @@ $description = Yii::t('app', 'View and update your personal information');
                     'options'=>['class'=>'pds']
                 ]); ?>
                 <?= $form->field($model, 'fullname')->textInput(['maxlength' => true, 'disabled'=>!$model->canChangeName()]) ?>
+                <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'disabled'=>true]) ?>
+                <?= $form->field($model, 'phone')->textInput(['maxlength' => true, 'disabled'=>true]) ?>
                 <?= $form->field($model, 'language')->widget(Select2Widget::className(), [
                     'bootstrap'=>false,
                     'items'=>Yii::$app->params['mongodb']['i18n']?\common\models\mongodb\Message::getLocaleList():\common\models\Message::getLocaleList(),

@@ -17,10 +17,16 @@ use yii\web\IdentityInterface;
  * @property string $access_token
  * @property string $password_hash
  * @property string $password_reset_token
+ *
  * @property string $email
  * @property integer $email_verified
  * @property string $new_email
  * @property string $change_email_token
+ *
+ * @property string $phone
+ * @property integer $phone_verified
+ * @property string $new_phone
+ * @property string $new_phone_code
  * @property integer $role
  * @property string $language
  * @property string $timezone
@@ -102,23 +108,25 @@ class Account extends AccountBase implements IdentityInterface
      */
     public function rules()
     {
-        if(is_a($this, '\yii\mongodb\ActiveRecord')){
-            $date=[
+        if (is_a($this, '\yii\mongodb\ActiveRecord')) {
+            $date = [
                 [['created_at', 'updated_at'], 'yii\mongodb\validators\MongoDateValidator']
             ];
-        }
-        else {
-            $date=[
+        } else {
+            $date = [
                 [['created_at', 'updated_at'], 'integer']
             ];
         }
 
-        $default =  [
-            [['fullname', 'email'], 'required'],
+        $default = [
+            [['fullname'], 'required'],
             [['fullname', 'email'], 'filter', 'filter' => 'trim'],
 
-            [['fullname_changed', 'role'], 'integer'],
+            [['email'], 'email'],
+            [['email'], 'filter', 'filter' => 'strtolower'],
+            [['phone'], 'match', 'pattern' => '/^\+[1-9][0-9]{9,14}$/'],
 
+            [['fullname_changed', 'role'], 'integer'],
             [['seo_name', 'fullname', 'password_hash', 'password_reset_token', 'access_token', 'email', 'status'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['language'], 'string', 'max' => 5],
@@ -145,6 +153,7 @@ class Account extends AccountBase implements IdentityInterface
             'password_hash' => Yii::t('app', 'Password Hash'),
             'password_reset_token' => Yii::t('app', 'Password Reset Token'),
             'email' => Yii::t('app', 'Email'),
+            'phone' => Yii::t('app', 'Phone'),
             'role' => Yii::t('app', 'Role'),
             'language' => Yii::t('app', 'Language'),
             'timezone' => Yii::t('app', 'Timezone'),
@@ -217,13 +226,12 @@ class Account extends AccountBase implements IdentityInterface
 
 
             /* Admin */
-            if (Account::find()->count()==1) {
+            if (Account::find()->count() == 1) {
                 $auth = Yii::$app->authManager;
                 $admin = $auth->getRole('admin');
                 $auth->assign($admin, $id);
                 Yii::$app->session->setFlash('info', Yii::t('app', 'Your admin account password is {PASS}', ['PASS' => $this->passwordText]));
-            }
-            else {
+            } else {
                 if ($this->emailNewAccount) {
                     $this->sendMailNewUser();
                 }
@@ -278,21 +286,21 @@ class Account extends AccountBase implements IdentityInterface
      */
     protected function sendMailNewUser()
     {
-
-        Yii::$app->mailer->setViewPath(Yii::getAlias('@common') . '/mail');
-        //Yii::$app->mailer->htmlLayout = '@common/mail/layouts/html';
-
-        $subject = Yii::t('app', 'Welcome to {APP_NAME}', ['APP_NAME' => Yii::$app->name]);
-        return Yii::$app->mailer
-            //->compose('newUser', ['user' => $this])
-            ->compose(
-                ['html' => 'new-user-html', 'text' => 'new-user-text'],
-                ['title' => $subject, 'user' => $this]
-            )
-            ->setFrom([Setting::getValue('outgoingMail') => Yii::$app->name])
-            ->setTo($this->email)
-            ->setSubject($subject)
-            ->send();
+        if (!empty($this->email)) {
+            Yii::$app->mailer->setViewPath(Yii::getAlias('@common') . '/mail');
+            $subject = Yii::t('app', 'Welcome to {APP_NAME}', ['APP_NAME' => Yii::$app->name]);
+            return Yii::$app->mailer
+                //->compose('newUser', ['user' => $this])
+                ->compose(
+                    ['html' => 'new-user-html', 'text' => 'new-user-text'],
+                    ['title' => $subject, 'user' => $this]
+                )
+                ->setFrom([Setting::getValue('outgoingMail') => Yii::$app->name])
+                ->setTo($this->email)
+                ->setSubject($subject)
+                ->send();
+        }
+        return false;
     }
 
 
@@ -319,14 +327,24 @@ class Account extends AccountBase implements IdentityInterface
         return static::findOne(['email' => $email]);
     }
 
+    /**
+     * find by phone
+     * @param string $phone
+     * @return static|null
+     */
+    public static function findByPhone($phone)
+    {
+        return static::findOne(['phone' => $phone]);
+    }
+
 
     /**
      * @inheritdoc
      */
     public static function findIdentity($id)
     {
-        if(is_array($id)){
-            $id=array_values($id)[0];
+        if (is_array($id)) {
+            $id = array_values($id)[0];
         }
         if (Yii::$app->params['mongodb']['account']) {
             return static::findOne(['_id' => $id, 'status' => self::STATUS_ACTIVE]);
@@ -361,10 +379,9 @@ class Account extends AccountBase implements IdentityInterface
      */
     public function getId()
     {
-        if(is_a($this, '\yii\mongodb\ActiveRecord')){
+        if (is_a($this, '\yii\mongodb\ActiveRecord')) {
             return (string)$this->_id;
-        }
-        else {
+        } else {
             return $this->id;
         }
     }
@@ -485,7 +502,7 @@ class Account extends AccountBase implements IdentityInterface
      */
     public function canSuspend()
     {
-        if(is_a($this, '\yii\mongodb\ActiveRecord')){
+        if (is_a($this, '\yii\mongodb\ActiveRecord')) {
             if (
                 (in_array((string)$this->_id, Yii::$app->params['rootAdmin']))
                 or
@@ -495,8 +512,7 @@ class Account extends AccountBase implements IdentityInterface
             ) {
                 return false;
             }
-        }
-        else {
+        } else {
             if (
                 (in_array($this->id, Yii::$app->params['rootAdmin']))
                 or
@@ -516,6 +532,6 @@ class Account extends AccountBase implements IdentityInterface
      */
     public function getAuths()
     {
-            return $this->hasMany(Auth::className(), ['user_id' => 'id']);
+        return $this->hasMany(Auth::className(), ['user_id' => 'id']);
     }
 }

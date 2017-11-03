@@ -26,7 +26,7 @@ class AccountController extends BackendController
         $adminRules = parent::behaviors()['access']['rules'];
         $rules = array_merge([
             [
-                'actions' => ['login', 'auth'],
+                'actions' => ['login', 'auth', 'signin'],
                 'allow' => true,
                 'roles' => ['?']
             ],
@@ -54,6 +54,9 @@ class AccountController extends BackendController
             'list' => [
                 'class' => Select2Action::className(),
                 'dataCallback' => [$this, 'listUser'],
+            ],
+            'signin' => [
+                'class' => 'common\actions\SignInAction',
             ],
         ];
     }

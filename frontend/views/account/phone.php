@@ -2,18 +2,18 @@
 /**
  * @author Harry Tang <harry@powerkernel.com>
  * @link https://powerkernel.com
- * @copyright Copyright (c) 2016 Power Kernel
+ * @copyright Copyright (c) 2017 Power Kernel
  */
 use common\Core;
 use himiklab\yii2\recaptcha\ReCaptcha;
 use yii\bootstrap\ActiveForm;
 
 /* @var $this \yii\web\View */
-/* @var $model frontend\models\ChangeEmailForm */
+/* @var $model frontend\models\ChangePhoneForm */
 
-$this->title = Yii::t('app', 'Change Email');
-$keywords = Yii::t('app', 'email, change email, new email');
-$description = Yii::t('app', 'View and change your email here');
+$this->title = Yii::t('app', 'Change Phone');
+$keywords = Yii::t('app', 'phone, change phone, new phone');
+$description = Yii::t('app', 'View and update your phone number');
 
 $this->registerMetaTag(['name' => 'keywords', 'content' => $keywords]);
 $this->registerMetaTag(['name' => 'description', 'content' => $description]);
@@ -49,14 +49,21 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
         </div>
         <div class="box-body">
             <div class="account-form">
-                <p><?= Yii::t('app', 'Please enter your new, valid email address, we will send a verification link to your new email.') ?></p>
-                <?php $form = ActiveForm::begin(); ?>
-                <?= $form->field($model, 'newEmail')->textInput(['type'=>'email']) ?>
+                <p><?= Yii::t('app', 'Please enter your new, valid phone number, we will send a verification code to your new phone.') ?></p>
+                <?php $form = ActiveForm::begin(['action'=>Yii::$app->urlManager->createUrl(['account/phone', 'act'=>'validate'])]); ?>
+                <?= $form->field($model, 'phone')->textInput(['readOnly'=>$model->scenario=='validation']) ?>
+                <?php if($model->scenario=='validation'):?>
+                    <?= $form->field($model, 'code')->textInput(['maxlength'=>6]) ?>
+                <?php endif;?>
                 <?php if(Core::isReCaptchaEnabled()):?>
-                <?= $form->field($model, 'verifyCode')->widget(ReCaptcha::className())->label(false) ?>
+                <?= $form->field($model, 'captcha')->widget(ReCaptcha::className())->label(false) ?>
                 <?php endif;?>
                 <div class="form-group">
-                    <?= \common\components\SubmitButton::widget(['text'=>Yii::t('app', 'Change'), 'options'=>['class' => 'btn btn-primary']]) ?>
+                    <?php if($model->scenario!='validation'):?>
+                    <?= \common\components\SubmitButton::widget(['text'=>Yii::t('app', 'Send Code'), 'options'=>['class' => 'btn btn-primary', 'name'=>'send-code']]) ?>
+                    <?php else:?>
+                    <?= \common\components\SubmitButton::widget(['text'=>Yii::t('app', 'Verify'), 'options'=>['class' => 'btn btn-primary', 'name'=>'validate']]) ?>
+                    <?php endif;?>
                 </div>
                 <?php ActiveForm::end(); ?>
             </div>

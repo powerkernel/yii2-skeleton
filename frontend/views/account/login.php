@@ -3,9 +3,11 @@
 
 /* @var $this yii\web\View */
 
-$this->title = Yii::t('app', 'Log in / Register');
+use common\models\Setting;
+
+$this->title = Yii::t('app', 'Log in');
 $keywords = Yii::t('app', 'login, signup, create account');
-$description = Yii::t('app', 'Create an account or log into {APP}. Start using our website immediately', ['APP'=>Yii::$app->name]);
+$description = Yii::t('app', 'Create an account or log into {APP}. Start using our website immediately', ['APP' => Yii::$app->name]);
 
 $this->registerMetaTag(['name' => 'keywords', 'content' => $keywords]);
 $this->registerMetaTag(['name' => 'description', 'content' => $description]);
@@ -37,5 +39,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="account-login">
-    <?= \frontend\widgets\Login::widget() ?>
+    <?php if (Setting::getValue('passwordLessLogin')): ?>
+        <?php echo \common\widgets\SignIn::widget() ?>
+    <?php else: ?>
+        <?php echo \common\widgets\PassSignIn::widget() ?>
+    <?php endif; ?>
 </div>

@@ -9,6 +9,7 @@ return [
         'taskLog'=>false,
         'blog'=>false,
         'login'=>false,
+        'signin'=>false,
         'banner'=>false,
         'service'=>false,
         'setting'=>false,

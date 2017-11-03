@@ -55,14 +55,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     'model' => $model,
                     'attributes' => [
                         //'id',
-                        'seo_name',
+                        //'seo_name',
                         'fullname',
                         //'fullname_changed:boolean',
                         //'auth_key',
                         //'password_hash',
                         //'password_reset_token',
                         'email:email',
-                        'email_verified:boolean',
+                        //'email_verified:boolean',
+                        'phone',
+                        //'phone_verified:boolean',
                         //'new_email:email',
                         //'change_email_token:email',
                         [
@@ -74,7 +76,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         'timezone',
                         [
                             'attribute'=>'status',
-                            'value' => $model->statusText,
+                            'value' => $model->statusColorText,
+                            'format'=>'raw'
                         ],
                         'createdAt:dateTime',
                         //'updatedAt:dateTime',
