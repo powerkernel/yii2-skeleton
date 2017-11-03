@@ -7,16 +7,16 @@
 
 namespace frontend\controllers;
 
+use common\components\MainController;
 use common\models\PageData;
 use Yii;
 use yii\data\Pagination;
-use yii\web\Controller;
 use yii\web\Response;
 
 /**
  * PageController
  */
-class PageController extends Controller
+class PageController extends MainController
 {
 
 

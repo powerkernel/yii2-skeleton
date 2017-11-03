@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\components\AuthHandler;
+use common\components\MainController;
 use common\models\Account;
 use common\models\Auth;
 
@@ -16,13 +17,12 @@ use frontend\models\SignupForm;
 
 use Yii;
 use yii\filters\AccessControl;
-use yii\web\Controller;
 
 /**
  * Class AccountController
  * @package frontend\controllers
  */
-class AccountController extends Controller
+class AccountController extends MainController
 {
     public $layout = 'account';
 
@@ -154,6 +154,7 @@ function actionEmailConfirm($token)
     } else {
         $user->email = $user->new_email;
         $user->new_email = null;
+        $user->email_verified=1;
         $user->removeChangeEmailToken();
         if ($user->save()) {
             Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Email successfully changed.'));

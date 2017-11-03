@@ -48,6 +48,11 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
             <h1 class="box-title"><?= $this->title ?></h1>
         </div>
         <div class="box-body">
+            <?php if(empty(Yii::$app->user->identity->email)):?>
+                <div class="alert alert-info">
+                    <?= Yii::t('app', 'Please take a few minutes to update your email address.') ?>
+                </div>
+            <?php endif;?>
             <div class="account-form">
                 <p><?= Yii::t('app', 'Please enter your new, valid email address, we will send a verification link to your new email.') ?></p>
                 <?php $form = ActiveForm::begin(); ?>
