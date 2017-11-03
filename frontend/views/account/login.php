@@ -5,7 +5,7 @@
 
 use common\models\Setting;
 
-$this->title = Yii::t('app', 'Log in');
+$this->title = Yii::t('app', 'Log in / Sign up');
 $keywords = Yii::t('app', 'login, signup, create account');
 $description = Yii::t('app', 'Create an account or log into {APP}. Start using our website immediately', ['APP' => Yii::$app->name]);
 

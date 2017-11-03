@@ -18,7 +18,7 @@ use modernkernel\bootstrapsocial\Button;
 ?>
 <div class="widget-login">
     <h1 class="text-center"
-        style="margin: 0 0 10px 0; font-size: 1.6em; font-weight: bold"><?= Yii::t('app', 'Log in') ?></h1>
+        style="margin: 0 0 10px 0; font-size: 1.6em; font-weight: bold"><?= Yii::t('app', 'Log in / Sign up') ?></h1>
     <div class="row">
         <div class="col-xs-12">
             <?php if (!Yii::$app->request->isPost): ?>
