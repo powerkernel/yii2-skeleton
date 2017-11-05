@@ -101,18 +101,16 @@ class SignIn extends SignInBase
         }
 
         /* login */
-        if(!empty(\modernkernel\sms\models\Setting::getValue('aws_access_key') && !empty(\modernkernel\sms\models\Setting::getValue('aws_secret_key')))){
-            $login=[
-                [['login'], 'match', 'pattern' => '/^(\+[1-9][0-9]{9,14})|([a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)$/', 'message'=>Yii::t('app', 'Email or phone number is invalid. Note that phone number should begin with a country prefix code.')],
+        if (!empty(\modernkernel\sms\models\Setting::getValue('aws_access_key') && !empty(\modernkernel\sms\models\Setting::getValue('aws_secret_key')))) {
+            $login = [
+                [['login'], 'match', 'pattern' => '/^(\+[1-9][0-9]{9,14})|([a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)$/', 'message' => Yii::t('app', 'Email or phone number is invalid. Note that phone number should begin with a country prefix code.')],
             ];
 
-        }
-        else {
-            $login=[
+        } else {
+            $login = [
                 [['login'], 'email'],
             ];
         }
-
 
 
         $default = [
@@ -138,20 +136,19 @@ class SignIn extends SignInBase
     public function attributeLabels()
     {
 
-        $default=[
+        $default = [
             'code' => \Yii::t('app', 'Verification code'),
             'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
         ];
 
-        if(!empty(\modernkernel\sms\models\Setting::getValue('aws_access_key') && !empty(\modernkernel\sms\models\Setting::getValue('aws_secret_key')))){
-            $login=[
+        if (!empty(\modernkernel\sms\models\Setting::getValue('aws_access_key') && !empty(\modernkernel\sms\models\Setting::getValue('aws_secret_key')))) {
+            $login = [
                 'login' => \Yii::t('app', 'Email or phone number'),
             ];
-        }
-        else {
-            $login=[
+        } else {
+            $login = [
                 'login' => \Yii::t('app', 'Email'),
             ];
         }
@@ -219,7 +216,10 @@ class SignIn extends SignInBase
      */
     protected function sendSMS()
     {
-        return (new AwsSMS())->send($this->login, Yii::t('app', 'Your verification code: {CODE}', ['CODE' => $this->code]));
+        return (new AwsSMS())->send(
+            $this->login,
+            Yii::t('app', '{APP}: Your verification code is {CODE}', ['CODE' => $this->code, 'APP'=>Yii::$app->name]
+            ));
     }
 
     /**
@@ -228,7 +228,7 @@ class SignIn extends SignInBase
      */
     public function sendEmail()
     {
-        $subject=Yii::t('app', 'Log in to {APP}', ['APP'=>Yii::$app->name]);
+        $subject = Yii::t('app', 'Log in to {APP}', ['APP' => Yii::$app->name]);
         return Yii::$app->mailer
             ->compose(
                 ['html' => '@common/mail/signin-email-html', 'text' => '@common/mail/signin-email-text'],
