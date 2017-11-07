@@ -72,7 +72,7 @@ class ChangePhoneForm extends Model {
             $model->new_phone=$this->phone;
             $model->new_phone_code=rand(100000,999999);
             /* send sms */
-            $smsSent=(new AwsSMS())->send($model->new_phone, Yii::t('app', 'Your verification code: {CODE}', ['CODE'=>$model->new_phone_code]));
+            $smsSent=(new AwsSMS())->send($model->new_phone, Yii::t('app', '{APP}: Your verification code is {CODE}', ['APP'=>Yii::$app->name, 'CODE'=>$model->new_phone_code]));
             if($smsSent){
                 return $model->save();
             }
