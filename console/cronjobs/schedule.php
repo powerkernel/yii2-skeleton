@@ -1,6 +1,6 @@
 <?php
 /**
- * @var \omnilight\scheduling\Schedule $schedule
+ * @var \powerkernel\scheduling\Schedule $schedule
  */
 
 /* main task */
@@ -12,7 +12,7 @@ foreach ($mainTasks as $mainTask) {
 }
 
 /* vendors tasks */
-$vendors=['harrytang','modernkernel'];
+$vendors=['harrytang','modernkernel', 'powerkernel'];
 foreach($vendors as $vendor){
     $dir = \Yii::$app->vendorPath . '/'.$vendor;
     if (file_exists($dir)) {
