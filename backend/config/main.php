@@ -41,7 +41,7 @@ return [
 
         'view' => [
             'theme' => [
-                'class' => 'modernkernel\themeadminlte\AdminlteTheme',
+                'class' => 'powerkernel\themeadminlte\AdminlteTheme',
                 'layout'=>'sidebar-mini' //fixed
             ],
         ],

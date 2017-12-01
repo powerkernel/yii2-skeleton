@@ -38,7 +38,7 @@ return [
 
         'view' => [
             'theme' => [
-                'class' => 'modernkernel\themeadminlte\AdminlteTheme',
+                'class' => 'powerkernel\themeadminlte\AdminlteTheme',
                 'skin' => 'skin-blue',
                 'layout' => 'layout-top-nav' //fixed
             ],
