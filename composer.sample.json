@@ -1,13 +1,13 @@
 {
-    "name": "modernkernel/yii2-skeleton",
+    "name": "powerkernel/yii2-skeleton",
     "description": "Yii 2 Skeleton Project Template",
     "keywords": ["yii2", "framework", "skeleton", "project template"],
     "homepage": "https://powerkernel.com/",
     "type": "project",
     "license": "BSD-3-Clause",
     "support": {
-        "issues": "https://github.com/modernkernel/yii2-skeleton/issues?state=open",
-        "source": "https://github.com/modernkernel/yii2-skeleton"
+        "issues": "https://github.com/powerkernel/yii2-skeleton/issues?state=open",
+        "source": "https://github.com/powerkernel/yii2-skeleton"
     },
     "minimum-stability": "dev",
     "require": {
@@ -20,7 +20,7 @@
 
         "himiklab/yii2-recaptcha-widget": "*",
         "conquer/select2": "~1.4.0",
-        "omnilight/yii2-scheduling": "*",
+        "powerkernel/yii2-scheduling": "*",
         "nirvana-msu/yii2-jsonld-helper": "1.0.*@dev",
         "codemix/yii2-localeurls":"*",
         "kotchuprik/yii2-sortable-widgets": "*",
