@@ -2,8 +2,8 @@
 
 use common\Core;
 use common\models\PageData;
-use modernkernel\slugify\Slugify;
-use modernkernel\tinymce\TinyMce;
+use powerkernel\slugify\Slugify;
+use powerkernel\tinymce\TinyMce;
 use yii\widgets\ActiveForm;
 
 

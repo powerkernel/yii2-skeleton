@@ -11,7 +11,7 @@
 
 /* @var $this \yii\web\View */
 
-use modernkernel\fontawesome\Icon;
+use powerkernel\fontawesome\Icon;
 use yii\bootstrap\ActiveForm;
 use modernkernel\bootstrapsocial\Button;
 

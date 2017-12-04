@@ -114,7 +114,7 @@ $this->registerCss($css);
         </div>
     </div>
     <?php
-    echo \modernkernel\photoswipe\Modal::widget([
+    echo \powerkernel\photoswipe\Modal::widget([
         'selector' => '.blog-content img',
         'images' => $model->getImages(),
         'clientOptions' => [

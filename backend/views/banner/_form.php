@@ -6,7 +6,7 @@
  */
 
 use common\models\Banner;
-use modernkernel\tinymce\TinyMce;
+use powerkernel\tinymce\TinyMce;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */

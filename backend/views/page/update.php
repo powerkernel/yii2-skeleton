@@ -2,7 +2,7 @@
 
 use common\Core;
 use common\models\PageData;
-use modernkernel\tinymce\TinyMce;
+use powerkernel\tinymce\TinyMce;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */

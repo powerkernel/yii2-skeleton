@@ -5,7 +5,7 @@
  * @var $homeUrl string
  * @var $this \yii\web\View
  */
-use modernkernel\fontawesome\Icon;
+use powerkernel\fontawesome\Icon;
 $this->registerJs('$(".nav-home").on("click", function(){window.location.replace($(this).data("url"));})');
 ?>
 <?php if(!empty($homeTitle) && !empty($homeUrl)):?>

@@ -1,7 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
-use modernkernel\fontawesome\Icon;
+use powerkernel\fontawesome\Icon;
 
 /* @var $files [] */
 /* @var $v [] */

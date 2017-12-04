@@ -2,7 +2,7 @@
 
 use common\Core;
 use common\models\Setting;
-use modernkernel\fontawesome\Icon;
+use powerkernel\fontawesome\Icon;
 use yii\bootstrap\Nav;
 
 ?>

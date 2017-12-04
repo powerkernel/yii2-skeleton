@@ -74,7 +74,7 @@ $this->registerCss($css);
                     ],
                     ['attribute' => 'message', 'value' => $mongodb ? 'message' : 'source.message'],
                     ['attribute' => 'translation', 'format' => 'raw', 'value' => function ($model) {
-                        return \modernkernel\jeditable\Editable::widget([
+                        return \powerkernel\jeditable\Editable::widget([
                             'content' => strip_tags($model->translation),
                             'saveUrl' => Yii::$app->urlManager->createUrl(['/i18n/save-translation']),
                             'options' => ['id' => 'message_' . $model->id . '_' . $model->language, 'class' => 'jeditable-text'],

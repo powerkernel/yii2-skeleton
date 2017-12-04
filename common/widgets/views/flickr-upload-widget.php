@@ -19,7 +19,7 @@ echo Html::hiddenInput('url-load-flickr-delete', $flickrDeleteUrl, ['id' => 'url
 </div>
 <div>
     <?=
-    modernkernel\fineuploader\Fineuploader::widget([
+    powerkernel\fineuploader\Fineuploader::widget([
         'dropLabel'=>Yii::t('app', 'Drag & drop photos here'),
         'buttonLabel'=>Yii::t('app', 'Choose photos'),
         'options' => [

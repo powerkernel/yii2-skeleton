@@ -7,9 +7,8 @@
 
 use common\models\Blog;
 use conquer\select2\Select2Widget;
-use modernkernel\slugify\Slugify;
-use modernkernel\tinymce\TinyMce;
-use yii\helpers\Html;
+use powerkernel\slugify\Slugify;
+use powerkernel\tinymce\TinyMce;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */

@@ -4,7 +4,7 @@
  * @link https://powerkernel.com
  * @copyright Copyright (c) 2016 Power Kernel
  */
-use modernkernel\fontawesome\Icon;
+use powerkernel\fontawesome\Icon;
 use yii\bootstrap\Html;
 
 /* @var $model common\models\Blog */
