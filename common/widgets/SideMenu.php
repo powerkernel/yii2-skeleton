@@ -97,7 +97,7 @@ class SideMenu extends Widget
         }
         $vendors = [
             'harrytang',
-            'modernkernel'
+            'powerkernel',
         ];
         $items = [];
 

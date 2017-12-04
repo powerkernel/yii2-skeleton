@@ -5,7 +5,7 @@
 
 /* @var $auths [] */
 
-use modernkernel\bootstrapsocial\Button;
+use powerkernel\bootstrapsocial\Button;
 use powerkernel\fontawesome\Icon;
 use yii\bootstrap\Html;
 

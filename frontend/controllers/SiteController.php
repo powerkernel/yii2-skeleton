@@ -265,7 +265,7 @@ class SiteController extends MainController
 
 
         /* load modules sitemap */
-        $modules = scandir(\Yii::$app->vendorPath . '/modernkernel');
+        $modules = scandir(\Yii::$app->vendorPath . '/powerkernel');
         foreach ($modules as $module) {
             if (!preg_match('/[\.]+/', $module)) {
                 $moduleName = str_ireplace('yii2-', '', $module);

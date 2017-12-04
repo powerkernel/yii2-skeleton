@@ -4,7 +4,7 @@
 /* @var $model \common\models\LoginForm */
 
 use common\models\Setting;
-use modernkernel\bootstrapsocial\Button;
+use powerkernel\bootstrapsocial\Button;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 

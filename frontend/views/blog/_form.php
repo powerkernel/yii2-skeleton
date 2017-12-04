@@ -22,18 +22,18 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?php if($model->isNewRecord):?>
-    <?= $form->field($model, 'slug')->widget(Slugify::className(),['source'=>'#blog-title']) ?>
-    <?php else:?>
-    <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
-    <?php endif;?>
-
     <?= $form->field($model, 'language')->widget(Select2Widget::className(), [
         'bootstrap'=>false,
         'items'=>\common\Core::getLocaleList(),
     ]) ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+
+    <?php if($model->isNewRecord):?>
+        <?= $form->field($model, 'slug')->widget(Slugify::className(),['source'=>'#blog-title']) ?>
+    <?php else:?>
+        <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
+    <?php endif;?>
 
     <?= $form->field($model, 'desc')->textInput(['maxlength' => true]) ?>
 

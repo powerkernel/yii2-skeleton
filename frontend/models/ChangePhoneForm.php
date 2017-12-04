@@ -9,7 +9,7 @@ namespace frontend\models;
 
 use common\Core;
 use himiklab\yii2\recaptcha\ReCaptchaValidator;
-use modernkernel\sms\components\AwsSMS;
+use powerkernel\sms\components\AwsSMS;
 use Yii;
 use yii\base\Model;
 
@@ -67,7 +67,7 @@ class ChangePhoneForm extends Model {
      */
     public function setNewPhone()
     {
-        if(!empty(\modernkernel\sms\models\Setting::getValue('aws_access_key') && !empty(\modernkernel\sms\models\Setting::getValue('aws_secret_key')))){
+        if(!empty(\powerkernel\sms\models\Setting::getValue('aws_access_key') && !empty(\powerkernel\sms\models\Setting::getValue('aws_secret_key')))){
             $model=Yii::$app->user->identity;
             $model->new_phone=$this->phone;
             $model->new_phone_code=rand(100000,999999);

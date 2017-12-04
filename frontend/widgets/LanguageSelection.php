@@ -10,7 +10,7 @@ namespace frontend\widgets;
 
 
 use common\models\Message;
-use modernkernel\flagiconcss\Flag;
+use powerkernel\flagiconcss\Flag;
 use Yii;
 use yii\base\Widget;
 use yii\helpers\Html;

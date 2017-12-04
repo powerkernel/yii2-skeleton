@@ -248,7 +248,7 @@ protected
 function configUrlManager()
 {
 
-    $modules = scandir(__DIR__ . '/../../vendor/modernkernel');
+    $modules = scandir(__DIR__ . '/../../vendor/powerkernel');
     $urlManager = [
         'ignoreLanguageUrlPatterns' => [
             '#^account/auth#' => '#^account/auth#',
@@ -278,7 +278,7 @@ function configUrlManager()
     ];
     foreach ($modules as $module) {
         if (!preg_match('/[\.]+/', $module)) {
-            $urlManagerFile = __DIR__ . '/../../vendor/modernkernel/' . $module . '/urlManager.php';
+            $urlManagerFile = __DIR__ . '/../../vendor/powerkernel/' . $module . '/urlManager.php';
             if (is_file($urlManagerFile)) {
                 $urlManagerConfig = require($urlManagerFile);
                 $urlManager['ignoreLanguageUrlPatterns'] = array_merge(
