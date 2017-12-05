@@ -16,6 +16,6 @@ return [
         'menu'=>false,
         'page'=>false,
         'account'=>false,
-        'auth'=>true,
+        'auth'=>false,
     ]
 ];

@@ -20,13 +20,21 @@ class PassLoginForm extends Model
      */
     public function rules()
     {
-        return [
-
+        $default=[
             [['login', 'password'], 'required'],
-            [['login'], 'match', 'pattern' => '/^(\+[1-9][0-9]{9,14})|([a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)$/', 'message' => Yii::t('app', 'Email or phone number is invalid. Note that phone number should begin with a country prefix code.')],
             [['rememberMe'], 'boolean'],
             [['password'], 'validatePassword', 'on' => ['default']],
         ];
+        if (!empty(\powerkernel\sms\models\Setting::getValue('aws_access_key') && !empty(\powerkernel\sms\models\Setting::getValue('aws_secret_key')))) {
+            $login = [
+                [['login'], 'match', 'pattern' => '/^(\+[1-9][0-9]{9,14})|([a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)$/', 'message' => Yii::t('app', 'Email or phone number is invalid. Note that phone number should begin with a country prefix code.')],
+            ];
+        } else {
+            $login = [
+                [['login'], 'email']
+            ];
+        }
+        return array_merge($default, $login);
     }
 
     /**
@@ -34,11 +42,22 @@ class PassLoginForm extends Model
      */
     public function attributeLabels()
     {
-        return [
-            'login' => Yii::t('app', 'Email or phone number'),
+        $default=[
             'password' => Yii::t('app', 'Password'),
             'rememberMe' => Yii::t('app', 'Remember Me'),
         ];
+        if (!empty(\powerkernel\sms\models\Setting::getValue('aws_access_key') && !empty(\powerkernel\sms\models\Setting::getValue('aws_secret_key')))) {
+            $login = [
+                'login' => \Yii::t('app', 'Email or phone number'),
+            ];
+        } else {
+            $login = [
+                'login' => \Yii::t('app', 'Email'),
+            ];
+        }
+
+        return array_merge($default, $login);
+
     }
 
     /**
