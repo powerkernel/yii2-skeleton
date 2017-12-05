@@ -7,7 +7,7 @@
 
 namespace common\models;
 
-use modernkernel\sms\components\AwsSMS;
+use powerkernel\sms\components\AwsSMS;
 use Yii;
 
 /**
@@ -101,7 +101,7 @@ class SignIn extends SignInBase
         }
 
         /* login */
-        if (!empty(\modernkernel\sms\models\Setting::getValue('aws_access_key') && !empty(\modernkernel\sms\models\Setting::getValue('aws_secret_key')))) {
+        if (!empty(\powerkernel\sms\models\Setting::getValue('aws_access_key') && !empty(\powerkernel\sms\models\Setting::getValue('aws_secret_key')))) {
             $login = [
                 [['login'], 'match', 'pattern' => '/^(\+[1-9][0-9]{9,14})|([a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)$/', 'message' => Yii::t('app', 'Email or phone number is invalid. Note that phone number should begin with a country prefix code.')],
             ];
@@ -143,7 +143,7 @@ class SignIn extends SignInBase
             'updated_at' => Yii::t('app', 'Updated At'),
         ];
 
-        if (!empty(\modernkernel\sms\models\Setting::getValue('aws_access_key') && !empty(\modernkernel\sms\models\Setting::getValue('aws_secret_key')))) {
+        if (!empty(\powerkernel\sms\models\Setting::getValue('aws_access_key') && !empty(\powerkernel\sms\models\Setting::getValue('aws_secret_key')))) {
             $login = [
                 'login' => \Yii::t('app', 'Email or phone number'),
             ];

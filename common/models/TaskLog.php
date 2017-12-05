@@ -64,7 +64,7 @@ class TaskLog extends TaskLogBase
      */
     public static function getTaskList()
     {
-        $vendors = ['harrytang', 'modernkernel'];
+        $vendors = ['harrytang', 'powerkernel'];
         $options = [];
 
         /* main */

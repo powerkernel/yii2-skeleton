@@ -5,7 +5,7 @@
 
 /* @var $model \common\models\PassLoginForm */
 
-use modernkernel\bootstrapsocial\Button;
+use powerkernel\bootstrapsocial\Button;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
