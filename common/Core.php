@@ -1213,6 +1213,7 @@ class Core
             'AccountSignup',
             'AccountIndex',
             'AccountEmail',
+            'AccountPhone',
             'AccountPassword',
             'AccountLinked',
             'AccountResetConfirm',

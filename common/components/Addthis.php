@@ -10,13 +10,13 @@ namespace common\components;
 use common\Core;
 use common\models\Setting;
 use Yii;
-use yii\base\Object;
+use yii\base\BaseObject;
 
 /**
  * Class Addthis
  * @package common\widgets
  */
-class Addthis extends Object
+class Addthis extends BaseObject
 {
 
     public static function register()
