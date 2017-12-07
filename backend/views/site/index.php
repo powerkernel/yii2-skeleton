@@ -5,6 +5,7 @@ use powerkernel\fontawesome\Icon;
 
 /* @var $files [] */
 /* @var $v [] */
+/* @var $newVersion boolean */
 
 
 $this->title = Yii::t('app', 'Dashboard');
@@ -27,7 +28,13 @@ $this->title = Yii::t('app', 'Dashboard');
                             </tr>
                             <tr>
                                 <th>Version</th>
-                                <td><?= $v['version'] ?> build <?= $v['build'] ?></td>
+                                <td>
+                                    Yii2 Skeleton v<?= $v['version'] ?> build <?= $v['build'] ?>
+                                    <?php if($newVersion):?>
+                                        <br />
+                                        <a href="https://github.com/powerkernel/yii2-skeleton" target="_blank" class="label label-warning"><?= Yii::t('app', 'New version available') ?></a>
+                                    <?php endif;?>
+                                </td>
                             </tr>
                             <tr>
                                 <th>Release date</th>

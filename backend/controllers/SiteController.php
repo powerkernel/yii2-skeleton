@@ -69,7 +69,21 @@ class SiteController extends BackendController
         $version=file_get_contents(Yii::$app->basePath.'/../version.json');
         $v=json_decode($version, true);
 
-        return $this->render('index', ['files'=>$files, 'v'=>$v]);
+        /* check version */
+        $checkVersion = Yii::$app->cache->get('check-version');
+        if ($checkVersion === false) {
+            $url='https://raw.githubusercontent.com/powerkernel/yii2-skeleton/master/version.json';
+            $checkVersion=@file_get_contents($url);
+            Yii::$app->cache->set('check-version', $checkVersion, 3600);
+        }
+
+        $latestVersion=json_decode($checkVersion, true);
+        $newVersion=false;
+        if($v['version']!=$latestVersion['version']){
+            $newVersion=true;
+        }
+
+        return $this->render('index', ['files'=>$files, 'v'=>$v, 'newVersion'=>$newVersion]);
     }
 
 
