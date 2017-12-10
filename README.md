@@ -24,11 +24,6 @@ or if you want to install packages from ```source```
 
     composer create-project --prefer-source powerkernel/yii2-skeleton yii-application
 
-The first command installs the [composer asset plugin](https://github.com/francoispluchino/composer-asset-plugin/)
-which allows managing bower and npm package dependencies through Composer. You only need to run this command
-once for all. The second command installs the advanced application in a directory named `yii-application`.
-You can choose a different directory name if you want.
-
 DIRECTORY STRUCTURE
 -------------------
 
