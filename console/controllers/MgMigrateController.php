@@ -42,6 +42,9 @@ class MgMigrateController extends Controller
 
     /**
      * rbac
+     * @throws \yii\mongodb\Exception
+     * @throws \yii\base\Exception
+     * @throws \Exception
      */
     public function actionRbac()
     {

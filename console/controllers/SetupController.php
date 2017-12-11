@@ -21,6 +21,7 @@ class SetupController extends Controller
 
     /**
      * Index
+     * @throws \Exception
      */
     public function actionIndex(){
         $this->addRbac();
@@ -39,6 +40,7 @@ class SetupController extends Controller
 
     /**
      * add RBAC
+     * @throws \Exception
      */
     protected function addRbac(){
         /* authManager */
