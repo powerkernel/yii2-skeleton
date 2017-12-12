@@ -98,11 +98,12 @@ HOW TO USE
 
 CONFIG
 ------
-1. Replace your icons (apple-touch-icon-57x57.png, apple-touch-icon-60x60.png, favicon-32x32.png etc)
-2. Replace your logos in /images
-3. Ignore local composer.json: `git update-index --skip-worktree composer.json`
-4. Ignore local site/index: `git update-index --skip-worktree frontend/views/site/index.php`
-5. Ignore local css: `git update-index --skip-worktree frontend/web/css/style.css.map`
+*. Replace your icons (apple-touch-icon-57x57.png, apple-touch-icon-60x60.png, favicon-32x32.png etc)
+*. Replace your logos in /images
+*. Ignore local composer.json: `git update-index --skip-worktree composer.json`
+*. Ignore localhost.php: `git update-index --skip-worktree common/config/localhost.php`
+*. Ignore local site/index: `git update-index --skip-worktree frontend/views/site/index.php`
+*. Ignore local css: `git update-index --skip-worktree frontend/web/css/style.css.map`
 `git update-index --skip-worktree frontend/web/css/style.scss`
 `git update-index --skip-worktree frontend/web/css/style.css`
 
