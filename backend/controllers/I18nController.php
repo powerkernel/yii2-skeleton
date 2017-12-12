@@ -6,6 +6,7 @@ use common\Core;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use ZipArchive;
 
 
 /**
@@ -63,17 +64,47 @@ class I18nController extends BackendController
             $message = $this->mysqlMessage();
         }
 
-
         foreach ($message['currentLanguages'] as $key => $name) {
             unset($languages[$key]);
+        }
+
+        /* export tab */
+        $availableExport = [
+        ];
+
+        $availableLanguages = $message['currentLanguages'];
+        foreach ($availableLanguages as $key => $availableLanguage) {
+            $availableExport[]=[
+                'lang' => $key,
+                'title' => $availableLanguage,
+                'cats' => $this->getLanguageCat($key)
+            ];
         }
 
         return $this->render('index', [
             'searchModel' => $message['searchModel'],
             'dataProvider' => $message['dataProvider'],
             'languages' => $languages,
-            'mongodb'=>Yii::$app->params['mongodb']['i18n']
+            'mongodb' => Yii::$app->params['mongodb']['i18n'],
+            'availableExport' => $availableExport
         ]);
+    }
+
+    /**
+     * @param $lang
+     * @return array
+     */
+    protected function getLanguageCat($lang)
+    {
+        $cats=[];
+        if (Yii::$app->params['mongodb']['i18n']) {
+            $cats = \common\models\mongodb\Message::find()
+                ->where(['language' => $lang])
+                ->asArray()
+                ->distinct('category');
+
+        }
+        return $cats;
     }
 
     /**
@@ -110,6 +141,7 @@ class I18nController extends BackendController
 
     /**
      * ajax save translation
+     * @throws \yii\db\Exception
      */
     public function actionSaveTranslation()
     {
@@ -120,12 +152,11 @@ class I18nController extends BackendController
             $language = $parts[2];
             $value = Yii::$app->request->post('value');
             if (!empty($id)) {
-                if (Yii::$app->params['mongodb']['i18n']){
-                    $message=\common\models\mongodb\Message::find()->where(['_id'=>$id])->one();
-                    $message->translation=$value;
+                if (Yii::$app->params['mongodb']['i18n']) {
+                    $message = \common\models\mongodb\Message::find()->where(['_id' => $id])->one();
+                    $message->translation = $value;
                     $message->save();
-                }
-                else {
+                } else {
                     Yii::$app->db->createCommand()->update('{{%core_message}}', ['translation' => $value, 'is_translated' => 1], ['id' => $id, 'language' => $language])->execute();
                 }
 
@@ -140,16 +171,46 @@ class I18nController extends BackendController
      * @param $id
      * @param $language
      * @return \yii\web\Response
+     * @throws \Exception
+     * @throws \yii\db\Exception
+     * @throws \yii\db\StaleObjectException
      */
-    public function actionDelete($id, $language=null)
+    public function actionDelete($id, $language = null)
     {
-        if(Yii::$app->params['mongodb']['i18n']){
-            \common\models\mongodb\Message::find()->where(['_id'=>$id])->one()->delete();
-        }
-        else {
+        if (Yii::$app->params['mongodb']['i18n']) {
+            \common\models\mongodb\Message::find()->where(['_id' => $id])->one()->delete();
+        } else {
             Yii::$app->db->createCommand()->delete('{{%core_message}}', ['id' => $id, 'language' => $language])->execute();
         }
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * @param $lang
+     * @param $cat
+     * @throws \Exception
+     */
+    public function actionExport($lang, $cat)
+    {
+        if (Yii::$app->params['mongodb']['i18n']) {
+            $messages = \common\models\mongodb\Message::find()
+                ->select(['language', 'category', 'message', 'is_translated'])
+                ->where(['language' => $lang, 'category' => $cat])
+                ->asArray()
+                ->all();
+
+            /* zip file */
+            $zipFile = tempnam(sys_get_temp_dir(), 'zip');
+            $zip = new ZipArchive();
+            if ($zip->open($zipFile, ZipArchive::CREATE) !== TRUE) {
+                throw new \Exception(Yii::t('app', 'Cannot create a zip file.'));
+            }
+            $zip->addFromString($lang . '_' . $cat . '.json', json_encode($messages));
+            $zip->close();
+
+            /* download */
+            Yii::$app->response->sendFile($zipFile, $lang . '_' . $cat . '.zip');
+        }
     }
 }
