@@ -5,21 +5,20 @@
  * @copyright Copyright (c) 2017 Power Kernel
  */
 
-namespace common\components;
-use common\models\Service;
+namespace common\actions;
+use common\components\FlickrPhoto;
 use Yii;
 
 
 /**
  * Class FlickrDeleteAction
- * @package common\components
+ * @package common\actions
  */
 class FlickrDeleteAction extends FlickrAction
 {
     /**
      * run action
      * @param $id
-     * @return string
      */
     public function run($id){
         /* @var FlickrPhoto $client */

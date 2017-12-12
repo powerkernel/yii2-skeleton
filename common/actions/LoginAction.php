@@ -2,10 +2,10 @@
 /**
  * @author Harry Tang <harry@powerkernel.com>
  * @link https://powerkernel.com
- * @copyright Copyright (c) 2016 Power Kernel
+ * @copyright Copyright (c) 2017 Power Kernel
  */
 
-namespace common\components;
+namespace common\actions;
 
 
 use common\models\Account;
@@ -16,7 +16,7 @@ use yii\base\Action;
 
 /**
  * Class LoginAction
- * @package common\components
+ * @package common\actions
  */
 class LoginAction extends Action
 {

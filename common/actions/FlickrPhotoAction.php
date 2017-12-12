@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2016 Power Kernel
  */
 
-namespace common\components;
+namespace common\actions;
 use Yii;
 use yii\helpers\Html;
 

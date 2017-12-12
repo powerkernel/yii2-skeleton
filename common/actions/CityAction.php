@@ -2,10 +2,10 @@
 /**
  * @author Harry Tang <harry@powerkernel.com>
  * @link https://powerkernel.com
- * @copyright Copyright (c) 2016 Power Kernel
+ * @copyright Copyright (c) 2017 Power Kernel
  */
 
-namespace common\components;
+namespace common\actions;
 
 
 use Yii;
@@ -14,7 +14,7 @@ use yii\db\Query;
 
 /**
  * Class CityAction
- * @package common\components
+ * @package common\actions
  */
 class CityAction extends Action
 {

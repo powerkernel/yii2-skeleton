@@ -20,16 +20,16 @@ class SiteController extends BackendController
                 'class' => 'yii\web\ErrorAction',
             ],
             'login' => [
-                'class' => 'common\components\LoginAction',
+                'class' => 'common\actions\LoginAction',
             ],
             'flickr-upload' => [
-                'class' => 'common\components\FlickrUploadAction',
+                'class' => 'common\actions\FlickrUploadAction',
             ],
             'flickr-photo' => [
-                'class' => 'common\components\FlickrPhotoAction',
+                'class' => 'common\actions\FlickrPhotoAction',
             ],
             'flickr-delete' => [
-                'class' => 'common\components\FlickrDeleteAction',
+                'class' => 'common\actions\FlickrDeleteAction',
             ],
         ];
     }

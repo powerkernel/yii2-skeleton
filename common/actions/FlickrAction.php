@@ -2,10 +2,10 @@
 /**
  * @author Harry Tang <harry@powerkernel.com>
  * @link https://powerkernel.com
- * @copyright Copyright (c) 2016 Power Kernel
+ * @copyright Copyright (c) 2017 Power Kernel
  */
 
-namespace common\components;
+namespace common\actions;
 
 
 use common\models\Service;
@@ -15,7 +15,7 @@ use yii\base\Action;
 
 /**
  * Class FlickrAction
- * @package common\components
+ * @package common\actions
  */
 class FlickrAction extends Action
 {
@@ -24,7 +24,7 @@ class FlickrAction extends Action
      */
     protected function getFlickr(){
         $client=Yii::$app->authClientCollection->getClient('flickr-photo');
-        $flickr=Service::findOne('flickr-photo');
+        $flickr=Service::find()->where(['name'=>'flickr-photo'])->one();
         if($flickr){
             $data=json_decode($flickr->data);
             $token = new OAuthToken([

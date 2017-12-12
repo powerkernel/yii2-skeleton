@@ -50,7 +50,7 @@ class SiteController extends MainController
                 'class' => 'yii\web\ErrorAction',
             ],
             'login' => [
-                'class' => 'common\components\LoginAction',
+                'class' => 'common\actions\LoginAction',
             ],
             'state-list' => [
                 'class' => 'common\actions\StateAction',
@@ -62,13 +62,13 @@ class SiteController extends MainController
                 'class' => 'common\actions\WardAction',
             ],
             'flickr-upload' => [
-                'class' => 'common\components\FlickrUploadAction',
+                'class' => 'common\actions\FlickrUploadAction',
             ],
             'flickr-photo' => [
-                'class' => 'common\components\FlickrPhotoAction',
+                'class' => 'common\actions\FlickrPhotoAction',
             ],
             'flickr-delete' => [
-                'class' => 'common\components\FlickrDeleteAction',
+                'class' => 'common\actions\FlickrDeleteAction',
             ],
 
         ];
@@ -91,6 +91,7 @@ class SiteController extends MainController
      * @return string
      * @throws NotFoundHttpException
      * @internal param $name
+     * @throws \yii\base\InvalidConfigException
      */
     public function actionPage($id)
     {
@@ -230,6 +231,7 @@ class SiteController extends MainController
     /**
      * sitemap
      * @return mixed
+     * @throws \yii\mongodb\Exception
      */
     public function actionSitemap()
     {

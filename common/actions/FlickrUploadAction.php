@@ -5,14 +5,15 @@
  * @copyright Copyright (c) 2016 Power Kernel
  */
 
-namespace common\components;
+namespace common\actions;
+use common\components\FlickrPhoto;
 use common\models\Service;
 use Yii;
 
 
 /**
  * Class FlickrUploadAction
- * @package common\components
+ * @package common\actions
  */
 class FlickrUploadAction extends FlickrAction
 {
