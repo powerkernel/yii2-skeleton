@@ -1,7 +1,6 @@
 <?php
 
-use modernkernel\bootstrapsocial\Button;
-use powerkernel\fontawesome\Icon;
+use powerkernel\bootstrapsocial\Button;
 
 
 /* @var $this yii\web\View */
