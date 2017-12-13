@@ -1,7 +1,7 @@
 <?php
 return [
     'rootAdmin'=>[1],
-    'iconImageUrl'=>'/',
+    'iconImageUrl'=>null, // baseUrl
     'sitemapPageSize'=>200,
     'enableBlog'=>true,
     'showPowered'=>true,
