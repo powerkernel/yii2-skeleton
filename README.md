@@ -85,8 +85,8 @@ And adding more features...
 More comming soon..
 ```
 
-HOW TO USE
-----------
+INSTALLATION
+------------
 1. Run `init`, update your database information in common\config\mail-local.php
 2. Run `php yii migrate` or `php yii mongodb-migrate --migrationPath=@console/migrations/mongodb`
 3. Run `php yii setup`
@@ -98,11 +98,11 @@ HOW TO USE
 
 CONFIG
 ------
-*. Replace your icons (apple-touch-icon-57x57.png, apple-touch-icon-60x60.png, favicon-32x32.png etc)
-*. Replace your logos in /images
-*. Ignore local composer.json: `git update-index --skip-worktree composer.json`
-*. Ignore localhost.php: `git update-index --skip-worktree common/config/localhost.php`
-*. Ignore local site/index: `git update-index --skip-worktree frontend/views/site/index.php`
+1. Go to [realfavicongenerator](http://realfavicongenerator.net) for icons creation, then upload them to frontend/web/favicon
+2. Upload your logos to frontend/web/images (logo.png, banner.svg, logo-mini.svg, logo-lg.svg, logo-1024.png, logo-120.png)
+3. Ignore local composer.json: `git update-index --skip-worktree composer.json`
+4. Ignore localhost.php (if you have this file, all mails will be sent to a file, delete it when go live): `git update-index --skip-worktree common/config/localhost.php`
+5. Ignore local site/index: `git update-index --skip-worktree frontend/views/site/index.php`
 
 ## symlink help
 Linux public_html
@@ -112,13 +112,13 @@ Frontend/Backend css/images
 ```php symlink.php```
 
 ## Google Login Authorized redirect URIs
-https://DOMAIN.COM/account/login/google
-https://DOMAIN.COM/account/auth?authclient=google
-https://DOMAIN.COM/backend/account/login/google
-https://DOMAIN.COM/backend/account/auth?authclient=google
+https://domain.com/account/login/google
+https://domain.com/account/auth?authclient=google
+https://domain.com/backend/account/login/google
+https://domain.com/backend/account/auth?authclient=google
 
 ## Google Login Authorized redirect URIs (for localhost)
-https://DOMAIN.local/account/login/google
-https://DOMAIN.local/account/auth?authclient=google
-https://DOMAIN.local/backend/account/login/google
-https://DOMAIN.local/backend/account/auth?authclient=google
+https://domain.local/account/login/google
+https://domain.local/account/auth?authclient=google
+https://domain.local/backend/account/login/google
+https://domain.local/backend/account/auth?authclient=google
