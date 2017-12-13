@@ -48,7 +48,7 @@ class BackendController extends MainController
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['error', 'login'],
+                        'actions' => ['error', 'login', 'manifest', 'browser-config'],
                         'allow' => true,
                     ],
                 ],

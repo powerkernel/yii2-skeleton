@@ -99,10 +99,11 @@ INSTALLATION
 CONFIG
 ------
 1. Go to [realfavicongenerator](http://realfavicongenerator.net) for icons creation, then upload them to frontend/web/favicon
-2. Upload your logos to frontend/web/images (logo.png, banner.svg, logo-mini.svg, logo-lg.svg, logo-1024.png, logo-120.png)
-3. Ignore local composer.json: `git update-index --skip-worktree composer.json`
-4. Ignore localhost.php (if you have this file, all mails will be sent to a file, delete it when go live): `git update-index --skip-worktree common/config/localhost.php`
-5. Ignore local site/index: `git update-index --skip-worktree frontend/views/site/index.php`
+2. Upload favicon.ico to the root of your web site (frontend and backend)
+3. Upload your logos to frontend/web/images (logo.png, banner.svg, logo-mini.svg, logo-lg.svg, logo-1024.png, logo-120.png)
+4. Ignore local composer.json: `git update-index --skip-worktree composer.json`
+5. Ignore localhost.php (if you have this file, all mails will be sent to a file, delete it when go live): `git update-index --skip-worktree common/config/localhost.php`
+6. Ignore local site/index: `git update-index --skip-worktree frontend/views/site/index.php`
 
 ## symlink help
 Linux public_html
