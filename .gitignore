@@ -1,3 +1,9 @@
+#hosting
+backend-httpd.access.log
+backend-httpd.error.log
+frontend-httpd.access.log
+frontend-httpd.error.log
+
 # yii console command
 /yii
 
