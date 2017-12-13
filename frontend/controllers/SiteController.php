@@ -49,6 +49,12 @@ class SiteController extends MainController
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
+            'browser-config' => [
+                'class' => 'common\actions\BrowserConfigAction',
+            ],
+            'manifest' => [
+                'class' => 'common\actions\ManifestAction',
+            ],
             'login' => [
                 'class' => 'common\actions\LoginAction',
             ],
@@ -280,49 +286,7 @@ class SiteController extends MainController
 
     }
 
-    /**
-     * manifest.json
-     */
-    public function actionManifest()
-    {
-        $color = Setting::getValue('androidThemeColor');
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        $baseUrl = Yii::$app->request->baseUrl;
-        $json = [
-            'name' => Yii::$app->name,
-            'icons' => [
-                ['src' => $baseUrl . '/android-chrome-192x192.png', 'sizes' => '192x192', 'type' => 'image/png'],
-                ['src' => $baseUrl . '/android-chrome-512x512.png', 'sizes' => '512x512', 'type' => 'image/png']
-            ],
-            'display' => 'standalone',
-            'theme_color' => $color,
-        ];
-        return $json;
-    }
 
-    /**
-     * browserconfig.xml
-     */
-    public function actionBrowserconfig()
-    {
-        Yii::$app->response->format = Response::FORMAT_XML;
-        $color = Setting::getValue('msTileColor');
-        $baseUrl = Yii::$app->request->baseUrl;
-
-        $xml = <<<EOB
-<?xml version="1.0" encoding="utf-8"?>
-<browserconfig>
-    <msapplication>
-        <tile>
-          <square150x150logo src="{$baseUrl}/mstile-150x150.png"/>
-          <TileColor>{$color}</TileColor>
-        </tile>
-    </msapplication>
-</browserconfig>
-EOB;
-        echo $xml;
-
-    }
 
     /**
      * This is page where google search result displayed

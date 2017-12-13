@@ -17,5 +17,5 @@ return [
         'page'=>false,
         'account'=>false,
         'auth'=>false,
-    ]
+    ],
 ];

@@ -19,6 +19,12 @@ class SiteController extends BackendController
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
+            'browser-config' => [
+                'class' => 'common\actions\BrowserConfigAction',
+            ],
+            'manifest' => [
+                'class' => 'common\actions\ManifestAction',
+            ],
             'login' => [
                 'class' => 'common\actions\LoginAction',
             ],

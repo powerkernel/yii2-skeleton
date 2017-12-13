@@ -133,233 +133,235 @@ EOB;
 
 
                 } catch (Exception $e) {
-                Yii::$app->cache->flush();
-                Yii::$app->user->logout();
-            }
-            }
-    }
-}
-
-
-/**
- * ReCaptcha
- */
-protected
-function configReCaptcha()
-{
-    // recaptcha
-    $rcKey = Setting::getValue('reCaptchaKey');
-    $rcSecret = Setting::getValue('reCaptchaSecret');
-    if (!empty($rcKey) && !empty($rcSecret)) {
-        Yii::$container->set('himiklab\yii2\recaptcha\ReCaptcha', [
-            'siteKey' => $rcKey,
-            'secret' => $rcSecret,
-        ]);
-    }
-}
-
-
-/**
- * Auth clients
- */
-protected
-function configAuthClient()
-{
-
-    $clients = [];
-
-    // client facebook
-    $fbAppId = Setting::getValue('facebookAppId');
-    $fbAppSecret = Setting::getValue('facebookAppSecret');
-    if (!empty($fbAppId) && !empty($fbAppSecret)) {
-        $clients['facebook'] = [
-            'class' => 'yii\authclient\clients\Facebook',
-            'clientId' => $fbAppId,
-            'clientSecret' => $fbAppSecret,
-        ];
-    }
-
-    // client google
-    $gClientId = Setting::getValue('googleClientId');
-    $gClientSecret = Setting::getValue('googleClientSecret');
-    if (!empty($gClientId) && !empty($gClientSecret)) {
-        $clients['google'] = [
-            'class' => 'yii\authclient\clients\Google',
-            'clientId' => $gClientId,
-            'clientSecret' => $gClientSecret,
-        ];
-    }
-
-    // flickr-photo
-    $flickrClientKey = Setting::getValue('flickrClientKey');
-    $flickrClientSecret = Setting::getValue('flickrClientSecret');
-    if (!empty($flickrClientKey) && !empty($flickrClientSecret)) {
-        $clients['flickr-photo'] = [
-            'class' => 'common\components\FlickrPhoto',
-            //'perms' => 'write',
-            'consumerKey' => $flickrClientKey,
-            'consumerSecret' => $flickrClientSecret,
-        ];
-    }
-
-    // clients OK
-    if (!empty($clients)) {
-        Yii::$container->set('yii\authclient\Collection', [
-            'class' => 'yii\authclient\Collection',
-            'clients' => $clients,
-        ]);
-    }
-}
-
-
-/**
- * mailer
- */
-protected
-function configMailer()
-{
-    $mailProtocol = Setting::getValue('mailProtocol');
-    if ($mailProtocol == 'smtp') {
-        $host = Setting::getValue('smtpHost');
-        $user = Setting::getValue('smtpUsername');
-        $pass = Setting::getValue('smtpPassword');
-        $port = Setting::getValue('smtpPort');
-        $encryption = Setting::getValue('smtpEncryption');
-        Yii::$container->set('yii\swiftmailer\Mailer', [
-            'viewPath' => '@common/mail',
-            'useFileTransport' => false,
-            'transport' => [
-                'class' => 'Swift_SmtpTransport',
-                'host' => $host,
-                'username' => $user,
-                'password' => $pass,
-                'port' => $port,
-                'encryption' => $encryption,
-            ],
-        ]);
-    }
-}
-
-
-/**
- * UrlManager
- */
-protected
-function configUrlManager()
-{
-
-    $modules = scandir(__DIR__ . '/../../vendor/powerkernel');
-    $urlManager = [
-        'ignoreLanguageUrlPatterns' => [
-            '#^account/auth#' => '#^account/auth#',
-            '#^site/logout#' => '#^site/logout#',
-            '#^site/robots#' => '#^robots.txt#',
-            '#^site/sitemap#' => '#^sitemap\.xml#',
-            '#^blog/sitemap#' => '#^blog/sitemap\d+\.xml#',
-        ],
-        'rules' => [
-            '' => 'site/index',
-            'sitemap.xml' => 'site/sitemap',
-            'robots.txt' => 'site/robots',
-            'manifest.json' => 'site/manifest',
-            'browserconfig.xml' => 'site/browserconfig',
-            '<id:.+?>.html' => 'site/page',
-
-            /* blog */
-            'blog/<action:(manage|create|update|delete)>' => 'blog/<action>',
-            'blog/sitemap<page:\d+>.xml' => 'blog/sitemap',
-            'blog' => 'blog/index',
-            'blog/<name:.+?>.amp' => 'blog/view-amp',
-            'blog/<name:.+?>' => 'blog/view',
-
-            /* page */
-            'page/sitemap<page:\d+>.xml' => 'page/sitemap',
-        ],
-    ];
-    foreach ($modules as $module) {
-        if (!preg_match('/[\.]+/', $module)) {
-            $urlManagerFile = __DIR__ . '/../../vendor/powerkernel/' . $module . '/urlManager.php';
-            if (is_file($urlManagerFile)) {
-                $urlManagerConfig = require($urlManagerFile);
-                $urlManager['ignoreLanguageUrlPatterns'] = array_merge(
-                    $urlManager['ignoreLanguageUrlPatterns'],
-                    $urlManagerConfig['ignoreLanguageUrlPatterns']
-                );
-                $urlManager['rules'] = array_merge(
-                    $urlManager['rules'],
-                    $urlManagerConfig['rules']
-                );
+                    Yii::$app->cache->flush();
+                    Yii::$app->user->logout();
+                }
             }
         }
     }
 
-    /* database value lang url */
-    $enableDefaultLanguageUrlCode = (boolean)Setting::getValue('languageUrlCode');
-    /* disable if we are in backend */
-    if (Yii::$app->id == 'app-backend') {
-        $enableDefaultLanguageUrlCode = false;
+
+    /**
+     * ReCaptcha
+     */
+    protected
+    function configReCaptcha()
+    {
+        // recaptcha
+        $rcKey = Setting::getValue('reCaptchaKey');
+        $rcSecret = Setting::getValue('reCaptchaSecret');
+        if (!empty($rcKey) && !empty($rcSecret)) {
+            Yii::$container->set('himiklab\yii2\recaptcha\ReCaptcha', [
+                'siteKey' => $rcKey,
+                'secret' => $rcSecret,
+            ]);
+        }
     }
 
-    Yii::$container->set('yii\web\UrlManager', [
-        /* config */
-        'rules' => $urlManager['rules']
-    ]);
 
-    Yii::$container->set('common\components\LocaleUrl', [
-        /* config */
-        'languages' => array_keys(Yii::$app->params['mongodb']['i18n'] ? \common\models\mongodb\Message::getLocaleList() : \common\models\Message::getLocaleList()),
-        'languageParam' => 'lang',
-        'enableLanguagePersistence' => false, // default true
-        'enableDefaultLanguageUrlCode' => $enableDefaultLanguageUrlCode,
-        'enableLanguageDetection' => false, // default true
-        'ignoreLanguageUrlPatterns' => $urlManager['ignoreLanguageUrlPatterns'],
-        'rules' => $urlManager['rules']
-    ]);
+    /**
+     * Auth clients
+     */
+    protected
+    function configAuthClient()
+    {
 
+        $clients = [];
 
-}
+        // client facebook
+        $fbAppId = Setting::getValue('facebookAppId');
+        $fbAppSecret = Setting::getValue('facebookAppSecret');
+        if (!empty($fbAppId) && !empty($fbAppSecret)) {
+            $clients['facebook'] = [
+                'class' => 'yii\authclient\clients\Facebook',
+                'clientId' => $fbAppId,
+                'clientSecret' => $fbAppSecret,
+            ];
+        }
 
-/**
- * config i18n
- */
-protected
-function configI18n()
-{
-    if (Yii::$app->params['mongodb']['i18n']) {
-        $class = 'common\components\MongoDbMessageSource';
-    } else {
-        $class = 'common\components\DbMessageSource';
+        // client google
+        $gClientId = Setting::getValue('googleClientId');
+        $gClientSecret = Setting::getValue('googleClientSecret');
+        if (!empty($gClientId) && !empty($gClientSecret)) {
+            $clients['google'] = [
+                'class' => 'yii\authclient\clients\Google',
+                'clientId' => $gClientId,
+                'clientSecret' => $gClientSecret,
+            ];
+        }
+
+        // flickr-photo
+        $flickrClientKey = Setting::getValue('flickrClientKey');
+        $flickrClientSecret = Setting::getValue('flickrClientSecret');
+        if (!empty($flickrClientKey) && !empty($flickrClientSecret)) {
+            $clients['flickr-photo'] = [
+                'class' => 'common\components\FlickrPhoto',
+                //'perms' => 'write',
+                'consumerKey' => $flickrClientKey,
+                'consumerSecret' => $flickrClientSecret,
+            ];
+        }
+
+        // clients OK
+        if (!empty($clients)) {
+            Yii::$container->set('yii\authclient\Collection', [
+                'class' => 'yii\authclient\Collection',
+                'clients' => $clients,
+            ]);
+        }
     }
 
-    Yii::$container->set('yii\i18n\I18N', [
-        'translations' => [
-            'app*' => [
-                'class' => $class,
-                'on missingTranslation' => function ($event) {
-                    $event->sender->handleMissingTranslation($event);
-                },
+
+    /**
+     * mailer
+     */
+    protected
+    function configMailer()
+    {
+        $mailProtocol = Setting::getValue('mailProtocol');
+        if ($mailProtocol == 'smtp') {
+            $host = Setting::getValue('smtpHost');
+            $user = Setting::getValue('smtpUsername');
+            $pass = Setting::getValue('smtpPassword');
+            $port = Setting::getValue('smtpPort');
+            $encryption = Setting::getValue('smtpEncryption');
+            Yii::$container->set('yii\swiftmailer\Mailer', [
+                'viewPath' => '@common/mail',
+                'useFileTransport' => false,
+                'transport' => [
+                    'class' => 'Swift_SmtpTransport',
+                    'host' => $host,
+                    'username' => $user,
+                    'password' => $pass,
+                    'port' => $port,
+                    'encryption' => $encryption,
+                ],
+            ]);
+        }
+    }
+
+
+    /**
+     * UrlManager
+     */
+    protected
+    function configUrlManager()
+    {
+
+        $modules = scandir(__DIR__ . '/../../vendor/powerkernel');
+        $urlManager = [
+            'ignoreLanguageUrlPatterns' => [
+                '#^account/auth#' => '#^account/auth#',
+                '#^site/logout#' => '#^site/logout#',
+                '#^site/robots#' => '#^robots.txt#',
+                '#^site/sitemap#' => '#^sitemap\.xml#',
+                '#^site/manifest#' => '#^manifest\.json#',
+                '#^site/browser-config#' => '#^browserconfig\.xml#',
+                '#^blog/sitemap#' => '#^blog/sitemap\d+\.xml#',
             ],
-            'main' => [
-                'class' => $class,
-                'on missingTranslation' => function ($event) {
-                    $event->sender->handleMissingTranslation($event);
-                },
+            'rules' => [
+                '' => 'site/index',
+                'sitemap.xml' => 'site/sitemap',
+                'robots.txt' => 'site/robots',
+                'manifest.json' => 'site/manifest',
+                'browserconfig.xml' => 'site/browser-config',
+                '<id:.+?>.html' => 'site/page',
+
+                /* blog */
+                'blog/<action:(manage|create|update|delete)>' => 'blog/<action>',
+                'blog/sitemap<page:\d+>.xml' => 'blog/sitemap',
+                'blog' => 'blog/index',
+                'blog/<name:.+?>.amp' => 'blog/view-amp',
+                'blog/<name:.+?>' => 'blog/view',
+
+                /* page */
+                'page/sitemap<page:\d+>.xml' => 'page/sitemap',
             ],
-        ],
-    ]);
+        ];
+        foreach ($modules as $module) {
+            if (!preg_match('/[\.]+/', $module)) {
+                $urlManagerFile = __DIR__ . '/../../vendor/powerkernel/' . $module . '/urlManager.php';
+                if (is_file($urlManagerFile)) {
+                    $urlManagerConfig = require($urlManagerFile);
+                    $urlManager['ignoreLanguageUrlPatterns'] = array_merge(
+                        $urlManager['ignoreLanguageUrlPatterns'],
+                        $urlManagerConfig['ignoreLanguageUrlPatterns']
+                    );
+                    $urlManager['rules'] = array_merge(
+                        $urlManager['rules'],
+                        $urlManagerConfig['rules']
+                    );
+                }
+            }
+        }
+
+        /* database value lang url */
+        $enableDefaultLanguageUrlCode = (boolean)Setting::getValue('languageUrlCode');
+        /* disable if we are in backend */
+        if (Yii::$app->id == 'app-backend') {
+            $enableDefaultLanguageUrlCode = false;
+        }
+
+        Yii::$container->set('yii\web\UrlManager', [
+            /* config */
+            'rules' => $urlManager['rules']
+        ]);
+
+        Yii::$container->set('common\components\LocaleUrl', [
+            /* config */
+            'languages' => array_keys(Yii::$app->params['mongodb']['i18n'] ? \common\models\mongodb\Message::getLocaleList() : \common\models\Message::getLocaleList()),
+            'languageParam' => 'lang',
+            'enableLanguagePersistence' => false, // default true
+            'enableDefaultLanguageUrlCode' => $enableDefaultLanguageUrlCode,
+            'enableLanguageDetection' => false, // default true
+            'ignoreLanguageUrlPatterns' => $urlManager['ignoreLanguageUrlPatterns'],
+            'rules' => $urlManager['rules']
+        ]);
 
 
-}
-
-/**
- * debug mode
- */
-protected
-function configDebugMode()
-{
-    if (Setting::getValue('debug') && !is_a(Yii::$app, 'yii\console\Application') && Yii::$app->user->can('admin')) {
-        $module = Yii::$app->getModule('debug');
-        $module->allowedIPs = [Yii::$app->request->userIP];
     }
-}
+
+    /**
+     * config i18n
+     */
+    protected
+    function configI18n()
+    {
+        if (Yii::$app->params['mongodb']['i18n']) {
+            $class = 'common\components\MongoDbMessageSource';
+        } else {
+            $class = 'common\components\DbMessageSource';
+        }
+
+        Yii::$container->set('yii\i18n\I18N', [
+            'translations' => [
+                'app*' => [
+                    'class' => $class,
+                    'on missingTranslation' => function ($event) {
+                        $event->sender->handleMissingTranslation($event);
+                    },
+                ],
+                'main' => [
+                    'class' => $class,
+                    'on missingTranslation' => function ($event) {
+                        $event->sender->handleMissingTranslation($event);
+                    },
+                ],
+            ],
+        ]);
+
+
+    }
+
+    /**
+     * debug mode
+     */
+    protected
+    function configDebugMode()
+    {
+        if (Setting::getValue('debug') && !is_a(Yii::$app, 'yii\console\Application') && Yii::$app->user->can('admin')) {
+            $module = Yii::$app->getModule('debug');
+            $module->allowedIPs = [Yii::$app->request->userIP];
+        }
+    }
 }
