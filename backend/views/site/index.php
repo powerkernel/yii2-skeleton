@@ -3,7 +3,8 @@
 /* @var $this yii\web\View */
 use powerkernel\fontawesome\Icon;
 
-/* @var $files [] */
+/* @var $urls [] */
+/* @var $favicon [] */
 /* @var $v [] */
 /* @var $newVersion boolean */
 
@@ -120,16 +121,26 @@ $this->title = Yii::t('app', 'Dashboard');
             <h3 class="box-title"><?= Yii::t('app', 'Images files verification') ?></h3>
         </div>
         <div class="box-body padding">
-            <?php foreach ($files as $file): ?>
+            <?php foreach ($urls as $url): ?>
                 <div>
-                    <?php if($file['exist']):?>
-                        <code class="text-green"><?= $file['file'] ?></code>
+                    <?php if($url['exist']):?>
+                        <code class="text-green"><?= $url['url'] ?></code>
                         <?= Icon::widget(['icon'=>'check text-green']) ?>
                     <?php else:?>
-                        <code class="text-red"><?= $file['file'] ?></code>
+                        <code class="text-red"><?= $url['url'] ?></code>
                         <?= Icon::widget(['icon'=>'exclamation-triangle text-red']) ?>
                     <?php endif;?>
-
+                </div>
+            <?php endforeach; ?>
+            <?php foreach ($favicon as $icon): ?>
+                <div>
+                    <?php if($icon['exist']):?>
+                        <code class="text-green"><?= $icon['file'] ?></code>
+                        <?= Icon::widget(['icon'=>'check text-green']) ?>
+                    <?php else:?>
+                        <code class="text-red"><?= $icon['file'] ?></code>
+                        <?= Icon::widget(['icon'=>'exclamation-triangle text-red']) ?>
+                    <?php endif;?>
                 </div>
             <?php endforeach; ?>
         </div>

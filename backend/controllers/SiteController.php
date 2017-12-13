@@ -1,7 +1,9 @@
 <?php
+
 namespace backend\controllers;
 
 use Yii;
+use yii\httpclient\Client;
 
 
 /**
@@ -46,50 +48,68 @@ class SiteController extends BackendController
      */
     public function actionIndex()
     {
-        /* check files */
-        $files = [
-            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/images/logo.png'],
-            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/images/banner.svg'],
-            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/images/logo-mini.svg'],
-            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/images/logo-lg.svg'],
-            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/images/logo-1024.png'],
-            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/images/logo-120.png'],
+        /* check favicon/images */
+        $baseUrl = Yii::$app->request->baseUrl;
+        $iconImageUrl = Yii::$app->params['iconImageUrl'];
+        $url = empty($iconImageUrl) ? $baseUrl : $iconImageUrl;
+        $urls = [
+            ['exist' => false, 'url' => $url . '/images/logo.png'],
+            ['exist' => false, 'url' => $url . '/images/banner.svg'],
+            ['exist' => false, 'url' => $url . '/images/logo-mini.svg'],
+            ['exist' => false, 'url' => $url . '/images/logo-lg.svg'],
+            ['exist' => false, 'url' => $url . '/images/logo-1024.png'],
+            ['exist' => false, 'url' => $url . '/images/logo-120.png'],
 
-            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/favicon/android-chrome-192x192.png'],
-            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/favicon/android-chrome-512x512.png'],
-            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/favicon/apple-touch-icon.png'],
-            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/favicon/favicon-16x16.png'],
-            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/favicon/favicon-32x32.png'],
-            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/favicon/mstile-150x150.png'],
-            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/favicon/safari-pinned-tab.svg'],
-            ['exist' => false, 'file' => Yii::getAlias('@frontend').'/web/favicon.ico'],
+            ['exist' => false, 'url' => $url . '/favicon/android-chrome-192x192.png'],
+            ['exist' => false, 'url' => $url . '/favicon/android-chrome-512x512.png'],
+            ['exist' => false, 'url' => $url . '/favicon/apple-touch-icon.png'],
+            ['exist' => false, 'url' => $url . '/favicon/favicon-16x16.png'],
+            ['exist' => false, 'url' => $url . '/favicon/favicon-32x32.png'],
+            ['exist' => false, 'url' => $url . '/favicon/mstile-150x150.png'],
+            ['exist' => false, 'url' => $url . '/favicon/safari-pinned-tab.svg'],
         ];
-
-        foreach($files as $i=>$file){
-            if(file_exists($file['file'])){
-                $files[$i]['exist']=true;
+        foreach ($urls as $i => $url) {
+            if ($this->isUrlExist($url['url'])) {
+                $urls[$i]['exist'] = true;
             }
         }
 
+        /* check favicon */
+        $favicon = [
+            ['exist' => false, 'file' => Yii::getAlias('@frontend') . '/web/favicon.ico'],
+            ['exist' => false, 'file' => Yii::getAlias('@backend') . '/web/favicon.ico'],
+        ];
+        foreach ($favicon as $i => $icon) {
+            if (file_exists($icon['file'])) {
+                $favicon[$i]['exist'] = true;
+            }
+        }
+
+
         /* version */
-        $version=file_get_contents(Yii::$app->basePath.'/../version.json');
-        $v=json_decode($version, true);
+        $version = file_get_contents(Yii::$app->basePath . '/../version.json');
+        $v = json_decode($version, true);
 
         /* check version */
         $checkVersion = Yii::$app->cache->get('check-version');
         if ($checkVersion === false) {
-            $url='https://raw.githubusercontent.com/powerkernel/yii2-skeleton/master/version.json';
-            $checkVersion=@file_get_contents($url);
+            $url = 'https://raw.githubusercontent.com/powerkernel/yii2-skeleton/master/version.json';
+            $checkVersion = @file_get_contents($url);
             Yii::$app->cache->set('check-version', $checkVersion, 60);
         }
 
-        $latestVersion=json_decode($checkVersion, true);
-        $newVersion=false;
-        if($v['version']!=$latestVersion['version']){
-            $newVersion=true;
+        $latestVersion = json_decode($checkVersion, true);
+        $newVersion = false;
+        if ($v['version'] != $latestVersion['version']) {
+            $newVersion = true;
         }
 
-        return $this->render('index', ['files'=>$files, 'v'=>$v, 'newVersion'=>$newVersion]);
+        return $this->render('index', [
+            'urls' => $urls,
+            'favicon' => $favicon,
+            'v' => $v,
+            'newVersion' => $newVersion
+        ]);
     }
 
 
@@ -107,14 +127,39 @@ class SiteController extends BackendController
      * toggle sidebar
      * @param $classname string
      */
-    public function actionToggleSidebar($classname){
-        if(Yii::$app->request->isAjax){
-            if(preg_match('/sidebar-collapse/', $classname)){
-                Yii::$app->session['sidebar-collapse']=false;
-            }
-            else {
-                Yii::$app->session['sidebar-collapse']=true;
+    public function actionToggleSidebar($classname)
+    {
+        if (Yii::$app->request->isAjax) {
+            if (preg_match('/sidebar-collapse/', $classname)) {
+                Yii::$app->session['sidebar-collapse'] = false;
+            } else {
+                Yii::$app->session['sidebar-collapse'] = true;
             }
         }
+    }
+
+    /**
+     * check url exist
+     * @param $url
+     * @return bool
+     */
+    protected function isUrlExist($url)
+    {
+        $exist = Yii::$app->cache->getOrSet(md5($url), function () use ($url) {
+            $curl = curl_init($url);
+            curl_setopt($curl, CURLOPT_NOBODY, true);
+            $result = curl_exec($curl);
+            if ($result !== false) {
+                $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+                if ($statusCode == 404) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        }, 60);
+        return $exist;
     }
 }
