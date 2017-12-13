@@ -14,7 +14,7 @@ Yii2 App Advanced Documentation is at [docs/guide/README.md](https://github.com/
 
 ## Installing using Composer
 
-If you do not have [Composer](http://getcomposer.org/), follow the instructions in the
+If you do not have [Composer](http://getcomposer.org), follow the instructions in the
 [Installing Yii](https://github.com/yiisoft/yii2/blob/master/docs/guide/start-installation.md#installing-via-composer) section of the definitive guide to install it.
 
 With Composer installed, you can then install the application using the following commands:
@@ -103,26 +103,22 @@ CONFIG
 *. Ignore local composer.json: `git update-index --skip-worktree composer.json`
 *. Ignore localhost.php: `git update-index --skip-worktree common/config/localhost.php`
 *. Ignore local site/index: `git update-index --skip-worktree frontend/views/site/index.php`
-*. Ignore local css: `git update-index --skip-worktree frontend/web/css/style.css.map`
-`git update-index --skip-worktree frontend/web/css/style.scss`
-`git update-index --skip-worktree frontend/web/css/style.css`
 
-## Symlink Help
-For Linux
-```ln -s ~/domains/domain.com/backend/web/ ~/domains/domain.com/frontend/web/backend```
+## symlink help
+Linux public_html
 ```ln -s ~/domains/domain.com/frontend/web/ ~/domains/domain.com/public_html```
 
+Frontend/Backend css/images
+```php symlink.php```
 
-For windows
-```mklink /D PATH_TO\frontend\web\backend PATH_TO\backend\web```
-
-Google Login Authorized redirect URIs
+## Google Login Authorized redirect URIs
 https://DOMAIN.COM/account/login/google
 https://DOMAIN.COM/account/auth?authclient=google
 https://DOMAIN.COM/backend/account/login/google
 https://DOMAIN.COM/backend/account/auth?authclient=google
 
-https://DOMAIN.DEV/account/login/google
-https://DOMAIN.DEV/account/auth?authclient=google
-https://DOMAIN.DEV/backend/account/login/google
-https://DOMAIN.DEV/backend/account/auth?authclient=google
+## Google Login Authorized redirect URIs (for localhost)
+https://DOMAIN.local/account/login/google
+https://DOMAIN.local/account/auth?authclient=google
+https://DOMAIN.local/backend/account/login/google
+https://DOMAIN.local/backend/account/auth?authclient=google

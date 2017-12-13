@@ -35,6 +35,10 @@ if (!is_link($imageLink)) {
 }
 
 
+/**
+ * @param $dir string
+ * @return bool
+ */
 function deleteDirectory($dir) {
     if (!file_exists($dir)) {
         return true;
