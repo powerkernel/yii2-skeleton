@@ -105,12 +105,9 @@ CONFIG
 5. Ignore localhost.php (if you have this file, all mails will be sent to a file, delete it when go live): `git update-index --skip-worktree common/config/localhost.php`
 6. Ignore local site/index: `git update-index --skip-worktree frontend/views/site/index.php`
 
-## symlink help
+## symlink public_html help
 Linux public_html
 ```ln -s ~/domains/domain.com/frontend/web/ ~/domains/domain.com/public_html```
-
-Frontend/Backend css/images
-```php symlink.php```
 
 ## Google Login Authorized redirect URIs
 https://domain.com/account/login/google
