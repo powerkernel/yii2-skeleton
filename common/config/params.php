@@ -1,7 +1,7 @@
 <?php
 return [
     'rootAdmin'=>[1],
-    'iconImageUrl'=>null, // baseUrl
+    'gitHubPage'=>null, // overwrite on params-local.php with https://powerkernel.github.io/domain.com
     'sitemapPageSize'=>200,
     'enableBlog'=>true,
     'showPowered'=>true,

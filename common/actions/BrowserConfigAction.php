@@ -24,7 +24,7 @@ class BrowserConfigAction extends Action
      */
     public function run()
     {
-        $iconImageUrl = Yii::$app->params['iconImageUrl'];
+        $gitHubPage = Yii::$app->params['gitHubPage'];
         $msTileColor = Setting::getValue('msTileColor');
 
         Yii::$app->response->format = \yii\web\Response::FORMAT_XML;
@@ -33,7 +33,7 @@ class BrowserConfigAction extends Action
 <browserconfig>
     <msapplication>
         <tile>
-            <square150x150logo src="{$iconImageUrl}/favicon/mstile-150x150.png"/>
+            <square150x150logo src="{$gitHubPage}/favicon/mstile-150x150.png"/>
             <TileColor>{$msTileColor}</TileColor>
         </tile>
     </msapplication>

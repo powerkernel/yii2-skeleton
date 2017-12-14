@@ -50,8 +50,8 @@ class SiteController extends BackendController
     {
         /* check favicon/images */
         $baseUrl = Yii::$app->request->baseUrl;
-        $iconImageUrl = Yii::$app->params['iconImageUrl'];
-        $url = empty($iconImageUrl) ? $baseUrl : $iconImageUrl;
+        $gitHubPage = Yii::$app->params['gitHubPage'];
+        $url = empty($gitHubPage) ? $baseUrl : $gitHubPage;
         $urls = [
             ['exist' => false, 'url' => $url . '/images/logo.png'],
             ['exist' => false, 'url' => $url . '/images/banner.svg'],

@@ -24,7 +24,7 @@ class ManifestAction extends Action
      */
     public function run()
     {
-        $iconImageUrl = Yii::$app->params['iconImageUrl'];
+        $gitHubPage = Yii::$app->params['gitHubPage'];
         $themeColor=Setting::getValue('androidThemeColor');
         $backgroundColor=Setting::getValue('backgroundColor');
         //$color = Setting::getValue('androidThemeColor');
@@ -33,12 +33,12 @@ class ManifestAction extends Action
             'name' => Yii::$app->name,
             'icons' => [
                 [
-                    'src' => $iconImageUrl . '/favicon/android-chrome-192x192.png',
+                    'src' => $gitHubPage . '/favicon/android-chrome-192x192.png',
                     'sizes' => '192x192',
                     'type' => 'image/png'
                 ],
                 [
-                    'src' => $iconImageUrl . '/favicon/android-chrome-512x512.png',
+                    'src' => $gitHubPage . '/favicon/android-chrome-512x512.png',
                     'sizes' => '512x512',
                     'type' => 'image/png'
                 ],
