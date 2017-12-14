@@ -5,6 +5,10 @@ use common\models\Setting;
 use powerkernel\fontawesome\Icon;
 use yii\bootstrap\Nav;
 
+$baseUrl = Yii::$app->request->baseUrl;
+$iconImageUrl = Yii::$app->params['iconImageUrl'];
+$url = empty($iconImageUrl) ? $baseUrl : $iconImageUrl;
+
 ?>
 <header class="main-header">
     <nav class="navbar navbar-static-top">
@@ -12,7 +16,7 @@ use yii\bootstrap\Nav;
             <div class="navbar-header">
                 <a href="<?= Yii::$app->homeUrl ?>" title="<?= Yii::$app->name ?>" class="navbar-brand"
                    style="width: 60px; padding: 10px 15px;">
-                    <img src="<?= Yii::$app->request->baseUrl ?>/images/logo-mini.svg" class="img-responsive"
+                    <img src="<?= $url ?>/images/logo-mini.svg" class="img-responsive"
                          alt="<?= Yii::$app->name ?>"/>
                 </a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
