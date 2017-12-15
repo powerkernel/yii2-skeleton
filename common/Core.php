@@ -16,6 +16,16 @@ use yii\helpers\Inflector;
  */
 class Core
 {
+    /**
+     * get storage url
+     * @return mixed|string
+     */
+    public static function getStorageUrl(){
+        $baseUrl = Yii::$app->request->baseUrl;
+        $gitHubPage = Yii::$app->params['gitHubPage'];
+        $url = empty($gitHubPage) ? $baseUrl : $gitHubPage;
+        return $url;
+    }
 
     /**
      * convert current yii date format to timestamp
