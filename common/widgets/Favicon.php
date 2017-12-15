@@ -7,6 +7,7 @@
 namespace common\widgets;
 
 
+use common\Core;
 use common\models\Setting;
 use Yii;
 use yii\base\Widget;
@@ -23,8 +24,7 @@ class Favicon extends Widget
     public function run()
     {
         $baseUrl=Yii::$app->request->baseUrl;
-        $gitHubPage = Yii::$app->params['gitHubPage'];
-        $url=empty($gitHubPage)?$baseUrl:$gitHubPage;
+        $url=Core::getStorageUrl();
         $themeColor = Setting::getValue('androidThemeColor');
         $safariMaskColor = Setting::getValue('safariMaskColor');
         $data = <<<EOB
