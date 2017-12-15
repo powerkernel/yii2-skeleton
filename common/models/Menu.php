@@ -155,8 +155,6 @@ class Menu extends MenuBase
             [['order'], 'integer'],
 
             [['label', 'active_route', 'url', 'class', 'position', 'status'], 'string', 'max' => 255],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['created_by' => 'id']],
-            [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['updated_by' => 'id']],
         ];
 
         return array_merge($default, $date, $account);
