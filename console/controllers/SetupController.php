@@ -9,6 +9,7 @@
 namespace console\controllers;
 
 use backend\controllers\SettingController;
+use common\models\PageData;
 use Yii;
 use yii\console\Controller;
 
@@ -126,6 +127,7 @@ class SetupController extends Controller
 EOB;
             $data->keywords='terms of use, conditions';
             $data->thumbnail='https://c1.staticflickr.com/9/8106/29359142860_fe31dc06a1_o.png';
+            $data->status=PageData::STATUS_ACTIVE;
             $data->save();
         }
 
@@ -171,6 +173,7 @@ EOB;
 EOB;
             $data->keywords='privacy, policy';
             $data->thumbnail='https://c1.staticflickr.com/9/8393/29359142920_7f14649ce8_o.png';
+            $data->status=PageData::STATUS_ACTIVE;
             $data->save();
         }
     }
