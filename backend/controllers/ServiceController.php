@@ -7,6 +7,7 @@
 
 namespace backend\controllers;
 
+use common\Core;
 use Yii;
 use common\models\Service;
 use yii\web\NotFoundHttpException;
@@ -37,7 +38,7 @@ class ServiceController extends BackendController
     public function onAuthSuccess($client)
     {
         if ($client->getName() == 'flickr-photo') {
-            $user=$client->getUserAttributes();
+            $user = $client->getUserAttributes();
 
             $service = Service::find()->where(['name' => $client->getName()])->one();
             if (!$service) {
@@ -45,42 +46,58 @@ class ServiceController extends BackendController
             }
 
             /* photoset */
-            $data=!empty($service->data)?json_decode($service->data, true):[];
-            $photoset=null;
-            if(empty($data['photoset']) && file_exists(Yii::getAlias('@frontend').'/web/images/banner.png')){
-                /* upload logo */
-                $response=$client->apiUpload($data, Yii::getAlias('@frontend').'/web/images/banner.png');
+            $data = !empty($service->data) ? json_decode($service->data, true) : [];
+            $photoset = null;
+            if (empty($data['photoset'])) {
+                /* download photo */
+                $url = Core::getStorageUrl();
+                $photoUrl = $url . '/images/banner.png';
+                if (Core::isUrlExist($photoUrl)) {
+                    /* download photo */
+                    $photoFile = tempnam(sys_get_temp_dir(), 'cma');
+                    file_put_contents($photoFile, file_get_contents($photoUrl));
+                    /* upload logo */
+                    $response = $client->apiUpload(['title'=>Yii::$app->name], $photoFile);
+                    unlink($photoFile);
 
-                /* create photoset */
-                if(!empty($response['photoid'])){
-                    $params = [
-                        'method' => 'flickr.photosets.create',
-                        'title'=>Yii::$app->name,
-                        'primary_photo_id'=>$response['photoid']
-                    ];
-                    $resp=$client->api('', 'POST', $params);
-                    if(!empty($resp['photoset']['id'])){
-                        $photoset=$resp['photoset']['id'];
+                    /* create photoset */
+                    if (!empty($response['photoid'])) {
+                        $params = [
+                            'method' => 'flickr.photosets.create',
+                            'title' => Yii::$app->name,
+                            'primary_photo_id' => $response['photoid']
+                        ];
+                        $resp = $client->api('', 'POST', $params);
+                        if (!empty($resp['photoset']['id'])) {
+                            $photoset = $resp['photoset']['id'];
+                        }
                     }
+
+
                 }
-            }
-            else {
-                $photoset=$data['photoset'];
+
+
+            } else {
+                $photoset = $data['photoset'];
             }
             /* end: photoset */
 
-            $service->name = $client->getName();
-            $service->title = 'Flickr Photo';
-            $service->token = json_encode($client->accessToken);
-            $service->data = json_encode([
-                'token' => $client->accessToken->token,
-                'tokenSecret' => $client->accessToken->tokenSecret,
-                'userid'=>$user['user']['id'],
-                'username'=>json_encode($user['user']['username']),
-                'photoset'=>$photoset
-            ]);
+            if (!empty($photoset)) {
+                $service->name = $client->getName();
+                $service->title = 'Flickr Photo';
+                $service->token = json_encode($client->accessToken);
+                $service->data = json_encode([
+                    'token' => $client->accessToken->token,
+                    'tokenSecret' => $client->accessToken->tokenSecret,
+                    'userid' => $user['user']['id'],
+                    'username' => json_encode($user['user']['username']),
+                    'photoset' => $photoset
+                ]);
+                $service->save(false);
+            } else {
+                Yii::$app->session->setFlash('error', Yii::t('app', 'Cannot create Flickr photoset.'));
+            }
 
-            $service->save(false);
         }
         Yii::$app->user->setReturnUrl(Yii::$app->urlManager->createUrl(['/service/index']));
     }
@@ -104,7 +121,6 @@ class ServiceController extends BackendController
             'services' => $services,
         ]);
     }
-
 
 
     /**

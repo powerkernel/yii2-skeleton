@@ -58,6 +58,7 @@ class FlickrPhoto extends FlickrAuth
      * @param string $file
      * @param array $headers
      * @return array
+     * @throws \yii\authclient\InvalidResponseException
      */
     public function apiUpload($data = [], $file='', $headers = [])
     {
@@ -70,11 +71,11 @@ class FlickrPhoto extends FlickrAuth
             ->addHeaders($headers);
 
         if (!empty($data)) {
-            if (is_array($params)) {
+            //if (is_array($params)) {
                 $request->setData($params);
-            } else {
-                $request->setContent($params);
-            }
+            //} else {
+             //   $request->setContent($params);
+            //}
         }
 
 

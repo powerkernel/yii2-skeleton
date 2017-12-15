@@ -17,10 +17,33 @@ use yii\helpers\Inflector;
 class Core
 {
     /**
+     * is URL exist
+     * @param $url
+     * @return mixed
+     */
+    public static function isUrlExist($url)
+    {
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_NOBODY, true);
+        $result = curl_exec($curl);
+        if ($result !== false) {
+            $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+            if ($statusCode == 404) {
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * get storage url
      * @return mixed|string
      */
-    public static function getStorageUrl(){
+    public static function getStorageUrl()
+    {
         $baseUrl = Yii::$app->request->baseUrl;
         $gitHubPage = Yii::$app->params['gitHubPage'];
         $url = empty($gitHubPage) ? $baseUrl : $gitHubPage;
@@ -171,8 +194,6 @@ class Core
     }
 
 
-
-
     /**
      * generate seo name
      * @param string $name
@@ -224,9 +245,9 @@ class Core
      * @param string $type
      * @return array
      */
-    public static function getYesNoOption($type='number')
+    public static function getYesNoOption($type = 'number')
     {
-        if($type=='number'){
+        if ($type == 'number') {
             return [
                 '1' => Yii::t('app', 'Yes'),
                 '0' => Yii::t('app', 'No')
@@ -247,9 +268,6 @@ class Core
     {
         return 'Powered by <a target="_blank" href="https://powerkernel.com/" rel="external" title="Power Kernel">Power Kernel</a>';
     }
-
-
-
 
 
     /**
@@ -340,10 +358,11 @@ class Core
      * @param null $state
      * @return array
      */
-    public static function getCityList($country, $state=null){
-        $file=Yii::$aliases['@common'].DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'location'.DIRECTORY_SEPARATOR.$country.'.php';
-        if(file_exists($file)){
-            $data=require_once($file);
+    public static function getCityList($country, $state = null)
+    {
+        $file = Yii::$aliases['@common'] . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'location' . DIRECTORY_SEPARATOR . $country . '.php';
+        if (file_exists($file)) {
+            $data = require_once($file);
             return ArrayHelper::map($data['city'], 'id', 'name');
         }
         return [];
@@ -355,12 +374,13 @@ class Core
      * @param string $id
      * @return mixed
      */
-    public static function getCityText($country, $id){
-        $file=Yii::$aliases['@common'].DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'location'.DIRECTORY_SEPARATOR.$country.'.php';
-        if(file_exists($file)){
-            $data=require_once($file);
+    public static function getCityText($country, $id)
+    {
+        $file = Yii::$aliases['@common'] . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'location' . DIRECTORY_SEPARATOR . $country . '.php';
+        if (file_exists($file)) {
+            $data = require_once($file);
             $key = array_search($id, array_column($data['city'], 'id'));
-            if($key){
+            if ($key) {
                 return $data['city'][$key]['name'];
             }
             return [];
@@ -373,15 +393,15 @@ class Core
      * @param $country
      * @return array
      */
-    public static function getStateList($country){
-        $file=Yii::$aliases['@common'].DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'location'.DIRECTORY_SEPARATOR.$country.'.php';
-        if(file_exists($file)){
-            $data=require($file);
+    public static function getStateList($country)
+    {
+        $file = Yii::$aliases['@common'] . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'location' . DIRECTORY_SEPARATOR . $country . '.php';
+        if (file_exists($file)) {
+            $data = require($file);
             return ArrayHelper::map($data['state'], 'id', 'name');
         }
         return [];
     }
-
 
 
     /**
@@ -390,12 +410,13 @@ class Core
      * @param string $city
      * @return array
      */
-    public static function getDistrictList($country, $city=null){
-        $file=Yii::$aliases['@common'].DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'location'.DIRECTORY_SEPARATOR.$country.'.php';
-        if(file_exists($file)){
-            $data=require_once($file);
-            if($data){
-                if($city){
+    public static function getDistrictList($country, $city = null)
+    {
+        $file = Yii::$aliases['@common'] . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'location' . DIRECTORY_SEPARATOR . $country . '.php';
+        if (file_exists($file)) {
+            $data = require_once($file);
+            if ($data) {
+                if ($city) {
                     $result = ArrayHelper::index($data['district'], 'id', 'id_city');
                     ArrayHelper::multisort($result[$city], 'name');
                     return $result[$city];
@@ -414,12 +435,13 @@ class Core
      * @param null $district
      * @return array
      */
-    public static function getWardList($country, $district=null){
-        $file=Yii::$aliases['@common'].DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'location'.DIRECTORY_SEPARATOR.$country.'.php';
-        if(file_exists($file)){
-            $data=require_once($file);
-            if($data){
-                if($district){
+    public static function getWardList($country, $district = null)
+    {
+        $file = Yii::$aliases['@common'] . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'location' . DIRECTORY_SEPARATOR . $country . '.php';
+        if (file_exists($file)) {
+            $data = require_once($file);
+            if ($data) {
+                if ($district) {
                     $result = ArrayHelper::index($data['ward'], 'id', 'id_district');
                     ArrayHelper::multisort($result[$district], 'name');
                     return $result[$district];
@@ -438,13 +460,14 @@ class Core
      * @param $id
      * @return array
      */
-    public static function getDistrictText($country,$id){
-        $file=Yii::$aliases['@common'].DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'location'.DIRECTORY_SEPARATOR.$country.'.php';
-        if(file_exists($file)){
-            $data=require($file);
-            if($data){
+    public static function getDistrictText($country, $id)
+    {
+        $file = Yii::$aliases['@common'] . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'location' . DIRECTORY_SEPARATOR . $country . '.php';
+        if (file_exists($file)) {
+            $data = require($file);
+            if ($data) {
                 $key = array_search($id, array_column($data['district'], 'id'));
-                if($key){
+                if ($key) {
                     return $data['district'][$key]['name'];
                 }
             }
@@ -459,13 +482,14 @@ class Core
      * @param $id
      * @return array
      */
-    public static function getWardText($country, $id){
-        $file=Yii::$aliases['@common'].DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'location'.DIRECTORY_SEPARATOR.$country.'.php';
-        if(file_exists($file)){
-            $data=require($file);
-            if($data){
+    public static function getWardText($country, $id)
+    {
+        $file = Yii::$aliases['@common'] . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'location' . DIRECTORY_SEPARATOR . $country . '.php';
+        if (file_exists($file)) {
+            $data = require($file);
+            if ($data) {
                 $key = array_search($id, array_column($data['ward'], 'id'));
-                if($key){
+                if ($key) {
                     return $data['ward'][$key]['name'];
                 }
             }
@@ -1183,9 +1207,9 @@ class Core
             'yo-NG' => 'Yoruba (Nigeria)',
         ];
         if (!empty($only)) {
-            $new=[];
+            $new = [];
             foreach ($only as $l) {
-                if(isset($list[$l])){
+                if (isset($list[$l])) {
                     $new[$l] = $list[$l];
                 }
             }
@@ -1251,8 +1275,8 @@ class Core
         if (in_array($m, ['app-frontend', 'app-backend'])) {
             $m = '';
         };
-        $c=Yii::$app->controller->id;
-        $a=Yii::$app->controller->action->id;
+        $c = Yii::$app->controller->id;
+        $a = Yii::$app->controller->action->id;
 
 
         return Inflector::id2camel($m) . Inflector::id2camel($c) . Inflector::id2camel($a);
@@ -1265,72 +1289,74 @@ class Core
     public static function getUSStateList()
     {
         return [
-            'AL'=>'Alabama',
-            'AK'=>'Alaska',
-            'AZ'=>'Arizona',
-            'AR'=>'Arkansas',
-            'CA'=>'California',
-            'CO'=>'Colorado',
-            'CT'=>'Connecticut',
-            'DE'=>'Delaware',
-            'DC'=>'District Of Columbia',
-            'FL'=>'Florida',
-            'GA'=>'Georgia',
-            'HI'=>'Hawaii',
-            'ID'=>'Idaho',
-            'IL'=>'Illinois',
-            'IN'=>'Indiana',
-            'IA'=>'Iowa',
-            'KS'=>'Kansas',
-            'KY'=>'Kentucky',
-            'LA'=>'Louisiana',
-            'ME'=>'Maine',
-            'MD'=>'Maryland',
-            'MA'=>'Massachusetts',
-            'MI'=>'Michigan',
-            'MN'=>'Minnesota',
-            'MS'=>'Mississippi',
-            'MO'=>'Missouri',
-            'MT'=>'Montana',
-            'NE'=>'Nebraska',
-            'NV'=>'Nevada',
-            'NH'=>'New Hampshire',
-            'NJ'=>'New Jersey',
-            'NM'=>'New Mexico',
-            'NY'=>'New York',
-            'NC'=>'North Carolina',
-            'ND'=>'North Dakota',
-            'OH'=>'Ohio',
-            'OK'=>'Oklahoma',
-            'OR'=>'Oregon',
-            'PA'=>'Pennsylvania',
-            'RI'=>'Rhode Island',
-            'SC'=>'South Carolina',
-            'SD'=>'South Dakota',
-            'TN'=>'Tennessee',
-            'TX'=>'Texas',
-            'UT'=>'Utah',
-            'VT'=>'Vermont',
-            'VA'=>'Virginia',
-            'WA'=>'Washington',
-            'WV'=>'West Virginia',
-            'WI'=>'Wisconsin',
-            'WY'=>'Wyoming'
+            'AL' => 'Alabama',
+            'AK' => 'Alaska',
+            'AZ' => 'Arizona',
+            'AR' => 'Arkansas',
+            'CA' => 'California',
+            'CO' => 'Colorado',
+            'CT' => 'Connecticut',
+            'DE' => 'Delaware',
+            'DC' => 'District Of Columbia',
+            'FL' => 'Florida',
+            'GA' => 'Georgia',
+            'HI' => 'Hawaii',
+            'ID' => 'Idaho',
+            'IL' => 'Illinois',
+            'IN' => 'Indiana',
+            'IA' => 'Iowa',
+            'KS' => 'Kansas',
+            'KY' => 'Kentucky',
+            'LA' => 'Louisiana',
+            'ME' => 'Maine',
+            'MD' => 'Maryland',
+            'MA' => 'Massachusetts',
+            'MI' => 'Michigan',
+            'MN' => 'Minnesota',
+            'MS' => 'Mississippi',
+            'MO' => 'Missouri',
+            'MT' => 'Montana',
+            'NE' => 'Nebraska',
+            'NV' => 'Nevada',
+            'NH' => 'New Hampshire',
+            'NJ' => 'New Jersey',
+            'NM' => 'New Mexico',
+            'NY' => 'New York',
+            'NC' => 'North Carolina',
+            'ND' => 'North Dakota',
+            'OH' => 'Ohio',
+            'OK' => 'Oklahoma',
+            'OR' => 'Oregon',
+            'PA' => 'Pennsylvania',
+            'RI' => 'Rhode Island',
+            'SC' => 'South Carolina',
+            'SD' => 'South Dakota',
+            'TN' => 'Tennessee',
+            'TX' => 'Texas',
+            'UT' => 'Utah',
+            'VT' => 'Vermont',
+            'VA' => 'Virginia',
+            'WA' => 'Washington',
+            'WV' => 'West Virginia',
+            'WI' => 'Wisconsin',
+            'WY' => 'Wyoming'
         ];
     }
 
     /**
      * @return bool
      */
-    public static function isLocalhost(){
-        return file_exists(__DIR__.'/config/localhost.php');
+    public static function isLocalhost()
+    {
+        return file_exists(__DIR__ . '/config/localhost.php');
     }
 
     /**
      * @return array
      */
-    public static function getCurrencyList(){
-        $currencies = array("AFA","ALL","DZD","USD","EUR","AOA","XCD","NOK","XCD","ARA","AMD","AWG","AUD","EUR","AZM","BSD","BHD","BDT","BBD","BYR","EUR","BZD","XAF","BMD","BTN","BOB","BAM","BWP","NOK","BRL","GBP","BND","BGN","XAF","BIF","KHR","XAF","CAD","CVE","KYD","XAF","XAF","CLF","CNY","AUD","AUD","COP","KMF","CDZ","XAF","NZD","CRC","HRK","CUP","EUR","CZK","DKK","DJF","XCD","DOP","TPE","USD","EGP","USD","XAF","ERN","EEK","ETB","FKP","DKK","FJD","EUR","EUR","EUR","EUR","XPF","EUR","XAF","GMD","GEL","EUR","GHC","GIP","EUR","DKK","XCD","EUR","USD","GTQ","GNS","GWP","GYD","HTG","AUD","EUR","HNL","HKD","HUF","ISK","INR","IDR","IRR","IQD","EUR","ILS","EUR","XAF","JMD","JPY","JOD","KZT","KES","AUD","KPW","KRW","KWD","KGS","LAK","LVL","LBP","LSL","LRD","LYD","CHF","LTL","EUR","MOP","MKD","MGF","MWK","MYR","MVR","XAF","EUR","USD","EUR","MRO","MUR","EUR","MXN","USD","MDL","EUR","MNT","XCD","MAD","MZM","MMK","NAD","AUD","NPR","EUR","ANG","XPF","NZD","NIC","XOF","NGN","NZD","AUD","USD","NOK","OMR","PKR","USD","PAB","PGK","PYG","PEI","PHP","NZD","PLN","EUR","USD","QAR","EUR","ROL","RUB","RWF","XCD","XCD","XCD","WST","EUR","STD","SAR","XOF","EUR","SCR","SLL","SGD","EUR","EUR","SBD","SOS","ZAR","GBP","EUR","LKR","SHP","EUR","SDG","SRG","NOK","SZL","SEK","CHF","SYP","TWD","TJR","TZS","THB","XAF","NZD","TOP","TTD","TND","TRY","TMM","USD","AUD","UGS","UAH","SUR","AED","GBP","USD","USD","UYU","UZS","VUV","VEF","VND","USD","USD","XPF","XOF","MAD","ZMK","USD");
+    public static function getCurrencyList()
+    {
+        $currencies = array("AFA", "ALL", "DZD", "USD", "EUR", "AOA", "XCD", "NOK", "XCD", "ARA", "AMD", "AWG", "AUD", "EUR", "AZM", "BSD", "BHD", "BDT", "BBD", "BYR", "EUR", "BZD", "XAF", "BMD", "BTN", "BOB", "BAM", "BWP", "NOK", "BRL", "GBP", "BND", "BGN", "XAF", "BIF", "KHR", "XAF", "CAD", "CVE", "KYD", "XAF", "XAF", "CLF", "CNY", "AUD", "AUD", "COP", "KMF", "CDZ", "XAF", "NZD", "CRC", "HRK", "CUP", "EUR", "CZK", "DKK", "DJF", "XCD", "DOP", "TPE", "USD", "EGP", "USD", "XAF", "ERN", "EEK", "ETB", "FKP", "DKK", "FJD", "EUR", "EUR", "EUR", "EUR", "XPF", "EUR", "XAF", "GMD", "GEL", "EUR", "GHC", "GIP", "EUR", "DKK", "XCD", "EUR", "USD", "GTQ", "GNS", "GWP", "GYD", "HTG", "AUD", "EUR", "HNL", "HKD", "HUF", "ISK", "INR", "IDR", "IRR", "IQD", "EUR", "ILS", "EUR", "XAF", "JMD", "JPY", "JOD", "KZT", "KES", "AUD", "KPW", "KRW", "KWD", "KGS", "LAK", "LVL", "LBP", "LSL", "LRD", "LYD", "CHF", "LTL", "EUR", "MOP", "MKD", "MGF", "MWK", "MYR", "MVR", "XAF", "EUR", "USD", "EUR", "MRO", "MUR", "EUR", "MXN", "USD", "MDL", "EUR", "MNT", "XCD", "MAD", "MZM", "MMK", "NAD", "AUD", "NPR", "EUR", "ANG", "XPF", "NZD", "NIC", "XOF", "NGN", "NZD", "AUD", "USD", "NOK", "OMR", "PKR", "USD", "PAB", "PGK", "PYG", "PEI", "PHP", "NZD", "PLN", "EUR", "USD", "QAR", "EUR", "ROL", "RUB", "RWF", "XCD", "XCD", "XCD", "WST", "EUR", "STD", "SAR", "XOF", "EUR", "SCR", "SLL", "SGD", "EUR", "EUR", "SBD", "SOS", "ZAR", "GBP", "EUR", "LKR", "SHP", "EUR", "SDG", "SRG", "NOK", "SZL", "SEK", "CHF", "SYP", "TWD", "TJR", "TZS", "THB", "XAF", "NZD", "TOP", "TTD", "TND", "TRY", "TMM", "USD", "AUD", "UGS", "UAH", "SUR", "AED", "GBP", "USD", "USD", "UYU", "UZS", "VUV", "VEF", "VND", "USD", "USD", "XPF", "XOF", "MAD", "ZMK", "USD");
         return array_combine($currencies, $currencies);
     }
 
