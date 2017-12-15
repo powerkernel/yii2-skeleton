@@ -12,7 +12,7 @@ foreach ($mainTasks as $mainTask) {
 }
 
 /* vendors tasks */
-$vendors=['harrytang','modernkernel', 'powerkernel'];
+$vendors=['harrytang','powerkernel'];
 foreach($vendors as $vendor){
     $dir = \Yii::$app->vendorPath . '/'.$vendor;
     if (file_exists($dir)) {

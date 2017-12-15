@@ -11,17 +11,17 @@ $controllerMap = [];
 if (class_exists('yii\mongodb\console\controllers\MigrateController')) {
     $controllerMap['mongodb-migrate'] = 'yii\mongodb\console\controllers\MigrateController';
 }
-if (class_exists('modernkernel\contact\console\MigrateController')) {
-    $controllerMap['contact-migrate'] = 'modernkernel\contact\console\MigrateController';
+if (class_exists('powerkernel\contact\console\MigrateController')) {
+    $controllerMap['contact-migrate'] = 'powerkernel\contact\console\MigrateController';
 }
-if (class_exists('modernkernel\sms\console\MigrateController')) {
-    $controllerMap['sms-migrate'] = 'modernkernel\sms\console\MigrateController';
+if (class_exists('powerkernel\sms\console\MigrateController')) {
+    $controllerMap['sms-migrate'] = 'powerkernel\sms\console\MigrateController';
 }
-if (class_exists('modernkernel\support\console\MigrateController')) {
-    $controllerMap['support-migrate'] = 'modernkernel\support\console\MigrateController';
+if (class_exists('powerkernel\support\console\MigrateController')) {
+    $controllerMap['support-migrate'] = 'powerkernel\support\console\MigrateController';
 }
-if (class_exists('modernkernel\billing\console\MigrateController')) {
-    $controllerMap['billing-migrate'] = 'modernkernel\billing\console\MigrateController';
+if (class_exists('powerkernel\billing\console\MigrateController')) {
+    $controllerMap['billing-migrate'] = 'powerkernel\billing\console\MigrateController';
 }
 if (class_exists('harrytang\hosting\console\MigrateController')) {
     $controllerMap['hosting-migrate'] = 'harrytang\hosting\console\MigrateController';
