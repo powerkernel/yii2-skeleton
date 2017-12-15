@@ -5,9 +5,7 @@ use common\models\Setting;
 use powerkernel\fontawesome\Icon;
 use yii\bootstrap\Nav;
 
-$baseUrl = Yii::$app->request->baseUrl;
-$gitHubPage = Yii::$app->params['gitHubPage'];
-$url = empty($gitHubPage) ? $baseUrl : $gitHubPage;
+$url = Core::getStorageUrl();
 
 ?>
 <header class="main-header">

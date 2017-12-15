@@ -2,8 +2,8 @@
 
 namespace backend\controllers;
 
+use common\Core;
 use Yii;
-use yii\httpclient\Client;
 
 
 /**
@@ -49,9 +49,7 @@ class SiteController extends BackendController
     public function actionIndex()
     {
         /* check favicon/images */
-        $baseUrl = Yii::$app->request->baseUrl;
-        $gitHubPage = Yii::$app->params['gitHubPage'];
-        $url = empty($gitHubPage) ? $baseUrl : $gitHubPage;
+        $url = Core::getStorageUrl();
         $urls = [
             ['exist' => false, 'url' => $url . '/images/logo.png'],
             ['exist' => false, 'url' => $url . '/images/banner.svg'],
