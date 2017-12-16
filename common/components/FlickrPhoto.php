@@ -81,4 +81,21 @@ class FlickrPhoto extends FlickrAuth
 
         return $this->sendRequest($request);
     }
+
+    /**
+     * get photo sizes
+     * @param $photoId
+     * @return bool
+     */
+    public function getPhotoSizes($photoId){
+        $params=[
+            'method'=>'flickr.photos.getSizes',
+            'photo_id'=>$photoId
+        ];
+        $data=$this->api('', 'GET', $params);
+        if(!empty($data['stat']) && $data['stat']=='ok'){
+            return $data['sizes']['size'];
+        }
+        return false;
+    }
 }
