@@ -20,6 +20,7 @@ class FlickrUploadAction extends FlickrAction
     /**
      * run action
      * @return string
+     * @throws \yii\authclient\InvalidResponseException
      */
     public function run(){
         /* POST: qquuid, qqfilename, qqtotalfilesize */
