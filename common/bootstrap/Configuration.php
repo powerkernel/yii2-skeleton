@@ -130,8 +130,6 @@ EOB;
                     }
                     Yii::$app->language = $user->language;
                     Yii::$app->setTimeZone($user->timezone);
-
-
                 } catch (Exception $e) {
                     Yii::$app->cache->flush();
                     Yii::$app->user->logout();
@@ -248,7 +246,7 @@ EOB;
     function configUrlManager()
     {
 
-        $modules = scandir(__DIR__ . '/../../vendor/powerkernel');
+        /* default */
         $urlManager = [
             'ignoreLanguageUrlPatterns' => [
                 '#^account/auth#' => '#^account/auth#',
@@ -278,22 +276,45 @@ EOB;
                 'page/sitemap<page:\d+>.xml' => 'page/sitemap',
             ],
         ];
-        foreach ($modules as $module) {
-            if (!preg_match('/[\.]+/', $module)) {
-                $urlManagerFile = __DIR__ . '/../../vendor/powerkernel/' . $module . '/urlManager.php';
-                if (is_file($urlManagerFile)) {
-                    $urlManagerConfig = require($urlManagerFile);
-                    $urlManager['ignoreLanguageUrlPatterns'] = array_merge(
-                        $urlManager['ignoreLanguageUrlPatterns'],
-                        $urlManagerConfig['ignoreLanguageUrlPatterns']
-                    );
-                    $urlManager['rules'] = array_merge(
-                        $urlManager['rules'],
-                        $urlManagerConfig['rules']
-                    );
+
+        /* modules */
+        $dirs=['harrytang', 'powerkernel'];
+
+        foreach($dirs as $dir){
+            if(file_exists(__DIR__ . '/../../vendor/'.$dir)){
+                $modules = scandir(__DIR__ . '/../../vendor/'.$dir);
+                foreach ($modules as $module) {
+                    if (!preg_match('/[\.]+/', $module)) // not parent dir
+                    {
+                        $urlManagerFile = __DIR__ . '/../../vendor/'.$dir.'/'.$module.'/urlManager.php';
+                        if (file_exists($urlManagerFile)) {
+
+                            $urlManagerConfig = require($urlManagerFile);
+
+
+                            if(!empty($urlManagerConfig['ignoreLanguageUrlPatterns'])){
+                                $urlManager['ignoreLanguageUrlPatterns'] = array_merge(
+                                    $urlManager['ignoreLanguageUrlPatterns'],
+                                    $urlManagerConfig['ignoreLanguageUrlPatterns']
+                                );
+                            }
+
+                            if(!empty($urlManagerConfig['rules'])){
+                                $urlManager['rules'] = array_merge(
+                                    $urlManager['rules'],
+                                    $urlManagerConfig['rules']
+                                );
+                            }
+
+
+
+                        }
+                    }
                 }
             }
         }
+
+
 
         /* database value lang url */
         $enableDefaultLanguageUrlCode = (boolean)Setting::getValue('languageUrlCode');
