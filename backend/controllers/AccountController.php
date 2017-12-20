@@ -122,6 +122,7 @@ class AccountController extends BackendController
      * Displays a single Account model.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionView($id)
     {
@@ -158,6 +159,7 @@ class AccountController extends BackendController
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionUpdate($id)
     {
@@ -177,12 +179,15 @@ class AccountController extends BackendController
      * login as this user
      * @param $id
      * @return \yii\web\Response
+     * @throws NotFoundHttpException
      */
     public function actionLoginAs($id)
     {
         $model = $this->findModel($id);
-        $model->generateAccessToken();
-        $model->save(false);
+        if(empty($model->access_token)){
+            $model->generateAccessToken();
+            $model->save(false);
+        }
         return $this->redirect(Yii::$app->urlManagerFrontend->createAbsoluteUrl(['/account/login-as', 'token' => $model->access_token]));
     }
 
@@ -190,6 +195,7 @@ class AccountController extends BackendController
      * suspend account
      * @param $id
      * @return \yii\web\Response
+     * @throws NotFoundHttpException
      */
     public function actionSuspend($id)
     {
@@ -212,6 +218,7 @@ class AccountController extends BackendController
      * un-suspend account
      * @param $id
      * @return \yii\web\Response
+     * @throws NotFoundHttpException
      */
     public function actionUnsuspend($id)
     {
@@ -229,6 +236,8 @@ class AccountController extends BackendController
      * send new password to user
      * @param $id
      * @return bool|\yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \yii\base\Exception
      */
     public function actionNewPassword($id)
     {
@@ -267,8 +276,12 @@ class AccountController extends BackendController
     /**
      * Deletes an existing Account model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Exception
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {

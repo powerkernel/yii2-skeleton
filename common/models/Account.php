@@ -167,6 +167,7 @@ class Account extends AccountBase implements IdentityInterface
      * Generates password hash from password and sets it to the model
      *
      * @param string $password
+     * @throws yii\base\Exception
      */
     public function setPassword($password = null)
     {
@@ -358,9 +359,6 @@ class Account extends AccountBase implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        //if (!static::isTokenValid($token)) {
-        //    return null;
-        //}
         return static::findOne(['access_token' => $token]);
     }
 
