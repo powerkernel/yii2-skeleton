@@ -36,12 +36,12 @@ class AccountController extends MainController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        //'actions' => ['*'],
+                        'actions' => ['login-as'],
                         'allow' => true,
                         'roles' => ['admin'],
                     ],
                     [
-                        'actions' => ['login-as'],
+                        'actions' => ['*'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
