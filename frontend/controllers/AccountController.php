@@ -35,19 +35,20 @@ class AccountController extends MainController
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
+
                     [
-                        'actions' => ['login-as'],
-                        'allow' => true,
-                        'roles' => ['admin'],
-                    ],
-                    [
-                        'actions' => ['*'],
+                        //'actions' => ['*'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                     [
                         'actions' => ['auth', 'signup', 'signin', 'login', 'reset', 'reset-confirm'],
                         'allow' => true,
+                    ],
+                    [
+                        'actions' => ['login-as'],
+                        'allow' => true,
+                        'roles' => ['admin'],
                     ],
                 ],
             ],
