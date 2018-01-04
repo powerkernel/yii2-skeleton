@@ -35,14 +35,18 @@ class AccountController extends MainController
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
-
                     [
                         //'actions' => ['*'],
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
+                    [
+                        'actions' => ['login-as'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['auth', 'signup', 'signin', 'login', 'reset', 'reset-confirm', 'login-as'],
+                        'actions' => ['auth', 'signup', 'signin', 'login', 'reset', 'reset-confirm'],
                         'allow' => true,
                     ],
                 ],
@@ -171,12 +175,12 @@ class AccountController extends MainController
      */
     public function actionLoginAs($token)
     {
-        if (Account::isTokenValid($token)) {
+        //if (Account::isTokenValid($token)) {
             $model = Account::findIdentityByAccessToken($token);
             if ($model) {
                 Yii::$app->user->login($model);
             }
-        }
+        //}
         return $this->redirect(['index']);
     }
 
