@@ -274,7 +274,7 @@ class SettingController extends BackendController
         $file = 'settings.php';
         $vendors = [
             'harrytang',
-            'modernkernel'
+            'powerkernel'
         ];
         $settings = []; // all modules settings save here
         foreach ($vendors as $vendor) {
