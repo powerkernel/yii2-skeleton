@@ -10,14 +10,14 @@ namespace common\components;
 
 use common\models\Setting;
 use yii\base\InvalidConfigException;
-use yii\base\Object;
+use yii\base\BaseObject;
 use yii\httpclient\Client;
 
 /**
  * Class Bitly
  * @package common\components
  */
-class Bitly extends Object
+class Bitly extends BaseObject
 {
     protected $token;
     protected $api = 'https://api-ssl.bitly.com/v3';

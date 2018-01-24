@@ -9,14 +9,14 @@ namespace common\components;
 
 use common\models\Setting;
 use Yii;
-use yii\base\Object;
+use yii\base\BaseObject;
 use yii\web\View;
 
 /**
  * Class HeaderJS
  * @package common\widgets
  */
-class HeaderJS extends Object
+class HeaderJS extends BaseObject
 {
 
     public static function register()

@@ -26,15 +26,14 @@ echo "<?php\n";
  * @copyright Copyright (c) <?= date('Y') ?> Power Kernel
  */
 
-use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 /* @var $form yii\widgets\ActiveForm */
 
-$js=file_get_contents(__DIR__.'/form.min.js');
-$this->registerJs($js);
+//$js=file_get_contents(__DIR__.'/form.min.js');
+//$this->registerJs($js);
 ?>
 
 <div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form">

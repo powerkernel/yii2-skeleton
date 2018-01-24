@@ -25,7 +25,6 @@ class OwnerRule extends Rule
      */
     public function execute($user, $item, $params)
     {
-
         if (isset($params['model'])) {
             $ids=[];
             if (!empty($params['model']->created_by)) {

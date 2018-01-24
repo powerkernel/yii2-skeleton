@@ -9,14 +9,14 @@ namespace common\components;
 
 use common\models\Setting;
 use Yii;
-use yii\base\Object;
+use yii\base\BaseObject;
 use yii\web\View;
 
 /**
  * Class GAnalytics
  * @package common\widgets
  */
-class GAnalytics extends Object
+class GAnalytics extends BaseObject
 {
 
     public static function register()

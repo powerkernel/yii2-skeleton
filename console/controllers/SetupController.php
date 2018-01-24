@@ -60,7 +60,7 @@ class SetupController extends Controller
         $createBlog->description = 'Create a blog';
         $auth->add($createBlog);
 
-        // add "updatePost" permission
+        // add "updateBlog" permission
         $updateBlog = $auth->createPermission('updateBlog');
         $updateBlog->description = 'Update blog';
         $auth->add($updateBlog);
@@ -89,8 +89,10 @@ class SetupController extends Controller
         // "$updateOwnItem" will be used from "updateBlog"
         $auth->addChild($updateOwnItem, $updateBlog);
 
-        // allow "author" to update their own blog
-        $auth->addChild($author, $updateOwnItem);
+        // allow "member" to update their own item
+        $member = $auth->createRole('member');
+        $auth->add($member);
+        $auth->addChild($member, $updateOwnItem);
     }
 
     /**

@@ -11,6 +11,10 @@ namespace common\components;
 
 use yii\httpclient\Client;
 
+/**
+ * Class IP2LOC
+ * @package common\components
+ */
 class IP2LOC
 {
     public $provider='ipinfo.io'; // ipapi.co; ipinfo.io

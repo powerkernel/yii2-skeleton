@@ -37,6 +37,8 @@ class Disqus extends Widget
 
     /**
      * register variables
+     * @param $shortname
+     * @return string
      */
     protected function registerVariables($shortname)
     {
