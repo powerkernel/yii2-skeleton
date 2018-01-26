@@ -1238,6 +1238,7 @@ class Core
      */
     public static function isInMemberAreaPage()
     {
+        /* default */
         $a = [
             'SiteError',
             'SiteSearch',
@@ -1257,7 +1258,24 @@ class Core
             'BlogCreate',
             'BlogUpdate'
         ];
-
+        /* vendors */
+        $dirs=['harrytang', 'powerkernel'];
+        foreach($dirs as $dir){
+            if(file_exists(__DIR__ . '/../vendor/'.$dir)){
+                $modules = scandir(__DIR__ . '/../vendor/'.$dir);
+                foreach ($modules as $module) {
+                    if (!preg_match('/[\.]+/', $module)) // not parent dir
+                    {
+                        $memberAreaFile = __DIR__ . '/../vendor/'.$dir.'/'.$module.'/memberArea.php';
+                        if (file_exists($memberAreaFile)) {
+                            $memberAreaPage = require($memberAreaFile);
+                            $a=array_merge($a, $memberAreaPage);
+                        }
+                    }
+                }
+            }
+        }
+        //var_dump($a);
 
         if (in_array(Core::getMCA(), $a)) {
             return true;

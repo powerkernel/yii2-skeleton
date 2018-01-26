@@ -26,7 +26,5 @@ class Addthis extends BaseObject
                 Yii::$app->view->registerJsFile('//s7.addthis.com/js/300/addthis_widget.js#pubid=' . $id);
             }
         }
-
-
     }
 }
