@@ -21,7 +21,23 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'lang')->dropDownList(Yii::$app->params['mongodb']['i18n']?\common\models\mongodb\Message::getLocaleList():\common\models\Message::getLocaleList(), ['prompt'=>'Any']) ?>
 
-    <?= $form->field($model, 'text_content')->widget(TinyMce::className())  ?>
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab_content" data-toggle="tab" aria-expanded="true"><?= $model->getAttributeLabel('content') ?></a></li>
+            <li class=""><a href="#tab_photo_uploader" data-toggle="tab" aria-expanded="false"><?= Yii::t('app', 'Photo Uploader') ?></a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="tab_content">
+                <?= $form->field($model, 'text_content')->widget(TinyMce::className()) ?>
+            </div>
+            <!-- /.tab-pane -->
+            <div class="tab-pane" id="tab_photo_uploader">
+                <?= \common\widgets\FlickrUploadWidget::widget() ?>
+            </div>
+            <!-- /.tab-pane -->
+        </div>
+        <!-- /.tab-content -->
+    </div>
     <?= $form->field($model, 'text_style')->textInput(['maxlength' => true, 'placeholder'=>'top: 10px; left: 10px;']) ?>
 
     <?= $form->field($model, 'banner_url')->textInput(['maxlength' => true]) ?>

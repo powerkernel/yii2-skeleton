@@ -11,7 +11,6 @@ use common\models\Banner;
 use Yii;
 use yii\base\Widget;
 use yii\bootstrap\Html;
-use yii\db\Query;
 use yii\helpers\HtmlPurifier;
 
 /**
@@ -26,15 +25,16 @@ class CarouselBanner extends Widget
      */
     public function run()
     {
-        $query=(new Query())->select('*')
-            ->from('{{%core_banner}}')
-            ->where('`status`=:status AND (`lang` IS NULL OR `lang`=:lang)', [':status'=>Banner::STATUS_ACTIVE, ':lang'=>Yii::$app->language]);
-            //->andwhere('lang IS NULL')
-            //->orWhere(['lang'=>Yii::$app->language]);
-        //echo $query->createCommand()->rawSql;
+//        $query=(new Query())->select('*')
+//            ->from('{{%core_banner}}')
+//            ->where('`status`=:status AND (`lang` IS NULL OR `lang`=:lang)', [':status'=>Banner::STATUS_ACTIVE, ':lang'=>Yii::$app->language]);
+//            //->andwhere('lang IS NULL')
+//            //->orWhere(['lang'=>Yii::$app->language]);
+//        //echo $query->createCommand()->rawSql;
 
         //$banners = Banner::find()->where(['status' => Banner::STATUS_ACTIVE])->all();
-        $banners=$query->all();
+        $banners=Banner::find()->where(['status'=>Banner::STATUS_ACTIVE, 'lang'=>[null, Yii::$app->language]])->all();
+        //$banners=$query->all();
 
 
         if ($banners) {
