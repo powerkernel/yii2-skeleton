@@ -151,9 +151,7 @@ class Menu extends MenuBase
         $default =  [
             [['id_parent', 'class', 'active_route'], 'default', 'value' => null],
             [['label', 'url', 'position'], 'required'],
-
             [['order'], 'integer'],
-
             [['label', 'active_route', 'url', 'class', 'position', 'status'], 'string', 'max' => 255],
         ];
 
