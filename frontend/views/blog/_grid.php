@@ -21,7 +21,7 @@ use yii\bootstrap\Html;
         <div class="box-body">
             <p><a href="<?= $model->viewUrl ?>" data-pjax="0"><img src="<?= $model->thumbnail ?>" alt="<?= $model->title ?>" class="img-responsive img-thumbnail"></a></p>
             <p><?= $model->desc ?></p>
-            <p><?= Html::a(Yii::t('app', 'Read') . ' ' . Icon::widget(['icon' => 'long-arrow-right']), $model->viewUrl, ['class' => 'btn btn-info btn-xs', 'data-pjax'=>0]) ?></p>
+            <p><?= Html::a(Yii::t('app', 'Read') . ' ' . Icon::widget(['prefix'=>'fas', 'name' => 'long-arrow-right']), $model->viewUrl, ['class' => 'btn btn-info btn-xs', 'data-pjax'=>0]) ?></p>
         </div>
         <div class="box-footer">
             <div class="box-tools pull-right">

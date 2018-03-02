@@ -26,7 +26,7 @@ use powerkernel\bootstrapsocial\Button;
                 <?=
                 $form->field($model, 'login',
                     [
-                        'template' => "{label}\n<div class=\"input-group\"><div class=\"input-group-addon\">" . Icon::widget(['icon' => 'user']) . "</div>{input}</div>{hint}\n{error}",
+                        'template' => "{label}\n<div class=\"input-group\"><div class=\"input-group-addon\">" . Icon::widget(['prefix'=>'fas', 'name' => 'user']) . "</div>{input}</div>{hint}\n{error}",
                     ]
                 )
                     ->label(false)
