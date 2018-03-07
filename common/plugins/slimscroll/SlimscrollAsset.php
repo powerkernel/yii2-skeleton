@@ -16,7 +16,7 @@ use yii\web\AssetBundle;
  */
 class SlimscrollAsset extends AssetBundle
 {
-    public $sourcePath = __DIR__ . '/assets';
+    public $sourcePath = '@common/plugins/slimscroll/assets';
 
     public $js = [
         'jquery.slimscroll.min.js',

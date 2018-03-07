@@ -40,9 +40,9 @@ $description = Yii::t('app', 'Add your accounts from other websites here and use
                             </div>
                             <div class="text-center">
                                 <?php if (in_array('facebook', array_keys($auths))): ?>
-                                    <?= Html::a(Yii::t('app', Icon::widget(['icon' => 'remove']) . ' ' . 'Remove account'), Yii::$app->urlManager->createUrl(['/account/linked', 'remove' => $auths['facebook']]), ['class' => 'btn btn-warning btn-xs', 'data-confirm' => Yii::t('app', 'Are you sure want to remove this link?')]) ?>
+                                    <?= Html::a(Yii::t('app', Icon::widget(['prefix'=>'fas', 'name' => 'trash-alt']) . ' ' . 'Remove account'), Yii::$app->urlManager->createUrl(['/account/linked', 'remove' => $auths['facebook']]), ['class' => 'btn btn-warning btn-xs', 'data-confirm' => Yii::t('app', 'Are you sure want to remove this link?')]) ?>
                                 <?php else: ?>
-                                    <?= Html::a(Yii::t('app', Icon::widget(['icon' => 'plus']) . ' ' . 'Add account'), Yii::$app->urlManager->createUrl(['/account/auth', 'authclient' => 'facebook']), ['class' => 'btn btn-success btn-xs']) ?>
+                                    <?= Html::a(Yii::t('app', Icon::widget(['prefix'=>'fas', 'name' => 'plus']) . ' ' . 'Add account'), Yii::$app->urlManager->createUrl(['/account/auth', 'authclient' => 'facebook']), ['class' => 'btn btn-success btn-xs']) ?>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -64,9 +64,9 @@ $description = Yii::t('app', 'Add your accounts from other websites here and use
                             <div><hr /></div>
                             <div class="text-center">
                                 <?php if (in_array('google', array_keys($auths))): ?>
-                                    <?= Html::a(Yii::t('app', Icon::widget(['icon' => 'remove']) . ' ' . 'Remove account'), Yii::$app->urlManager->createUrl(['/account/linked', 'remove' => $auths['google']]), ['class' => 'btn btn-warning btn-xs', 'data-confirm' => Yii::t('app', 'Are you sure want to remove this link?')]) ?>
+                                    <?= Html::a(Yii::t('app', Icon::widget(['prefix'=>'fas', 'name' => 'trash-alt']) . ' ' . 'Remove account'), Yii::$app->urlManager->createUrl(['/account/linked', 'remove' => $auths['google']]), ['class' => 'btn btn-warning btn-xs', 'data-confirm' => Yii::t('app', 'Are you sure want to remove this link?')]) ?>
                                 <?php else: ?>
-                                    <?= Html::a(Yii::t('app', Icon::widget(['icon' => 'plus']) . ' ' . 'Add account'), Yii::$app->urlManager->createUrl(['/account/auth', 'authclient' => 'google']), ['class' => 'btn btn-success btn-xs']) ?>
+                                    <?= Html::a(Yii::t('app', Icon::widget(['prefix'=>'fas', 'name' => 'plus']) . ' ' . 'Add account'), Yii::$app->urlManager->createUrl(['/account/auth', 'authclient' => 'google']), ['class' => 'btn btn-success btn-xs']) ?>
                                 <?php endif; ?>
                             </div>
                         </div>

@@ -15,7 +15,7 @@ use yii\web\AssetBundle;
  */
 class FastclickAsset extends AssetBundle
 {
-    public $sourcePath = __DIR__ . '/assets';
+    public $sourcePath = '@common/plugins/fastclick/assets';
 
     public $js = [
         'fastclick.min.js',

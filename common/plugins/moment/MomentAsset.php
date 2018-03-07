@@ -16,7 +16,7 @@ use yii\web\AssetBundle;
  */
 class MomentAsset extends AssetBundle
 {
-    public $sourcePath = __DIR__ . '/assets';
+    public $sourcePath = '@common/plugins/moment/assets';
 
     public $js = [
         'moment.min.js'

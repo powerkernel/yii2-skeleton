@@ -125,10 +125,10 @@ $this->title = Yii::t('app', 'Dashboard');
                 <div>
                     <?php if($url['exist']):?>
                         <code class="text-green"><?= $url['url'] ?></code>
-                        <?= Icon::widget(['icon'=>'check text-green']) ?>
+                        <?= Icon::widget(['prefix'=>'fas', 'name'=>'check', 'options'=>['class'=>'text-green']]) ?>
                     <?php else:?>
                         <code class="text-red"><?= $url['url'] ?></code>
-                        <?= Icon::widget(['icon'=>'exclamation-triangle text-red']) ?>
+                        <?= Icon::widget(['prefix'=>'fas', 'name'=>'exclamation-triangle', 'options'=>['class'=>'text-red']]) ?>
                     <?php endif;?>
                 </div>
             <?php endforeach; ?>
@@ -136,10 +136,10 @@ $this->title = Yii::t('app', 'Dashboard');
                 <div>
                     <?php if($icon['exist']):?>
                         <code class="text-green"><?= $icon['file'] ?></code>
-                        <?= Icon::widget(['icon'=>'check text-green']) ?>
+                        <?= Icon::widget(['prefix'=>'fas', 'name'=>'check', 'options'=>['class'=>'text-green']]) ?>
                     <?php else:?>
                         <code class="text-red"><?= $icon['file'] ?></code>
-                        <?= Icon::widget(['icon'=>'exclamation-triangle text-red']) ?>
+                        <?= Icon::widget(['prefix'=>'fas', 'name'=>'exclamation-triangle', 'options'=>['class'=>'text-red']]) ?>
                     <?php endif;?>
                 </div>
             <?php endforeach; ?>

@@ -14,7 +14,7 @@ echo Carousel::widget([
         'class'=>'carousel slide',
     ],
     'controls'=>[
-        \powerkernel\fontawesome\Icon::widget(['icon'=>'chevron-left']),
-        \powerkernel\fontawesome\Icon::widget(['icon'=>'chevron-right']),
+        \powerkernel\fontawesome\Icon::widget(['prefix'=>'fas', 'name'=>'chevron-left']),
+        \powerkernel\fontawesome\Icon::widget(['prefix'=>'fas', 'name'=>'chevron-right']),
     ]
 ]);

@@ -16,9 +16,9 @@ $this->registerJs('$(".nav-home").on("click", function(){window.location.replace
     <?php if(!isset($item['enabled']) or $item['enabled']===true):?>
         <li class="treeview <?= $item['active']?'active menu-open':'' ?>">
             <a href="#">
-                <?= Icon::widget(['icon'=>$item['icon']]) ?> <span><?= $item['title'] ?></span>
+                <?= Icon::widget(['prefix'=>'fas', 'name'=>$item['icon']]) ?> <span><?= $item['title'] ?></span>
                 <span class="pull-right-container">
-                    <?= Icon::widget(['icon'=>'angle-left pull-right']) ?>
+                    <?php //Icon::widget(['prefix'=>'fas', 'name'=>'angle-left', 'options'=>['class'=>'pull-right']]) ?>
                 </span>
             </a>
             <ul class="treeview-menu">
@@ -27,7 +27,7 @@ $this->registerJs('$(".nav-home").on("click", function(){window.location.replace
                 <?php if(!isset($menu['enabled']) or $menu['enabled']===true):?>
                     <li class="<?= empty($menu['active']) ? '' : 'active' ?>">
                         <a href="<?= Yii::$app->urlManager->createUrl($menu['url']) ?>">
-                            <?= Icon::widget(['icon' => $menu['icon'] ? $menu['icon'] : 'link']) ?>
+                            <?= Icon::widget(['prefix'=>'fas', 'name' => $menu['icon'] ? $menu['icon'] : 'link']) ?>
                             <span><?= $menu['label'] ?></span>
                         </a>
                     </li>

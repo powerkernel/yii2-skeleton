@@ -19,7 +19,7 @@ $url = Core::getStorageUrl();
                 </a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                         data-target="#navbar-collapse">
-                    <?= Icon::widget(['icon' => 'bars']) ?>
+                    <?= Icon::widget(['prefix'=>'fas', 'name' => 'bars']) ?>
                 </button>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -38,7 +38,7 @@ $url = Core::getStorageUrl();
                                    placeholder="<?= Yii::t('app', 'Search') ?>">
                             <span class="input-group-btn">
                       <button type="submit" class="btn btn-default btn-flat">
-                          <?= Icon::widget(['icon' => 'search']) ?>
+                          <?= Icon::widget(['prefix'=>'fas', 'name' => 'search']) ?>
                       </button>
                     </span>
                         </div>
@@ -54,20 +54,20 @@ $url = Core::getStorageUrl();
                     <?php if (!Yii::$app->user->isGuest): ?>
                         <li class="<?= Core::checkMCA('', 'account', '*') ? 'active' : '' ?>">
                             <a href="<?= Yii::$app->urlManager->createUrl(['/account']) ?>">
-                                <?= Icon::widget(['icon' => 'user']) ?>
+                                <?= Icon::widget(['prefix'=>'fas', 'name' => 'user']) ?>
                                 <span><?= Yii::$app->user->identity->fullname ?></span>
                             </a>
                         </li>
                         <li>
                             <a href="<?= Yii::$app->urlManager->createUrl(['/site/logout']) ?>">
                                 <span><?= Yii::t('app', 'Logout') ?></span>
-                                <?= Icon::widget(['icon' => 'sign-out']) ?>
+                                <?= Icon::widget(['prefix'=>'fas', 'name' => 'sign-out']) ?>
                             </a>
                         </li>
                     <?php else: ?>
                         <li>
                             <a href="<?= Yii::$app->urlManager->createUrl(Yii::$app->user->loginUrl) ?>">
-                                <?= Icon::widget(['icon' => 'key']) ?>
+                                <?= Icon::widget(['prefix'=>'fas', 'name' => 'sign-in']) ?>
                                 <span><?= Yii::t('app', 'Login') ?></span>
                             </a>
                         </li>
