@@ -16,19 +16,18 @@ $this->registerJs('$(".nav-home").on("click", function(){window.location.replace
     <?php if(!isset($item['enabled']) or $item['enabled']===true):?>
         <li class="treeview <?= $item['active']?'active menu-open':'' ?>">
             <a href="#">
-                <?= Icon::widget(['prefix'=>'fas', 'name'=>$item['icon']]) ?> <span><?= $item['title'] ?></span>
+                <?= Icon::widget(['prefix'=>'fas fa-fw', 'name'=>$item['icon']]) ?> <span class="treeview-label"><?= $item['title'] ?></span>
                 <span class="pull-right-container">
                     <?php //Icon::widget(['prefix'=>'fas', 'name'=>'angle-left', 'options'=>['class'=>'pull-right']]) ?>
                 </span>
             </a>
             <ul class="treeview-menu">
-
             <?php foreach ($item['items'] as $menu): ?>
                 <?php if(!isset($menu['enabled']) or $menu['enabled']===true):?>
                     <li class="<?= empty($menu['active']) ? '' : 'active' ?>">
                         <a href="<?= Yii::$app->urlManager->createUrl($menu['url']) ?>">
-                            <?= Icon::widget(['prefix'=>'fas', 'name' => $menu['icon'] ? $menu['icon'] : 'link']) ?>
-                            <span><?= $menu['label'] ?></span>
+                            <?= Icon::widget(['prefix'=>'fas fa-fw', 'name' => $menu['icon'] ? $menu['icon'] : 'link']) ?>
+                            <span class="treeview-label"><?= $menu['label'] ?></span>
                         </a>
                     </li>
                 <?php endif;?>

@@ -26,12 +26,10 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
         <div class="col-xs-6 col-sm-4 col-lg-3">
             <div class="box box-<?= isset($services['flickr-photo'])?'success':'default' ?>">
                 <div class="box-header with-border">
-                    <?= Button::widget([
-                        'button' => 'flickr',
-                        'iconOnly' => false,
-                        'label' => 'Flickr Photo',
-                        'link' => Yii::$app->urlManager->createUrl(['/service/auth', 'authclient'=>'flickr-photo'])
-                    ]) ?>
+                    <a href="<?= Yii::$app->urlManager->createUrl(['/service/auth', 'authclient'=>'flickr-photo']) ?>" class="">
+                        <?= \powerkernel\fontawesome\Icon::widget(['name'=>'flickr', 'prefix'=>'fab']) ?>
+                        Flickr
+                    </a>
                 </div>
                 <div class="box-body">
                     <h5 class="text-center">
