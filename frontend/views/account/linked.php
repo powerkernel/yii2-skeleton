@@ -5,7 +5,7 @@
 
 /* @var $auths [] */
 
-use powerkernel\bootstrapsocial\Button;
+
 use powerkernel\fontawesome\Icon;
 use yii\bootstrap\Html;
 
@@ -28,7 +28,8 @@ $description = Yii::t('app', 'Add your accounts from other websites here and use
                     <div class="col-sm-3">
                         <div class="well well-sm">
                             <div class="text-center">
-                                <?= Button::widget(['button' => 'facebook', 'iconOnly' => true, 'label' => 'Facebook']) ?>
+                                <?= Icon::widget(['prefix'=>'fab', 'name'=>'facebook']) ?>
+                                <?php // Button::widget(['button' => 'facebook', 'iconOnly' => true, 'label' => 'Facebook']) ?>
                                 <?php if (in_array('facebook', array_keys($auths))): ?>
                                     <span class="text-success"><?= Yii::t('app', 'Facebook account linked') ?></span>
                                 <?php else: ?>
@@ -54,7 +55,8 @@ $description = Yii::t('app', 'Add your accounts from other websites here and use
                         <div class="well well-sm">
 
                             <div class="text-center">
-                                <?= Button::widget(['button' => 'google', 'iconOnly' => true, 'label' => 'Google']) ?>
+                                <?= Icon::widget(['prefix'=>'fab', 'name'=>'google']) ?>
+                                <?php // Button::widget(['button' => 'google', 'iconOnly' => true, 'label' => 'Google']) ?>
                                 <?php if (in_array('google', array_keys($auths))): ?>
                                     <span class="text-success"><?= Yii::t('app', 'Google account linked') ?></span>
                                 <?php else: ?>
