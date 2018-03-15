@@ -95,20 +95,18 @@ use powerkernel\bootstrapsocial\Button;
         <div class="text-center" style="margin-bottom: 10px;"><strong><?= Yii::t('app', 'or log in with')?></strong></div>
 
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-12 text-center">
                 <?php if (Yii::$app->authClientCollection->hasClient('facebook')): ?>
-                    <?= Button::widget([
-                        'button' => 'facebook',
-                        'link' => Yii::$app->urlManager->createUrl(['/account/auth', 'authclient' => 'facebook']),
-                        'label' => Yii::t('app', 'Login with Facebook')
-                    ]) ?>
+                    <a title="Facebook" style="color: #3B5998;" href="<?= Yii::$app->urlManager->createUrl(['/account/auth', 'authclient' => 'facebook']) ?>" class="btn btn-default">
+                        <?= Icon::widget(['prefix'=>'fab', 'name'=>'facebook', 'size'=>'fa-3x']) ?>
+                        <?php // Yii::t('app', 'Login with Facebook') ?>
+                    </a>
                 <?php endif; ?>
                 <?php if (Yii::$app->authClientCollection->hasClient('google')): ?>
-                    <?= Button::widget([
-                        'button' => 'google',
-                        'link' => Yii::$app->urlManager->createUrl(['/account/auth', 'authclient' => 'google']),
-                        'label' => Yii::t('app', 'Login with Google')
-                    ]) ?>
+                    <a title="Google" style="color: #EA4335;" href="<?= Yii::$app->urlManager->createUrl(['/account/auth', 'authclient' => 'google']) ?>" class="btn btn-default">
+                        <?= Icon::widget(['prefix'=>'fab', 'name'=>'google', 'size'=>'fa-3x']) ?>
+                        <?php // Yii::t('app', 'Login with Google') ?>
+                    </a>
                 <?php endif; ?>
             </div>
         </div>

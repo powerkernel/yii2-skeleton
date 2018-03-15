@@ -7,7 +7,6 @@
 
 
 use common\widgets\Disqus;
-use frontend\widgets\Adsense;
 use frontend\widgets\LikeButton;
 use frontend\widgets\PlusOneButton;
 
@@ -48,7 +47,7 @@ $js = file_get_contents(__DIR__ . '/view.min.js');
 $this->registerJs($js);
 $css = file_get_contents(__DIR__ . '/view.css');
 $this->registerCss($css);
-
+\common\components\AdsenseAuto::register();
 ?>
 <div class="blog-view">
     <div class="row">
@@ -70,7 +69,6 @@ $this->registerCss($css);
                                href="<?= Yii::$app->urlManager->createUrl(['/blog/update', 'id' => (string)$model->id]) ?>"><?= Yii::t('app', 'Edit') ?></a>
                         </div>
                     <?php endif; ?>
-                    <?= Adsense::widget() ?>
                 </div>
                 <div class="box-footer">
                     <div class="pull-left">
