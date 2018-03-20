@@ -92,11 +92,10 @@ class SignIn extends Widget
         $account->fullname = $signin->login;
         if($signin->type=='email'){
             $account->email = $signin->login;
-            $account->email_verified = 1;
+
         }
         else {
             $account->phone = $signin->login;
-            $account->phone_verified = 1;
         }
 
         if ($account->save()) {

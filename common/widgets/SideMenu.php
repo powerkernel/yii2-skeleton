@@ -132,10 +132,7 @@ class SideMenu extends Widget
             'icon' => 'user',
             'items' => [
                 ['icon' => 'id-card', 'label' => Yii::t('app', 'Profile'), 'url' => ['/account/index'], 'active' => Core::checkMCA(null, 'account', 'index')],
-                ['icon' => 'envelope', 'label' => Yii::t('app', 'Change Email'), 'url' => ['/account/email'], 'active' => Core::checkMCA(null, 'account', 'email')],
-                ['icon' => 'phone', 'label' => Yii::t('app', 'Change Phone'), 'url' => ['/account/phone'], 'active' => Core::checkMCA(null, 'account', 'phone')],
-                ['icon' => 'lock', 'label' => Yii::t('app', 'Password'), 'url' => ['/account/password'], 'active' => Core::checkMCA(null, 'account', 'password'), 'enabled'=>!Setting::getValue('passwordLessLogin')],
-                ['icon' => 'puzzle-piece', 'label' => Yii::t('app', 'Linked Accounts'), 'url' => ['/account/linked'], 'active' => Core::checkMCA(null, 'account', 'linked')],
+                ['icon' => 'phone', 'label' => Yii::t('app', 'Update Phone'), 'url' => ['/account/phone'], 'active' => Core::checkMCA(null, 'account', 'phone')],
             ]
         ];
         $menu['active'] = SideMenu::isActive($menu['items']);
@@ -158,4 +155,4 @@ class SideMenu extends Widget
     }
 
 
-} 
+}

@@ -167,7 +167,7 @@ class AccountController extends BackendController
         $model->setScenario('update');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => (string)$model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,

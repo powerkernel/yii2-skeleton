@@ -1,5 +1,4 @@
 <?php
-use common\models\Setting;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
@@ -38,9 +37,5 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
 //$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="account-login-index">
-    <?php if (Setting::getValue('passwordLessLogin')): ?>
-        <?php echo \common\widgets\SignIn::widget() ?>
-    <?php else: ?>
-        <?php echo \common\widgets\PassSignIn::widget() ?>
-    <?php endif; ?>
+    <?php echo \common\widgets\SignIn::widget() ?>
 </div>

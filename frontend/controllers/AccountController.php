@@ -82,35 +82,6 @@ class AccountController extends MainController
     }
 
 
-    /**
-     * change email
-     * @return string
-     */
-    public function actionPassword()
-    {
-        if (Setting::getValue('passwordLessLogin')) {
-            return $this->redirect(['index']);
-        }
-        $model = new ChangePasswordForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->changePassword()) {
-            Yii::$app->session->setFlash('success', Yii::t('app', 'Success! Your Password has been changed!'));
-        }
-        return $this->render('password', ['model' => $model]);
-    }
-
-    /**
-     * change email
-     * @return string
-     */
-    public function actionEmail()
-    {
-        $model = new ChangeEmailForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->changeEmail()) {
-            Yii::$app->session->setFlash('info', Yii::t('app', 'We sent a verification link to your new email address.'));
-        }
-
-        return $this->render('email', ['model' => $model]);
-    }
 
     /**
      * change phone
@@ -146,30 +117,6 @@ class AccountController extends MainController
     }
 
     /**
-     * @param $token
-     * @return \yii\web\Response
-     */
-    public
-    function actionEmailConfirm($token)
-    {
-        $user = Yii::$app->user->identity;
-        if (Account::isTokenValid($token) == false || $user->change_email_token != $token) {
-            Yii::$app->session->setFlash('error', Yii::t('app', 'Invalid or expired token.'));
-        } else {
-            $user->email = $user->new_email;
-            $user->new_email = null;
-            $user->email_verified = 1;
-            $user->removeChangeEmailToken();
-            if ($user->save()) {
-                Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Email successfully changed.'));
-            } else {
-                Yii::$app->getSession()->setFlash('error', Yii::t('app', 'Sorry, something went wrong. Please try again later.'));
-            }
-        }
-        return $this->redirect(['account/index']);
-    }
-
-    /**
      * login in as
      * @param $token
      * @return \yii\web\Response
@@ -177,10 +124,10 @@ class AccountController extends MainController
     public function actionLoginAs($token)
     {
         //if (Account::isTokenValid($token)) {
-            $model = Account::findIdentityByAccessToken($token);
-            if ($model) {
-                Yii::$app->user->login($model);
-            }
+        $model = Account::findIdentityByAccessToken($token);
+        if ($model) {
+            Yii::$app->user->login($model);
+        }
         //}
         return $this->redirect(['index']);
     }
@@ -206,38 +153,6 @@ class AccountController extends MainController
         return $this->render('index', ['model' => $model]);
     }
 
-    /**
-     * @param string $remove
-     * @return string
-     * @throws \Exception
-     * @throws \yii\db\StaleObjectException
-     */
-    public
-    function actionLinked($remove = '')
-    {
-        $model = Yii::$app->user->identity;
-        $auths = [];
-        if ($model->auths) {
-            foreach ($model->auths as $auth) {
-                if (is_a($auth, '\yii\mongodb\ActiveRecord')) {
-                    $auths[$auth->source] = (string)$auth->_id;
-                } else {
-                    $auths[$auth->source] = $auth->id;
-                }
-
-
-                if (!empty($remove) && $remove == $auth->id) {
-                    Auth::findOne($remove)->delete();
-                    Yii::$app->session->setFlash('success', Yii::t('app', '{SOURCE} account removed.', ['SOURCE' => ucfirst($auth->source)]));
-                    //$auths[$auth->source]=null;
-                    return $this->redirect(['linked']);
-                }
-            }
-        }
-
-
-        return $this->render('linked', ['model' => $model, 'auths' => $auths]);
-    }
 
     /**
      * The signup page
@@ -288,57 +203,6 @@ class AccountController extends MainController
         ]);
 
 
-    }
-
-
-    /**
-     * reset password
-     * @return string|\yii\web\Response
-     */
-    public
-    function actionReset()
-    {
-        if (Setting::getValue('passwordLessLogin')) {
-            return $this->redirect(['login']);
-        }
-        $this->layout = 'login';
-        $model = new PasswordResetRequestForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail()) {
-                Yii::$app->getSession()->setFlash('success', Yii::t('app', 'Check your email for further instructions.'));
-                return $this->goBack();
-            } else {
-                Yii::$app->getSession()->setFlash('error', Yii::t('app', 'Sorry, we are unable to reset password for email provided.'));
-            }
-        }
-
-        return $this->render('reset', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * set new password
-     * @param $token
-     * @return string|\yii\web\Response
-     */
-    public
-    function actionResetConfirm($token)
-    {
-        $this->layout = 'login';
-        $model = new ResetPasswordForm();
-        $account = Account::findByPasswordResetToken($token);
-        if ($account) {
-            if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->setPassword($account)) {
-                Yii::$app->getSession()->setFlash('success', Yii::t('app', 'New password was saved.'));
-                return $this->redirect(['/account/login']);
-            }
-        }
-
-        return $this->render('reset-confirm', [
-            'model' => $model,
-            'account' => $account
-        ]);
     }
 
 

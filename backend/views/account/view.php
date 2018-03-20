@@ -91,16 +91,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= Html::a(Yii::t('app', 'Billing Info'), Yii::$app->urlManager->createUrl(['/billing/info/check', 'id'=>is_a($model, '\yii\mongodb\ActiveRecord')?(string)$model->_id:$model->id]), ['class' => 'btn btn-primary']) ?>
                 <?php endif;?>
 
-                <?php if($model->status!=Account::STATUS_SUSPENDED && !Setting::getValue('passwordLessLogin')):?>
-                <?= Html::a(Yii::t('app', 'Send New Password'), ['new-password', 'id' => is_a($model, '\yii\mongodb\ActiveRecord')?(string)$model->_id:$model->id], [
-                    'class' => 'btn btn-info',
-                    'data' => [
-                        'confirm' => Yii::t('app', 'Send new password to this user?'),
-                        //'method' => 'post',
-                    ],
-                ]) ?>
-                <?php endif;?>
-
                 <?php if($model->canSuspend()):?>
                 <?= Html::a(Yii::t('app', 'Suspend'), ['suspend', 'id' => is_a($model, '\yii\mongodb\ActiveRecord')?(string)$model->_id:$model->id], [
                     'class' => 'btn btn-danger',

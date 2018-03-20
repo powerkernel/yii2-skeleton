@@ -63,5 +63,4 @@ class SignupForm extends Model
             'captcha' => Yii::t('app', 'Verify Code'),
         ];
     }
-
 }

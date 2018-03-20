@@ -20,7 +20,7 @@ class AccountSearch extends Account
     {
         return [
             [['fullname_changed', 'email_verified', 'role', 'status'], 'safe'],
-            [['seo_name', 'fullname', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'new_email', 'change_email_token', 'language', 'timezone'], 'safe'],
+            [['seo_name', 'fullname', 'auth_key', 'email', 'new_email', 'change_email_token', 'language', 'timezone'], 'safe'],
             [['created_at'], 'safe']
         ];
     }
@@ -64,7 +64,6 @@ class AccountSearch extends Account
         $query->andFilterWhere([
             //'id' => $this->id,
             'fullname_changed' => $this->fullname_changed,
-            'email_verified' => $this->email_verified,
             'role' => $this->role,
             'status' => $this->status,
             //'created_at' => $this->created_at,
@@ -74,11 +73,7 @@ class AccountSearch extends Account
         $query->andFilterWhere(['like', 'seo_name', $this->seo_name])
             ->andFilterWhere(['like', 'fullname', $this->fullname])
             ->andFilterWhere(['like', 'auth_key', $this->auth_key])
-            ->andFilterWhere(['like', 'password_hash', $this->password_hash])
-            ->andFilterWhere(['like', 'password_reset_token', $this->password_reset_token])
             ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'new_email', $this->new_email])
-            ->andFilterWhere(['like', 'change_email_token', $this->change_email_token])
             ->andFilterWhere(['like', 'language', $this->language])
             ->andFilterWhere(['like', 'timezone', $this->timezone]);
 

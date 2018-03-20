@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\behaviors\UTCDateTimeBehavior;
 use common\Core;
 use yii;
 use yii\web\IdentityInterface;
@@ -15,37 +16,93 @@ use yii\web\IdentityInterface;
  * @property integer $fullname_changed
  * @property string $auth_key
  * @property string $access_token
- * @property string $password_hash
- * @property string $password_reset_token
- *
  * @property string $email
- * @property integer $email_verified
- * @property string $new_email
- * @property string $change_email_token
- *
  * @property string $phone
- * @property integer $phone_verified
  * @property string $new_phone
  * @property string $new_phone_code
  * @property integer $role
  * @property string $language
  * @property string $timezone
  * @property string $status
- * @property integer|\MongoDB\BSON\UTCDateTime $created_at
- * @property integer|\MongoDB\BSON\UTCDateTime $updated_at
+ * @property \MongoDB\BSON\UTCDateTime $created_at
+ * @property \MongoDB\BSON\UTCDateTime $updated_at
  *
- * @property string $password write-only password
  * @property mixed statusText
  * @property Auth[] $auths
  */
-class Account extends AccountBase implements IdentityInterface
+class Account extends \yii\mongodb\ActiveRecord implements IdentityInterface
 {
 
     const STATUS_ACTIVE = 'STATUS_ACTIVE';//10;
     const STATUS_SUSPENDED = 'STATUS_SUSPENDED';//20;
 
-    public $passwordText;
-    public $emailNewAccount = true;
+    /**
+     * @inheritdoc
+     */
+    public static function collectionName()
+    {
+        return 'accounts';
+    }
+
+    /**
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            '_id',
+            'seo_name',
+            'fullname',
+            'fullname_changed',
+            'auth_key',
+            'access_token',
+            'email',
+            'phone',
+            'new_phone',
+            'new_phone_code',
+            'role',
+            'language',
+            'timezone',
+            'status',
+            'created_at',
+            'updated_at',
+        ];
+    }
+
+    /**
+     * get id
+     * @return \MongoDB\BSON\ObjectID|string
+     */
+    public function getId()
+    {
+        return $this->_id;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            UTCDateTimeBehavior::class,
+        ];
+    }
+
+    /**
+     * @return int timestamp
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at->toDateTime()->format('U');
+    }
+
+    /**
+     * @return int timestamp
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at->toDateTime()->format('U');
+    }
 
     /**
      * get status list
@@ -108,17 +165,7 @@ class Account extends AccountBase implements IdentityInterface
      */
     public function rules()
     {
-        if (is_a($this, '\yii\mongodb\ActiveRecord')) {
-            $date = [
-                [['created_at', 'updated_at'], 'yii\mongodb\validators\MongoDateValidator']
-            ];
-        } else {
-            $date = [
-                [['created_at', 'updated_at'], 'integer']
-            ];
-        }
-
-        $default = [
+        return [
             [['fullname'], 'required'],
             [['fullname', 'email'], 'filter', 'filter' => 'trim'],
 
@@ -127,17 +174,19 @@ class Account extends AccountBase implements IdentityInterface
             [['phone'], 'match', 'pattern' => '/^\+[1-9][0-9]{9,14}$/'],
 
             [['fullname_changed', 'role'], 'integer'],
-            [['seo_name', 'fullname', 'password_hash', 'password_reset_token', 'access_token', 'email', 'status'], 'string', 'max' => 255],
+            [['seo_name', 'fullname', 'access_token', 'email', 'status'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
             [['language'], 'string', 'max' => 5],
 
             [['timezone'], 'string', 'max' => 100],
             [['timezone'], 'in', 'range' => timezone_identifiers_list()],
 
+            [['created_at', 'updated_at'], 'yii\mongodb\validators\MongoDateValidator'],
+
             /* update action */
             [['fullname', 'email', 'language', 'timezone'], 'required', 'on' => ['create', 'update']],
         ];
-        return array_merge($default, $date);
+
     }
 
     /**
@@ -150,8 +199,6 @@ class Account extends AccountBase implements IdentityInterface
             'seo_name' => Yii::t('app', 'SEO name'),
             'fullname' => Yii::t('app', 'Full Name'),
             'auth_key' => Yii::t('app', 'Auth Key'),
-            'password_hash' => Yii::t('app', 'Password Hash'),
-            'password_reset_token' => Yii::t('app', 'Password Reset Token'),
             'email' => Yii::t('app', 'Email'),
             'phone' => Yii::t('app', 'Phone'),
             'role' => Yii::t('app', 'Role'),
@@ -161,21 +208,6 @@ class Account extends AccountBase implements IdentityInterface
             'created_at' => Yii::t('app', 'Created At'),
             'updated_at' => Yii::t('app', 'Updated At'),
         ];
-    }
-
-    /**
-     * Generates password hash from password and sets it to the model
-     *
-     * @param string $password
-     * @throws yii\base\Exception
-     */
-    public function setPassword($password = null)
-    {
-        $this->passwordText = $password;
-        if ($this->passwordText === null) {
-            $this->passwordText = Yii::$app->security->generateRandomString(9);
-        }
-        $this->password_hash = Yii::$app->security->generatePasswordHash($this->passwordText);
     }
 
     /**
@@ -195,7 +227,6 @@ class Account extends AccountBase implements IdentityInterface
     {
 
         if ($insert) {
-            $this->setPassword();
             $this->generateAuthKey();
 
             /* default timezone and language */
@@ -217,25 +248,13 @@ class Account extends AccountBase implements IdentityInterface
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
-        if (is_a($this, '\yii\mongodb\ActiveRecord')) {
-            $id = (string)$this->_id;
-        } else {
-            $id = $this->id;
-        }
-
+        $id = (string)$this->_id;
         if ($insert) {
-
-
             /* Admin */
             if (Account::find()->count() == 1) {
                 $auth = Yii::$app->authManager;
                 $admin = $auth->getRole('admin');
                 $auth->assign($admin, $id);
-                Yii::$app->session->setFlash('info', Yii::t('app', 'Your admin account password is {PASS}', ['PASS' => $this->passwordText]));
-            } else {
-                if ($this->emailNewAccount) {
-                    $this->sendMailNewUser();
-                }
             }
         }
 
@@ -243,27 +262,12 @@ class Account extends AccountBase implements IdentityInterface
         if (in_array('fullname', array_keys($changedAttributes))) {
             /* if reach max, revert name */
             if (!$this->canChangeName()) {
-                if (is_a($this, '\yii\mongodb\ActiveRecord')) {
-                    Yii::$app->mongodb->createCommand()
-                        ->update('accounts', ['_id' => $this->_id], ['fullname' => $changedAttributes['fullname']]);
-                } else {
-                    Yii::$app->db->createCommand()
-                        ->update('{{%core_account}}', ['fullname' => $changedAttributes['fullname']], ['id' => $this->id])
-                        ->execute();
-                }
-
+                Yii::$app->mongodb->createCommand()
+                    ->update('accounts', ['_id' => $this->_id], ['fullname' => $changedAttributes['fullname']]);
             } else {
                 /* count changed ++ */
-                if (is_a($this, '\yii\mongodb\ActiveRecord')) {
-                    Yii::$app->mongodb->createCommand()
-                        ->update('accounts', ['_id' => $this->_id], ['fullname_changed' => $this->fullname_changed + 1]);
-
-                } else {
-                    Yii::$app->db->createCommand()
-                        ->update('{{%core_account}}', ['fullname_changed' => $this->fullname_changed + 1], ['id' => $this->id])
-                        ->execute();
-                }
-
+                Yii::$app->mongodb->createCommand()
+                    ->update('accounts', ['_id' => $this->_id], ['fullname_changed' => $this->fullname_changed + 1]);
             }
         }
     }
@@ -306,18 +310,6 @@ class Account extends AccountBase implements IdentityInterface
 
 
     /**
-     * Validates password
-     *
-     * @param string $password password to validate
-     * @return boolean if password provided is valid for current user
-     */
-    public function validatePassword($password)
-    {
-        return Yii::$app->security->validatePassword($password, $this->password_hash);
-    }
-
-
-    /**
      * Finds user by email
      *
      * @param string $email
@@ -347,11 +339,7 @@ class Account extends AccountBase implements IdentityInterface
         if (is_array($id)) {
             $id = array_values($id)[0];
         }
-        if (Yii::$app->params['mongodb']['account']) {
-            return static::findOne(['_id' => $id, 'status' => self::STATUS_ACTIVE]);
-        } else {
-            return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
-        }
+        return static::findOne(['_id' => $id, 'status' => self::STATUS_ACTIVE]);
     }
 
     /**
@@ -375,18 +363,6 @@ class Account extends AccountBase implements IdentityInterface
     /**
      * @inheritdoc
      */
-    public function getId()
-    {
-        if (is_a($this, '\yii\mongodb\ActiveRecord')) {
-            return (string)$this->_id;
-        } else {
-            return $this->id;
-        }
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getAuthKey()
     {
         return $this->auth_key;
@@ -400,40 +376,6 @@ class Account extends AccountBase implements IdentityInterface
         return $this->getAuthKey() === $authKey;
     }
 
-    /**
-     * Finds user by password reset token
-     *
-     * @param string $token password reset token
-     * @return static|null
-     */
-    public static function findByPasswordResetToken($token)
-    {
-        if (!static::isTokenValid($token)) {
-            return null;
-        }
-
-        return static::findOne([
-            'password_reset_token' => $token,
-            'status' => self::STATUS_ACTIVE,
-        ]);
-    }
-
-
-    /**
-     * Generates new password reset token
-     */
-    public function generatePasswordResetToken()
-    {
-        $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
-    }
-
-    /**
-     * Removes password reset token
-     */
-    public function removePasswordResetToken()
-    {
-        $this->password_reset_token = null;
-    }
 
     /**
      * Generates new change email token
@@ -500,28 +442,15 @@ class Account extends AccountBase implements IdentityInterface
      */
     public function canSuspend()
     {
-        if (is_a($this, '\yii\mongodb\ActiveRecord')) {
-            if (
-                (in_array((string)$this->_id, Yii::$app->params['rootAdmin']))
-                or
-                Yii::$app->user->id == $this->_id
-                or
-                $this->status == self::STATUS_SUSPENDED
-            ) {
-                return false;
-            }
-        } else {
-            if (
-                (in_array($this->id, Yii::$app->params['rootAdmin']))
-                or
-                Yii::$app->user->id == $this->id
-                or
-                $this->status == self::STATUS_SUSPENDED
-            ) {
-                return false;
-            }
+        if (
+            (in_array((string)$this->_id, Yii::$app->params['rootAdmin']))
+            or
+            Yii::$app->user->id == $this->_id
+            or
+            $this->status == self::STATUS_SUSPENDED
+        ) {
+            return false;
         }
-
         return true;
     }
 
