@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="tab_content">
-                <?= $form->field($model, 'text_content')->widget(TinyMce::className()) ?>
+                <?= $form->field($model, 'text_content')->widget(TinyMce::class()) ?>
             </div>
             <!-- /.tab-pane -->
             <div class="tab-pane" id="tab_photo_uploader">

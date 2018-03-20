@@ -124,7 +124,7 @@ class SignIn extends SignInBase
             [['code'], 'match', 'pattern' => '/^[0-9]{6}$/'],
 
             [['status'], 'string', 'max' => 20],
-            //['captcha', ReCaptchaValidator::className(), 'message' => Yii::t('app', 'Prove you are NOT a robot')]
+            //['captcha', ReCaptchaValidator::class, 'message' => Yii::t('app', 'Prove you are NOT a robot')]
         ];
 
         return array_merge($default, $date, $login);

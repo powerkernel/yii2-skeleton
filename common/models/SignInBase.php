@@ -58,7 +58,7 @@ if (Yii::$app->params['mongodb']['signin']) {
         public function behaviors()
         {
             return [
-                UTCDateTimeBehavior::className(),
+                UTCDateTimeBehavior::class,
             ];
         }
 
@@ -99,7 +99,7 @@ if (Yii::$app->params['mongodb']['signin']) {
         public function behaviors()
         {
             return [
-                TimestampBehavior::className(),
+                TimestampBehavior::class,
             ];
         }
 

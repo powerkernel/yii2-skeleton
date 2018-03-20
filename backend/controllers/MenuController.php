@@ -28,11 +28,11 @@ class MenuController extends BackendController
         $adminRules = parent::behaviors()['access']['rules'];
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => $adminRules,
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -48,7 +48,7 @@ class MenuController extends BackendController
     {
         return [
             'sorting' => [
-                'class' => Sorting::className(),
+                'class' => Sorting::class,
                 'query' => Menu::find(),
             ],
         ];
@@ -121,7 +121,6 @@ class MenuController extends BackendController
      * @throws NotFoundHttpException
      * @throws \Exception
      * @throws \yii\db\StaleObjectException
-     * @throws \Throwable
      */
     public function actionDelete($id)
     {

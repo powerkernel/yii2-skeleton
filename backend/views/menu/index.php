@@ -35,7 +35,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
                     'sorter'=>[],
-                    'rowOptions' => function ($model, $key, $index, $grid) {
+                    'rowOptions' => function ($model) {
                         return ['data-sortable-id' => $model->id];
                     },
                     'options' => [
@@ -47,7 +47,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                     'columns' => [
                         //['class' => 'yii\grid\SerialColumn'],
                         [
-                            'class' => Column::className(),
+                            'class' => Column::class,
                         ],
 
                         ['attribute' => 'id_parent', 'value' => function ($model){return $model->parent?$model->parent->label:null;}, 'filter'=> Menu::getRootMenu()],

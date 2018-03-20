@@ -26,7 +26,7 @@ class Auth extends AuthBase
             [['user_id', 'source', 'source_id'], 'required'],
             //[['user_id'], 'integer'],
             [['source', 'source_id'], 'string', 'max' => 255],
-            //[['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['user_id' => 'id']],
+            //[['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Account::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -49,9 +49,9 @@ class Auth extends AuthBase
     public function getUser()
     {
         if (Yii::$app->params['mongodb']['account']) {
-            return $this->hasOne(Account::className(), ['_id' => 'user_id']);
+            return $this->hasOne(Account::class, ['_id' => 'user_id']);
         } else {
-            return $this->hasOne(Account::className(), ['id' => 'user_id']);
+            return $this->hasOne(Account::class, ['id' => 'user_id']);
         }
 
     }

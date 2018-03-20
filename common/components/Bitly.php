@@ -29,7 +29,7 @@ class Bitly extends BaseObject
     {
         $token = Setting::getValue('bitly');
         if (empty($token)) {
-            throw new InvalidConfigException($this->className() . '::token cannot be empty.');
+            throw new InvalidConfigException($this->class . '::token cannot be empty.');
         } else {
             $this->token = $token;
         }

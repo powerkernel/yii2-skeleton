@@ -22,7 +22,7 @@ use yii\web\NotFoundHttpException;
  * {
  *     return [
  *         'backend' => [
- *             'class' => common\components\BackendFilter::className(),
+ *             'class' => common\components\BackendFilter::class,
  *             'actions' => [
  *                 'index',
  *                 'view',

@@ -50,7 +50,7 @@ class Page extends PageBase
      */
     public function getData()
     {
-        return $this->hasMany(PageData::class(), ['slug' => 'slug']);
+        return $this->hasMany(PageData::class, ['slug' => 'slug']);
     }
 
 

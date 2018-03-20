@@ -61,7 +61,7 @@ class Message extends ActiveRecord
      */
     public function getSource()
     {
-        return $this->hasOne(SourceMessage::className(), ['id' => 'id']);
+        return $this->hasOne(SourceMessage::classN, ['id' => 'id']);
     }
 
 

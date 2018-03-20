@@ -98,13 +98,13 @@ class PageData extends PageDataBase
         if (Yii::$app->params['mongodb']['account']) {
             $account = [
                 [['created_by', 'updated_by'], 'string'],
-                [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['created_by' => '_id']],
+                [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::class, 'targetAttribute' => ['created_by' => '_id']],
             ];
         }
         else {
             $account = [
                 [['created_by', 'updated_by'], 'integer'],
-                [['created_by', 'updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['created_by' => 'id']],
+                [['created_by', 'updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::class, 'targetAttribute' => ['created_by' => 'id']],
             ];
         }
 
@@ -148,7 +148,7 @@ class PageData extends PageDataBase
      */
     public function getPage()
     {
-        return $this->hasOne(Page::className(), ['slug' => 'slug']);
+        return $this->hasOne(Page::class, ['slug' => 'slug']);
     }
 
 

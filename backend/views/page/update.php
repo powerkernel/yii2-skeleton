@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_content">
-                            <?= $form->field($model, 'content')->widget(TinyMce::className()) ?>
+                            <?= $form->field($model, 'content')->widget(TinyMce::class()) ?>
                         </div>
                         <!-- /.tab-pane -->
                         <div class="tab-pane" id="tab_photo_uploader">

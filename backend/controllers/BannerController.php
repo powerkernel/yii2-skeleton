@@ -27,11 +27,11 @@ class BannerController extends BackendController
         $adminRules = parent::behaviors()['access']['rules'];
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => $adminRules,
             ],
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],

@@ -138,13 +138,13 @@ class Menu extends MenuBase
         if (Yii::$app->params['mongodb']['account']) {
             $account = [
                 [['created_by', 'updated_by'], 'string'],
-                [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['created_by' => '_id']],
+                [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::class, 'targetAttribute' => ['created_by' => '_id']],
             ];
         }
         else {
             $account = [
                 [['created_by', 'updated_by'], 'integer'],
-                [['created_by', 'updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['created_by' => 'id']],
+                [['created_by', 'updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::class, 'targetAttribute' => ['created_by' => 'id']],
             ];
         }
 
@@ -185,9 +185,9 @@ class Menu extends MenuBase
     public function getParent()
     {
         if (is_a($this, '\yii\mongodb\ActiveRecord')) {
-            return $this->hasOne(Menu::className(), ['_id' => 'id_parent']);
+            return $this->hasOne(Menu::class, ['_id' => 'id_parent']);
         } else {
-            return $this->hasOne(Menu::className(), ['id' => 'id_parent']);
+            return $this->hasOne(Menu::class, ['id' => 'id_parent']);
         }
     }
 

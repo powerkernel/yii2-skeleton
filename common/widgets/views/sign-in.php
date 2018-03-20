@@ -13,7 +13,6 @@
 
 use powerkernel\fontawesome\Icon;
 use yii\bootstrap\ActiveForm;
-use powerkernel\bootstrapsocial\Button;
 
 ?>
 <div class="widget-login">

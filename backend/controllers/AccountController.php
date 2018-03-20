@@ -33,7 +33,7 @@ class AccountController extends BackendController
         ], $adminRules);
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => $rules,
             ],
         ];
@@ -52,7 +52,7 @@ class AccountController extends BackendController
                 'successCallback' => [$this, 'onAuthSuccess'],
             ],
             'list' => [
-                'class' => Select2Action::className(),
+                'class' => Select2Action::class,
                 'dataCallback' => [$this, 'listUser'],
             ],
             'signin' => [
@@ -280,7 +280,6 @@ class AccountController extends BackendController
      * @return \yii\web\Response
      * @throws NotFoundHttpException
      * @throws \Exception
-     * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)

@@ -11,10 +11,12 @@ use yii\web\View;
  */
 class AdsenseAuto extends BaseObject
 {
+    /**
+     * register
+     */
     public static function register()
     {
         $adClient = Setting::getValue('adsense');
-
         if (!empty($adClient)) {
             self::registerJsFile();
             $js = <<<EOB

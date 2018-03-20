@@ -100,13 +100,13 @@ class Blog extends BlogBase
         if (Yii::$app->params['mongodb']['account']) {
             $author = [
                 [['created_by'], 'string'],
-                [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['created_by' => '_id']],
+                [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::class, 'targetAttribute' => ['created_by' => '_id']],
             ];
         }
         else {
             $author = [
                 [['created_by'], 'integer'],
-                [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::className(), 'targetAttribute' => ['created_by' => 'id']],
+                [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::class, 'targetAttribute' => ['created_by' => 'id']],
             ];
         }
 
@@ -173,9 +173,9 @@ class Blog extends BlogBase
     public function getAuthor()
     {
         if (Yii::$app->params['mongodb']['account']) {
-            return $this->hasOne(Account::className(), ['_id' => 'created_by']);
+            return $this->hasOne(Account::class, ['_id' => 'created_by']);
         } else {
-            return $this->hasOne(Account::className(), ['id' => 'created_by']);
+            return $this->hasOne(Account::class, ['id' => 'created_by']);
         }
     }
 

@@ -57,7 +57,7 @@ if (Yii::$app->params['mongodb']['taskLog']) {
         public function behaviors()
         {
             return [
-                UTCDateTimeBehavior::className(),
+                UTCDateTimeBehavior::class,
             ];
         }
 
@@ -98,7 +98,7 @@ if (Yii::$app->params['mongodb']['taskLog']) {
         public function behaviors()
         {
             return [
-                TimestampBehavior::className(),
+                TimestampBehavior::class,
             ];
         }
 

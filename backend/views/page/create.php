@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-                <?= $form->field($model, 'slug')->widget(Slugify::className(),['source'=>'#pagedata-title']) ?>
+                <?= $form->field($model, 'slug')->widget(Slugify::class,['source'=>'#pagedata-title']) ?>
 
                 <?= $form->field($model, 'description')->textarea(['rows' => 3]) ?>
 
@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_content">
-                            <?= $form->field($model, 'content')->widget(TinyMce::className()) ?>
+                            <?= $form->field($model, 'content')->widget(TinyMce::class()) ?>
                         </div>
                         <!-- /.tab-pane -->
                         <div class="tab-pane" id="tab_photo_uploader">

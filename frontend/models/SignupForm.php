@@ -32,7 +32,7 @@ class SignupForm extends Model
         if(Core::isReCaptchaEnabled()){
             $captcha=[
                 ['captcha', 'required', 'message' => Yii::t('app', 'Prove you are NOT a robot')],
-                ['captcha', ReCaptchaValidator::className(), 'message' => Yii::t('app', 'Prove you are NOT a robot')]
+                ['captcha', ReCaptchaValidator::class, 'message' => Yii::t('app', 'Prove you are NOT a robot')]
 
             ];
         }
@@ -64,4 +64,4 @@ class SignupForm extends Model
         ];
     }
 
-} 
+}

@@ -55,7 +55,7 @@ class SourceMessage extends ActiveRecord
      */
     public function getI18nMessages()
     {
-        return $this->hasMany(Message::className(), ['id' => 'id']);
+        return $this->hasMany(Message::class, ['id' => 'id']);
     }
 
     /**

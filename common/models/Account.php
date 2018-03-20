@@ -530,6 +530,6 @@ class Account extends AccountBase implements IdentityInterface
      */
     public function getAuths()
     {
-        return $this->hasMany(Auth::className(), ['user_id' => 'id']);
+        return $this->hasMany(Auth::class, ['user_id' => 'id']);
     }
 }

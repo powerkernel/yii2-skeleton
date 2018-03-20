@@ -33,7 +33,7 @@ class AccountController extends MainController
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
+                'class' => AccessControl::class,
                 'rules' => [
 
                     [

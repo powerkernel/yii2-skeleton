@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'language')->textInput(['maxlength' => true]) ?>
 
     <?=
-    $form->field($model, 'timezone')->widget(Select2Widget::className(), [
+    $form->field($model, 'timezone')->widget(Select2Widget::class, [
         'bootstrap'=>false,
         'items'=>Core::getTimezoneList(),
     ])

@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'language')->widget(Select2Widget::className(), [
+    <?= $form->field($model, 'language')->widget(Select2Widget::class, [
         'bootstrap'=>false,
         'items'=>\common\Core::getLocaleList(),
     ]) ?>
@@ -30,7 +30,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
     <?php if($model->isNewRecord):?>
-        <?= $form->field($model, 'slug')->widget(Slugify::className(),['source'=>'#blog-title']) ?>
+        <?= $form->field($model, 'slug')->widget(Slugify::class,['source'=>'#blog-title']) ?>
     <?php else:?>
         <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
     <?php endif;?>

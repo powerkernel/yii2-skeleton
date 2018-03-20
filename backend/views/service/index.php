@@ -1,7 +1,5 @@
 <?php
 
-use powerkernel\bootstrapsocial\Button;
-
 
 /* @var $this yii\web\View */
 /* @var $services [] */

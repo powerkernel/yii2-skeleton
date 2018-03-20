@@ -22,7 +22,7 @@ class SettingController extends BackendController
         $parent = parent::behaviors();
         return array_merge($parent, [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -232,7 +232,7 @@ class SettingController extends BackendController
 			}
 			else {
 				Yii::$app->session->setFlash('warning', Yii::t('app', 'Some setting(s) can not be updated: {SETTINGS}', ['SETTINGS'=>implode(', ', $unsave)]));
-			}					
+			}
 		}
     }
 

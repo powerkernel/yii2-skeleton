@@ -150,7 +150,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . 
     public function behaviors()
     {
         return [
-            UTCDateTimeBehavior::className(),
+            UTCDateTimeBehavior::class,
         ];
     }
 
