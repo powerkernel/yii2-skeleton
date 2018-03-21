@@ -118,12 +118,7 @@ EOB;
                 try {
                     $user = Yii::$app->user->identity;
                     /* if user local not exist, set default */
-                    if (Yii::$app->params['mongodb']['i18n']) {
-                        $locales = \common\models\mongodb\Message::getLocaleList();
-                    } else {
-                        $locales = \common\models\Message::getLocaleList();
-                    }
-
+                    $locales = \common\models\Message::getLocaleList();
                     if (!in_array($user->language, array_keys($locales))) {
                         $user->language = Setting::getValue('language');
                         $user->save();
@@ -278,28 +273,28 @@ EOB;
         ];
 
         /* modules */
-        $dirs=['harrytang', 'powerkernel'];
+        $dirs = ['harrytang', 'powerkernel'];
 
-        foreach($dirs as $dir){
-            if(file_exists(__DIR__ . '/../../vendor/'.$dir)){
-                $modules = scandir(__DIR__ . '/../../vendor/'.$dir);
+        foreach ($dirs as $dir) {
+            if (file_exists(__DIR__ . '/../../vendor/' . $dir)) {
+                $modules = scandir(__DIR__ . '/../../vendor/' . $dir);
                 foreach ($modules as $module) {
                     if (!preg_match('/[\.]+/', $module)) // not parent dir
                     {
-                        $urlManagerFile = __DIR__ . '/../../vendor/'.$dir.'/'.$module.'/urlManager.php';
+                        $urlManagerFile = __DIR__ . '/../../vendor/' . $dir . '/' . $module . '/urlManager.php';
                         if (file_exists($urlManagerFile)) {
 
                             $urlManagerConfig = require($urlManagerFile);
 
 
-                            if(!empty($urlManagerConfig['ignoreLanguageUrlPatterns'])){
+                            if (!empty($urlManagerConfig['ignoreLanguageUrlPatterns'])) {
                                 $urlManager['ignoreLanguageUrlPatterns'] = array_merge(
                                     $urlManager['ignoreLanguageUrlPatterns'],
                                     $urlManagerConfig['ignoreLanguageUrlPatterns']
                                 );
                             }
 
-                            if(!empty($urlManagerConfig['rules'])){
+                            if (!empty($urlManagerConfig['rules'])) {
                                 $urlManager['rules'] = array_merge(
                                     $urlManager['rules'],
                                     $urlManagerConfig['rules']
@@ -307,13 +302,11 @@ EOB;
                             }
 
 
-
                         }
                     }
                 }
             }
         }
-
 
 
         /* database value lang url */
@@ -330,7 +323,7 @@ EOB;
 
         Yii::$container->set('common\components\LocaleUrl', [
             /* config */
-            'languages' => array_keys(Yii::$app->params['mongodb']['i18n'] ? \common\models\mongodb\Message::getLocaleList() : \common\models\Message::getLocaleList()),
+            'languages' => array_keys(\common\models\Message::getLocaleList()),
             'languageParam' => 'lang',
             'enableLanguagePersistence' => false, // default true
             'enableDefaultLanguageUrlCode' => $enableDefaultLanguageUrlCode,
@@ -345,14 +338,9 @@ EOB;
     /**
      * config i18n
      */
-    protected
-    function configI18n()
+    protected function configI18n()
     {
-        if (Yii::$app->params['mongodb']['i18n']) {
-            $class = 'common\components\MongoDbMessageSource';
-        } else {
-            $class = 'common\components\DbMessageSource';
-        }
+        $class = 'common\components\MongoDbMessageSource';
 
         Yii::$container->set('yii\i18n\I18N', [
             'translations' => [

@@ -7,12 +7,13 @@
 
 namespace common\models;
 
+use common\behaviors\UTCDateTimeBehavior;
 use Yii;
 
 /**
  * Banner model class.
  *
- * @property integer|\MongoDB\BSON\ObjectID|string $id
+ * @property \MongoDB\BSON\ObjectID|string $id
  * @property string $lang
  * @property string $title
  * @property string $text_content
@@ -21,16 +22,79 @@ use Yii;
  * @property string $link_url
  * @property string $link_option
  * @property string $status
- * @property integer|\MongoDB\BSON\UTCDateTime $created_at
- * @property integer|\MongoDB\BSON\UTCDateTime $updated_at
+ * @property \MongoDB\BSON\UTCDateTime $created_at
+ * @property \MongoDB\BSON\UTCDateTime $updated_at
  */
-class Banner extends BannerBase
+class Banner extends \yii\mongodb\ActiveRecord
 {
 
 
     const STATUS_ACTIVE = 'STATUS_ACTIVE';//10;
     const STATUS_INACTIVE = 'STATUS_INACTIVE';//20;
 
+    /**
+     * @inheritdoc
+     */
+    public static function collectionName()
+    {
+        return 'banners';
+    }
+
+    /**
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            '_id',
+            'lang',
+            'title',
+            'text_content',
+            'text_style',
+            'banner_url',
+            'link_url',
+            'link_option',
+            'status',
+            'created_at',
+            'updated_at'
+        ];
+    }
+
+    /**
+     * get id
+     * @return \MongoDB\BSON\ObjectID|string
+     */
+    public function getId()
+    {
+        return $this->_id;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            UTCDateTimeBehavior::class,
+        ];
+    }
+
+    /**
+     * @return int timestamp
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at->toDateTime()->format('U');
+    }
+
+    /**
+     * @return int timestamp
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at->toDateTime()->format('U');
+    }
 
     /**
      * get status list

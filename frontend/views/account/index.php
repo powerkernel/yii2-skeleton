@@ -29,7 +29,7 @@ $description = Yii::t('app', 'View and update your personal information');
                 <?= $form->field($model, 'phone')->textInput(['maxlength' => true, 'disabled'=>true]) ?>
                 <?= $form->field($model, 'language')->widget(Select2Widget::class, [
                     'bootstrap'=>false,
-                    'items'=>Yii::$app->params['mongodb']['i18n']?\common\models\mongodb\Message::getLocaleList():\common\models\Message::getLocaleList(),
+                    'items'=>\common\models\Message::getLocaleList(),
                 ]) ?>
                 <?=
                     $form->field($model, 'timezone')->widget(Select2Widget::class, [

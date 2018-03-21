@@ -1,4 +1,4 @@
-php yii mongodb-migrate --migrationPath=@console/migrations/mongodb
+php yii mongodb-migrate --migrationPath=@console/migrations
 php yii mg-migrate
 
 migrate existing project:

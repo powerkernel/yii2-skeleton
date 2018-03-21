@@ -1,4 +1,9 @@
 <?php
+/**
+ * @author Harry Tang <harry@powerkernel.com>
+ * @link https://powerkernel.com
+ * @copyright Copyright (c) 2016 Power Kernel
+ */
 
 namespace common\models;
 
@@ -19,9 +24,45 @@ use Yii;
  * @property string $rules
  * @property string $key_order
  */
-class Setting extends SettingBase
+class Setting extends \yii\mongodb\ActiveRecord
 {
 
+    /**
+     * @inheritdoc
+     */
+    public static function collectionName()
+    {
+        return 'settings';
+    }
+
+    /**
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            '_id',
+            'key',
+            'value',
+            'title',
+            'description',
+            'group',
+            'type',
+            'data',
+            'default',
+            'rules',
+            'key_order'
+        ];
+    }
+
+    /**
+     * get id
+     * @return \MongoDB\BSON\ObjectID|string
+     */
+    public function getId()
+    {
+        return $this->_id;
+    }
 
     /**
      * @inheritdoc

@@ -1,4 +1,9 @@
 <?php
+/**
+ * @author Harry Tang <harry@powerkernel.com>
+ * @link https://powerkernel.com
+ * @copyright Copyright (c) 2017 Power Kernel
+ */
 
 namespace common\models;
 
@@ -28,7 +33,6 @@ use yii\web\IdentityInterface;
  * @property \MongoDB\BSON\UTCDateTime $updated_at
  *
  * @property mixed statusText
- * @property Auth[] $auths
  */
 class Account extends \yii\mongodb\ActiveRecord implements IdentityInterface
 {
@@ -454,11 +458,4 @@ class Account extends \yii\mongodb\ActiveRecord implements IdentityInterface
         return true;
     }
 
-    /**
-     * @return yii\db\ActiveQueryInterface
-     */
-    public function getAuths()
-    {
-        return $this->hasMany(Auth::class, ['user_id' => 'id']);
-    }
 }

@@ -7,6 +7,7 @@
 
 namespace common\models;
 
+use common\behaviors\UTCDateTimeBehavior;
 use common\Core;
 use DOMDocument;
 use MongoDB\BSON\UTCDateTime;
@@ -15,7 +16,7 @@ use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 
 /**
- * @property integer|\MongoDB\BSON\ObjectID|string $id
+ * @property \MongoDB\BSON\ObjectID|string $id
  * @property string $slug
  * @property string $language
  * @property string $title
@@ -28,21 +29,94 @@ use yii\helpers\HtmlPurifier;
  * @property integer|string $created_by
  * @property integer $views
  * @property string $status
- * @property integer|\MongoDB\BSON\UTCDateTime $created_at
- * @property integer|\MongoDB\BSON\UTCDateTime $updated_at
- * @property integer|\MongoDB\BSON\UTCDateTime $published_at
+ * @property \MongoDB\BSON\UTCDateTime $created_at
+ * @property \MongoDB\BSON\UTCDateTime $updated_at
+ * @property \MongoDB\BSON\UTCDateTime $published_at
  *
  * @property Account $author
  * @property string $viewUrl
  * @property string $updateUrl
  */
-class Blog extends BlogBase
+class Blog extends \yii\mongodb\ActiveRecord
 {
-
-
     const STATUS_PUBLISHED = 'STATUS_PUBLISHED';//10;
     const STATUS_DRAFT = 'STATUS_DRAFT';//20;
 
+    /**
+     * @inheritdoc
+     */
+    public static function collectionName()
+    {
+        return 'blog';
+    }
+
+    /**
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            '_id',
+            'slug',
+            'language',
+            'title',
+            'desc',
+            'content',
+            'tags',
+            'thumbnail',
+            'thumbnail_square',
+            'image_object',
+            'created_by',
+            'views',
+            'status',
+            'created_at',
+            'updated_at',
+            'published_at',
+        ];
+    }
+
+    /**
+     * get id
+     * @return \MongoDB\BSON\ObjectID|string
+     */
+    public function getId()
+    {
+        return $this->_id;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            UTCDateTimeBehavior::class,
+        ];
+    }
+
+    /**
+     * @return int timestamp
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at->toDateTime()->format('U');
+    }
+
+    /**
+     * @return int timestamp
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at->toDateTime()->format('U');
+    }
+
+    /**
+     * @return int timestamp
+     */
+    public function getPublishedAt()
+    {
+        return $this->published_at->toDateTime()->format('U');
+    }
 
     /**
      * get status list
@@ -96,34 +170,7 @@ class Blog extends BlogBase
      */
     public function rules()
     {
-        /* author */
-        if (Yii::$app->params['mongodb']['account']) {
-            $author = [
-                [['created_by'], 'string'],
-                [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::class, 'targetAttribute' => ['created_by' => '_id']],
-            ];
-        }
-        else {
-            $author = [
-                [['created_by'], 'integer'],
-                [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::class, 'targetAttribute' => ['created_by' => 'id']],
-            ];
-        }
-
-        /* date */
-        if(is_a($this, '\yii\mongodb\ActiveRecord')){
-            $date=[
-                [['created_at', 'updated_at', 'published_at'], 'yii\mongodb\validators\MongoDateValidator']
-            ];
-        }
-        else {
-            $date=[
-                [['created_at', 'updated_at', 'published_at'], 'integer']
-            ];
-        }
-
-        /* default */
-        $default = [
+        return [
             [['slug', 'language', 'title', 'desc', 'content', 'tags', 'thumbnail', 'thumbnail_square'], 'required'],
             [['slug'], 'match', 'pattern' => '/^[a-z0-9-]+$/'],
             [['slug'], 'unique'],
@@ -137,10 +184,12 @@ class Blog extends BlogBase
             [['thumbnail', 'thumbnail_square'], 'url'],
             [['image_object'], 'string'],
 
+            [['created_at', 'updated_at', 'published_at'], 'yii\mongodb\validators\MongoDateValidator'],
+            [['created_by'], 'string'],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::class, 'targetAttribute' => ['created_by' => '_id']],
+
 
         ];
-
-        return array_merge($default, $author, $date);
     }
 
     /**
@@ -172,11 +221,7 @@ class Blog extends BlogBase
      */
     public function getAuthor()
     {
-        if (Yii::$app->params['mongodb']['account']) {
-            return $this->hasOne(Account::class, ['_id' => 'created_by']);
-        } else {
-            return $this->hasOne(Account::class, ['id' => 'created_by']);
-        }
+        return $this->hasOne(Account::class, ['_id' => 'created_by']);
     }
 
 
@@ -228,13 +273,7 @@ class Blog extends BlogBase
 
         /* published_at */
         if ($this->status == Blog::STATUS_PUBLISHED && empty($this->published_at)) {
-            if(Yii::$app->params['mongodb']['blog']){
-                $this->published_at=new UTCDateTime();
-            }
-            else {
-                $this->published_at=time();
-            }
-
+            $this->published_at = new UTCDateTime();
         }
 
         /* clean html */

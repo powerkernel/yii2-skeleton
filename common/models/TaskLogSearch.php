@@ -66,13 +66,7 @@ class TaskLogSearch extends TaskLog
             return $dataProvider;
         }
 
-        if (Yii::$app->params['mongodb']['taskLog']) {
-            $query->andFilterWhere(['like', '_id', $this->_id]);
-        } else {
-            $query->andFilterWhere([
-                'id' => $this->id,
-            ]);
-        }
+        $query->andFilterWhere(['like', '_id', $this->_id]);
 
         // grid filtering conditions
         $query->andFilterWhere([
@@ -84,21 +78,13 @@ class TaskLogSearch extends TaskLog
             ->andFilterWhere(['like', 'result', $this->result]);
 
         if (!empty($this->created_at)) {
-            if (Yii::$app->params['mongodb']['taskLog']) {
-                $query->andFilterWhere([
-                    'created_at' => ['$gte'=>new UTCDateTime(strtotime($this->created_at)*1000)],
-                ])->andFilterWhere([
-                    'created_at' => ['$lt'=>new UTCDateTime((strtotime($this->created_at)+86400)*1000)],
-                ]);
-            } else {
 
-                $query->andFilterWhere([
-                    'DATE(CONVERT_TZ(FROM_UNIXTIME(`created_at`), :UTC, :ATZ))' => $this->created_at,
-                ])->params([
-                    ':UTC' => '+00:00',
-                    ':ATZ' => date('P')
-                ]);
-            }
+            $query->andFilterWhere([
+                'created_at' => ['$gte' => new UTCDateTime(strtotime($this->created_at) * 1000)],
+            ])->andFilterWhere([
+                'created_at' => ['$lt' => new UTCDateTime((strtotime($this->created_at) + 86400) * 1000)],
+            ]);
+
         }
 
 

@@ -15,9 +15,38 @@ use Yii;
  * @property PageData[] $data
  * @property PageData $content
  */
-class Page extends PageBase
+class Page extends \yii\mongodb\ActiveRecord
 {
 
+    /**
+     * @inheritdoc
+     */
+    public static function collectionName()
+    {
+        return 'page_id';
+    }
+
+    /**
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            '_id',
+            'slug',
+            'show_description',
+            'show_update_date'
+        ];
+    }
+
+    /**
+     * get id
+     * @return \MongoDB\BSON\ObjectID|string
+     */
+    public function getId()
+    {
+        return $this->_id;
+    }
 
     /**
      * @inheritdoc

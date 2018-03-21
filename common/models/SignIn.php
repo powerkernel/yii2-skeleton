@@ -7,6 +7,7 @@
 
 namespace common\models;
 
+use common\behaviors\UTCDateTimeBehavior;
 use powerkernel\sms\components\AwsSMS;
 use Yii;
 
@@ -17,12 +18,70 @@ use Yii;
  * @property string $code
  * @property integer $attempts
  * @property string $status
- * @property integer|\MongoDB\BSON\UTCDateTime $created_at
- * @property integer|\MongoDB\BSON\UTCDateTime $updated_at
+ * @property \MongoDB\BSON\UTCDateTime $created_at
+ * @property \MongoDB\BSON\UTCDateTime $updated_at
  */
-class SignIn extends SignInBase
+class SignIn extends \yii\mongodb\ActiveRecord
 {
 
+    /**
+     * @inheritdoc
+     */
+    public static function collectionName()
+    {
+        return 'signin';
+    }
+
+    /**
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            '_id',
+            'login',
+            'code',
+            'attempts',
+            'status',
+            'created_at',
+            'updated_at',
+        ];
+    }
+
+    /**
+     * get id
+     * @return \MongoDB\BSON\ObjectID|string
+     */
+    public function getId()
+    {
+        return $this->_id;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            UTCDateTimeBehavior::class,
+        ];
+    }
+
+    /**
+     * @return int timestamp
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at->toDateTime()->format('U');
+    }
+
+    /**
+     * @return int timestamp
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at->toDateTime()->format('U');
+    }
 
     const STATUS_NEW = 'STATUS_NEW';//10;
     const STATUS_USED = 'STATUS_USED';//20;
@@ -90,16 +149,6 @@ class SignIn extends SignInBase
      */
     public function rules()
     {
-        if (is_a($this, '\yii\mongodb\ActiveRecord')) {
-            $date = [
-                [['created_at', 'updated_at'], 'yii\mongodb\validators\MongoDateValidator']
-            ];
-        } else {
-            $date = [
-                [['created_at', 'updated_at'], 'integer']
-            ];
-        }
-
         /* login */
         if (!empty(\powerkernel\sms\models\Setting::getValue('aws_access_key') && !empty(\powerkernel\sms\models\Setting::getValue('aws_secret_key')))) {
             $login = [
@@ -124,10 +173,11 @@ class SignIn extends SignInBase
             [['code'], 'match', 'pattern' => '/^[0-9]{6}$/'],
 
             [['status'], 'string', 'max' => 20],
+            [['created_at', 'updated_at'], 'yii\mongodb\validators\MongoDateValidator'],
             //['captcha', ReCaptchaValidator::class, 'message' => Yii::t('app', 'Prove you are NOT a robot')]
         ];
 
-        return array_merge($default, $date, $login);
+        return array_merge($default, $login);
     }
 
     /**
@@ -218,7 +268,7 @@ class SignIn extends SignInBase
     {
         return (new AwsSMS())->send(
             $this->login,
-            Yii::t('app', '{APP}: Your verification code is {CODE}', ['CODE' => $this->code, 'APP'=>Yii::$app->name]
+            Yii::t('app', '{APP}: Your verification code is {CODE}', ['CODE' => $this->code, 'APP' => Yii::$app->name]
             ));
     }
 

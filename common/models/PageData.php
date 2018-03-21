@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\behaviors\UTCDateTimeBehavior;
 use DOMDocument;
 use Yii;
 use yii\helpers\HtmlPurifier;
@@ -18,18 +19,83 @@ use yii\helpers\HtmlPurifier;
  * @property string $keywords
  * @property string $thumbnail
  * @property string $status
- * @property integer|string $created_by
- * @property integer|string $updated_by
- * @property integer|\MongoDB\BSON\UTCDateTime $created_at
- * @property integer|\MongoDB\BSON\UTCDateTime $updated_at
+ * @property string $created_by
+ * @property string $updated_by
+ * @property \MongoDB\BSON\UTCDateTime $created_at
+ * @property \MongoDB\BSON\UTCDateTime $updated_at
  *
  * @property Page $page
  */
-class PageData extends PageDataBase
+class PageData extends \yii\mongodb\ActiveRecord
 {
 
     const STATUS_ACTIVE = 'STATUS_ACTIVE';//10;
     const STATUS_INACTIVE = 'STATUS_INACTIVE';//20;
+
+    /**
+     * @inheritdoc
+     */
+    public static function collectionName()
+    {
+        return 'page_data';
+    }
+
+    /**
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            '_id',
+            'slug',
+            'language',
+            'title',
+            'description',
+            'content',
+            'keywords',
+            'thumbnail',
+            'status',
+            'created_by',
+            'updated_by',
+            'created_at',
+            'updated_at',
+        ];
+    }
+
+    /**
+     * get id
+     * @return \MongoDB\BSON\ObjectID|string
+     */
+    public function getId()
+    {
+        return $this->_id;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            UTCDateTimeBehavior::class,
+        ];
+    }
+
+    /**
+     * @return int timestamp
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at->toDateTime()->format('U');
+    }
+
+    /**
+     * @return int timestamp
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at->toDateTime()->format('U');
+    }
 
 
     /**
@@ -100,23 +166,22 @@ class PageData extends PageDataBase
                 [['created_by', 'updated_by'], 'string'],
                 [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::class, 'targetAttribute' => ['created_by' => '_id']],
             ];
-        }
-        else {
+        } else {
             $account = [
                 [['created_by', 'updated_by'], 'integer'],
                 [['created_by', 'updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::class, 'targetAttribute' => ['created_by' => 'id']],
             ];
         }
 
-        $default =  [
+        $default = [
             [['slug', 'language', 'title', 'description', 'content', 'keywords'], 'required', 'on' => ['update', 'create']],
-            [['status'], 'string', 'max'=>255],
+            [['status'], 'string', 'max' => 255],
             [['content', 'thumbnail'], 'string'],
             [['thumbnail'], 'url'],
             [['language'], 'string', 'max' => 5],
             [['title', 'description', 'keywords'], 'string', 'max' => 160],
             [['slug'], 'string', 'max' => 100],
-            [['slug'], 'unique', 'on'=>['create']]
+            [['slug'], 'unique', 'on' => ['create']]
         ];
 
         return array_merge($default, $account);

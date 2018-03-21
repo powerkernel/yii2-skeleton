@@ -8,6 +8,7 @@
 namespace common\models;
 
 
+use common\behaviors\UTCDateTimeBehavior;
 use Yii;
 
 
@@ -18,29 +19,77 @@ use Yii;
  * @property integer|\MongoDB\BSON\UTCDateTime $created_at
  * @property integer|\MongoDB\BSON\UTCDateTime $updated_at
  */
-class TaskLog extends TaskLogBase
+class TaskLog extends \yii\mongodb\ActiveRecord
 {
+    /**
+     * @inheritdoc
+     */
+    public static function collectionName()
+    {
+        return 'task_logs';
+    }
+
+    /**
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            '_id',
+            'task',
+            'result',
+            'created_at',
+            'updated_at',
+        ];
+    }
+
+    /**
+     * get id
+     * @return \MongoDB\BSON\ObjectID|string
+     */
+    public function getId()
+    {
+        return $this->_id;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            UTCDateTimeBehavior::class,
+        ];
+    }
+
+    /**
+     * @return int timestamp
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at->toDateTime()->format('U');
+    }
+
+    /**
+     * @return int timestamp
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at->toDateTime()->format('U');
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
-        if (is_a($this, '\yii\mongodb\ActiveRecord')) {
-            $date = [
-                [['created_at', 'updated_at'], 'yii\mongodb\validators\MongoDateValidator'],
-            ];
-        } else {
-            $date = [
-                [['created_at', 'updated_at'], 'integer'],
-            ];
-        }
-        $default = [
+        return [
             [['task', 'result'], 'required'],
             [['result'], 'string'],
 
             [['task'], 'string', 'max' => 255],
+            [['created_at', 'updated_at'], 'yii\mongodb\validators\MongoDateValidator'],
         ];
-        return array_merge($default, $date);
     }
 
     /**
@@ -49,7 +98,7 @@ class TaskLog extends TaskLogBase
     public function attributeLabels()
     {
         return [
-            Yii::$app->params['mongodb']['taskLog'] ? '_id' : 'id' => Yii::t('app', 'ID'),
+            '_id' => Yii::t('app', 'ID'),
             'task' => Yii::t('app', 'Task'),
             'result' => Yii::t('app', 'Result'),
             'created_at' => Yii::t('app', 'Created At'),

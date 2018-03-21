@@ -7,6 +7,7 @@
 
 namespace common\models;
 
+use common\behaviors\UTCDateTimeBehavior;
 use common\Core;
 use Yii;
 use yii\helpers\ArrayHelper;
@@ -14,8 +15,8 @@ use yii\helpers\ArrayHelper;
 /**
  * This is the model class for Menu.
  *
- * @property integer|\MongoDB\BSON\ObjectID|string $id
- * @property integer|string $id_parent
+ * @property \MongoDB\BSON\ObjectID|string $id
+ * @property string $id_parent
  * @property string $label
  * @property string $active_route
  * @property string $url
@@ -23,16 +24,16 @@ use yii\helpers\ArrayHelper;
  * @property string $position
  * @property integer $order
  * @property string $status
- * @property integer|\MongoDB\BSON\UTCDateTime $created_at
- * @property integer|\MongoDB\BSON\UTCDateTime $updated_at
- * @property integer|string $created_by
- * @property integer|string $updated_by
+ * @property \MongoDB\BSON\UTCDateTime $created_at
+ * @property \MongoDB\BSON\UTCDateTime $updated_at
+ * @property string $created_by
+ * @property string $updated_by
  *
  * @property Menu $parent
  * @property Account $createdBy
  * @property Account $updatedBy
  */
-class Menu extends MenuBase
+class Menu extends \yii\mongodb\ActiveRecord
 {
     const STATUS_ACTIVE = 'STATUS_ACTIVE';//10;
     const STATUS_INACTIVE = 'STATUS_INACTIVE';//20;
@@ -40,6 +41,71 @@ class Menu extends MenuBase
     private $_route;
     private $_path;
     private $_query;
+
+    /**
+     * @inheritdoc
+     */
+    public static function collectionName()
+    {
+        return 'menu';
+    }
+
+    /**
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            '_id',
+            'id_parent',
+            'label',
+            'active_route',
+            'url',
+            'class',
+            'position',
+            'order',
+            'status',
+            'created_at',
+            'updated_at',
+            'created_by',
+            'updated_by'
+        ];
+    }
+
+    /**
+     * get id
+     * @return \MongoDB\BSON\ObjectID|string
+     */
+    public function getId()
+    {
+        return $this->_id;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            UTCDateTimeBehavior::class,
+        ];
+    }
+
+    /**
+     * @return int timestamp
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at->toDateTime()->format('U');
+    }
+
+    /**
+     * @return int timestamp
+     */
+    public function getCreatedAt()
+    {
+        return $this->created_at->toDateTime()->format('U');
+    }
 
     /**
      * @inheritdoc
@@ -124,38 +190,15 @@ class Menu extends MenuBase
      */
     public function rules()
     {
-        if (is_a($this, '\yii\mongodb\ActiveRecord')) {
-            $date = [
-                [['created_at', 'updated_at'], 'yii\mongodb\validators\MongoDateValidator']
-            ];
-        } else {
-            $date = [
-                [['created_at', 'updated_at'], 'integer']
-            ];
-        }
-
-        /* account */
-        if (Yii::$app->params['mongodb']['account']) {
-            $account = [
-                [['created_by', 'updated_by'], 'string'],
-                [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::class, 'targetAttribute' => ['created_by' => '_id']],
-            ];
-        }
-        else {
-            $account = [
-                [['created_by', 'updated_by'], 'integer'],
-                [['created_by', 'updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::class, 'targetAttribute' => ['created_by' => 'id']],
-            ];
-        }
-
-        $default =  [
+        return [
             [['id_parent', 'class', 'active_route'], 'default', 'value' => null],
             [['label', 'url', 'position'], 'required'],
             [['order'], 'integer'],
             [['label', 'active_route', 'url', 'class', 'position', 'status'], 'string', 'max' => 255],
+            [['created_at', 'updated_at'], 'yii\mongodb\validators\MongoDateValidator'],
+            [['created_by', 'updated_by'], 'string'],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::class, 'targetAttribute' => ['created_by' => '_id']],
         ];
-
-        return array_merge($default, $date, $account);
     }
 
     /**
@@ -184,11 +227,7 @@ class Menu extends MenuBase
      */
     public function getParent()
     {
-        if (is_a($this, '\yii\mongodb\ActiveRecord')) {
-            return $this->hasOne(Menu::class, ['_id' => 'id_parent']);
-        } else {
-            return $this->hasOne(Menu::class, ['id' => 'id_parent']);
-        }
+        return $this->hasOne(Menu::class, ['_id' => 'id_parent']);
     }
 
     /**

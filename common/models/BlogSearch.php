@@ -93,23 +93,13 @@ class BlogSearch extends Blog
         }
 
         // grid filtering conditions
-        if(!empty($this->created_by)) {
+        if (!empty($this->created_by)) {
 
-            if(Yii::$app->params['mongodb']['account']){
-                $key='_id';
-            }
-            else {
-                $key='id';
-            }
+            $key = '_id';
             $ids = [];
-            $owners=Account::find()->select([$key])->where(['like', 'fullname', $this->created_by])->asArray()->all();
+            $owners = Account::find()->select([$key])->where(['like', 'fullname', $this->created_by])->asArray()->all();
             foreach ($owners as $owner) {
-                if(Yii::$app->params['mongodb']['account']){
-                    $ids[] = (string)$owner[$key];
-                }
-                else {
-                    $ids[] = (int)$owner[$key];
-                }
+                $ids[] = (string)$owner[$key];
 
             }
             $query->andFilterWhere(['created_by' => $ids]);
@@ -130,21 +120,11 @@ class BlogSearch extends Blog
 
 
         if (!empty($this->updated_at)) {
-            if (is_a($this, '\yii\db\ActiveRecord')) {
-                $query->andFilterWhere([
-                    'DATE(CONVERT_TZ(FROM_UNIXTIME({{%core_blog}}.updated_at), :UTC, :ATZ))' => $this->updated_at,
-                ])->params([
-                    ':UTC' => '+00:00',
-                    ':ATZ' => date('P')
-                ]);
-            }
-            else {
-                $query->andFilterWhere([
-                    'updated_at' => ['$gte'=>new UTCDateTime(strtotime($this->updated_at)*1000)],
-                ])->andFilterWhere([
-                    'updated_at' => ['$lt'=>new UTCDateTime((strtotime($this->updated_at)+86400)*1000)],
-                ]);
-            }
+            $query->andFilterWhere([
+                'updated_at' => ['$gte' => new UTCDateTime(strtotime($this->updated_at) * 1000)],
+            ])->andFilterWhere([
+                'updated_at' => ['$lt' => new UTCDateTime((strtotime($this->updated_at) + 86400) * 1000)],
+            ]);
         }
 
         return $dataProvider;

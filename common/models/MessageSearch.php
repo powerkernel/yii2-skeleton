@@ -1,28 +1,29 @@
 <?php
+/**
+ * @author Harry Tang <harry@powerkernel.com>
+ * @link https://powerkernel.com
+ * @copyright Copyright (c) 2016 Power Kernel
+ */
+
 
 namespace common\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Message;
 
 /**
- * MessageSearch represents the model behind the search form about `common\models\Message`.
+ * MessageSearch represents the model behind the search form about `common\models\mongodb\Message`.
  */
 class MessageSearch extends Message
 {
-    public $message;
-    public $category;
-
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'is_translated'], 'integer'],
-            [['language', 'translation', 'message', 'category'], 'safe'],
+            [['_id', 'category', 'language', 'message', 'translation', 'is_translated'], 'safe'],
+            //[['is_translated'], 'boolean'],
         ];
     }
 
@@ -45,24 +46,14 @@ class MessageSearch extends Message
     public function search($params)
     {
         $query = Message::find();
-        $query->joinWith(['source']);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            //'sort'=> ['defaultOrder' => ['id'=>SORT_DESC]]
-            'sort' => ['defaultOrder' => ['is_translated' => SORT_ASC]]
+            //'sort'=> ['defaultOrder' => ['id'=>SORT_DESC]],
+            //'pagination'=>['pageSize'=>20],
         ]);
-
-        $dataProvider->sort->attributes['message'] = [
-            'asc' => ['{{%core_source_message}}.message' => SORT_ASC],
-            'desc' => ['{{%core_source_message}}.message' => SORT_DESC],
-        ];
-        $dataProvider->sort->attributes['category'] = [
-            'asc' => ['{{%core_source_message}}.category' => SORT_ASC],
-            'desc' => ['{{%core_source_message}}.category' => SORT_DESC],
-        ];
 
         $this->load($params);
 
@@ -72,21 +63,23 @@ class MessageSearch extends Message
             return $dataProvider;
         }
 
+        $query->andFilterWhere(['is_translated' => in_array($this->is_translated, [null, ''], true) ? null : (boolean)$this->is_translated]);
+
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'is_translated' => $this->is_translated,
-        ]);
+        $query->andFilterWhere(['like', '_id', $this->_id])
+            ->andFilterWhere(['like', 'category', $this->category])
+            ->andFilterWhere(['like', 'language', $this->language])
+            ->andFilterWhere(['like', 'message', $this->message])
+            ->andFilterWhere(['like', 'translation', $this->translation]);
 
-        $query->andFilterWhere(['like', 'language', $this->language])
-            ->andFilterWhere(['like', 'translation', $this->translation])
-            ->andFilterWhere(['like', '{{%core_source_message}}.message', $this->message])
-            ->andFilterWhere(['like', '{{%core_source_message}}.category', $this->category]);
-        ;
-
-        //$query->andFilterWhere([
-        //    'DATE(FROM_UNIXTIME(`created_at`))' => $this->created_at,
-        //]);
+        //if(!empty($this->created_at)){
+        //    $query->andFilterWhere([
+        //        'DATE(CONVERT_TZ(FROM_UNIXTIME(`created_at`), :UTC, :ATZ))' => $this->created_at,
+        //    ])->params([
+        //        ':UTC'=>'+00:00',
+        //        ':ATZ'=>date('P')
+        //    ]);
+        //}
 
         return $dataProvider;
     }
