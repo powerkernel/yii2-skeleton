@@ -30,8 +30,8 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
                     'columns' => [
-                        //['class' => 'yii\grid\SerialColumn'],
-                        Yii::$app->params['mongodb']['taskLog'] ? ['class' => 'yii\grid\SerialColumn'] : 'id',
+                        ['class' => 'yii\grid\SerialColumn'],
+
                         ['attribute' => 'task', 'value' => function ($model) {
                             return $model->task;
                         }, 'filter' => TaskLog::getTaskList()],

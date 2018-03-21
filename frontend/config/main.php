@@ -30,6 +30,19 @@ return [
                         'yii\debug\Module::checkAccess'
                     ],
                 ],
+//                [
+//                    'class' => 'yii\log\EmailTarget',
+//                    'message' => [
+//                        'from' => ['webmaster@domain.com'],
+//                        'to' => ['admin@domain.com'],
+//                        'subject' => 'Error at domain.com',
+//                    ],
+//                    'levels' => ['error', 'warning'],
+//                    'except' => [
+//                        'yii\web\HttpException:404',
+//                        'yii\debug\Module::checkAccess'
+//                    ],
+//                ],
             ],
         ],
         'errorHandler' => [

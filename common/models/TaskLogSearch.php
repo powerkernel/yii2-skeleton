@@ -9,7 +9,6 @@
 namespace common\models;
 
 use MongoDB\BSON\UTCDateTime;
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
@@ -24,7 +23,7 @@ class TaskLogSearch extends TaskLog
     public function rules()
     {
         return [
-            Yii::$app->params['mongodb']['taskLog'] ? [['_id'], 'safe'] : [['id'], 'integer'],
+            [['_id'], 'safe'],
             [['updated_at'], 'integer'],
             [['task', 'result', 'created_at'], 'safe'],
         ];

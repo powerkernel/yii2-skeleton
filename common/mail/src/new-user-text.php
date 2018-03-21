@@ -18,9 +18,6 @@ $loginUrl = Yii::$app->urlManagerFrontend->createAbsoluteUrl(['/account/login'])
 
 <?= Yii::t('app', 'Email: {EMAIL}', ['EMAIL' => Html::encode($user->email)]) ?>
 
-<?php if(!Setting::getValue('passwordLessLogin')):?>
-<?= Yii::t('app', 'Password: {PASSWORD}', ['PASSWORD' => Html::encode($user->passwordText)]) ?>
-<?php endif;?>
 
 <?= Yii::t('app', 'Click the link below to login') ?>
 

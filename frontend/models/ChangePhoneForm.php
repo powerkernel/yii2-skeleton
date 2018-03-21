@@ -88,7 +88,6 @@ class ChangePhoneForm extends Model {
     {
         $model=Yii::$app->user->identity;
         $model->phone=$this->phone;
-        $model->phone_verified=1;
         $model->new_phone=null;
         $model->new_phone_code=null;
         return $model->save();

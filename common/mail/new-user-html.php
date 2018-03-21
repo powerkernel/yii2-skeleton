@@ -38,11 +38,6 @@ $loginUrl=Yii::$app->urlManagerFrontend->createAbsoluteUrl(['/account/login']);
                                 <tr>
                                     <td class="content-block" style="vertical-align: top; padding: 0 0 20px;" valign="top">
                                         <?= Yii::t('app', 'Email: {EMAIL}', ['EMAIL' => Html::encode($user->email)]) ?>
-                                        <br>
-                                        <?php if(!Setting::getValue('passwordLessLogin')):?>
-                                        <?= Yii::t('app', 'Password: {PASSWORD}', ['PASSWORD' => Html::encode($user->passwordText)]) ?>
-                                        <br>
-                                        <?php endif;?>
                                     </td>
                                 </tr>
                                 <tr>
@@ -60,4 +55,3 @@ $loginUrl=Yii::$app->urlManagerFrontend->createAbsoluteUrl(['/account/login']);
         <td style="vertical-align: top;" valign="top"></td>
     </tr>
 </table>
-

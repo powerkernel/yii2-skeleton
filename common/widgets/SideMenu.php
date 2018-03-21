@@ -132,6 +132,7 @@ class SideMenu extends Widget
             'icon' => 'user',
             'items' => [
                 ['icon' => 'id-card', 'label' => Yii::t('app', 'Profile'), 'url' => ['/account/index'], 'active' => Core::checkMCA(null, 'account', 'index')],
+                ['icon' => 'envelope', 'label' => Yii::t('app', 'Update Email'), 'url' => ['/account/email'], 'active' => Core::checkMCA(null, 'account', 'email')],
                 ['icon' => 'phone', 'label' => Yii::t('app', 'Update Phone'), 'url' => ['/account/phone'], 'active' => Core::checkMCA(null, 'account', 'phone')],
             ]
         ];

@@ -36,16 +36,10 @@ class SettingController extends BackendController
      */
     public function actionIndex()
     {
-        if(Yii::$app->params['mongodb']['setting']){
-            $query=new yii\mongodb\Query;
-            $tabs = $query->from('settings')->orderBy(['key_order'=>SORT_DESC])->distinct('group');
-            $attributes = $query->select(['key'])->from('settings')->orderBy('key_order')->column();
-        }
-        else {
-            $query=new yii\db\Query;
-            $tabs = $query->select('group')->from('{{%core_setting}}')->orderBy('key_order')->distinct()->column();
-            $attributes = $query->select('key')->from('{{%core_setting}}')->orderBy('key_order')->column();
-        }
+        $query = new yii\mongodb\Query;
+        $tabs = $query->from('settings')->orderBy(['key_order' => SORT_DESC])->distinct('group');
+        $attributes = $query->select(['key'])->from('settings')->orderBy('key_order')->column();
+
 
         $model = new DynamicModel($attributes);
         $settings = [];
@@ -66,7 +60,7 @@ class SettingController extends BackendController
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             foreach ($attributes as $attribute) {
-                $s = Setting::find()->where(['key'=>$attribute])->one();
+                $s = Setting::find()->where(['key' => $attribute])->one();
                 $s->value = $model->$attribute;
                 if ($s->save(false)) {
                     Yii::$app->session->setFlash('success', Yii::t('app', 'Settings saved successfully.'));
@@ -204,9 +198,9 @@ class SettingController extends BackendController
         }
 
         /* sync */
-        $unsave=[];
+        $unsave = [];
         foreach ($s as $i => $setting) {
-            $conf = Setting::find()->where(['key'=>$setting['key']])->one();
+            $conf = Setting::find()->where(['key' => $setting['key']])->one();
             if (!$conf) {
                 $conf = new Setting();
                 $conf->key = $setting['key'];
@@ -221,19 +215,18 @@ class SettingController extends BackendController
             $conf->default = $setting['default'];
             $conf->rules = $setting['rules'];
             $conf->key_order = (int)$i;
-            if(!$conf->save()){
-                $unsave[]=$conf->key;
+            if (!$conf->save()) {
+                $unsave[] = $conf->key;
             }
         }
 
-		if(is_a(Yii::$app, '\yii\web\Application')){
-			if(empty($unsave)){
-				Yii::$app->session->setFlash('success', Yii::t('app', 'All settings has been updated.'));
-			}
-			else {
-				Yii::$app->session->setFlash('warning', Yii::t('app', 'Some setting(s) can not be updated: {SETTINGS}', ['SETTINGS'=>implode(', ', $unsave)]));
-			}
-		}
+        if (is_a(Yii::$app, '\yii\web\Application')) {
+            if (empty($unsave)) {
+                Yii::$app->session->setFlash('success', Yii::t('app', 'All settings has been updated.'));
+            } else {
+                Yii::$app->session->setFlash('warning', Yii::t('app', 'Some setting(s) can not be updated: {SETTINGS}', ['SETTINGS' => implode(', ', $unsave)]));
+            }
+        }
     }
 
     /**

@@ -1,16 +1,15 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $user common\models\Account */
+/* @var $model \common\models\Account */
 
-$confirmLink = Yii::$app->urlManagerFrontend->createAbsoluteUrl(['/account/email-confirm', 'token' => $user->change_email_token]);
+
 ?>
 <div itemscope itemtype="http://schema.org/EmailMessage">
     <div itemprop="potentialAction" itemscope itemtype="http://schema.org/ViewAction">
-        <link itemprop="target" href="<?= $confirmLink ?>"/>
-        <meta itemprop="name" content="<?= Yii::t('app', 'Confirm') ?>"/>
+        <meta itemprop="name" content="<?= Yii::t('app', 'Update Email') ?>"/>
     </div>
-    <meta itemprop="description" content="<?= Yii::t('app', 'Confirm new email') ?>"/>
+    <meta itemprop="description" content="<?= Yii::t('app', 'Update email at {APP}', ['APP' => Yii::$app->name]) ?>"/>
 </div>
 
 <table class="body-wrap">
@@ -25,29 +24,12 @@ $confirmLink = Yii::$app->urlManagerFrontend->createAbsoluteUrl(['/account/email
                             <table width="100%" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td class="content-block">
-                                        <?= Yii::t('app', 'Hello {USERNAME},', ['USERNAME' => $user->fullname]) ?>
+                                        <?= Yii::t('app', 'Hello,') ?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="content-block">
-                                        <?= Yii::t('app', 'You are requesting to change your email address at {APPNAME}:', ['APPNAME' => Yii::$app->name]) ?>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="content-block">
-                                        <?= Yii::t('app', 'To confirm, just click the button below:') ?>
-                                    </td>
-                                </tr>
-
-
-                                <tr>
-                                    <td class="content-block">
-                                        <a href="<?= $confirmLink ?>" class="btn-primary"><?= Yii::t('app', 'Confirm') ?></a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="content-block">
-                                        <?= Yii::t('app', 'If you did not request this action, please ignore this email.') ?>
+                                        <?= Yii::t('app', 'Your verification code is: {CODE}', ['CODE' => $model->new_email_code]) ?>
                                     </td>
                                 </tr>
                             </table>
@@ -61,4 +43,4 @@ $confirmLink = Yii::$app->urlManagerFrontend->createAbsoluteUrl(['/account/email
         <td></td>
     </tr>
 </table>
-<link href="src/css/mailgun.css" media="all" rel="stylesheet" type="text/css" />
+<link href="src/css/mailgun.css" media="all" rel="stylesheet" type="text/css"/>

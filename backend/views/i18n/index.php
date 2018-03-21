@@ -7,9 +7,8 @@ use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $searchModel \common\models\MessageSearch|\common\models\mongodb\MessageSearch */
+/* @var $searchModel \common\models\MessageSearch|\common\models\MessageSearch */
 /* @var $languages [] */
-/* @var $mongodb boolean */
 /* @var $availableExport [] */
 
 
@@ -74,14 +73,14 @@ $this->registerCss($css);
                             [
                                 'attribute' => 'language',
                                 'value' => 'language',
-                                'filter' => $mongodb ? \common\models\mongodb\Message::getLocaleList() : \common\models\Message::getLocaleList([Yii::$app->sourceLanguage])
+                                'filter' => \common\models\Message::getLocaleList()
                             ],
                             [
                                 'attribute' => 'category',
-                                'value' => $mongodb ? 'category' : 'source.category',
-                                'filter' => $mongodb ? \common\models\mongodb\Message::getCategoryList() : \common\models\SourceMessage::getCategoryList()
+                                'value' => 'category',
+                                'filter' => \common\models\Message::getCategoryList()
                             ],
-                            ['attribute' => 'message', 'value' => $mongodb ? 'message' : 'source.message'],
+                            ['attribute' => 'message', 'value' => 'message'],
                             ['attribute' => 'translation', 'format' => 'raw', 'value' => function ($model) {
                                 return \powerkernel\jeditable\Editable::widget([
                                     'content' => strip_tags($model->translation),

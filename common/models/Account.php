@@ -22,6 +22,8 @@ use yii\web\IdentityInterface;
  * @property string $auth_key
  * @property string $access_token
  * @property string $email
+ * @property string $new_email
+ * @property string $new_email_code
  * @property string $phone
  * @property string $new_phone
  * @property string $new_phone_code
@@ -61,6 +63,8 @@ class Account extends \yii\mongodb\ActiveRecord implements IdentityInterface
             'auth_key',
             'access_token',
             'email',
+            'new_email',
+            'new_email_code',
             'phone',
             'new_phone',
             'new_phone_code',
@@ -173,7 +177,7 @@ class Account extends \yii\mongodb\ActiveRecord implements IdentityInterface
             [['fullname'], 'required'],
             [['fullname', 'email'], 'filter', 'filter' => 'trim'],
 
-            [['email'], 'email'],
+            [['email', 'new_email'], 'email'],
             [['email'], 'filter', 'filter' => 'strtolower'],
             [['phone'], 'match', 'pattern' => '/^\+[1-9][0-9]{9,14}$/'],
 

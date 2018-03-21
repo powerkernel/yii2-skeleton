@@ -2,17 +2,19 @@
 /**
  * @author Harry Tang <harry@powerkernel.com>
  * @link https://powerkernel.com
- * @copyright Copyright (c) 2016 Power Kernel
+ * @copyright Copyright (c) 2017 Power Kernel
  */
+
+use common\Core;
+use himiklab\yii2\recaptcha\ReCaptcha;
 use yii\bootstrap\ActiveForm;
-use yii\bootstrap\Html;
 
 /* @var $this \yii\web\View */
-/* @var $model \common\models\Account */
+/* @var $model frontend\models\ChangeEmailForm */
 
-$this->title = Yii::t('app', 'Change password');
-$keywords = Yii::t('app', 'password, change password');
-$description = Yii::t('app', 'Change your password here, please keep it safe');
+$this->title = Yii::t('app', 'Update Email');
+$keywords = Yii::t('app', 'phone, change email, new email');
+$description = Yii::t('app', 'View and update your email address');
 
 $this->registerMetaTag(['name' => 'keywords', 'content' => $keywords]);
 $this->registerMetaTag(['name' => 'description', 'content' => $description]);
@@ -40,22 +42,31 @@ $this->registerMetaTag(['name' => 'description', 'content' => $description]);
 
 /* breadcrumbs */
 //$this->params['breadcrumbs'][] = ['label' => 'label', 'url' => '#'];
-
 ?>
-<div class="account-password">
+<div class="account-email">
     <div class="box box-default">
         <div class="box-header with-border">
             <h1 class="box-title"><?= $this->title ?></h1>
         </div>
         <div class="box-body">
             <div class="account-form">
-                <?php $form = ActiveForm::begin(); ?>
-                <?= $form->field($model, 'currentPassword')->passwordInput() ?>
-                <?= $form->field($model, 'password')->passwordInput() ?>
-                <?= $form->field($model, 'passwordConfirm')->passwordInput() ?>
+                <p><?= Yii::t('app', 'Please enter your new, valid email address, we will send a verification code to your new email.') ?></p>
+                <?php $form = ActiveForm::begin(['action' => Yii::$app->urlManager->createUrl(['account/email', 'act' => 'validate'])]); ?>
+                <?= $form->field($model, 'email')->textInput(['readOnly' => $model->scenario == 'validation'])
+                ?>
+                <?php if ($model->scenario == 'validation'): ?>
+                    <?= $form->field($model, 'code')->textInput(['maxlength' => 6]) ?>
+                <?php endif; ?>
+                <?php if (Core::isReCaptchaEnabled()): ?>
+                    <?= $form->field($model, 'captcha')->widget(ReCaptcha::class)->label(false) ?>
+                <?php endif; ?>
                 <div class="form-group">
-                    <?= \common\components\SubmitButton::widget(['text'=>Yii::t('app', 'Change'), 'options'=>['class' => 'btn btn-primary']]) ?>
-                </div
+                    <?php if ($model->scenario != 'validation'): ?>
+                        <?= \common\components\SubmitButton::widget(['text' => Yii::t('app', 'Send Code'), 'options' => ['class' => 'btn btn-primary', 'name' => 'send-code']]) ?>
+                    <?php else: ?>
+                        <?= \common\components\SubmitButton::widget(['text' => Yii::t('app', 'Verify'), 'options' => ['class' => 'btn btn-primary', 'name' => 'validate']]) ?>
+                    <?php endif; ?>
+                </div>
                 <?php ActiveForm::end(); ?>
             </div>
         </div>

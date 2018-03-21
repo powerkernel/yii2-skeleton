@@ -2,13 +2,12 @@
 /**
  * @author Harry Tang <harry@powerkernel.com>
  * @link https://powerkernel.com
- * @copyright Copyright (c) 2016 Power Kernel
+ * @copyright Copyright (c) 2018 Power Kernel
  */
 
 namespace frontend\models;
 
 use common\Core;
-use common\models\Account;
 use common\models\Setting;
 use himiklab\yii2\recaptcha\ReCaptchaValidator;
 use Yii;
@@ -18,31 +17,34 @@ use yii\base\Model;
  * Class ChangeEmailForm
  * @package frontend\models
  */
-class ChangeEmailForm extends Model {
+class ChangeEmailForm extends Model
+{
 
-    public $newEmail;
-    public $verifyCode;
+    public $email;
+    public $code;
+    public $captcha;
 
     /**
      * @inheritdoc
      */
     public function rules()
     {
-        $captcha=[];
-        if(Core::isReCaptchaEnabled()){
-            $captcha=[
-                ['verifyCode', 'required', 'message' => Yii::t('app', 'Prove you are NOT a robot')],
-                ['verifyCode', ReCaptchaValidator::class, 'message' => Yii::t('app', 'Prove you are NOT a robot')]
+        $captcha = [];
+        if (Core::isReCaptchaEnabled()) {
+            $captcha = [
+                ['captcha', 'required', 'message' => Yii::t('app', 'Prove you are NOT a robot')],
+                ['captcha', ReCaptchaValidator::class, 'message' => Yii::t('app', 'Prove you are NOT a robot')]
             ];
         }
 
-        $default= [
-            [['newEmail'], 'required'],
+        $default = [
+            [['email'], 'required'],
+            [['code'], 'required', 'on' => ['validation']],
 
-            ['newEmail', 'email'],
-            ['newEmail', 'filter', 'filter' => 'trim'],
-            ['newEmail', 'filter', 'filter' => 'strtolower'],
-            ['newEmail', 'unique', 'targetAttribute'=>'email', 'targetClass' => 'common\models\Account', 'message' => Yii::t('app', 'This email address has already been taken.')],
+            [['email'], 'email'],
+            [['code'], 'match', 'pattern' => '/^[0-9]{6}$/'],
+            [['code'], 'validateCode', 'skipOnError' => true],
+            [['email'], 'unique', 'targetAttribute' => 'email', 'targetClass' => 'common\models\Account', 'message' => Yii::t('app', 'This email address has already been taken.')],
         ];
 
         return array_merge($default, $captcha);
@@ -54,8 +56,9 @@ class ChangeEmailForm extends Model {
     public function attributeLabels()
     {
         return [
-            'newEmail' => Yii::t('app', 'New email'),
-            'verifyCode' => Yii::t('app', 'Verify Code'),
+            'email' => Yii::t('app', 'Enter your email address'),
+            'captcha' => Yii::t('app', 'Verify Code'),
+            'code' => \Yii::t('app', 'Verification code'),
         ];
     }
 
@@ -63,31 +66,55 @@ class ChangeEmailForm extends Model {
      * set new email
      * @return bool
      */
-    public function changeEmail()
+    public function setNewEmail()
     {
-        $user= Yii::$app->user->identity;
-        if (!Account::isTokenValid($user->change_email_token)) {
-            $user->generateChangeEmailToken();
+        $model = Yii::$app->user->identity;
+        $model->new_email = $this->email;
+        $model->new_email_code = rand(100000, 999999);
+        /* send email code */
+        Yii::$app->mailer->setViewPath(Yii::getAlias('@common') . '/mail');
+        $subject = Yii::t('app', 'Verify your email address at {APP_NAME}', ['APP_NAME' => Yii::$app->name]);
+        $sent = Yii::$app->mailer
+            ->compose(
+                ['html' => 'change-email-html', 'text' => 'change-email-text'],
+                ['title' => $subject, 'model' => $model]
+            )
+            ->setFrom([Setting::getValue('outgoingMail') => Yii::$app->name])
+            ->setTo($this->email)
+            ->setSubject($subject)
+            ->send();
+        if ($sent) {
+            return $model->save();
         }
-
-        $user->new_email=$this->newEmail;
-
-        if ($user->save()) {
-            Yii::$app->language=$user->language;
-            $subject=Yii::t('app', '[{APP_NAME}] Please verify your email address', ['APP_NAME'=> Yii::$app->name]);
-            return Yii::$app->mailer
-                //->compose('changeEmail', ['title'=>$subject, 'user' => $user])
-                ->compose(
-                    ['html' => 'change-email-html', 'text' => 'change-email-text'],
-                    ['title'=>$subject, 'user' => $user]
-                )
-                ->setFrom([Setting::getValue('outgoingMail')])
-                ->setTo($user->new_email)
-                ->setSubject($subject)
-                ->send();
-        }
-
-
         return false;
     }
+
+    /**
+     * update phone
+     * @return mixed
+     */
+    public function updateEmail()
+    {
+        $model = Yii::$app->user->identity;
+        $model->email = $this->email;
+        $model->new_email = null;
+        $model->new_email_code = null;
+        return $model->save();
+    }
+
+    /**
+     * @param $attribute
+     * @param $params
+     * @param $validator
+     */
+    public function validateCode($attribute, $params, $validator)
+    {
+        $account = Yii::$app->user->identity;
+        if ($this->code != $account->new_email_code) {
+            $this->addError($attribute, Yii::t('app', 'Wrong code. Please try again.'));
+        }
+        unset($params, $validator);
+    }
+
+
 }

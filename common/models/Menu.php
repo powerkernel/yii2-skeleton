@@ -316,20 +316,13 @@ class Menu extends \yii\mongodb\ActiveRecord
         if (empty($e)) {
             $menus = Menu::find()->where(['id_parent' => null])->all();
         } else {
-            if (Yii::$app->params['mongodb']['menu']) {
-                $menus = Menu::find()->where(['id_parent' => null])->andFilterCompare('_id', $e, '!=')->all();
-            } else {
-                $menus = Menu::find()->where(['id_parent' => null])->andFilterCompare('id', $e, '!=')->all();
-            }
+            $menus = Menu::find()->where(['id_parent' => null])->andFilterCompare('_id', $e, '!=')->all();
         }
 
-        if (Yii::$app->params['mongodb']['menu']) {
-            return ArrayHelper::map($menus, function ($model) {
-                return (string)$model->_id;
-            }, 'label');
-        } else {
-            return ArrayHelper::map($menus, 'id', 'label');
-        }
+        return ArrayHelper::map($menus, function ($model) {
+            return (string)$model->_id;
+        }, 'label');
+
 
     }
 

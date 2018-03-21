@@ -38,13 +38,12 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                         //'id',
                         'title',
                         //'lang',
-                        ['attribute' => 'lang', 'value' => function ($model) {
-                            if (Yii::$app->params['mongodb']['i18n']) {
-                                return !empty($model->lang)?\common\models\mongodb\Message::getLocaleList()[$model->lang]:null;
-                            } else {
-                                return !empty($model->lang)?\common\models\Message::getLocaleList()[$model->lang]:null;
-                            }
-                        }, 'filter' => Yii::$app->params['mongodb']['i18n'] ? \common\models\mongodb\Message::getLocaleList() : \common\models\Message::getLocaleList()
+                        [
+                            'attribute' => 'lang',
+                            'value' => function ($model) {
+                                return !empty($model->lang) ? \common\models\Message::getLocaleList()[$model->lang] : null;
+                            },
+                            'filter' => \common\models\Message::getLocaleList()
                         ],
                         //'text_content:ntext',
                         //'link_url:url',
@@ -68,7 +67,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
         </div>
         <!-- Loading (remove the following to stop the loading)-->
         <div class="overlay grid-view-overlay hidden">
-            <?= \powerkernel\fontawesome\Icon::widget(['prefix'=>'fas', 'name' => 'sync-alt', 'styling'=>'fa-spin']) ?>
+            <?= \powerkernel\fontawesome\Icon::widget(['prefix' => 'fas', 'name' => 'sync-alt', 'styling' => 'fa-spin']) ?>
         </div>
         <!-- end loading -->
     </div>

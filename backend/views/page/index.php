@@ -30,13 +30,12 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
                     ['class' => 'yii\grid\SerialColumn'],
 
                     'slug',
-                    ['attribute' => 'language', 'value' => function ($model) {
-                        if (Yii::$app->params['mongodb']['i18n']) {
-                            return \common\models\mongodb\Message::getLocaleList()[$model->language];
-                        } else {
+                    [
+                        'attribute' => 'language',
+                        'value' => function ($model) {
                             return \common\models\Message::getLocaleList()[$model->language];
-                        }
-                    }, 'filter' => Yii::$app->params['mongodb']['i18n'] ? \common\models\mongodb\Message::getLocaleList() : \common\models\Message::getLocaleList()
+                        },
+                        'filter' => \common\models\Message::getLocaleList()
                     ],
                     //'seo_name',
                     'title',
@@ -91,7 +90,7 @@ $this->registerJs('$(document).on("pjax:send", function(){ $(".grid-view-overlay
         </div>
         <!-- Loading (remove the following to stop the loading)-->
         <div class="overlay grid-view-overlay hidden">
-            <?= \powerkernel\fontawesome\Icon::widget(['prefix'=>'fas', 'name' => 'sync-alt', 'styling'=>'fa-spin']) ?>
+            <?= \powerkernel\fontawesome\Icon::widget(['prefix' => 'fas', 'name' => 'sync-alt', 'styling' => 'fa-spin']) ?>
         </div>
         <!-- end loading -->
 

@@ -42,7 +42,7 @@ class AccountController extends MainController
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['auth', 'signup', 'signin', 'login', 'reset', 'reset-confirm'],
+                        'actions' => ['auth', 'signup', 'signin', 'login'],
                         'allow' => true,
                     ],
                     [
@@ -81,7 +81,37 @@ class AccountController extends MainController
         (new AuthHandler($client))->handle();
     }
 
+    /**
+     * update email
+     * @return string|\yii\web\Response
+     */
+    public function actionEmail(){
+        $model = new ChangeEmailForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if (isset($_POST['validate'])) {
+                $model->setScenario('validation');
+            }
 
+            if ($model->validate()) {
+                if (empty($model->code)) {
+                    $model->setScenario('validation');
+                    if ($model->setNewEmail()) {
+                        Yii::$app->session->setFlash('success', Yii::t('app', 'A message with a 6-digit verification code was just sent to {EMAIL}', ['EMAIL' => $model->email]));
+                    } else {
+                        $model = new ChangeEmailForm();
+                        Yii::$app->session->setFlash('error', Yii::t('app', 'We cannot process your request at this time.'));
+                    }
+                } else {
+                    if ($model->updateEmail()) {
+                        Yii::$app->session->setFlash('success', Yii::t('app', 'Your email address has been successfully updated.'));
+                        return $this->redirect('index');
+                    }
+                }
+            }
+        }
+
+        return $this->render('email', ['model' => $model]);
+    }
 
     /**
      * change phone
