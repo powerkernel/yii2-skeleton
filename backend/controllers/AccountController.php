@@ -80,27 +80,10 @@ class AccountController extends BackendController
             return $this->goHome();
         }
 
-        $model = new LoginForm();
-        $model->admin=true;
-        $model->setScenario('default');
-        $passLess=Setting::getValue('passwordLessLogin');
-        if($passLess){
-            $model->setScenario('passwordLess');
-        }
+        return $this->render('login', [
+            //'model' => $model,
+        ]);
 
-        if ($model->load(Yii::$app->request->post())) {
-            if($model->login()){
-                return $this->goBack();
-            }
-            else {
-                return $this->redirect(['login']);
-            }
-
-        } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
-        }
     }
 
     /**
