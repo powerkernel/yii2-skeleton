@@ -162,6 +162,12 @@ class SettingController extends BackendController
             ['key' => 'msTileColor', 'value' => '#3c8dbc', 'title' => 'MS Tile Color', 'description' => 'Background color for a live tile', 'group' => 'Theme', 'type' => 'textInput', 'data' => '[]', 'default' => '#3c8dbc', 'rules' => json_encode(['safe' => [], 'string' => []])],
             ['key' => 'safariMaskColor', 'value' => '#3c8dbc', 'title' => 'Safari Mask Color', 'description' => 'Safari pinned tab color', 'group' => 'Theme', 'type' => 'textInput', 'data' => '[]', 'default' => '#3c8dbc', 'rules' => json_encode(['safe' => [], 'string' => []])],
 
+            ['key' => 'logoLg', 'value' => '', 'title' => 'Logo large', 'description' => 'SVG Logo large', 'group' => 'Theme', 'type' => 'textarea', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
+            ['key' => 'logoXs', 'value' => '', 'title' => 'Logo mini', 'description' => 'SVG Logo mini', 'group' => 'Theme', 'type' => 'textarea', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
+            ['key' => 'logoColorLg', 'value' => '', 'title' => 'Logo color large', 'description' => 'SVG Logo color large', 'group' => 'Theme', 'type' => 'textarea', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
+            ['key' => 'logoColorXs', 'value' => '', 'title' => 'Logo color mini', 'description' => 'SVG Logo color mini', 'group' => 'Theme', 'type' => 'textarea', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
+            ['key' => 'logoLogin', 'value' => '', 'title' => 'Logo login', 'description' => 'SVG Logo login', 'group' => 'Theme', 'type' => 'textarea', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
+
             /* Enhancements */
             ['key' => 'googleCustomSearch', 'value' => '', 'title' => 'Google Custom Search', 'description' => 'CX code: 123456789012345678901:abcdefjh123', 'group' => 'Enhancements', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
             ['key' => 'googleAnalytics', 'value' => '', 'title' => 'Google Analytics', 'description' => 'Tracking ID: UA-1111111-22', 'group' => 'Enhancements', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
