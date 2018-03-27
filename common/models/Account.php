@@ -462,4 +462,23 @@ class Account extends \yii\mongodb\ActiveRecord implements IdentityInterface
         return true;
     }
 
+
+    /**
+     * Get identifier type
+     * @param $identifier
+     * @return bool|int|string
+     */
+    public static function getIdentifierType($identifier){
+        $patterns = [
+            'phone' => '/^\+[1-9][0-9]{9,14}$/',
+            'email' => '/^[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/'
+        ];
+        foreach ($patterns as $type => $pattern) {
+            if (preg_match($pattern, $identifier)) {
+                return $type;
+            }
+        }
+        return false;
+    }
+
 }

@@ -2,25 +2,24 @@
 /**
  * @author Harry Tang <harry@powerkernel.com>
  * @link https://powerkernel.com
- * @copyright Copyright (c) 2017 Power Kernel
+ * @copyright Copyright (c) 2018 Power Kernel
  */
 
+namespace common\forms;
 
-namespace common\models;
-
-
+use common\models\CodeVerification;
 use Yii;
 use yii\base\Model;
 
 /**
- * Class SignInValidationForm
+ * Class CodeVerificationForm
  * @package common\models
  */
-class SignInValidationForm extends Model
+class CodeVerificationForm extends Model
 {
-    public $sid;
+    public $vid;
     public $code;
-    public $login;
+    public $identifier;
     public $type;
     public $message;
 
@@ -31,11 +30,11 @@ class SignInValidationForm extends Model
     public function rules()
     {
         return [
-            [['sid', 'code'], 'required'],
-            [['sid'], 'string'],
-            [['code'], 'string', 'length'=>6],
+            [['vid', 'code'], 'required'],
+            [['vid'], 'string'],
+            [['code'], 'string', 'length' => 6],
 
-            ['code', 'match', 'pattern'=>'/^[0-9]{6}$/'],
+            ['code', 'match', 'pattern' => '/^[0-9]{6}$/'],
             ['code', 'validateCode'],
             ['message', 'safe']
         ];
@@ -49,23 +48,21 @@ class SignInValidationForm extends Model
      */
     public function validateCode($attribute, $params, $validator)
     {
-        $model=SignIn::findOne($this->sid);
-        if($model){
-            $this->login=$model->login;
-            $this->type=$model->getType();
-            if($this->code!=$model->code){
+        //$model = CodeVerification::findOne($this->vid);
+        $model = CodeVerification::find()->where(['_id'=>$this->vid, 'status'=>CodeVerification::STATUS_NEW])->one();
+        if ($model) {
+            $this->identifier = $model->identifier;
+            $this->type = $model->getType();
+            if ($this->code != $model->code) {
                 $model->attempts++;
                 $this->addError($attribute, Yii::t('app', 'Wrong code. Please try again.'));
-            }
-            else {
-                $model->status=SignIn::STATUS_USED;
+            } else {
+                $model->status = CodeVerification::STATUS_USED;
             }
             $model->save();
-        }
-        else {
+        } else {
             $this->addError($attribute, Yii::t('app', 'Wrong code. Please try again.'));
         }
-
         unset($params, $validator);
     }
 
@@ -75,12 +72,8 @@ class SignInValidationForm extends Model
     public function attributeLabels()
     {
         return [
-            'sid' => \Yii::t('app', 'SID'),
-            'code'=> \Yii::t('app', 'Verification code'),
+            'vid' => \Yii::t('app', 'VID'),
+            'code' => \Yii::t('app', 'Verification code'),
         ];
     }
-
-
-
-
 }

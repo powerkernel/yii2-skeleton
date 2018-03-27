@@ -1,15 +1,15 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $model \common\models\SignIn */
+/* @var $model \common\models\CodeVerification */
 
 
 ?>
 <div itemscope itemtype="http://schema.org/EmailMessage">
     <div itemprop="potentialAction" itemscope itemtype="http://schema.org/ViewAction">
-        <meta itemprop="name" content="<?= Yii::t('app', 'Login') ?>"/>
+        <meta itemprop="name" content="<?= Yii::t('app', 'Verification Code') ?>"/>
     </div>
-    <meta itemprop="description" content="<?= Yii::t('app', 'Login me in {APP}', ['APP' => Yii::$app->name]) ?>"/>
+    <meta itemprop="description" content="<?= Yii::t('app', 'Your verification code is: {CODE}', ['CODE' => $model->code]) ?>"/>
 </div>
 
 <table class="body-wrap">
@@ -29,7 +29,7 @@
                                 </tr>
                                 <tr>
                                     <td class="content-block">
-                                        <?= Yii::t('app', 'Your login verification code is: {CODE}', ['CODE' => $model->code]) ?>
+                                        <?= Yii::t('app', 'Your verification code is: {CODE}', ['CODE' => $model->code]) ?>
                                     </td>
                                 </tr>
                             </table>

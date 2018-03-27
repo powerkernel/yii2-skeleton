@@ -2,7 +2,7 @@
 /**
  * @author Harry Tang <harry@powerkernel.com>
  * @link https://powerkernel.com
- * @copyright Copyright (c) 2017 Power Kernel
+ * @copyright Copyright (c) 2018 Power Kernel
  */
 
 namespace common\models;
@@ -12,24 +12,28 @@ use powerkernel\sms\components\AwsSMS;
 use Yii;
 
 /**
- * This is the model class for table "{{%core_login}}".
+ * class CodeVerification
  *
- * @property string $login
+ * @property string $identifier
  * @property string $code
  * @property integer $attempts
  * @property string $status
  * @property \MongoDB\BSON\UTCDateTime $created_at
  * @property \MongoDB\BSON\UTCDateTime $updated_at
  */
-class SignIn extends \yii\mongodb\ActiveRecord
+class CodeVerification extends \yii\mongodb\ActiveRecord
 {
+    const STATUS_NEW = 'STATUS_NEW';//10;
+    const STATUS_USED = 'STATUS_USED';//20;
+
+    public $captcha;
 
     /**
      * @inheritdoc
      */
     public static function collectionName()
     {
-        return 'signin';
+        return 'core_code_verification';
     }
 
     /**
@@ -39,7 +43,7 @@ class SignIn extends \yii\mongodb\ActiveRecord
     {
         return [
             '_id',
-            'login',
+            'identifier',
             'code',
             'attempts',
             'status',
@@ -82,11 +86,6 @@ class SignIn extends \yii\mongodb\ActiveRecord
     {
         return $this->created_at->toDateTime()->format('U');
     }
-
-    const STATUS_NEW = 'STATUS_NEW';//10;
-    const STATUS_USED = 'STATUS_USED';//20;
-
-    public $captcha;
 
 
     /**
@@ -149,15 +148,15 @@ class SignIn extends \yii\mongodb\ActiveRecord
      */
     public function rules()
     {
-        /* login */
+        /* identifier */
         if (!empty(\powerkernel\sms\models\Setting::getValue('aws_access_key') && !empty(\powerkernel\sms\models\Setting::getValue('aws_secret_key')))) {
-            $login = [
-                [['login'], 'match', 'pattern' => '/^(\+[1-9][0-9]{9,14})|([a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)$/', 'message' => Yii::t('app', 'Email or phone number is invalid. Note that phone number should begin with a country prefix code.')],
+            $identifier = [
+                [['identifier'], 'match', 'pattern' => '/^(\+[1-9][0-9]{9,14})|([a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)$/', 'message' => Yii::t('app', 'Email or phone number is invalid. Note that phone number should begin with a country prefix code.')],
             ];
 
         } else {
-            $login = [
-                [['login'], 'email'],
+            $identifier = [
+                [['identifier'], 'email'],
             ];
         }
 
@@ -165,11 +164,10 @@ class SignIn extends \yii\mongodb\ActiveRecord
         $default = [
             [['attempts'], 'default', 'value' => 0],
 
-            [['login'], 'required'],
+            [['identifier'], 'required'],
             [['code'], 'string', 'length' => 6],
 
-            [['login'], 'trim'],
-            //[['login'], 'match', 'pattern' => '/^(\+[1-9][0-9]{9,14})|([a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)$/', 'message'=>Yii::t('app', 'Email or phone number is invalid. Note that phone number should begin with a country prefix code.')],
+            [['identifier'], 'trim'],
             [['code'], 'match', 'pattern' => '/^[0-9]{6}$/'],
 
             [['status'], 'string', 'max' => 20],
@@ -177,7 +175,7 @@ class SignIn extends \yii\mongodb\ActiveRecord
             //['captcha', ReCaptchaValidator::class, 'message' => Yii::t('app', 'Prove you are NOT a robot')]
         ];
 
-        return array_merge($default, $login);
+        return array_merge($default, $identifier);
     }
 
     /**
@@ -194,16 +192,16 @@ class SignIn extends \yii\mongodb\ActiveRecord
         ];
 
         if (!empty(\powerkernel\sms\models\Setting::getValue('aws_access_key') && !empty(\powerkernel\sms\models\Setting::getValue('aws_secret_key')))) {
-            $login = [
-                'login' => \Yii::t('app', 'Email or phone number'),
+            $identifier = [
+                'identifier' => \Yii::t('app', 'Email or phone number'),
             ];
         } else {
-            $login = [
-                'login' => \Yii::t('app', 'Email'),
+            $identifier = [
+                'identifier' => \Yii::t('app', 'Email'),
             ];
         }
 
-        return array_merge($default, $login);
+        return array_merge($default, $identifier);
     }
 
     /**
@@ -243,7 +241,7 @@ class SignIn extends \yii\mongodb\ActiveRecord
     }
 
     /**
-     * get login type
+     * get identifier type
      * @return bool|string
      */
     public function getType()
@@ -253,7 +251,7 @@ class SignIn extends \yii\mongodb\ActiveRecord
             'email' => '/^[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&\'*+\\/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/'
         ];
         foreach ($patterns as $type => $pattern) {
-            if (preg_match($pattern, $this->login)) {
+            if (preg_match($pattern, $this->identifier)) {
                 return $type;
             }
         }
@@ -267,7 +265,7 @@ class SignIn extends \yii\mongodb\ActiveRecord
     protected function sendSMS()
     {
         return (new AwsSMS())->send(
-            $this->login,
+            $this->identifier,
             Yii::t('app', '{APP}: Your verification code is {CODE}', ['CODE' => $this->code, 'APP' => Yii::$app->name]
             ));
     }
@@ -276,16 +274,16 @@ class SignIn extends \yii\mongodb\ActiveRecord
      * send email code
      * @return bool
      */
-    public function sendEmail()
+    protected function sendEmail()
     {
-        $subject = Yii::t('app', 'Log in to {APP}', ['APP' => Yii::$app->name]);
+        $subject = Yii::t('app', 'Verification code for {APP}', ['APP' => Yii::$app->name]);
         return Yii::$app->mailer
             ->compose(
-                ['html' => '@common/mail/signin-email-html', 'text' => '@common/mail/signin-email-text'],
+                ['html' => '@common/mail/code-verification-html', 'text' => '@common/mail/code-verification-text'],
                 ['model' => $this]
             )
             ->setFrom([Setting::getValue('outgoingMail') => Yii::$app->name])
-            ->setTo($this->login)
+            ->setTo($this->identifier)
             ->setSubject($subject)
             ->send();
     }

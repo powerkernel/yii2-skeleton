@@ -9,7 +9,6 @@
 namespace common\actions;
 
 
-
 use yii\base\Action;
 use yii\web\BadRequestHttpException;
 
@@ -25,16 +24,14 @@ class Sorting extends Action
     /** @var string */
     public $orderAttribute = 'order';
 
+    /**
+     * @throws BadRequestHttpException
+     */
     public function run()
     {
         foreach (\Yii::$app->request->post('sorting') as $order => $id) {
             $query = clone $this->query;
-            if(is_a($query, '\yii\mongodb\ActiveQuery')){
-                $model = $query->andWhere(['_id' => $id])->one();
-            }
-            else {
-                $model = $query->andWhere(['id' => $id])->one();
-            }
+            $model = $query->andWhere(['_id' => $id])->one();
 
             if ($model === null) {
                 throw new BadRequestHttpException();

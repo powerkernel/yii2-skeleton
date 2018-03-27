@@ -143,6 +143,8 @@ class SettingController extends BackendController
             ['key' => 'twitterSite', 'value' => '', 'title' => 'Twitter Card Site', 'description' => '@username for the website used', 'group' => 'Social', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
 
             /* API */
+            ['key' => 'appApi', 'value' => md5(uniqid()), 'title' => 'App API', 'description' => 'App API', 'group' => 'API', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
+
             ['key' => 'bitly', 'value' => '', 'title' => 'Bitly Token', 'description' => 'Bitly API token', 'group' => 'API', 'type' => 'passwordInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],
 
             ['key' => 'reCaptchaKey', 'value' => '', 'title' => 'reCaptcha Site Key', 'description' => 'reCaptcha Site Key', 'group' => 'API', 'type' => 'textInput', 'data' => '[]', 'default' => '', 'rules' => json_encode(['safe' => [], 'string' => []])],

@@ -65,8 +65,6 @@ use yii\helpers\Html;
 </head>
 <body>
     <?php $this->beginBody() ?>
-    
-
         <?= $content ?>
         <div class="footer" style="width: 100%; clear: both; color: #999; padding: 20px;">
             <table width="100%">
