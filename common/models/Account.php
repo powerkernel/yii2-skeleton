@@ -344,6 +344,9 @@ class Account extends \yii\mongodb\ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
+        if (is_array($id)) {
+            $id = array_values($id)[0];
+        }
         return static::findOne(['_id' => $id, 'status' => self::STATUS_ACTIVE]);
     }
 

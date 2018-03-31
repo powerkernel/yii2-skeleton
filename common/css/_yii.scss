@@ -74,3 +74,13 @@ body {
 .treeview-label {
   margin-left: 5px;
 }
+/* adminlte header*/
+.main-header .logo-mini {
+  margin: 0 !important;
+}
+.main-header .logo-lg {
+  padding: 10px;
+  svg {
+    max-height: 30px;
+  }
+}
