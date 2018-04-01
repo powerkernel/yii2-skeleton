@@ -37,7 +37,7 @@ class Banner extends \yii\mongodb\ActiveRecord
      */
     public static function collectionName()
     {
-        return 'banners';
+        return 'core_banners';
     }
 
     /**

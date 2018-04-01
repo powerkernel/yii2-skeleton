@@ -30,7 +30,7 @@ class Message extends ActiveRecord
      */
     public static function collectionName()
     {
-        return 'message';
+        return 'core_message';
     }
 
     /**

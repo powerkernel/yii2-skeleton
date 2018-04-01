@@ -47,7 +47,7 @@ class Account extends \yii\mongodb\ActiveRecord implements IdentityInterface
      */
     public static function collectionName()
     {
-        return 'accounts';
+        return 'core_accounts';
     }
 
     /**

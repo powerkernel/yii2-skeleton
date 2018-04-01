@@ -23,7 +23,7 @@ class Page extends \yii\mongodb\ActiveRecord
      */
     public static function collectionName()
     {
-        return 'page_id';
+        return 'core_page_id';
     }
 
     /**

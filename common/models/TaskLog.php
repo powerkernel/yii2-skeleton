@@ -26,7 +26,7 @@ class TaskLog extends \yii\mongodb\ActiveRecord
      */
     public static function collectionName()
     {
-        return 'task_logs';
+        return 'core_task_logs';
     }
 
     /**

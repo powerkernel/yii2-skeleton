@@ -37,7 +37,7 @@ class PageData extends \yii\mongodb\ActiveRecord
      */
     public static function collectionName()
     {
-        return 'page_data';
+        return 'core_page_data';
     }
 
     /**

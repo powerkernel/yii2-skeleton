@@ -32,7 +32,7 @@ class Setting extends \yii\mongodb\ActiveRecord
      */
     public static function collectionName()
     {
-        return 'settings';
+        return 'core_settings';
     }
 
     /**

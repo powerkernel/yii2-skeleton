@@ -32,7 +32,7 @@ class Service extends \yii\mongodb\ActiveRecord
      */
     public static function collectionName()
     {
-        return 'services';
+        return 'core_services';
     }
 
     /**

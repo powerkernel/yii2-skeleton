@@ -47,7 +47,7 @@ class Blog extends \yii\mongodb\ActiveRecord
      */
     public static function collectionName()
     {
-        return 'blog';
+        return 'core_blog';
     }
 
     /**

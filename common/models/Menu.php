@@ -47,7 +47,7 @@ class Menu extends \yii\mongodb\ActiveRecord
      */
     public static function collectionName()
     {
-        return 'menu';
+        return 'core_menu';
     }
 
     /**
