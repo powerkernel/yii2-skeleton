@@ -161,17 +161,10 @@ class PageData extends \yii\mongodb\ActiveRecord
     {
 
         /* account */
-        if (Yii::$app->params['mongodb']['account']) {
-            $account = [
-                [['created_by', 'updated_by'], 'string'],
-                [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::class, 'targetAttribute' => ['created_by' => '_id']],
-            ];
-        } else {
-            $account = [
-                [['created_by', 'updated_by'], 'integer'],
-                [['created_by', 'updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::class, 'targetAttribute' => ['created_by' => 'id']],
-            ];
-        }
+        $account = [
+            [['created_by', 'updated_by'], 'yii\mongodb\validators\MongoDateValidator'],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::class, 'targetAttribute' => ['created_by' => '_id']],
+        ];
 
         $default = [
             [['slug', 'language', 'title', 'description', 'content', 'keywords'], 'required', 'on' => ['update', 'create']],

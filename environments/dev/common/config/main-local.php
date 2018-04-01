@@ -10,13 +10,6 @@
 // add file hosts 127.0.0.1 dbserver
 $config =  [
     'components' => [
-        'db' => [
-            'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=dbserver;dbname=yii2advanced',
-            'username' => 'root',
-            'password' => '',
-            'charset' => 'utf8',
-        ],
 //        'mongodb' => [
 //            'class' => '\yii\mongodb\Connection',
 //            'dsn'=>'mongodb://user_mg:password@localhost:27017/dbname',
@@ -42,16 +35,6 @@ $config =  [
             'showScriptName' => false,
             //'baseUrl' => \common\Core::isLocalhost()?'https://dev.backend.domain.com/':'https://backend.domain.com/',
         ],
-        'authManager' => [
-            //'class' => 'yii\mongodb\rbac\MongoDbManager',
-            'class' => 'yii\rbac\DbManager',
-            'ruleTable'=>'{{%core_auth_rule}}', // cm when using mg
-            'assignmentTable'=>'{{%core_auth_assignment}}', // cm when using mg
-            'itemChildTable'=>'{{%core_auth_item_child}}', // cm when using mg
-            'itemTable'=>'{{%core_auth_item}}', // cm when using mg
-            'defaultRoles'=>['member']
-        ],
-
     ],
     'modules' => [],
 ];

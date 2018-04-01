@@ -1,16 +1,6 @@
 <?php
 return [
     'components' => [
-        'db' => [
-            'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=yii2advanced',
-            'username' => 'root',
-            'password' => '',
-            'charset' => 'utf8',
-            'on afterOpen' => function($event) {
-                $event->sender->createCommand("SET time_zone='+00:00';")->execute();
-            },
-        ],
 //        'mongodb' => [
 //            'class' => '\yii\mongodb\Connection',
 //            'dsn'=>'mongodb://u6353857_mg:xM5mVgcRAFx4WHLe@localhost:27017/u6353857_db'

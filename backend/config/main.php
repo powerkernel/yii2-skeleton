@@ -13,6 +13,10 @@ return [
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
+        'session' => [
+            'class' => 'yii\mongodb\Session',
+            'sessionCollection'=>'core_session_backend'
+        ],
         'request'=>[
             'csrfParam'=>'_csrf_b'
         ],

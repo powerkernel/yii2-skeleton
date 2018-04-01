@@ -10,7 +10,7 @@ class m170810_174027_blog extends \yii\mongodb\Migration
      */
     public function up()
     {
-        $col=Yii::$app->mongodb->getCollection('blog');
+        $col=Yii::$app->mongodb->getCollection(\common\models\Blog::collectionName());
         $col->createIndexes([
             [
                 'key'=>['slug'],
@@ -24,7 +24,7 @@ class m170810_174027_blog extends \yii\mongodb\Migration
      */
     public function down()
     {
-        $col=Yii::$app->mongodb->getCollection('blog');
+        $col=Yii::$app->mongodb->getCollection(\common\models\Blog::collectionName());
         $col->drop();
     }
 }

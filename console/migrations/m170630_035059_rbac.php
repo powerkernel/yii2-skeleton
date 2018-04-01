@@ -10,7 +10,7 @@ class m170630_035059_rbac extends \yii\mongodb\Migration
      */
     public function up()
     {
-        $authItem=Yii::$app->mongodb->getCollection('auth_item');
+        $authItem=Yii::$app->mongodb->getCollection('core_auth_item');
         $authItem->createIndexes([
             [
                 'key'=>['name'],
@@ -18,7 +18,7 @@ class m170630_035059_rbac extends \yii\mongodb\Migration
             ]
         ]);
 
-        $authRule=Yii::$app->mongodb->getCollection('auth_rule');
+        $authRule=Yii::$app->mongodb->getCollection('core_auth_rule');
         $authRule->createIndexes([
             [
                 'key'=>['name'],
@@ -26,7 +26,7 @@ class m170630_035059_rbac extends \yii\mongodb\Migration
             ]
         ]);
 
-        $authAssignment=Yii::$app->mongodb->getCollection('auth_assignment');
+        $authAssignment=Yii::$app->mongodb->getCollection('core_auth_assignment');
         $authAssignment->createIndexes([
             [
                 'key'=>['user_id', 'item_name'],
@@ -42,11 +42,11 @@ class m170630_035059_rbac extends \yii\mongodb\Migration
     public function down()
     {
         /* @var $authItem \yii\mongodb\Collection */
-        $authItem=Yii::$app->mongodb->getCollection('auth_item');
+        $authItem=Yii::$app->mongodb->getCollection('core_auth_item');
         $authItem->drop();
-        $authRule=Yii::$app->mongodb->getCollection('auth_rule');
+        $authRule=Yii::$app->mongodb->getCollection('core_auth_rule');
         $authRule->drop();
-        $authAssignment=Yii::$app->mongodb->getCollection('auth_assignment');
+        $authAssignment=Yii::$app->mongodb->getCollection('core_auth_assignment');
         $authAssignment->drop();
     }
 

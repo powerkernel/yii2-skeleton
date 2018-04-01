@@ -13,7 +13,10 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
-
+        'session' => [
+            'class' => 'yii\mongodb\Session',
+            'sessionCollection'=>'core_session_frontend'
+        ],
         'user' => [
             'identityClass' => 'common\models\Account',
             'enableAutoLogin' => true,

@@ -4,13 +4,13 @@ Yii 2 Skeleton
 Yii 2 Skeleton is a skeleton (based on [Yii 2 App Advanced](https://github.com/yiisoft/yii2-app-advanced)) application best for
 developing complex Web applications with multiple tiers.
 
-The template includes three tiers: front end, back end, and console, each of which
+The template includes 4 tiers: front end, back end, api and console, each of which
 is a separate Yii application.
 
 The template is designed to work in a team development environment. It supports
 deploying the application in different environments.
 
-Yii2 App Advanced Documentation is at [docs/guide/README.md](https://github.com/yiisoft/yii2-app-advanced/blob/master/docs/guide/README.md).
+Note: Yii 2 Skeleton only supports MongoDB
 
 ## Installing using Composer
 
@@ -24,71 +24,11 @@ or if you want to install packages from ```source```
 
     composer create-project --prefer-source powerkernel/yii2-skeleton yii-application
 
-DIRECTORY STRUCTURE
--------------------
-
-```
-common
-    bootstrap/           contains bootstrap 
-    config/              contains shared configurations
-    gii/                 contains gii templates
-    mail/                contains view files for e-mails
-    models/              contains model classes used in both backend and frontend
-    plugins/             contains 3rd plugins used in both backend and frontend
-    widgets/             contains widgets classes used in both backend and frontend    
-console
-    config/              contains console configurations
-    controllers/         contains console controllers (commands)
-    migrations/          contains database migrations
-    models/              contains console-specific model classes
-    runtime/             contains files generated during runtime
-backend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains backend configurations
-    controllers/         contains Web controller classes
-    models/              contains backend-specific model classes
-    runtime/             contains files generated during runtime
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-frontend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains frontend configurations
-    controllers/         contains Web controller classes
-    models/              contains frontend-specific model classes
-    runtime/             contains files generated during runtime
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-    widgets/             contains frontend widgets
-vendor/                  contains dependent 3rd-party packages
-environments/            contains environment-based overrides
-tests                    contains various tests for the advanced application
-    codeception/         contains tests developed with Codeception PHP Testing Framework
-```
-
-FEATURES
---------
-
-```
-Account
-    Signup, Login
-    Login with Facebook, Google
-    CRUD: View, Update, Delete, List
-RBAC
-    Assign, Revoke, List
-I18N
-    Message Translation
-    User locale selection    
-```
-
-And adding more features...
-```
-More comming soon..
-```
 
 INSTALLATION
 ------------
 1. Run `init`, update your database information in common\config\mail-local.php
-2. Run `php yii migrate` or `php yii mongodb-migrate --migrationPath=@console/migrations/mongodb`
+2. Run `php yii mongodb-migrate --migrationPath=@console/migrations`
 3. Run `php yii setup`
 4. Config/Symlink frontend\web & backend\web to your public_html
 5. Go to frontend and sign up for new account, admin role will be auto assigned.
