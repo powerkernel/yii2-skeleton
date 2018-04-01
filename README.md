@@ -12,21 +12,9 @@ deploying the application in different environments.
 
 Note: Yii 2 Skeleton only supports MongoDB
 
-## Installing using Composer
-
-If you do not have [Composer](http://getcomposer.org), follow the instructions in the
-[Installing Yii](https://github.com/yiisoft/yii2/blob/master/docs/guide/start-installation.md#installing-via-composer) section of the definitive guide to install it.
-
-With Composer installed, you can then install the application using the following commands:
-
-    composer create-project --prefer-dist powerkernel/yii2-skeleton yii-application
-or if you want to install packages from ```source```
-
-    composer create-project --prefer-source powerkernel/yii2-skeleton yii-application
-
-
 INSTALLATION
 ------------
+0. Unzip repository, edit composer.json to suit your needs, then run `composer update` or `composer update --prefer-source`
 1. Run `init`, update your database information in common\config\mail-local.php
 2. Run `php yii mongodb-migrate --migrationPath=@console/migrations`
 3. Run `php yii setup`
