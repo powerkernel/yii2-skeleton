@@ -72,5 +72,9 @@ return [
             'defaultRoles'=>['member']
         ],
     ],
-    'modules' => [],
+    'modules' => [
+        'sms' => [
+            'class' => 'powerkernel\sms\Module',
+        ],
+    ],
 ];

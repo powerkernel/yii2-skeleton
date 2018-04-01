@@ -37,8 +37,8 @@ class SettingController extends BackendController
     public function actionIndex()
     {
         $query = new yii\mongodb\Query;
-        $tabs = $query->from('settings')->orderBy(['key_order' => SORT_DESC])->distinct('group');
-        $attributes = $query->select(['key'])->from('settings')->orderBy('key_order')->column();
+        $tabs = $query->from(Setting::collectionName())->orderBy(['key_order' => SORT_DESC])->distinct('group');
+        $attributes = $query->select(['key'])->from(Setting::collectionName())->orderBy('key_order')->column();
 
 
         $model = new DynamicModel($attributes);
