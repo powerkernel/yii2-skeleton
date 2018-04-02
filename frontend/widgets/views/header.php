@@ -13,9 +13,8 @@ $url = Core::getStorageUrl();
         <div class="container">
             <div class="navbar-header">
                 <a href="<?= Yii::$app->homeUrl ?>" title="<?= Yii::$app->name ?>" class="navbar-brand"
-                   style="width: 60px; padding: 10px 15px;">
-                    <img src="<?= $url ?>/images/logo-mini.svg" class="img-responsive"
-                         alt="<?= Yii::$app->name ?>"/>
+                   style="max-width: 200px; padding: auto 15px;">
+                    <?= \common\models\Setting::getValue('logoLg') ?>
                 </a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                         data-target="#navbar-collapse">
