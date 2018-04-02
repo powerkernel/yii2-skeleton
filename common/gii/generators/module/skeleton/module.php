@@ -62,12 +62,7 @@ class <?= $className ?> extends \yii\base\Module
      */
     public function registerTranslations()
     {
-        if(Yii::$app->params['mongodb']['i18n']){
-            $class='common\components\MongoDbMessageSource';
-        }
-        else {
-            $class='common\components\DbMessageSource';
-        }
+        $class='common\components\MongoDbMessageSource';
         Yii::$app->i18n->translations['<?= $generator->moduleID ?>'] = [
             'class' => $class,
             'on missingTranslation' => function ($event) {
