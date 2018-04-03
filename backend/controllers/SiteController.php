@@ -51,13 +51,6 @@ class SiteController extends BackendController
         /* check favicon/images */
         $url = Core::getStorageUrl();
         $urls = [
-            ['exist' => false, 'url' => $url . '/images/logo.png'],
-            ['exist' => false, 'url' => $url . '/images/banner.svg'],
-            ['exist' => false, 'url' => $url . '/images/logo-mini.svg'],
-            ['exist' => false, 'url' => $url . '/images/logo-lg.svg'],
-            ['exist' => false, 'url' => $url . '/images/logo-1024.png'],
-            ['exist' => false, 'url' => $url . '/images/logo-120.png'],
-
             ['exist' => false, 'url' => $url . '/favicon/android-chrome-192x192.png'],
             ['exist' => false, 'url' => $url . '/favicon/android-chrome-512x512.png'],
             ['exist' => false, 'url' => $url . '/favicon/apple-touch-icon.png'],

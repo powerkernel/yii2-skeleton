@@ -5,15 +5,13 @@ use common\models\Setting;
 use powerkernel\fontawesome\Icon;
 use yii\bootstrap\Nav;
 
-$url = Core::getStorageUrl();
-
 ?>
 <header class="main-header">
     <nav class="navbar navbar-static-top">
         <div class="container">
             <div class="navbar-header">
                 <a href="<?= Yii::$app->homeUrl ?>" title="<?= Yii::$app->name ?>" class="navbar-brand"
-                   style="max-width: 200px; padding: auto 15px;">
+                   style="padding: auto 15px;">
                     <?= \common\models\Setting::getValue('logoLg') ?>
                 </a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
