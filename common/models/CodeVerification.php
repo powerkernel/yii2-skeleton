@@ -212,8 +212,14 @@ class CodeVerification extends \yii\mongodb\ActiveRecord
     public function beforeSave($insert)
     {
         if ($insert) {
-            $this->code = (string)rand(100000, 999999);
             $this->status = self::STATUS_NEW;
+            /* demo account */
+            if($this->identifier==Yii::$app->params['demo_account']){
+                $this->code=Yii::$app->params['demo_pass'];
+                return true;
+            }
+            /* not demo */
+            $this->code = (string)rand(100000, 999999);
             /* send code */
             if ($this->getType() == 'phone') {
                 return $this->sendSMS();
