@@ -5,6 +5,8 @@ frontend-httpd.access.log
 frontend-httpd.error.log
 www-httpd.access.log
 www-httpd.error.log
+api-httpd.access.log
+api-httpd.error.log
 
 # yii console command
 /yii

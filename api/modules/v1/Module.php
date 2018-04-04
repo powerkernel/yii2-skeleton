@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Power Kernel
  */
 
-namespace frontend\modules\api\v1;
+namespace api\modules\v1;
 
 
 /**

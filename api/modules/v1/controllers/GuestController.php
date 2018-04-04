@@ -6,7 +6,7 @@
  */
 
 
-namespace frontend\modules\api\v1\controllers;
+namespace api\modules\v1\controllers;
 
 
 use common\forms\CodeVerificationForm;
@@ -15,11 +15,12 @@ use common\models\CodeVerification;
 use common\models\Setting;
 use Yii;
 use yii\filters\VerbFilter;
+use yii\web\BadRequestHttpException;
 
 
 /**
  * Class GuestController
- * @package frontend\modules\api\v1\controllers
+ * @package api\modules\v1\controllers
  */
 class GuestController extends \yii\rest\Controller
 {
@@ -51,19 +52,12 @@ class GuestController extends \yii\rest\Controller
         $model->identifier = $p['identifier'];
         if ($model->validate() && $model->save()) {
             return [
-                'success' => true,
-                'data' => [
-                    'message' => 'Verification code has been sent',
-                    'vid' => (string)$model->id
-                ]
+                'message' => 'Verification code has been sent',
+                'vid' => (string)$model->id
             ];
+        } else {
+            throw new BadRequestHttpException(json_encode($model->errors));
         }
-        return [
-            'success' => false,
-            'data' => [
-                'message' => 'Verification code cannot be sent',
-            ]
-        ];
     }
 
     /**
@@ -81,18 +75,12 @@ class GuestController extends \yii\rest\Controller
             $token = $this->getAccountToken($model->identifier);
             if ($token) {
                 return [
-                    'success' => true,
-                    'data' => [
-                        'token' => $token,
-                    ]
+                    'token' => $token,
                 ];
             }
         }
         return [
-            'success' => false,
-            'data' => [
-                'message' => 'Cannot get access token',
-            ]
+            'message' => 'Cannot get access token',
         ];
     }
 
@@ -113,25 +101,13 @@ class GuestController extends \yii\rest\Controller
                 if ($param == 'api') {
                     /* check api */
                     if ($p[$param] != Setting::getValue('appApi')) {
-                        Yii::$app->response->content = json_encode([
-                            'success' => false,
-                            'data' => [
-                                'message' => Yii::t('app', 'Invalid api key provided')
-                            ]
-                        ]);
-                        Yii::$app->end(401, Yii::$app->response);
+                        throw new BadRequestHttpException(Yii::t('app', 'Invalid api key provided.'));
                     }
                 }
             }
         }
         if (!empty($missing)) {
-            Yii::$app->response->content = json_encode([
-                'success' => false,
-                'data' => [
-                    'message' => Yii::t('app', 'Missing required parameters: {PARAMS}', ['PARAMS' => implode(',', $missing)])
-                ]
-            ]);
-            Yii::$app->end(400, Yii::$app->response);
+            throw new BadRequestHttpException(Yii::t('app', 'Missing required parameters: {PARAMS}', ['PARAMS' => implode(',', $missing)]));
         }
         return $p;
     }

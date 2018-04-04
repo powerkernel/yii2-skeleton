@@ -5,7 +5,7 @@
  * @copyright Copyright (c) 2018 Power Kernel
  */
 
-namespace frontend\modules\api\controllers;
+namespace api\modules\v1\controllers;
 
 /**
  * Class DefaultController
@@ -17,7 +17,8 @@ class DefaultController extends \yii\rest\Controller
      */
     public function actionIndex(){
         return [
-            'status'=>'ok'
+            'status'=>'ok',
+            'version'=>'1.0.0'
         ];
     }
 }

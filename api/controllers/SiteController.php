@@ -5,20 +5,20 @@
  * @copyright Copyright (c) 2018 Power Kernel
  */
 
-namespace frontend\modules\api\v1\controllers;
+namespace api\controllers;
 
 /**
  * Class DefaultController
  */
-class DefaultController extends \yii\rest\Controller
+class SiteController extends \yii\rest\Controller
 {
     /**
      * @return array
      */
-    public function actionIndex(){
+    public function actionIndex()
+    {
         return [
-            'status'=>'ok',
-            'version'=>'1.0.0'
+            'status' => 'ok'
         ];
     }
 }

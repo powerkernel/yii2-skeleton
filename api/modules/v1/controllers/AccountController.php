@@ -6,7 +6,7 @@
  */
 
 
-namespace frontend\modules\api\v1\controllers;
+namespace api\modules\v1\controllers;
 
 
 use yii\filters\auth\HttpBasicAuth;
@@ -15,7 +15,7 @@ use yii\filters\VerbFilter;
 
 /**
  * Class AccountController
- * @package frontend\modules\api\v1\controllers
+ * @package api\modules\v1\controllers
  */
 class AccountController extends \yii\rest\Controller
 {
@@ -45,13 +45,10 @@ class AccountController extends \yii\rest\Controller
     public function actionProfile()
     {
         return [
-            'success' => true,
-            'data' => [
-                'id' => (string)\Yii::$app->user->identity->getId(),
-                'fullname' => \Yii::$app->user->identity->fullname,
-                'email' => \Yii::$app->user->identity->email,
-                'phone' => \Yii::$app->user->identity->phone,
-            ]
+            'id' => (string)\Yii::$app->user->identity->getId(),
+            'fullname' => \Yii::$app->user->identity->fullname,
+            'email' => \Yii::$app->user->identity->email,
+            'phone' => \Yii::$app->user->identity->phone,
         ];
     }
 }

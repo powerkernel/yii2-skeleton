@@ -62,8 +62,5 @@ return [
     ],
     'params' => $params,
     'modules' => [
-        'api'=>[
-            'class' => 'frontend\modules\api\Module',
-        ]
     ]
 ];
