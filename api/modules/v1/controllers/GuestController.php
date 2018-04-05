@@ -56,7 +56,11 @@ class GuestController extends \yii\rest\Controller
                 'vid' => (string)$model->id
             ];
         } else {
-            throw new BadRequestHttpException(json_encode($model->errors));
+            $error='';
+            foreach ($model->getFirstErrors() as $attr=>$message){
+                $error.=$attr.': '.$message;
+            }
+            throw new BadRequestHttpException($error);
         }
     }
 
@@ -79,9 +83,13 @@ class GuestController extends \yii\rest\Controller
                 ];
             }
         }
-        return [
-            'message' => 'Cannot get access token',
-        ];
+        else {
+            $error='';
+            foreach ($model->getFirstErrors() as $attr=>$message){
+                $error.=$attr.': '.$message;
+            }
+            throw new BadRequestHttpException($error);
+        }
     }
 
     /**
