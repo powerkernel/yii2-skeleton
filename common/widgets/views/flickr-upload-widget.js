@@ -1,32 +1,35 @@
 /**
- * Created by Harry Tang on 9/6/2016.
+ * @author Harry Tang <harry@powerkernel.com>
+ * @link https://powerkernel.com
+ * @copyright Copyright (c) 2017 Power Kernel
  */
 
 /**
  * click and copy photo url
  */
 $(document).on("click", ".photo-url", function () {
-    var temp=$(this).val();
-    var obj=$(this);
+    var temp = $(this).val();
+    var obj = $(this);
+    var modal = $("#" + obj.data('modal-id'));
     obj.select();
     document.execCommand("copy");
     obj.val(obj.data('copy-text'));
     setTimeout(function () {
         obj.val(temp);
-    }, 2000);
+        modal.modal('toggle');
+    }, 1000);
 });
 
 $(document).on("click", ".btn-flickr-delete", function (e) {
     var url = $("#url-load-flickr-delete").val();
     $(this).parent().hide(500);
-    $.ajax(url, {data:{id:$(this).data('flickr')}})
+    $.ajax(url, {data: {id: $(this).data('flickr')}})
         .done(function () {
         })
         .fail(function () {
             alert("error");
         })
         .always(function () {
-            //alert("ok");
         });
     e.preventDefault();
 });
@@ -43,7 +46,7 @@ function loadFlickrPhoto() {
             alert("error");
         })
         .always(function () {
-            //alert("ok");
         });
 }
+
 loadFlickrPhoto();
