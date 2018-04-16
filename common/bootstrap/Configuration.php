@@ -36,6 +36,8 @@ class Configuration extends Component
 
         Yii::$app->name = Setting::getValue('title');
 
+        $this->configTheme();
+
         $this->configApp();
 
         $this->configI18n();
@@ -371,6 +373,46 @@ EOB;
         if (Setting::getValue('debug') && !is_a(Yii::$app, 'yii\console\Application') && Yii::$app->user->can('admin')) {
             $module = Yii::$app->getModule('debug');
             $module->allowedIPs = [Yii::$app->request->userIP];
+        }
+    }
+
+    /**
+     * config theme
+     */
+    protected function configTheme()
+    {
+        $session = Yii::$app->session;
+        $requestCookies = Yii::$app->request->cookies;
+        /* get saved theme */
+        $name = $session->get('theme');
+        if (!$name) {
+            $cookie = $requestCookies->get('theme');
+            if ($cookie) {
+                $name = $cookie->value;
+            }
+        }
+        /* is changing theme ?*/
+        $setTheme = Yii::$app->request->get('set-theme');
+        if (!empty($setTheme)) {
+            $name = $setTheme;
+        }
+        /* set action */
+        if (in_array($name, array_keys(Yii::$app->params['themes']))) {
+            $class = Yii::$app->params['themes'][$name];
+
+            if (class_exists($class) && get_class(Yii::$app->view->theme)!=$class) {
+                $theme = new $class;
+                Yii::$app->view->theme = $theme;
+                /* cookie and session */
+                $session->set('theme', $name);
+                $responseCookies = Yii::$app->response->cookies;
+                $responseCookies->add(new \yii\web\Cookie([
+                    'name' => 'theme',
+                    'value' => $name,
+                    'expire' => time() + (10 * 365 * 24 * 60 * 60)
+                ]));
+            }
+
         }
     }
 }
