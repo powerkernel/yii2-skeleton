@@ -396,21 +396,24 @@ EOB;
         if (!empty($setTheme)) {
             $name = $setTheme;
         }
-        /* set action */
+        /* check */
         if (in_array($name, array_keys(Yii::$app->params['themes']))) {
             $class = Yii::$app->params['themes'][$name];
 
+            /* set theme */
+            /* cookie and session */
+            $session->set('theme', $name);
+            $responseCookies = Yii::$app->response->cookies;
+            $responseCookies->add(new \yii\web\Cookie([
+                'name' => 'theme',
+                'value' => $name,
+                'expire' => time() + (10 * 365 * 24 * 60 * 60)
+            ]));
+
+            /* change theme*/
             if (class_exists($class) && get_class(Yii::$app->view->theme)!=$class) {
                 $theme = new $class;
                 Yii::$app->view->theme = $theme;
-                /* cookie and session */
-                $session->set('theme', $name);
-                $responseCookies = Yii::$app->response->cookies;
-                $responseCookies->add(new \yii\web\Cookie([
-                    'name' => 'theme',
-                    'value' => $name,
-                    'expire' => time() + (10 * 365 * 24 * 60 * 60)
-                ]));
             }
 
         }

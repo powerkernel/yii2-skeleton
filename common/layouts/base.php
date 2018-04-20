@@ -7,7 +7,7 @@ use common\components\Addthis;
 use common\components\GAnalytics;
 use common\components\HeaderJS;
 use common\widgets\Favicon;
-use nirvana\jsonld\JsonLDHelper;
+use powerkernel\jsonld\JsonLDHelper;
 use yii\helpers\Html;
 
 ?>

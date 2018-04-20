@@ -101,7 +101,7 @@ class SiteController extends MainController
      */
     public function actionPage($id)
     {
-        $model = Page::find()->where(['slug'=>$id])->one();
+        $model = Page::find()->where(['slug' => $id])->one();
         if (!$model) {
             throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
         }
@@ -116,12 +116,8 @@ class SiteController extends MainController
 
         /* missing lang */
         if ($page->language !== Yii::$app->language) {
-            if(Yii::$app->params['mongodb']['i18n']){
-                $locales=\common\models\mongodb\Message::getLocaleList();
-            }
-            else {
-                $locales=\common\models\Message::getLocaleList();
-            }
+
+            $locales = \common\models\Message::getLocaleList();
 
             Yii::$app->session->setFlash(
                 'info',
@@ -285,7 +281,6 @@ class SiteController extends MainController
         return $this->renderPartial('sitemap', ['sitemaps' => $sitemaps]);
 
     }
-
 
 
     /**

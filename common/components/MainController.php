@@ -9,7 +9,7 @@ namespace common\components;
 
 
 use common\Core;
-use nirvana\jsonld\JsonLDHelper;
+use powerkernel\jsonld\JsonLDHelper;
 use Yii;
 use yii\web\Controller;
 
