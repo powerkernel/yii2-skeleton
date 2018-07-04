@@ -35,7 +35,10 @@
 
     },
     "repositories": [
-
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
     ],
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0",
