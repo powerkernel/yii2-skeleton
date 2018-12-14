@@ -31,7 +31,8 @@
         "powerkernel/yii2-slugify": "@dev",
         "powerkernel/yii2-fineuploader": "@dev",
         "powerkernel/yii2-tinymce": "@dev",
-        "powerkernel/yii2-photoswipe": "@dev"
+        "powerkernel/yii2-photoswipe": "@dev",
+        "powerkernel/yii2-sms": "@dev"
 
     },
     "repositories": [
