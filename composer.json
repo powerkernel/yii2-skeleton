@@ -22,7 +22,6 @@
         "himiklab/yii2-recaptcha-widget": "*",
         "conquer/select2": "~1.4.0",
         "omnilight/yii2-scheduling": "*",
-        "nirvana-msu/yii2-jsonld-helper": "1.0.*@dev",
         "codemix/yii2-localeurls":"*",
         "kotchuprik/yii2-sortable-widgets": "*",
 
@@ -32,7 +31,8 @@
         "powerkernel/yii2-fineuploader": "@dev",
         "powerkernel/yii2-tinymce": "@dev",
         "powerkernel/yii2-photoswipe": "@dev",
-        "powerkernel/yii2-sms": "@dev"
+        "powerkernel/yii2-sms": "@dev",
+        "powerkernel/yii2-jsonld-helper": "@dev"
 
     },
     "repositories": [
