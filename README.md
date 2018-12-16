@@ -18,10 +18,9 @@ INSTALLATION
 1. Run `init`, update your database information, `baseUrl` in common/config/mail-local.php
 2. Run `php yii mongodb-migrate --migrationPath=@console/migrations`
 3. Run `php yii setup`
-4. Config/Symlink frontend\web & backend\web to your public_html
-5. Go to frontend and sign up for new account, admin role will be auto assigned
-6. Go to backend and update all settings (reCaptcha, API, SMTP...)
-7. Generate icons from http://realfavicongenerator.net/, upload favicon.ico to the root of your web site (frontend and backend)
+4. Go to frontend and sign up for new account, admin role will be auto assigned
+5. Go to backend and update all settings (reCaptcha, API, SMTP...)
+6. Generate icons from http://realfavicongenerator.net/, upload favicon.ico to the root of your web site (frontend and backend)
 8. (optional) update `gitHubPage` in common/config/params-local.php if you want to use github to host favicon and images.
 
 ## Web server config
