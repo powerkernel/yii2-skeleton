@@ -26,7 +26,7 @@ class SignInAction extends Action
             $model = new \common\models\CodeVerification();
             if ($model->load(Yii::$app->request->post()) && $model->validate()) {
                 if ($model->save()) {
-                    echo json_encode([
+                    return json_encode([
                         'vid' => (string)$model->id,
                         'message'=> Yii::t('app', 'A message with a 6-digit verification code was just sent to {IDENTIFIER}', ['IDENTIFIER'=>$model->identifier])
                     ]);
