@@ -1,13 +1,7 @@
 Options +FollowSymLinks
 IndexIgnore */*
 RewriteEngine on
-## ssl redirect
-RewriteCond %{SERVER_PORT} !=443
-RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L]
-## www redirect
-#RewriteCond %{HTTP_HOST} !^(www|dev)\.
-#RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [R=301,L]
-## non-www redirect
+## www redirect no www
 RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
 RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 ## if a directory or a file exists, use it directly
