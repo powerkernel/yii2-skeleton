@@ -1,13 +1,3 @@
-#hosting
-backend-httpd.access.log
-backend-httpd.error.log
-frontend-httpd.access.log
-frontend-httpd.error.log
-www-httpd.access.log
-www-httpd.error.log
-api-httpd.access.log
-api-httpd.error.log
-
 # yii console command
 /yii
 
@@ -28,10 +18,6 @@ Thumbs.db
 # composer vendor dir
 /vendor
 
-# composer itself is not needed
-composer.phar
-composer.json
-
 # Mac DS_Store Files
 .DS_Store
 
@@ -42,12 +28,3 @@ phpunit.phar
 
 # vagrant runtime
 /.vagrant
-
-# misc
-.ssl
-.data
-.docs
-frontend/web/backend
-composer.lock
-upload.zip
-grunt-email-workflow/Gruntfile.min.js
