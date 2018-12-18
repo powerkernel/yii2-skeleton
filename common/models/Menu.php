@@ -234,14 +234,15 @@ class Menu extends \yii\mongodb\ActiveRecord
      * @inheritdoc
      * @param bool $insert
      * @return bool
+     * @throws \yii\mongodb\Exception
      */
     public function beforeSave($insert)
     {
         if (!empty(Yii::$app->user)) {
             if (empty($this->created_by)) {
-                $this->created_by = Yii::$app->user->id;
+                $this->created_by = (string)Yii::$app->user->id;
             }
-            $this->updated_by = Yii::$app->user->id;
+            $this->updated_by = (string)Yii::$app->user->id;
         }
         if ($insert) {
             $order = Menu::find()->count();
