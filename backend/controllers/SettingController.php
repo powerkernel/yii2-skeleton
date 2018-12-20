@@ -108,7 +108,7 @@ class SettingController extends BackendController
 
             //['key' => 'urlManagerClass', 'value' => 'common\components\LocaleUrl', 'title' => 'URL Manager Class', 'description' => 'System URL manager class', 'group' => 'General', 'type' => 'dropDownList', 'data' => json_encode(['common\components\LocaleUrl' => 'common\components\LocaleUrl', 'yii\web\UrlManager' => 'yii\web\UrlManager']), 'default' => 'common\components\LocaleUrl', 'rules' => json_encode(['required' => []])],
             ['key' => 'languageUrlCode', 'value' => '0', 'title' => 'Language URL', 'description' => 'Include language code in URL', 'group' => 'General', 'type' => 'dropDownList', 'data' => json_encode(Core::getYesNoOption()), 'default' => '0', 'rules' => json_encode(['required' => [], 'boolean' => []])],
-            ['key' => 'debug', 'value' => '0', 'title' => 'Debug Mode', 'description' => 'Turn debug mode ON/OFF', 'group' => 'General', 'type' => 'dropDownList', 'data' => json_encode(Core::getYesNoOption()), 'default' => '0', 'rules' => json_encode(['required' => [], 'boolean' => []])],
+            //['key' => 'debug', 'value' => '0', 'title' => 'Debug Mode', 'description' => 'Turn debug mode ON/OFF', 'group' => 'General', 'type' => 'dropDownList', 'data' => json_encode(Core::getYesNoOption()), 'default' => '0', 'rules' => json_encode(['required' => [], 'boolean' => []])],
 
 
             /* Account */
