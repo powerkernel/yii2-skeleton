@@ -46,7 +46,7 @@ class Configuration extends Component
 
         $this->configMailer();
 
-        $this->configDebugMode();
+        //$this->configDebugMode();
 
         $this->configUrlManager();
 
@@ -362,18 +362,6 @@ EOB;
         ]);
 
 
-    }
-
-    /**
-     * debug mode
-     */
-    protected
-    function configDebugMode()
-    {
-        if (Setting::getValue('debug') && !is_a(Yii::$app, 'yii\console\Application') && Yii::$app->user->can('admin')) {
-            $module = Yii::$app->getModule('debug');
-            $module->allowedIPs = [Yii::$app->request->userIP];
-        }
     }
 
     /**
