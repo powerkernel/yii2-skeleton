@@ -22,7 +22,7 @@ if (file_exists(__DIR__.'/../../common/config/localhost.php')) {
                 'db' => 'mongodb',
             ],
         ],
-        'allowedIPs' => [],
+        //'allowedIPs' => [],
     ];
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
