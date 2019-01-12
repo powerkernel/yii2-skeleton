@@ -6,5 +6,6 @@ return [
     'enableBlog'=>true,
     'showPowered'=>true,
     'demo_account'=>'',
-    'demo_pass'=>''
+    'demo_pass'=>'',
+    'themes'=>[]
 ];
