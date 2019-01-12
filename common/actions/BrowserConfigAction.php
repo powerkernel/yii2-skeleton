@@ -24,22 +24,23 @@ class BrowserConfigAction extends Action
      */
     public function run()
     {
-        $gitHubPage = Yii::$app->params['gitHubPage'];
+        $baseUrl=Yii::$app->request->baseUrl;
         $msTileColor = Setting::getValue('msTileColor');
 
-        Yii::$app->response->format = \yii\web\Response::FORMAT_XML;
+        Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+        Yii::$app->response->headers->add('Content-Type', 'application/xml');
         $xml = <<<EOB
 <?xml version="1.0" encoding="utf-8"?>
 <browserconfig>
     <msapplication>
         <tile>
-            <square150x150logo src="{$gitHubPage}/favicon/mstile-150x150.png"/>
+            <square150x150logo src="{$baseUrl}/mstile-150x150.png"/>
             <TileColor>{$msTileColor}</TileColor>
         </tile>
     </msapplication>
 </browserconfig>
 EOB;
-        echo $xml;
+        return $xml;
 
     }
 
