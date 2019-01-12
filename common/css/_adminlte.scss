@@ -24,6 +24,10 @@
   }
 }
 
+.main-header .sidebar-toggle::before {
+  content: "";
+}
+
 .navbar-header {
   a {
     svg {
