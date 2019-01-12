@@ -1,20 +1,12 @@
 <?php
-//use u1234567_db
-//db.createUser(
-//     {
-//          user: "u1234567_mg",
-//          pwd: "abcd1234xxx",
-//          roles: [ { role: "readWrite", db: "u1234567_db" } ]
-//    }
-//)
-// add file hosts 127.0.0.1 dbserver
+$db = require(__DIR__ . '/db.php');
 $config =  [
     'components' => [
-//        'mongodb' => [
-//            'class' => '\yii\mongodb\Connection',
-//            'dsn'=>'mongodb://user_mg:password@localhost:27017/dbname',
-//            'options'=>['ssl'=>true]
-//        ],
+        'mongodb' => [
+            'class' => '\yii\mongodb\Connection',
+            'dsn' => $db['dsn'],
+            'options' => $db['options']
+        ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',
