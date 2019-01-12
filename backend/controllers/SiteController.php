@@ -48,29 +48,24 @@ class SiteController extends BackendController
      */
     public function actionIndex()
     {
-        /* check favicon/images */
-        $url = Core::getStorageUrl();
-        $urls = [
-            ['exist' => false, 'url' => $url . '/favicon/android-chrome-192x192.png'],
-            ['exist' => false, 'url' => $url . '/favicon/android-chrome-512x512.png'],
-            ['exist' => false, 'url' => $url . '/favicon/apple-touch-icon.png'],
-            ['exist' => false, 'url' => $url . '/favicon/favicon-16x16.png'],
-            ['exist' => false, 'url' => $url . '/favicon/favicon-32x32.png'],
-            ['exist' => false, 'url' => $url . '/favicon/mstile-150x150.png'],
-            ['exist' => false, 'url' => $url . '/favicon/safari-pinned-tab.svg'],
-        ];
-        foreach ($urls as $i => $url) {
-            $urlExist = Yii::$app->cache->getOrSet(md5($url['url']), function () use ($url) {
-                return Core::isUrlExist($url['url']);
-            }, 300);
-            if ($urlExist) {
-                $urls[$i]['exist'] = true;
-            }
-        }
-
         /* check favicon */
         $favicon = [
+            ['exist' => false, 'file' => Yii::getAlias('@frontend') . '/web/android-chrome-192x192.png'],
+            ['exist' => false, 'file' => Yii::getAlias('@frontend') . '/web/android-chrome-512x512.png'],
+            ['exist' => false, 'file' => Yii::getAlias('@frontend') . '/web/apple-touch-icon.png'],
+            ['exist' => false, 'file' => Yii::getAlias('@frontend') . '/web/favicon-16x16.png'],
+            ['exist' => false, 'file' => Yii::getAlias('@frontend') . '/web/favicon-32x32.png'],
+            ['exist' => false, 'file' => Yii::getAlias('@frontend') . '/web/mstile-150x150.png'],
+            ['exist' => false, 'file' => Yii::getAlias('@frontend') . '/web/safari-pinned-tab.svg'],
             ['exist' => false, 'file' => Yii::getAlias('@frontend') . '/web/favicon.ico'],
+
+            ['exist' => false, 'file' => Yii::getAlias('@backend') . '/web/android-chrome-192x192.png'],
+            ['exist' => false, 'file' => Yii::getAlias('@backend') . '/web/android-chrome-512x512.png'],
+            ['exist' => false, 'file' => Yii::getAlias('@backend') . '/web/apple-touch-icon.png'],
+            ['exist' => false, 'file' => Yii::getAlias('@backend') . '/web/favicon-16x16.png'],
+            ['exist' => false, 'file' => Yii::getAlias('@backend') . '/web/favicon-32x32.png'],
+            ['exist' => false, 'file' => Yii::getAlias('@backend') . '/web/mstile-150x150.png'],
+            ['exist' => false, 'file' => Yii::getAlias('@backend') . '/web/safari-pinned-tab.svg'],
             ['exist' => false, 'file' => Yii::getAlias('@backend') . '/web/favicon.ico'],
         ];
         foreach ($favicon as $i => $icon) {
@@ -99,7 +94,7 @@ class SiteController extends BackendController
         }
 
         return $this->render('index', [
-            'urls' => $urls,
+            //'urls' => $urls,
             'favicon' => $favicon,
             'v' => $v,
             'newVersion' => $newVersion
