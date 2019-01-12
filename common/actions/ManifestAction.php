@@ -24,27 +24,27 @@ class ManifestAction extends Action
      */
     public function run()
     {
-        $gitHubPage = Yii::$app->params['gitHubPage'];
-        $themeColor=Setting::getValue('androidThemeColor');
-        $backgroundColor=Setting::getValue('backgroundColor');
-        //$color = Setting::getValue('androidThemeColor');
+        $baseUrl=Yii::$app->request->baseUrl;
+        $themeColor = Setting::getValue('androidThemeColor');
+        $backgroundColor = Setting::getValue('backgroundColor');
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $manifest = [
             'name' => Yii::$app->name,
+            "short_name" => Yii::$app->name,
             'icons' => [
                 [
-                    'src' => $gitHubPage . '/favicon/android-chrome-192x192.png',
+                    'src' => $baseUrl . '/android-chrome-192x192.png',
                     'sizes' => '192x192',
                     'type' => 'image/png'
                 ],
                 [
-                    'src' => $gitHubPage . '/favicon/android-chrome-512x512.png',
+                    'src' => $baseUrl . '/android-chrome-512x512.png',
                     'sizes' => '512x512',
                     'type' => 'image/png'
                 ],
             ],
-            'theme_color' => empty($themeColor)?'#ffffff':$themeColor,
-            'background_color' => empty($backgroundColor)?'#ffffff':$themeColor,
+            'theme_color' => empty($themeColor) ? '#ffffff' : $themeColor,
+            'background_color' => empty($backgroundColor) ? '#ffffff' : $themeColor,
             'display' => 'standalone'
         ];
         echo json_encode($manifest);
