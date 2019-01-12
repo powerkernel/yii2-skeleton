@@ -121,17 +121,6 @@ $this->title = Yii::t('app', 'Dashboard');
             <h3 class="box-title"><?= Yii::t('app', 'Images files verification') ?></h3>
         </div>
         <div class="box-body padding">
-            <?php foreach ($urls as $url): ?>
-                <div>
-                    <?php if($url['exist']):?>
-                        <code class="text-green"><?= $url['url'] ?></code>
-                        <?= Icon::widget(['prefix'=>'fas', 'name'=>'check', 'options'=>['class'=>'text-green']]) ?>
-                    <?php else:?>
-                        <code class="text-red"><?= $url['url'] ?></code>
-                        <?= Icon::widget(['prefix'=>'fas', 'name'=>'exclamation-triangle', 'options'=>['class'=>'text-red']]) ?>
-                    <?php endif;?>
-                </div>
-            <?php endforeach; ?>
             <?php foreach ($favicon as $icon): ?>
                 <div>
                     <?php if($icon['exist']):?>
