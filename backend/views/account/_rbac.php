@@ -16,14 +16,14 @@ $auth = Yii::$app->authManager;
 
         <div class="btn-group">
             <button type="button"
-                    class="btn btn-sm btn-<?= $auth->checkAccess($model->id, $name) ? 'success' : 'default' ?> dropdown-toggle <?= (($auth->checkAccess($model->id, $name) && !$auth->getAssignment($name, $model->id)) || $model->id==Yii::$app->user->id) ? 'disabled' : '' ?>"
+                    class="btn btn-sm btn-<?= $auth->checkAccess((string)$model->_id, $name) ? 'success' : 'default' ?> dropdown-toggle <?= (($auth->checkAccess((string)$model->_id, $name) && !$auth->getAssignment($name, (string)$model->_id)) || (string)$model->_id==Yii::$app->user->id) ? 'disabled' : '' ?>"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <?= ucfirst($name) ?> <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <?php if ($auth->checkAccess($model->id, $name)): ?>
+                <?php if ($auth->checkAccess((string)$model->_id, $name)): ?>
                     <li>
-                        <?= Html::a(Yii::t('app', 'Revoke'), ['/rbac/revoke', 'user' => $model->id, 'role' => $name], [
+                        <?= Html::a(Yii::t('app', 'Revoke'), ['/rbac/revoke', 'user' => (string)$model->_id, 'role' => $name], [
                             'class' => '',
                             'data' => [
                                 'confirm' => Yii::t('app', 'Are you sure you want to revoke {ROLE} from this user?', ['ROLE'=>ucfirst($name)]),
@@ -33,7 +33,7 @@ $auth = Yii::$app->authManager;
                     </li>
                 <?php else: ?>
                     <li>
-                        <?= Html::a(Yii::t('app', 'Assign'), ['/rbac/assign', 'user' => $model->id, 'role' => $name], [
+                        <?= Html::a(Yii::t('app', 'Assign'), ['/rbac/assign', 'user' => (string)$model->_id, 'role' => $name], [
                             'class' => '',
                             'data' => [
                                 'confirm' => Yii::t('app', 'Are you sure you want to assign {ROLE} to this user?', ['ROLE'=>ucfirst($name)]),
