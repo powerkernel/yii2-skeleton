@@ -15,7 +15,7 @@ use yii\helpers\ArrayHelper;
 /**
  * This is the model class for Menu.
  *
- * @property \MongoDB\BSON\ObjectID|string $id
+ * @property \MongoDB\BSON\ObjectID|string $_id
  * @property string $id_parent
  * @property string $label
  * @property string $active_route
@@ -207,7 +207,7 @@ class Menu extends \yii\mongodb\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            '_id' => 'ID',
             'id_parent' => Yii::t('app', 'Parent'),
             'label' => Yii::t('app', 'Label'),
             'active_route' => Yii::t('app', 'Active Route'),
@@ -334,7 +334,7 @@ class Menu extends \yii\mongodb\ActiveRecord
     public function generateSubNavItem()
     {
         $items = [];
-        $menus = Menu::find()->where(['status' => Menu::STATUS_ACTIVE, 'id_parent' => $this->id])->orderBy('order')->all();
+        $menus = Menu::find()->where(['status' => Menu::STATUS_ACTIVE, 'id_parent' => (string)$this->_id])->orderBy('order')->all();
         foreach ($menus as $menu) {
             $items[] = [
                 'active' => $menu->getActiveStatus(),
