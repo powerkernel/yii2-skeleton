@@ -8,6 +8,7 @@
 namespace common\models;
 
 use common\behaviors\UTCDateTimeBehavior;
+use common\Core;
 use powerkernel\sms\components\AwsSMS;
 use Yii;
 
@@ -220,6 +221,9 @@ class CodeVerification extends \yii\mongodb\ActiveRecord
             }
             /* not demo */
             $this->code = (string)rand(100000, 999999);
+            if(Core::isLocalhost()){
+                $this->code = '999999';
+            }
             /* send code */
             if ($this->getType() == 'phone') {
                 return $this->sendSMS();
