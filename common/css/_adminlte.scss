@@ -17,6 +17,8 @@
   }
 }
 
+
+
 .main-header .logo-lg {
   padding: 10px;
   svg {
@@ -33,5 +35,17 @@
     svg {
       max-height: 20px;
     }
+  }
+}
+
+/* home logo */
+.navbar-header a.home-logo {
+  padding: 5px 0;
+  height: 50px;
+  width: auto;
+  margin-left: 0 !important;
+  svg {
+    height: 40px !important;
+    max-height: 40px !important;
   }
 }
