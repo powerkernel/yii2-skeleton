@@ -91,6 +91,11 @@ $this->title = Yii::t('app', 'Dashboard');
 
                                 </td>
                             </tr>
+                            
+                            <tr>
+                                <th>PHP Version</th>
+                                <td><?= PHP_VERSION ?></td>
+                            </tr>                            
 
                             <tr>
                                 <th>Yii Version</th>
