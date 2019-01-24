@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'lang')->dropDownList(Yii::$app->params['mongodb']['i18n']?\common\models\mongodb\Message::getLocaleList():\common\models\Message::getLocaleList(), ['prompt'=>'Any']) ?>
+    <?= $form->field($model, 'lang')->dropDownList(\common\models\Message::getLocaleList(), ['prompt'=>'Any']) ?>
 
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="tab_content">
-                <?= $form->field($model, 'text_content')->widget(TinyMce::class()) ?>
+                <?= $form->field($model, 'text_content')->widget(TinyMce::class) ?>
             </div>
             <!-- /.tab-pane -->
             <div class="tab-pane" id="tab_photo_uploader">
