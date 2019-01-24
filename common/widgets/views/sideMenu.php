@@ -18,7 +18,7 @@ $this->registerJs('$(".nav-home").on("click", function(){window.location.replace
             <a href="#">
                 <?= Icon::widget(['prefix'=>isset($item['prefix'])?$item['prefix']:'fas fa-fw', 'name'=>$item['icon']]) ?> <span class="treeview-label"><?= $item['title'] ?></span>
                 <span class="pull-right-container">
-                    <?php //Icon::widget(['prefix'=>'fas', 'name'=>'angle-left', 'options'=>['class'=>'pull-right']]) ?>
+                    <?= Icon::widget(['prefix'=>'fas', 'name'=>'angle-left', 'options'=>['class'=>'pull-right']]) ?>
                 </span>
             </a>
             <ul class="treeview-menu">
@@ -34,6 +34,7 @@ $this->registerJs('$(".nav-home").on("click", function(){window.location.replace
             <?php endforeach;?>
             </ul>
         </li>
+
 
 
     <?php endif;?>
