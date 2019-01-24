@@ -50,15 +50,10 @@ class ServiceController extends BackendController
             $photoset = null;
             if (empty($data['photoset'])) {
                 /* download photo */
-                $url = Core::getStorageUrl();
-                $photoUrl = $url . '/images/banner.png';
-                if (Core::isUrlExist($photoUrl)) {
-                    /* download photo */
-                    $photoFile = tempnam(sys_get_temp_dir(), 'cma');
-                    file_put_contents($photoFile, file_get_contents($photoUrl));
+                $photoPath = Yii::getAlias('@frontend') . '/web/android-chrome-512x512.png';
+                if (file_exists($photoPath)) {
                     /* upload logo */
-                    $response = $client->apiUpload(['title'=>Yii::$app->name], $photoFile);
-                    unlink($photoFile);
+                    $response = $client->apiUpload(['title'=>Yii::$app->name], $photoPath);
 
                     /* create photoset */
                     if (!empty($response['photoid'])) {
