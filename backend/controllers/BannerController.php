@@ -148,7 +148,7 @@ class BannerController extends BackendController
         $model = new Banner();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => Yii::$app->params['mongodb']['banner']?(string)$model->id:$model->id]);
+            return $this->redirect(['view', 'id' => (string)$model->_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -161,6 +161,7 @@ class BannerController extends BackendController
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionUpdate($id)
     {
