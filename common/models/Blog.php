@@ -26,7 +26,7 @@ use yii\helpers\HtmlPurifier;
  * @property string $thumbnail
  * @property string $thumbnail_square
  * @property string $image_object
- * @property integer|string $created_by
+ * @property string $created_by
  * @property integer $views
  * @property string $status
  * @property \MongoDB\BSON\UTCDateTime $created_at
@@ -263,7 +263,7 @@ class Blog extends \yii\mongodb\ActiveRecord
     {
         /* author */
         if ($insert) {
-            $this->created_by = Yii::$app->user->id;
+            $this->created_by = (string)Yii::$app->user->id;
         }
 
         /* slug */
@@ -329,6 +329,7 @@ class Blog extends \yii\mongodb\ActiveRecord
         $doc->loadHTML($this->content);
         $tags = $doc->getElementsByTagName('img');
         $img = ['url' => '', 'width' => '', 'height' => ''];
+
         foreach ($tags as $i => $tag) {
             $img['url'] = $tag->getAttribute('src');
             $img['width'] = $tag->getAttribute('width');
@@ -378,7 +379,7 @@ class Blog extends \yii\mongodb\ActiveRecord
      */
     public function updateViews()
     {
-        $key = 'blog_viewed' . $this->id;
+        $key = 'blog_viewed' . (string)$this->id;
         $viewed = Yii::$app->session->get($key);
         if (empty($viewed)) {
             Yii::$app->session->set($key, true);
