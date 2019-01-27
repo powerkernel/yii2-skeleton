@@ -106,7 +106,6 @@ class MenuController extends BackendController
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         } else {
-            var_dump($model->errors);
             return $this->render('update', [
                 'model' => $model,
             ]);
