@@ -147,6 +147,8 @@ class BlogController extends MainController
      * Displays a single Blog model.
      * @param string $name
      * @return mixed
+     * @throws NotFoundHttpException
+     * @throws \yii\base\InvalidConfigException
      */
     public function actionView($name)
     {
@@ -241,6 +243,8 @@ class BlogController extends MainController
      * Displays a single Blog model in AMP page.
      * @param string $name
      * @return mixed
+     * @throws NotFoundHttpException
+     * @throws \yii\base\InvalidConfigException
      */
     public function actionViewAmp($name)
     {
@@ -360,6 +364,7 @@ class BlogController extends MainController
      * @param integer $id
      * @return mixed
      * @throws ForbiddenHttpException
+     * @throws NotFoundHttpException
      */
     public function actionUpdate($id)
     {
@@ -387,6 +392,8 @@ class BlogController extends MainController
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
@@ -398,6 +405,7 @@ class BlogController extends MainController
     /**
      * sitemap
      * @return string
+     * @throws \yii\mongodb\Exception
      */
     public function actionSitemap()
     {
@@ -429,15 +437,10 @@ class BlogController extends MainController
      */
     protected function findModel($id)
     {
-        if(Yii::$app->params['mongodb']['blog']){
-            $key='_id';
-        }
-        else {
-            $key='id';
-        }
-        $condition = [$key => $id];
+
+        $condition = ['_id' => $id];
         if (Core::checkMCA(null, 'blog', 'view')) {
-            $condition = [$key => $id, 'status' => Blog::STATUS_PUBLISHED];
+            $condition = ['_id' => $id, 'status' => Blog::STATUS_PUBLISHED];
         }
 
         if (($model = Blog::find()->where($condition)->one()) !== null) {
