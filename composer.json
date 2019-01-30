@@ -15,6 +15,9 @@
         "php": ">=7.1.0",
         "ext-json": "*",
         "ext-mongodb": "*",
+        "ext-dom": "*",
+        "ext-zip": "*",
+        
         "yiisoft/yii2": ">=2.0",
         "yiisoft/yii2-bootstrap": "~2.0",
         "yiisoft/yii2-swiftmailer": "~2.0",
