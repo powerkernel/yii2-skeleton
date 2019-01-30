@@ -35,6 +35,7 @@ class PageController extends BackendController
      * @param integer $slug
      * @param string $language
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionView($slug, $language)
     {
@@ -60,10 +61,12 @@ class PageController extends BackendController
             $model->load(Yii::$app->request->post());
             $page->slug = $model->slug;
 
-            if($model->validate() && $page->validate()){
+            if ($model->validate() && $page->validate()) {
                 if ($page->save() && $model->save()) {
                     return $this->redirect(['index']);
                 }
+            } else {
+                var_dump($page->errors);
             }
         }
 
@@ -81,6 +84,7 @@ class PageController extends BackendController
      * @param string $slug
      * @param string $language
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionUpdate($slug, $language)
     {
@@ -88,12 +92,8 @@ class PageController extends BackendController
         $model->setScenario('update');
 
         /* copy to other languages */
-        if (Yii::$app->params['mongodb']['i18n']){
-            $languages = \common\models\mongodb\Message::getLocaleList();
-        }
-        else {
-            $languages = \common\models\Message::getLocaleList();
-        }
+
+        $languages = \common\models\Message::getLocaleList();
 
 
         $pageLang = PageData::find()->where(['slug' => $slug])->select(['language'])->all();
@@ -110,7 +110,7 @@ class PageController extends BackendController
             $model->load(Yii::$app->request->post());
             $model->page->load(Yii::$app->request->post());
             $model->page->save();
-            if($model->save()){
+            if ($model->save()) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Page has been saved successfully.'));
             }
             return $this->redirect(['update', 'slug' => $model->slug, 'language' => $model->language]);
@@ -156,6 +156,8 @@ class PageController extends BackendController
      * @param string $slug
      * @param string $language
      * @return mixed
+     * @throws NotFoundHttpException
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($slug, $language)
     {
