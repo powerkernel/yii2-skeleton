@@ -19,7 +19,7 @@ use yii\mongodb\Query;
 class MongoDbMessageSource extends \yii\mongodb\i18n\MongoDbMessageSource
 {
 
-
+    public $collection = 'core_message';
 
     /**
      * Loads the messages from database.
