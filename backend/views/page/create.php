@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="page-data-form">
                 <?php $form = ActiveForm::begin(); ?>
 
-                <?= $form->field($model, 'language')->dropDownList(Yii::$app->params['mongodb']['i18n']?\common\models\mongodb\Message::getLocaleList():\common\models\Message::getLocaleList()) ?>
+                <?= $form->field($model, 'language')->dropDownList(\common\models\Message::getLocaleList()) ?>
 
                 <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab_content">
-                            <?= $form->field($model, 'content')->widget(TinyMce::class()) ?>
+                            <?= $form->field($model, 'content')->widget(TinyMce::class) ?>
                         </div>
                         <!-- /.tab-pane -->
                         <div class="tab-pane" id="tab_photo_uploader">
