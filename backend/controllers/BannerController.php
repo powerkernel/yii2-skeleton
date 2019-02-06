@@ -59,6 +59,7 @@ class BannerController extends BackendController
      * Displays a single Banner model.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException
      */
     public function actionView($id)
     {
@@ -169,7 +170,7 @@ class BannerController extends BackendController
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => Yii::$app->params['mongodb']['banner']?(string)$model->id:$model->id]);
+            return $this->redirect(['view', 'id' => (string)$model->_id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -182,6 +183,8 @@ class BannerController extends BackendController
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
+     * @throws NotFoundHttpException
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
