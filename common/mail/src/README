@@ -1,1 +1,1 @@
-grunt --dist=../common/mail --style=../common/mail
+grunt --dist=../common/mail
