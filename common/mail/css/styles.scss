@@ -1,3 +1,28 @@
+/* -------------------------------------
+    GLOBAL
+    A very basic CSS reset
+------------------------------------- */
+* {
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+img {
+  max-width: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: none;
+  width: 100% !important;
+  height: 100%;
+  line-height: 1.6em;
+  /* 1.6em * 14px = 22.4px, use px to get airier line-height also in Thunderbird, and Yahoo!, Outlook.com, AOL webmail clients */
+  /*line-height: 22px;*/
+}
+
 /* Let's make sure all tables have defaults */
 table td {
   vertical-align: top;
@@ -6,7 +31,9 @@ table td {
 /* -------------------------------------
     BODY & CONTAINER
 ------------------------------------- */
-
+body {
+  background-color: #f6f6f6;
+}
 
 .body-wrap {
   background-color: #f6f6f6;
@@ -47,7 +74,18 @@ table td {
 
 .header {
   width: 100%;
-  margin-bottom: 20px;
+  margin: 20px 0;
+}
+
+.preheader {
+  display: none;
+  font-size: 1px;
+  line-height: 1px;
+  max-height: 0;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  mso-hide: all;
 }
 
 .footer {
@@ -56,6 +94,7 @@ table td {
   color: #999;
   padding: 20px;
 }
+
 .footer p, .footer a, .footer td {
   color: #999;
   font-size: 12px;
@@ -100,17 +139,22 @@ p, ul, ol {
   margin-bottom: 10px;
   font-weight: normal;
 }
+
 p li, ul li, ol li {
   margin-left: 5px;
   list-style-position: inside;
 }
 
 /* -------------------------------------
-    LINKS & BUTTONS
+    LINKS, ICONS & BUTTONS
 ------------------------------------- */
 a {
   color: #348eda;
   text-decoration: underline;
+}
+
+a.social {
+  padding: 0 5px;
 }
 
 .btn-primary {
@@ -169,18 +213,30 @@ a {
   text-align: center;
   border-radius: 3px 3px 0 0;
 }
+
 .alert a {
   color: #fff;
   text-decoration: none;
   font-weight: 500;
   font-size: 16px;
 }
+
+.alert.alert-primary {
+  background-color: #2196f3;
+}
+
+.alert.alert-info {
+  background-color: #17a2b8;
+}
+
 .alert.alert-warning {
   background-color: #FF9F00;
 }
+
 .alert.alert-bad {
   background-color: #D0021B;
 }
+
 .alert.alert-good {
   background-color: #68B90F;
 }
@@ -194,15 +250,19 @@ a {
   text-align: left;
   width: 80%;
 }
+
 .invoice td {
   padding: 5px 0;
 }
+
 .invoice .invoice-items {
   width: 100%;
 }
+
 .invoice .invoice-items td {
   border-top: #eee 1px solid;
 }
+
 .invoice .invoice-items .total td {
   border-top: 2px solid #333;
   border-bottom: 2px solid #333;

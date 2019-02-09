@@ -1,25 +1,19 @@
 <?php
-use common\models\Setting;
-use \yii\helpers\Html;
+/**
+ * @author Harry Tang <harry@powerkernel.com>
+ * @link https://powerkernel.com
+ * @copyright Copyright (c) 2018 Power Kernel
+ */
 
-/* @var $user \common\models\Account */
-
-
-$loginUrl = Yii::$app->urlManagerFrontend->createAbsoluteUrl(['/account/login']);
-
+/* @var $this yii\web\View */
+/* @var $model \common\models\Account */
+/* @var $title string */
 
 ?>
 
-<?= Yii::t('app', 'Hello {FULLNAME},', ['FULLNAME' => Html::encode($user->fullname)]) ?>
+
+<?= Yii::t('app', 'Hello,') ?>
 
 
-<?= Yii::t('app', 'Thank you for registering with {APPNAME}. Please note details of your account:', ['APPNAME' => Html::encode(Html::encode(\Yii::$app->name))]) ?>
+<?= Yii::t('app', 'You\'ve created a new account at {APP}.', ['APP'=>Yii::$app->name]) ?>
 
-
-<?= Yii::t('app', 'Email: {EMAIL}', ['EMAIL' => Html::encode($user->email)]) ?>
-
-
-<?= Yii::t('app', 'Click the link below to login') ?>
-
-
-<?= $loginUrl ?>
