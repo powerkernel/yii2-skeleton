@@ -109,11 +109,16 @@ class PageController extends BackendController
             /* page data */
             $model->load(Yii::$app->request->post());
             $model->page->load(Yii::$app->request->post());
-            $model->page->save();
-            if ($model->save()) {
+
+            if($model->validate() && $model->page->validate()){
+                $model->page->save();
+                $model->save();
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Page has been saved successfully.'));
+                return $this->render('update', [
+                    'model' => $model,
+                    'languages' => $languages
+                ]);
             }
-            return $this->redirect(['update', 'slug' => $model->slug, 'language' => $model->language]);
         } else {
             return $this->render('update', [
                 'model' => $model,

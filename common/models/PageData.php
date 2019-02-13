@@ -159,14 +159,7 @@ class PageData extends \yii\mongodb\ActiveRecord
      */
     public function rules()
     {
-
-        /* account */
-        $account = [
-            [['created_by', 'updated_by'], 'yii\mongodb\validators\MongoDateValidator'],
-            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::class, 'targetAttribute' => ['created_by' => '_id']],
-        ];
-
-        $default = [
+        return [
             [['slug', 'language', 'title', 'description', 'content', 'keywords'], 'required', 'on' => ['update', 'create']],
             [['status'], 'string', 'max' => 255],
             [['content', 'thumbnail'], 'string'],
@@ -174,10 +167,9 @@ class PageData extends \yii\mongodb\ActiveRecord
             [['language'], 'string', 'max' => 5],
             [['title', 'description', 'keywords'], 'string', 'max' => 160],
             [['slug'], 'string', 'max' => 100],
-            [['slug'], 'unique', 'on' => ['create']]
+            [['slug'], 'unique', 'on' => ['create']],
+            [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => Account::class, 'targetAttribute' => ['created_by' => '_id']],
         ];
-
-        return array_merge($default, $account);
     }
 
     /**
