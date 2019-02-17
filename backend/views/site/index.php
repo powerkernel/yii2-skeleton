@@ -94,7 +94,7 @@ $this->title = Yii::t('app', 'Dashboard');
                             
                             <tr>
                                 <th>PHP Version</th>
-                                <td><?= PHP_VERSION ?></td>
+                                <td><?= \yii\helpers\Html::a(PHP_VERSION, Yii::$app->urlManager->createUrl(['site/php']), ['target' => '_blank']) ?></td>
                             </tr>                            
 
                             <tr>

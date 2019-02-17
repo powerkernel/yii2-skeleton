@@ -41,6 +41,15 @@ class SiteController extends BackendController
             ],
         ];
     }
+	
+    /**
+     * display php info
+     * @return string
+     */
+    public function actionPhp(){
+        return $this->renderPartial('php', [
+        ]);
+    }	
 
     /**
      * Index
