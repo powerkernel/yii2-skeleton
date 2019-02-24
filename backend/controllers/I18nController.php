@@ -127,12 +127,11 @@ class I18nController extends BackendController
             $id = $parts[1];
             //$language = $parts[2];
             $value = Yii::$app->request->post('value');
-            if (Yii::$app->params['mongodb']['i18n']) {
-                $message = \common\models\Message::find()->where(['_id' => $id])->one();
-                $message->translation = $value;
-                $message->save();
-                echo $value;
-            }
+
+			$message = \common\models\Message::find()->where(['_id' => $id])->one();
+			$message->translation = $value;
+			$message->save();
+			echo $value;
 
         }
     }
