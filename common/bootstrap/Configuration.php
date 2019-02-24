@@ -369,6 +369,9 @@ EOB;
      */
     protected function configTheme()
     {
+        if (is_a(Yii::$app, '\yii\console\Application')) {
+            return;
+        }
         $session = Yii::$app->session;
         $requestCookies = Yii::$app->request->cookies;
         /* get saved theme */

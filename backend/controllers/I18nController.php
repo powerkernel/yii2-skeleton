@@ -131,7 +131,7 @@ class I18nController extends BackendController
 			$message = \common\models\Message::find()->where(['_id' => $id])->one();
 			$message->translation = $value;
 			$message->save();
-			echo $value;
+			return $value;
 
         }
     }

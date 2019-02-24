@@ -16,23 +16,18 @@ $schedule->call(function (\yii\console\Application $app) {
     $expire = (int)Setting::getValue('tokenExpiryTime');
     $point = $now - $expire;
 
-    if (Yii::$app->params['mongodb']['login']) {
-        $links = \common\models\Login::find()->where([
-            'status'=>\common\models\Login::STATUS_USED,
-        ])->orWhere([
-            'updated_at'=>['$lt'=>new \MongoDB\BSON\UTCDateTime($point*1000)]
-        ])->all();
-    } else {
-        $links = \common\models\Login::find()->where('status=:status OR updated_at<=:point', [
-            ':status' => \common\models\Login::STATUS_USED,
-            ':point' => $point
-        ])->all();
-    }
-    if ($links) {
+
+    $codes = \common\models\CodeVerification::find()->where([
+        'status' => \common\models\CodeVerification::STATUS_USED,
+    ])->orWhere([
+        'updated_at' => ['$lt' => new \MongoDB\BSON\UTCDateTime($point * 1000)]
+    ])->all();
+
+    if ($codes) {
         $obj = [];
-        foreach ($links as $link) {
-            $obj[] = $link->token;
-            $link->delete();
+        foreach ($codes as $code) {
+            $obj[] = (string)$code->_id;
+            $code->delete();
         }
         $output = implode(', ', $obj);
     }
@@ -47,20 +42,11 @@ $schedule->call(function (\yii\console\Application $app) {
     /* delete old logs never bad */
     $period = 30 * 24 * 60 * 60; // 30 days
     $point = time() - $period;
-    if(Yii::$app->params['mongodb']['taskLog']){
-        \common\models\TaskLog::deleteAll([
-            'task'=>basename(__FILE__, '.php'),
-            'created_at'=>['$lte', new \MongoDB\BSON\UTCDateTime($point*1000)]
-        ]);
-    }
-    else {
-        \common\models\TaskLog::deleteAll('task=:task AND created_at<=:point', [
-            ':task' => basename(__FILE__, '.php'),
-            ':point' => $point
-        ]);
-    }
 
-
+    \common\models\TaskLog::deleteAll([
+        'task' => basename(__FILE__, '.php'),
+        'created_at' => ['$lte', new \MongoDB\BSON\UTCDateTime($point * 1000)]
+    ]);
 
     unset($app);
 })->cron($time);
