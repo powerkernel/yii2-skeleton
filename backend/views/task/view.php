@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= DetailView::widget([
                     'model' => $model,
                     'attributes' => [
-                        Yii::$app->params['mongodb']['taskLog']?'_id':'id',
+                        '_id',
                         'task',
                         'result:ntext',
                         'createdAt:dateTime',
@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]) ?>
             </div>
             <p>
-                <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => (string)$model->id], [
+                <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => (string)$model->_id], [
                     'class' => 'btn btn-danger',
                     'data' => [
                         'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
