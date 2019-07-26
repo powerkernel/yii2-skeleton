@@ -1,6 +1,8 @@
 Yii 2 Skeleton
 ==============
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/powerkernel/yii2-skeleton.svg)](https://greenkeeper.io/)
+
 Yii 2 Skeleton is a skeleton (based on [Yii 2 App Advanced](https://github.com/yiisoft/yii2-app-advanced)) application best for
 developing complex Web applications with multiple tiers.
 
