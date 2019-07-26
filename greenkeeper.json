@@ -1,0 +1,9 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "grunt-email-workflow/package.json"
+      ]
+    }
+  }
+}
